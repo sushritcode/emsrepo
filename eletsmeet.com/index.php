@@ -1,5 +1,5 @@
 <?php
-//echo realpath($_SERVER["DOCUMENT_ROOT"]);
+//echo realpath($_SERVER["DOCUMENT_ROOT"]); small change
 
 require_once('includes/global.inc.php');
 require_once(CLASSES_PATH.'error.inc.php');
