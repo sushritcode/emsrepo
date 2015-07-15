@@ -1,0 +1,157 @@
+/*
+    Document   : schedule
+    Created on : Jul 31, 2012, 2:41:15 PM
+    Author     : salome
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/*
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root {
+     display: block;
+}
+
+.spacePL30{
+     padding-left: 30px;
+}
+.spaceML15{
+     margin-left: 15px;
+}
+.timezone {
+    display: none;
+}
+.left-banner {
+    background: none repeat scroll 0 0 #FFFFFF;/*#FBA913;/*#5B93C9;*/
+    height: 150px;
+    overflow-y:scroll;
+    padding-top : 5px;
+    padding-left : 10px;
+    /*width: 260px;*/
+    width: 235px;
+    float: left;
+    border: 1px solid #CCCCCC;
+}
+.input-xmedium {
+    width: 203px;
+}
+#inviteesList {
+  overflow-y:scroll;
+  width: 235px;
+  height:150px;
+  background-color:#FFFFFF;
+  z-index:-1px;
+  overflow-x:hidden;
+  border:1px solid #CCCCCC;
+}
+.pT40 {
+     padding-top: 40px;
+}
+
+input.inputInviteesList {
+  width:200px;
+  border:0px;
+  background-color:#FFFFFF;
+  margin-bottom: 0px;
+  box-shadow: -20 0px 0px rgba(0, 0, 0, 0.075) inset
+}
+
+.errorDisplay {
+     display:none;
+}
+
+.ui-datepicker-trigger {
+     margin-left: -20px;
+}
+
+.w150 {
+     width: 150px;
+}
+
+.w450 {
+     width: 450px;
+}
+.fleft {
+     float: left;
+}
+.h55 {
+     height: 55px;
+}
+.cPointer {
+     cursor: pointer;
+}
+.mT15 {
+     margin-top: 15px;
+}
+.tBold {
+     font-weight: bold;
+}
+.tColor {
+     color: #0088CC;
+}
+.meetingschedule li.hover {
+     background-image: none;
+}
+.cWh {
+     color:#FFFFFF;
+}
+.lGy {
+     background-color:#F5F5F5;
+}
+.dGy {
+     background-color:#E5E5E5;
+}
+.f18 {
+    font-size: 18px;
+}
+.p10 {
+    padding: 10px;
+}
+.scheduleSubTitle {
+    margin-top: -2rem;
+    font-weight: bold;
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+.mL20 {
+    margin-left: 20px;
+}
+.mL30 {
+    margin-left: 30px;
+}
+.mL50 {
+    margin-left: 50px;
+}
+.mL0 {
+    margin-left: 0px;
+}
+.mT40 {
+    margin-top: 40px;
+}
+.mB40 {
+    margin-bottom: 40px;
+}
+.h20 {
+  height:20px;
+}
+.dN {
+  display:none;
+}
+
+
+.w80 {
+     width: 80px;
+}
+
+.mT5 {
+    margin-top: 5px;
+}
+
+.w215{width:215px;}
+
+.w247{width:247px;}
+
+.w20{width:20px;}
