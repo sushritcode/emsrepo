@@ -7,11 +7,11 @@ if(count($arrHOST) > 2 )
 	$urlScheme = "http";
 }
 //$SITE_ROOT = $urlScheme."://".$_SERVER['HTTP_HOST']."/";
-$SITE_ROOT = $urlScheme."://".$_SERVER['HTTP_HOST']."/ace_eletsmeet/";
+$SITE_ROOT = $urlScheme."://".$_SERVER['HTTP_HOST']."/emsrepo/branches/mitesh/ace_eletsmeet/";
 
 //$SITE_ROOT = "https://".$_SERVER['HTTP_HOST']."/";
 
-$WEBAPP_PATH = "/var/www/html/ace_eletsmeet/";
+$WEBAPP_PATH = "/var/www/html/emsrepo/branches/mitesh/ace_eletsmeet/";
 //$WEBAPP_PATH = "/home/eletsmeet/public_html/";
 
 /*********************Includes Configuration files ******************/
