@@ -7,12 +7,12 @@ if(count($arrHOST) > 2 )
 	$urlScheme = "http";
 }
 //$SITE_ROOT = $urlScheme."://".$_SERVER['HTTP_HOST']."/";
-$SITE_ROOT = $urlScheme."://".$_SERVER['HTTP_HOST']."/eletsmeet.com/";
+$SITE_ROOT = $urlScheme."://".$_SERVER['HTTP_HOST']."/letsemeet/emsrepo/branches/sushrit/eletsmeet.com/";
 
 //$SITE_ROOT = "https://".$_SERVER['HTTP_HOST']."/";
 //$SITE_ROOT = 'http://' . $_SERVER['HTTP_HOST'] . '/eletsmeet.com/';
 
-$WEBAPP_PATH = "/var/www/html/eletsmeet.com/";
+$WEBAPP_PATH = "/var/www/html/letsemeet/emsrepo/branches/sushrit/eletsmeet.com/";
 //$WEBAPP_PATH = "/home/eletsmeet/public_html/";
 /*********************Configuration files ******************/
 $CONST_SITETITLE = "Welcome to LetsMeet";
@@ -28,7 +28,7 @@ define("ROOT_PATH",$WEBAPP_PATH);
 /*********************Configuration files ******************/
 
 /*********************DB Connection Start******************/
-define("DB_CONNECTIONSTRING","root:mclaren:localhost:db_eletesmeet_com:3306");
+define("DB_CONNECTIONSTRING","root:root123:localhost:db_eletesmeet_com:3306");
 //define("DB_CONNECTIONSTRING","usreletsmeet:Qu@dEl3ts!meE7:localhost:db_eletesmeet_com:3306");
 /*********************DB Connection End******************/
 
