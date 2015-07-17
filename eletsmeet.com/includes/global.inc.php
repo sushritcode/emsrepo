@@ -28,8 +28,6 @@ define("ROOT_PATH",$WEBAPP_PATH);
 /*********************Configuration files ******************/
 
 /*********************DB Connection Start******************/
-define("DB_CONNECTIONSTRING","root:mclaren:localhost:db_eletesmeet_com:3306");
-//define("DB_CONNECTIONSTRING","usreletsmeet:Qu@dEl3ts!meE7:localhost:db_eletesmeet_com:3306");
 /*********************DB Connection End******************/
 
 /********************ERROR LOGGING************/
