@@ -27,12 +27,7 @@ $CONST_PAGEID = 'Sample Page';
                     <div class="col-sm-10 col-sm-offset-1">
                         <div class="login-container">
                             <div class="center">
-                                <h1>
-                                    <i class="ace-icon fa fa-leaf green"></i>
-                                    <span class="red">Ace</span>
-                                    <span class="white" id="id-text2">Application</span>
-                                </h1>
-                                <h4 class="blue" id="id-company-text">&copy; Company Name</h4>
+				<img src='<?php echo IMG_PATH; ?>quadridge-logo-530-270.png' title="Quadridge Technologies">
                             </div>
 
                             <div class="space-6"></div>
@@ -82,25 +77,6 @@ $CONST_PAGEID = 'Sample Page';
                                                 </fieldset>
                                             </form>
 
-                                            <div class="social-or-login center">
-                                                <span class="bigger-110">Or Login Using</span>
-                                            </div>
-
-                                            <div class="space-6"></div>
-
-                                            <div class="social-login center">
-                                                <a class="btn btn-primary">
-                                                    <i class="ace-icon fa fa-facebook"></i>
-                                                </a>
-
-                                                <a class="btn btn-info">
-                                                    <i class="ace-icon fa fa-twitter"></i>
-                                                </a>
-
-                                                <a class="btn btn-danger">
-                                                    <i class="ace-icon fa fa-google-plus"></i>
-                                                </a>
-                                            </div>
                                         </div><!-- /.widget-main -->
 
                                         <div class="toolbar clearfix">
