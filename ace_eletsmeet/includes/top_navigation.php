@@ -296,37 +296,20 @@
             <!-- #section:basics/navbar.user_menu -->
             <li class="light-blue">
                 <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                    <img class="nav-user-photo" src="../assets/avatars/user.jpg" alt="Jason's Photo" />
-                    <span class="user-info">
-                        <small>Welcome,</small>
-                        Jason
-                    </span>
-
+                    <img class="nav-user-photo" src="<?php echo AVATARS_PATH; ?>avatar2.png" alt="<?php echo $strCk_user_nick_name; ?>'s Photo" title="<?php echo $strCk_user_nick_name; ?>'s Photo" />
+                    <span class="user-info"><small>Welcome,</small><?php echo $strCk_user_nick_name; ?></span>
                     <i class="ace-icon fa fa-caret-down"></i>
                 </a>
-
                 <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                     <li>
-                        <a href="#">
-                            <i class="ace-icon fa fa-cog"></i>
-                            Settings
-                        </a>
+                        <a href="#"><i class="ace-icon fa fa-cog"></i>Settings</a>
                     </li>
-
                     <li>
-                        <a href="profile.html">
-                            <i class="ace-icon fa fa-user"></i>
-                            Profile
-                        </a>
+                        <a href="<?php echo PROFILE_URL; ?>"><i class="ace-icon fa fa-user"></i>Profile</a>
                     </li>
-
                     <li class="divider"></li>
-
                     <li>
-                        <a href="#">
-                            <i class="ace-icon fa fa-power-off"></i>
-                            Logout
-                        </a>
+                        <a href="<?php echo LOGOUT_URL; ?>"><i class="ace-icon fa fa-power-off"></i>Logout</a>
                     </li>
                 </ul>
             </li>
