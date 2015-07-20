@@ -156,7 +156,7 @@ if (isset($_POST['fgt_submit'])) {
                                                     <div class="form-group <?php echo $errEmailClass; ?>">
                                                         <label class="block clearfix">
                                                             <span class="block input-icon input-icon-right">
-                                                                <input type="text" class="form-control" placeholder="Email Address" value="<?php echo $signin_email; ?>" name="signin_email" />
+                                                                <input type="email" class="form-control" placeholder="Email Address" value="<?php echo $signin_email; ?>" name="signin_email" />
                                                                 <i class="ace-icon fa fa-user"></i>
                                                             </span>
                                                         </label>
