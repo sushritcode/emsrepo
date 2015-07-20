@@ -4,9 +4,11 @@ require_once(CLASSES_PATH.'error.inc.php');
 require_once(DBS_PATH.'DataHelper.php');
 require_once(DBS_PATH.'objDataHelper.php');
 require_once(INCLUDES_PATH.'cm_authfunc.inc.php');
-$CONST_MODULE = 'dashboard';
-$CONST_PAGEID = 'Dashboard Home';
+$CONST_MODULE = 'profile';
+$CONST_PAGEID = 'My Profile';
 require_once(INCLUDES_PATH.'cm_authorize.inc.php');
+require_once(INCLUDES_PATH.'common_function.inc.php');
+require_once(INCLUDES_PATH.'profile_function.inc.php');
 ?>
 
 <!DOCTYPE html>
@@ -50,7 +52,7 @@ require_once(INCLUDES_PATH.'cm_authorize.inc.php');
                     
                     <!-- BREADCRUMBS N SEARCH BAR START -->
                     <div class="breadcrumbs" id="breadcrumbs">
-                        <?php include (INCLUDES_PATH.'breadcrumbs_navigation.php'); ?>
+                        <?php include (INCLUDES_PATH.'breadcrumbs_navigation.php'); ?>    
                     </div>
                     <!-- BREADCRUMBS N SEARCH BAR END -->                    
                    
@@ -64,7 +66,7 @@ require_once(INCLUDES_PATH.'cm_authorize.inc.php');
                         <!-- PAGE HEADER -->
                         <div class="page-header">
                             <h1>
-                                Dashboard<small><i class="ace-icon fa fa-angle-double-right"></i>overview &amp; stats</small>
+                                My Profile<small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp;personal details</small>
                             </h1>
                         </div>
                         <!-- PAGE HEADER -->

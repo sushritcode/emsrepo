@@ -1,30 +1,33 @@
 <?php
-$arrHOST  = explode("." , $_SERVER['HTTP_HOST']);
-
-$urlScheme = "https";
-if(count($arrHOST) > 2 )
-{
-	$urlScheme = "http";
-}
+//$arrHOST  = explode("." , $_SERVER['HTTP_HOST']);
+//$urlScheme = "https";
+//if(count($arrHOST) > 2 )
+//{
+//    $urlScheme = "http";
+//}
 //$SITE_ROOT = $urlScheme."://".$_SERVER['HTTP_HOST']."/";
-$SITE_ROOT = $urlScheme."://".$_SERVER['HTTP_HOST']."/letsemeet/emsrepo/branches/sushrit/ace_eletsmeet/";
+//$SITE_ROOT = $urlScheme."://".$_SERVER['HTTP_HOST']."/emsrepo/branches/mitesh/ace_eletsmeet/";
 
-//$SITE_ROOT = "https://".$_SERVER['HTTP_HOST']."/";
+$SITE_ROOT = "http://".$_SERVER['HTTP_HOST']."/ace_eletsmeet/";
 
-$WEBAPP_PATH = "/var/www/html/letsemeet/emsrepo/branches/sushrit/ace_eletsmeet/";
+$WEBAPP_PATH   = 'C:/wamp/www/ace_eletsmeet/';
+//$WEBAPP_PATH = "/var/www/html/emsrepo/branches/mitesh/ace_eletsmeet/";
 //$WEBAPP_PATH = "/home/eletsmeet/public_html/";
 
 /*********************Includes Configuration files ******************/
+define("ASSETS_PATH",$SITE_ROOT."assets/images/");
+define("AVATARS_PATH",$SITE_ROOT."assets/avatars/");
 define("CLASSES_PATH",$WEBAPP_PATH."classes/");
 define("CSS_PATH",$SITE_ROOT."assets/css/");
 define("DBS_PATH",$WEBAPP_PATH."dbs/");
 define("IMG_PATH",$SITE_ROOT."assets/images/");
 define("INCLUDES_PATH",$WEBAPP_PATH."includes/");
 define("JS_PATH",$SITE_ROOT."assets/js/");
-define("LOGOUT_URL",$SITE_ROOT."authenticate/logout.php");
 define("ROOT_PATH",$WEBAPP_PATH);
 /*********************Includes Configuration files ******************/
 
+define("LOGOUT_URL",$SITE_ROOT."dashboard/logout.php");
+define("PROFILE_URL",$SITE_ROOT."profile/");
 /*********************Configuration Parameter Start ******************/
 $CONST_SITETITLE = "Welcome to LetsMeet";
 
