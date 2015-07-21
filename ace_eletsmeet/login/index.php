@@ -41,7 +41,7 @@ if (isset($_POST['lgn_submit'])) {
             $user_id = $arrAuthUserResult[0]['user_id'];
             $email_address = $arrAuthUserResult[0]['email_address'];
             $client_id = $arrAuthUserResult[0]['client_id'];
-            $nick_name = $arrAuthUserResult[0]['nick_name'];
+            $nick_name =  $arrAuthUserResult[0]['nick_name']; // to be fetched from user details
             setLMUserSession($user_id, $email_address, $client_id, $nick_name);
             $arrUpdLastLoginDtls = updUserLastLoginDtls($email_address, $user_id, GM_DATE, $Login_IP_Address, $objDataHelper);
             $strReferer = "dashboard/";
@@ -143,7 +143,7 @@ if (isset($_POST['fgt_submit'])) {
 
                                             <div class="space-6"></div>
 
-                                            <form method="POST" action="<?php echo $SITE_ROOT . 'login/'; //$_SERVER['PHP_SELF']; ?>" name="frmLogin">
+                                            <form method="POST" action="<?php echo $SITE_ROOT . 'login/index.php'; //$_SERVER['PHP_SELF']; ?>" name="frmLogin">
 <?php if (count($errors)): ?>
                                                     <div class="alert alert-danger">
     <?php foreach ($errors as $error): ?>
