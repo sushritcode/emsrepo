@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS `login_users` (
-  `login_id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` varchar(100) NOT NULL,
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(100) NOT NULL,
   `client_id` varchar(25) NOT NULL,
   `partner_id` varchar(25) NOT NULL,
   `password` varchar(50) NOT NULL,
@@ -9,8 +9,22 @@ CREATE TABLE IF NOT EXISTS `login_users` (
   `login_enabled` tinyint(1) NOT NULL,
   `createdOn` datetime NOT NULL,
   `createdBy` varchar(100) NOT NULL,
-  `user_last_login_dtm` datetime NOT NULL,
+  `user_lastlogin_dtm` datetime NOT NULL,
   `	user_login_ip_address` varchar(25) NOT NULL,
   PRIMARY KEY (`login_id`),
   UNIQUE KEY `Userid` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+
+ALTER TABLE `user_details` DROP `client_id` ,
+DROP `partner_id` ,
+DROP `email_address` ,
+DROP `password` ,
+DROP `registration_dtm` ,
+DROP `user_lastlogin_dtm` ,
+DROP `user_login_ip_address` ,
+DROP `is_admin` ;
+
+
+ALTER TABLE `login_users` CHANGE `	user_login_ip_address` `user_login_ip_address` VARCHAR( 25 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ;
