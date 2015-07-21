@@ -37,6 +37,7 @@ try {
 //	exit;
 //    }
 
+
     if (is_array($arrUserSessionDetails) && sizeof($arrUserSessionDetails) > 0) {
         $strCK_user_id = $arrUserSessionDetails[0]; //user_id
         $strCk_user_email_address = $arrUserSessionDetails[1]; //email_address
