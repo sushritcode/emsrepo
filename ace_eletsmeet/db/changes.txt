@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS `login_users` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(25) NOT NULL,
   `user_name` varchar(100) NOT NULL,
   `client_id` varchar(25) NOT NULL,
   `partner_id` varchar(25) NOT NULL,
@@ -10,11 +10,10 @@ CREATE TABLE IF NOT EXISTS `login_users` (
   `createdOn` datetime NOT NULL,
   `createdBy` varchar(100) NOT NULL,
   `user_lastlogin_dtm` datetime NOT NULL,
-  `	user_login_ip_address` varchar(25) NOT NULL,
-  PRIMARY KEY (`login_id`),
-  UNIQUE KEY `Userid` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
+  `user_login_ip_address` varchar(25) NOT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `Userid` (`user_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 ALTER TABLE `user_details` DROP `client_id` ,
