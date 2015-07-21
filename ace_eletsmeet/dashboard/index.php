@@ -64,7 +64,7 @@ require_once(INCLUDES_PATH.'cm_authorize.inc.php');
                         <!-- PAGE HEADER -->
                         <div class="page-header">
                             <h1>
-                                Dashboard<small><i class="ace-icon fa fa-angle-double-right"></i>overview &amp; stats</small>
+                                Dashboard<small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp;overview &amp; stats</small>
                             </h1>
                         </div>
                         <!-- PAGE HEADER -->
