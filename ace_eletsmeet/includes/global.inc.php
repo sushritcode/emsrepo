@@ -1,17 +1,14 @@
 <?php
-//$arrHOST  = explode("." , $_SERVER['HTTP_HOST']);
-//$urlScheme = "https";
-//if(count($arrHOST) > 2 )
-//{
-//    $urlScheme = "http";
-//}
+$arrHOST  = explode("." , $_SERVER['HTTP_HOST']);
+$urlScheme = "https";
+if(count($arrHOST) > 2 )
+{
+    $urlScheme = "http";
+}
 //$SITE_ROOT = $urlScheme."://".$_SERVER['HTTP_HOST']."/";
-//$SITE_ROOT = $urlScheme."://".$_SERVER['HTTP_HOST']."/emsrepo/branches/mitesh/ace_eletsmeet/";
+$SITE_ROOT = $urlScheme."://".$_SERVER['HTTP_HOST']."/letsemeet/emsrepo/branches/sushrit/ace_eletsmeet/";
 
-$SITE_ROOT = "http://".$_SERVER['HTTP_HOST']."/ace_eletsmeet/";
-
-$WEBAPP_PATH   = 'C:/wamp/www/ace_eletsmeet/';
-//$WEBAPP_PATH = "/var/www/html/emsrepo/branches/mitesh/ace_eletsmeet/";
+$WEBAPP_PATH = "/var/www/html/letsemeet/emsrepo/branches/sushrit/ace_eletsmeet/";
 //$WEBAPP_PATH = "/home/eletsmeet/public_html/";
 
 /*********************Includes Configuration files ******************/
@@ -53,7 +50,8 @@ define("USER_SESSION_NAME","ckUsrLetsMeetUserSession");
 /*********************Configuration Parameter End ******************/
 
 /*********************DB Connection Start******************/
-define("DB_CONNECTIONSTRING","root:mclaren:localhost:db_eletesmeet_com:3306");
+//define("DB_CONNECTIONSTRING","root:root123:localhost:db_eletesmeet_com:3306");
+define("DB_CONNECTIONSTRING","root:mclaren:172.16.1.53:dev_db_eletesmeet_com:3306");
 /*********************DB Connection End******************/
 
 /********************Error Logging Parameter Start************/
