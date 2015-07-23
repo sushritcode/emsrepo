@@ -74,6 +74,296 @@ require_once(INCLUDES_PATH.'profile_function.inc.php');
                         <div class="row">
                             <div class="col-xs-12">
                                 <!-- PAGE CONTENT START -->
+					<div class="row">
+								<div class="col-sm-12">
+									<!-- #section:elements.tab -->
+									<div class="tabbable">
+										<ul id="myTab" class="nav nav-tabs">
+											<li class="active">
+												<a href="#basic" data-toggle="tab" aria-expanded="false">
+													<i class="green ace-icon fa fa-pencil-square-o bigger-120"></i>
+													Basic Details
+												</a>
+											</li>
+											<li class="">
+												<a href="#contact" data-toggle="tab" aria-expanded="false">
+													<i class="green ace-icon glyphicon glyphicon-user"></i>
+													Contact Details
+												</a>
+											</li>
+											<li class="">
+												<a href="#address" data-toggle="tab" aria-expanded="false">
+													<i class="green ace-icon fa fa-home bigger-120"></i>
+													Address details
+												</a>
+											</li>
+											<li class="">
+												<a href="#Social" data-toggle="tab" aria-expanded="false">
+													<i class="green ace-icon fa fa-users bigger-120"></i>
+													Social Media
+												</a>
+											</li>
+											<li class="">
+												<a href="#Billing" data-toggle="tab" aria-expanded="false">
+													<i class="green ace-icon fa fa-credit-card  bigger-120"></i>
+													Billing & Localisation
+												</a>
+											</li>
+											<li class="">
+												<a href="#password" data-toggle="tab" aria-expanded="false">
+													<i class="red ace-icon fa fa-lock bigger-120"></i>
+													Change Password
+												</a>
+											</li>																				</ul>
+
+										<form class="form-horizontal" role="form">
+										<div class="tab-content">
+											<div class="tab-pane fade in active" id="basic">
+												<div class="row">
+													<div class="col-sm-12">
+														<div class="space-20"></div>
+														<div class="form-group">
+															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Company Type </label>
+															<div class="col-sm-9">
+											                                         <select class="col-sm-5" id="form-field-select-1">
+				                                        					                    <option value="">Company Type</option>
+				                                                            					    <option value="AL">Alabama</option>
+				                                                            					    <option value="AK">Alaska</option>
+				                                                        					</select>
+															</div>
+														</div>
+														<div class="space-4"></div>
+
+														<div class="form-group">
+															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Company Name </label>
+															<div class="col-sm-9">
+																<input type="text" class="col-sm-5" placeholder="Company Name" id="companyname" name="companyname" required>
+															</div>
+														</div>
+
+														<div class="space-4"></div>
+
+														<div class="form-group">
+															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Nature Of Biusiness </label>
+															<div class="col-sm-9">
+																<input type="text" class="col-sm-5" placeholder="Nature Of Business" id="natureofbusiness" name="natureofbusiness	" required>
+															</div>
+														</div>
+
+														<div class="space-4"></div>
+
+														<div class="form-group">
+															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Display Name </label>
+															<div class="col-sm-9">
+																<input type="text" class="col-sm-5" placeholder="Display Name" id="displayName" name="displayName" required>
+															</div>
+														</div>
+
+														<div class="space-4"></div>
+
+														<div class="form-group">
+															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Company Name </label>
+															<div class="col-sm-9">
+																<input type="text" class="col-sm-5" placeholder="Company Name" id="companyname" name="companyname" required>
+															</div>
+														</div>
+
+														<div class="space-4"></div>
+
+														<div class="form-group">
+															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Company URI </label>
+															<div class="col-sm-9">
+																<input type="text" class="col-sm-5" placeholder="Company URI" id="companyURL" name="companyURL" required>
+															</div>
+														</div>
+
+														<div class="space-4"></div>
+
+														<div class="form-group">
+															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Brief Discription Of Company </label>
+															<div class="col-sm-9">
+																<textarea placeholder="Brief Discription Of Company" id="briefDescription" class="col-sm-5"></textarea>
+															</div>
+														</div>
+														
+
+													</div>
+												</div>												
+											</div>
+											<div class="tab-pane fade" id="contact">
+											<div class="space-20"></div>
+
+											<div class="form-group">
+												<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Phone #1 </label>
+												<div class="col-sm-9">
+													<input type="text" class="col-sm-5" placeholder="Phone #1" id="phone1" name="phone1" required>
+												</div>
+											</div>
+											<div class="space-4"></div>
+
+											<div class="form-group">
+												<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Phone #2 </label>
+												<div class="col-sm-9">
+													<input type="text" class="col-sm-5" placeholder="Phone #2" id="phone2" name="phone2" required>
+												</div>
+											</div> 
+											<div class="space-4"></div>
+
+											<div class="form-group">
+												<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Mobile Number </label>
+												<div class="col-sm-9">
+													<input type="text" class="col-sm-5" placeholder="Mobile Number" id="mobile" name="mobile" required>
+												</div>
+											</div> 
+											<div class="space-4"></div>
+
+											<div class="form-group">
+												<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Secondry Email </label>
+												<div class="col-sm-9">
+													<input type="text" class="col-sm-5" placeholder="Secondry Email" id="SecondryEmail" name="SecondryEmail" required>
+												</div>
+											</div> 
+			
+											</div>
+											<div class="tab-pane fade" id="address">
+												<div class="space-20"></div>
+
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Primary Address </label>
+													<div class="col-sm-9">
+														<textarea placeholder="Primary Address" id="address1" class="col-sm-5"></textarea>
+													</div>
+												</div>
+												
+												<div class="space-4"></div>
+
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Address #1 </label>
+													<div class="col-sm-9">
+														<textarea placeholder="Address #1" id="address2" class="col-sm-5"></textarea>
+													</div>
+												</div>
+												<div class="space-4"></div>
+
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Address #2 </label>
+													<div class="col-sm-9">
+														<textarea placeholder="Address #2" id="address3" class="col-sm-5"></textarea>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane fade" id="Social">
+												<div class="space-20"></div>
+
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Facebook ID </label>
+													<div class="col-sm-9">
+														<textarea placeholder="Facebook ID" id="facebook" class="col-sm-5"></textarea>
+													</div>
+												</div>
+												
+												<div class="space-4"></div>
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Twitter </label>
+													<div class="col-sm-9">
+														<textarea placeholder="Twitter" id="twitter" class="col-sm-5"></textarea>
+													</div>
+												</div>
+												
+												<div class="space-4"></div>
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Google Plus </label>
+													<div class="col-sm-9">
+														<textarea placeholder="Google Plus" id="googleplus" class="col-sm-5"></textarea>
+													</div>
+												</div>
+												
+												<div class="space-4"></div>
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> LinkedIn </label>
+													<div class="col-sm-9">
+														<textarea placeholder="LinkedIn" id="linkedin" class="col-sm-5"></textarea>
+													</div>
+												</div>
+												
+												<div class="space-4"></div>
+											</div>
+											<div class="tab-pane fade" id="Billing">
+												<div class="space-20"></div>
+
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Billing Name </label>
+													<div class="col-sm-9">
+														<<input type="text" class="col-sm-5" placeholder="Billing Name" id="billersname" name="billersname" required>
+													</div>
+												</div>
+												<div class="space-4"></div>
+
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Select Currency </label>
+													<div class="col-sm-9">
+											                	<select class="col-sm-5" id="currency">
+				                                        						<option value="">Select Currency</option>
+				                                                            				<option value="AL">Alabama</option>
+				                                                            				<option value="AK">Alaska</option>
+				                                                        			</select>
+													</div>
+												</div>
+												<div class="space-4"></div>
+
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Select TimeZone </label>
+													<div class="col-sm-9">
+											                	<select class="col-sm-5" id="timezone">
+				                                        						<option value="">Select TimeZone</option>
+				                                                            				<option value="AL">Alabama</option>
+				                                                            				<option value="AK">Alaska</option>
+				                                                        			</select>
+													</div>
+												</div>
+												
+				
+											</div>
+
+											
+											<div class="tab-pane fade" id="password">
+												<div class="space-20"></div>
+
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Current Password </label>
+													<div class="col-sm-9">
+														<input type="text" class="col-sm-5" placeholder="Current Password" id="currentpwd" name="currentpwd" required>
+													</div>
+												</div>
+												<div class="space-4"></div>
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> New Password </label>
+													<div class="col-sm-9">
+														<input type="text" class="col-sm-5" placeholder="New Password" id="newpwd" name="newpwd" required>
+													</div>
+												</div>
+												<div class="space-4"></div>
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Confirm New Password </label>
+													<div class="col-sm-9">
+														<input type="text" class="col-sm-5" placeholder="Confirm New Password" id="cnfnewpwd" name="cnfnewpwd" required>
+													</div>
+												</div>
+
+						 
+											</div>
+												
+									      </div>
+										</form>
+									</div>
+
+									<!-- /section:elements.tab -->
+								</div><!-- /.col -->
+
+								<div class="vspace-6-sm"></div>
+
+									
+								</div>
                
                                
 
