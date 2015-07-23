@@ -9,6 +9,17 @@ $CONST_PAGEID = 'My Profile';
 require_once(INCLUDES_PATH.'cm_authorize.inc.php');
 require_once(INCLUDES_PATH.'common_function.inc.php');
 require_once(INCLUDES_PATH.'profile_function.inc.php');
+
+//data population start	
+$arrIndustryType = getAllIndustryType($objDataHelper);	
+$optionIndustryType = "";
+	for($cnt=0;$cnt< count($arrIndustryType);$cnt++)
+	{
+		$optionIndustryType.="<option value='".$$arrIndustryType[$cnt]['industry_id']."'>".$arrIndustryType[$cnt]['industry_name']."</option>";
+
+	}
+//data population end
+
 ?>
 
 <!DOCTYPE html>
@@ -123,12 +134,11 @@ require_once(INCLUDES_PATH.'profile_function.inc.php');
 													<div class="col-sm-12">
 														<div class="space-20"></div>
 														<div class="form-group">
-															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Company Type </label>
+															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Industry Type </label>
 															<div class="col-sm-9">
 											                                         <select class="col-sm-5" id="form-field-select-1">
-				                                        					                    <option value="">Company Type</option>
-				                                                            					    <option value="AL">Alabama</option>
-				                                                            					    <option value="AK">Alaska</option>
+				                                        					                    <option value="">Industry Type</option>
+																    <?php echo $optionIndustryType;?>
 				                                                        					</select>
 															</div>
 														</div>
