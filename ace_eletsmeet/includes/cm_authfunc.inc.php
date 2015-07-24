@@ -31,7 +31,7 @@ function isAuthenticUser($email_address, $password, $dataHelper) {
 
     try
     {
-        $strSqlStatement = "SELECT lu.user_id, lu.client_id, lu.partner_id, lu.email_address, ud.nick_name FROM user_login_details lu , user_details ud WHERE lu.email_address='" . trim($email_address) . "' AND lu.password='" . trim($password) . "' AND  lu.login_enabled = '1' and lu.user_id = ud.user_id";
+        $strSqlStatement = "SELECT lu.user_id, lu.client_id, lu.partner_id, lu.email_address, ud.nick_name FROM user_login_details lu, user_details ud WHERE lu.email_address='" . trim($email_address) . "' AND lu.password='" . trim($password) . "' AND  lu.login_enabled = '1' and lu.user_id = ud.user_id;";
         $arrAuthResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrAuthResult;
     }
@@ -173,8 +173,8 @@ function updUserLastLoginDtls($email_address, $user_id, $datetime, $ipaddress, $
 }
 
 /* -----------------------------------------------------------------------------
-  Function Name : getUserDetailsByID
-  Purpose       : To get user details from User Email Address
+  Function Name : getUserLoginDetailsByID
+  Purpose       : To get user login details from User Email Address
   Parameters    :
   Returns       : email_address
   Calls         : datahelper.fetchRecords
@@ -185,20 +185,20 @@ function updUserLastLoginDtls($email_address, $user_id, $datetime, $ipaddress, $
   Modified on   :
   -------------------------------------------------------------------------------- */
 
-function getUserDetailsByID($email_address, $dataHelper) {
+function getUserLoginDetailsByID($email_address, $dataHelper) {
     if (!is_object($dataHelper))
     {
-        throw new Exception("cm_authfunc.inc.php : getUserDetailsByID : DataHelper Object did not instantiate", 104);
+        throw new Exception("cm_authfunc.inc.php : getUserLoginDetailsByID : DataHelper Object did not instantiate", 104);
     }
 
     if (strlen(trim($email_address)) <= 0)
     {
-        throw new Exception("cm_authfunc.inc.php: getUserDetailsByID : Missing Parameter email_address.", 141);
+        throw new Exception("cm_authfunc.inc.php: getUserLoginDetailsByID : Missing Parameter email_address.", 141);
     }
 
     try
     {
-        $strSqlStatement = "SELECT lu.user_id, lu.user_name , nick_name , first_name , last_name , country_name , timezones , gmt , phone_number , idd_code , mobile_number "
+        $strSqlStatement = "SELECT ud.user_id, user_name, cd.client_id, cd.partner_id, email_address, role, login_enabled, createdOn, createdBy, user_lastlogin_dtm, user_login_ip_address, cd.client_name, cd.client_logo_flag, cd.client_logo_url "
                 . "FROM user_details AS ud, user_login_details AS lu, client_details AS cd "
                 . "WHERE lu.user_name ='" . trim($email_address) . "' "
                 . "ANd lu.user_id = ud.user_id AND cd.client_id = lu.client_id AND lu.login_enabled = '1'; ";
@@ -207,6 +207,6 @@ function getUserDetailsByID($email_address, $dataHelper) {
     }
     catch (Exception $e)
     {
-        throw new Exception("cm_authfunc.inc.php : getUserDetailsByID : Could not fetch records : " . $e->getMessage(), 144);
+        throw new Exception("cm_authfunc.inc.php : getUserLoginDetailsByID : Could not fetch records : " . $e->getMessage(), 144);
     }
 }
