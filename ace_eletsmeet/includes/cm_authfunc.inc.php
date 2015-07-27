@@ -119,7 +119,7 @@ function getUserSession() {
   Function Name : unsetUserSession
   Purpose       : To unset the logged in user .
   Parameters    :
-  Returns       : user_id, email_address, password, client_id
+  Returns       : 
   Calls         :
   Called By     :
   Author        : Mitesh Shah
@@ -145,7 +145,7 @@ function unsetUserSession() {
   Function Name : updUserLastLoginDtls
   Purpose       : To update User last logged in datetime
   Parameters    :
-  Returns       : email_address
+  Returns       : 
   Calls         : datahelper.putRecords
   Called By     :
   Author        : Mitesh Shah
@@ -173,10 +173,10 @@ function updUserLastLoginDtls($email_address, $user_id, $datetime, $ipaddress, $
 }
 
 /* -----------------------------------------------------------------------------
-  Function Name : getUserLoginDetailsByID
+  Function Name : getUserLoginDetailsByUserName
   Purpose       : To get user login details from User Email Address
-  Parameters    :
-  Returns       : email_address
+  Parameters    : user_name, Datahelper
+  Returns       : 
   Calls         : datahelper.fetchRecords
   Called By     :
   Author        : Mitesh Shah
@@ -185,13 +185,13 @@ function updUserLastLoginDtls($email_address, $user_id, $datetime, $ipaddress, $
   Modified on   :
   -------------------------------------------------------------------------------- */
 
-function getUserLoginDetailsByID($email_address, $dataHelper) {
+function getUserLoginDetailsByUserName($user_name, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("cm_authfunc.inc.php : getUserLoginDetailsByID : DataHelper Object did not instantiate", 104);
     }
 
-    if (strlen(trim($email_address)) <= 0)
+    if (strlen(trim($user_name)) <= 0)
     {
         throw new Exception("cm_authfunc.inc.php: getUserLoginDetailsByID : Missing Parameter email_address.", 141);
     }
@@ -200,7 +200,7 @@ function getUserLoginDetailsByID($email_address, $dataHelper) {
     {
         $strSqlStatement = "SELECT ud.user_id, user_name, cd.client_id, cd.partner_id, email_address, role, login_enabled, createdOn, createdBy, user_lastlogin_dtm, user_login_ip_address, cd.client_name, cd.client_logo_flag, cd.client_logo_url "
                 . "FROM user_details AS ud, user_login_details AS lu, client_details AS cd "
-                . "WHERE lu.user_name ='" . trim($email_address) . "' "
+                . "WHERE lu.user_name ='" . trim($user_name) . "' "
                 . "ANd lu.user_id = ud.user_id AND cd.client_id = lu.client_id AND lu.login_enabled = '1'; ";
         $arrAuthResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrAuthResult;

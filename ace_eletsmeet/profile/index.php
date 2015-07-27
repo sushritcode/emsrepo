@@ -304,7 +304,7 @@ $optionIndustryType = "";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Billing Name </label>
 													<div class="col-sm-9">
-														<<input type="text" class="col-sm-5" placeholder="Billing Name" id="billersname" name="billersname" required>
+														<input type="text" class="col-sm-5" placeholder="Billing Name" id="billersname" name="billersname" required>
 													</div>
 												</div>
 												<div class="space-4"></div>

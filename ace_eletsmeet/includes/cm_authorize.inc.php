@@ -57,7 +57,7 @@ try
         {
             try
             {
-                $arrUserDetls = getUserLoginDetailsByID($strCk_user_email_address, $objDataHelper);
+                $arrUserDetls = getUserLoginDetailsByUserName($strCk_user_email_address, $objDataHelper);
             }
             catch (Exception $a)
             {
