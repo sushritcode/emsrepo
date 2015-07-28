@@ -15,9 +15,19 @@ $arrIndustryType = getAllIndustryType($objDataHelper);
 $optionIndustryType = "";
 	for($cnt=0;$cnt< count($arrIndustryType);$cnt++)
 	{
-		$optionIndustryType.="<option value='".$$arrIndustryType[$cnt]['industry_id']."'>".$arrIndustryType[$cnt]['industry_name']."</option>";
+		$optionIndustryType.="<option value='".$arrIndustryType[$cnt]['industry_id']."'>".$arrIndustryType[$cnt]['industry_name']."</option>";
 
 	}
+
+$arrTimezonesType = getTimezoneList($objDataHelper);
+$optionTimezonesType = "";	
+	for($cnt=0;$cnt< count($arrTimezonesType);$cnt++)
+	{
+		$optionTimezonesType.="<option value='".$arrTimezonesType[$cnt]['ct_id']."'>".$arrTimezonesType[$cnt]['timezones']." - ".$arrTimezonesType[$cnt]['country_name']."</option>";
+
+	}
+
+
 //data population end
 
 ?>
@@ -326,8 +336,7 @@ $optionIndustryType = "";
 													<div class="col-sm-9">
 											                	<select class="col-sm-5" id="timezone">
 				                                        						<option value="">Select TimeZone</option>
-				                                                            				<option value="AL">Alabama</option>
-				                                                            				<option value="AK">Alaska</option>
+															 <?php echo $optionTimezonesType;?>
 				                                                        			</select>
 													</div>
 												</div>
