@@ -314,8 +314,8 @@ $optionIndustryType = "";
 													<div class="col-sm-9">
 											                	<select class="col-sm-5" id="currency">
 				                                        						<option value="">Select Currency</option>
-				                                                            				<option value="AL">Alabama</option>
-				                                                            				<option value="AK">Alaska</option>
+				                                                            				<option value="INR">INR - Indian Rupees</option>
+				                                                            				<option value="USD">USD - United State Dollars</option>
 				                                                        			</select>
 													</div>
 												</div>
