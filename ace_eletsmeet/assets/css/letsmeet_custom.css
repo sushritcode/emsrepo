@@ -1,3 +1,8 @@
 .timezone {
     display: none;
 }
+
+.form-group.required .control-label::after {
+    color: red;
+    content: "*";
+}
