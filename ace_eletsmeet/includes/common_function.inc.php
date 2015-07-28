@@ -88,10 +88,11 @@ function getTimezoneList($dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("common_function.inc.php : getTimezoneList : DataHelper Object did not instantiate", 104);
+
     }
     try
     {
-        $strSqlStatement = "SELECT  cd.country_name,  cd.country_code, ct.timezones, ct.gmt FROM country_details cd, country_timezones ct WHERE cd.country_code = ct.country_code AND country_status='1'  ORDER BY cd.country_name";
+        $strSqlStatement = "SELECT  ct.ct_id , cd.country_name,  cd.country_code, ct.timezones, ct.gmt FROM country_details cd, country_timezones ct WHERE cd.country_code = ct.country_code AND country_status='1'  ORDER BY cd.country_name";
         $arrList = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrList;
     }
