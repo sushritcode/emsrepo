@@ -98,3 +98,18 @@ INSERT INTO `industry_details` (`industry_id`, `industry_name`) VALUES
 (57, 'Tobacco');
 
 ALTER TABLE `industry_details` ADD `status` ENUM( '0', '1' ) NOT NULL DEFAULT '1';
+ALTER TABLE `user_details` ADD `mobile_number` VARCHAR( 50 ) NULL AFTER `gmt` ;
+ALTER TABLE `user_details` ADD `address` VARCHAR( 255 ) NULL AFTER `secondry_email` ;
+ALTER TABLE `user_details` ADD `landmark` VARCHAR( 255 ) NULL AFTER `secondry_email` ;
+ALTER TABLE `user_details` ADD `city` VARCHAR( 255 ) NULL AFTER `landmark` ;
+ALTER TABLE `user_details` ADD `facebook` VARCHAR( 200 ) NULL AFTER `mobile_number` ;
+ALTER TABLE `user_details` ADD `twitter` VARCHAR( 200 ) NULL AFTER `facebook` ;
+ALTER TABLE `user_details` ADD `googleplus` VARCHAR( 200 ) NULL AFTER `twitter` ;
+ALTER TABLE `user_details` ADD `linkedin` VARCHAR( 200 ) NULL AFTER `googleplus` ;
+
+ALTER TABLE `user_details` ADD `industry_type` VARCHAR( 50 ) NULL AFTER `mobile_number` ,
+ADD `company_name` VARCHAR( 255 ) NULL AFTER `industry_type` ,
+ADD `nature_business` TEXT NULL AFTER `company_name` ,
+ADD `company_uri` VARCHAR( 255 ) NULL AFTER `nature_business` ,
+ADD `brief_desc_company` TEXT NULL AFTER `company_uri` ;
+
