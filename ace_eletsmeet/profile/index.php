@@ -153,13 +153,13 @@ $optionCountry ="";
 												</a>
 											</li>																				</ul>
 
-										<form class="form-horizontal" role="form">
 										<div class="tab-content">
 											<div class="tab-pane fade in active" id="basic">
 												<div class="row">
 													<div class="col-sm-12">
 														<div class="space-20"></div>
 														
+														<form class="form-horizontal" role="form">
 														<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Email Id / Login Id </label>
 															<div class="col-sm-9" style="padding:6px 20px;">
@@ -173,7 +173,7 @@ $optionCountry ="";
 														<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Display Name </label>
 															<div class="col-sm-9">
-																<input type="text" class="col-sm-5" placeholder="Display Name" id="displayname" name="displayname" required>
+																<input type="text" class="col-sm-5" placeholder="Display Name" id="displayname" name="displayname" required for="basic">
 															</div>
 														</div>
 
@@ -182,7 +182,7 @@ $optionCountry ="";
 														<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> First Name </label>
 															<div class="col-sm-9">
-																<input type="text" class="col-sm-5" placeholder="First Name" id="firstname" name="firstname" required>
+																<input type="text" class="col-sm-5" placeholder="First Name" id="firstname" name="firstname" required for="basic">
 															</div>
 														</div>
 
@@ -191,11 +191,13 @@ $optionCountry ="";
 														<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Last Name </label>
 															<div class="col-sm-9">
-																<input type="text" class="col-sm-5" placeholder="Last Name" id="lastname" name="lastname" required>
+																<input type="text" class="col-sm-5" placeholder="Last Name" id="lastname" name="lastname" required for="basic">
 															</div>
 														</div>
 
-														<div class="space-4"></div>
+														<div class="space-20"></div>
+														<input type="submit" class="btn btn-info" value="Save Basic Details">
+														</form>
 
 
 
@@ -209,11 +211,12 @@ $optionCountry ="";
 											</div>
 											<div class="tab-pane fade" id="contact">
 											<div class="space-20"></div>
+											<form class="form-horizontal" role="form">
 
 											<div class="form-group">
 												<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Phone #1 </label>
 												<div class="col-sm-9">
-													<input type="text" class="col-sm-5" placeholder="Phone #1" id="phone1" name="phone1" required>
+													<input type="text" class="col-sm-5" placeholder="Phone #1" id="phone1" name="phone1" required for="contact">
 												</div>
 											</div>
 											<div class="space-4"></div>
@@ -222,7 +225,7 @@ $optionCountry ="";
 											<div class="form-group">
 												<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Mobile Number </label>
 												<div class="col-sm-9">
-													<input type="text" class="col-sm-5" placeholder="Mobile Number" id="mobile" name="mobile" required>
+													<input type="text" class="col-sm-5" placeholder="Mobile Number" id="mobile" name="mobile" required for="contact"> 
 												</div>
 											</div> 
 											<div class="space-4"></div>
@@ -230,19 +233,22 @@ $optionCountry ="";
 											<div class="form-group">
 												<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Secondry Email </label>
 												<div class="col-sm-9">
-													<input type="text" class="col-sm-5" placeholder="Secondry Email" id="SecondryEmail" name="SecondryEmail" required>
+													<input type="text" class="col-sm-5" placeholder="Secondry Email" id="SecondryEmail" name="SecondryEmail" required for="contact">
 												</div>
 											</div> 
-			
+											<div class="space-20"></div>
+											<input type="submit" class="btn btn-info" value="Save Contact Details">
+											</form>
 											</div>
 											<div class="tab-pane fade" id="address">
+											<form class="form-horizontal" role="form">
 												<div class="space-20"></div>
 
 												
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Address </label>
 													<div class="col-sm-9">
-														<textarea placeholder="Address" id="address" class="col-sm-5"></textarea>
+														<textarea placeholder="Address" id="address" class="col-sm-5" for="address"></textarea>
 													</div>
 												</div>
 												<div class="space-4"></div> 	
@@ -250,7 +256,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Land Mark </label>
 													<div class="col-sm-9">
-														<input type="text" class="col-sm-5" placeholder="Land Mark" id="landmark" name="landmark" required>
+														<input type="text" class="col-sm-5" placeholder="Land Mark" id="landmark" name="landmark" required for="address">
 													</div>
 												</div> 
 												<div class="space-4"></div>
@@ -259,7 +265,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> City </label>
 													<div class="col-sm-9">
-														<input type="text" class="col-sm-5" placeholder="City" id="city" name="city" required>
+														<input type="text" class="col-sm-5" placeholder="City" id="city" name="city" required for="address">
 													</div>
 												</div> 
 												<div class="space-4"></div>
@@ -267,23 +273,26 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Select Country </label>
 													<div class="col-sm-9">
-														 <select class="col-sm-5" id="form-field-select-1">
+														 <select class="col-sm-5" id="form-field-select-1" for="address">
 														    <option value="">Select Country</option>
 														    <?php echo $optionCountry;?>
 														</select>
 													</div>
 												</div>
-												<div class="space-4"></div>
+												<div class="space-20"></div>
+												<input type="submit" class="btn btn-info" value="Save Address Details">
+												</form>
 
 
 																															     </div>
 											<div class="tab-pane fade" id="Social">
+												<form class="form-horizontal" role="form">
 												<div class="space-20"></div>
 
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Facebook ID </label>
 													<div class="col-sm-9">
-														<textarea placeholder="Facebook ID" id="facebook" class="col-sm-5"></textarea>
+														<textarea placeholder="Facebook ID" id="facebook" class="col-sm-5" for="Social"></textarea>
 													</div>
 												</div>
 												
@@ -291,7 +300,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Twitter </label>
 													<div class="col-sm-9">
-														<textarea placeholder="Twitter" id="twitter" class="col-sm-5"></textarea>
+														<textarea placeholder="Twitter" id="twitter" class="col-sm-5" for="Social"></textarea>
 													</div>
 												</div>
 												
@@ -299,7 +308,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Google Plus </label>
 													<div class="col-sm-9">
-														<textarea placeholder="Google Plus" id="googleplus" class="col-sm-5"></textarea>
+														<textarea placeholder="Google Plus" id="googleplus" class="col-sm-5" for="Social"></textarea>
 													</div>
 												</div>
 												
@@ -307,19 +316,22 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> LinkedIn </label>
 													<div class="col-sm-9">
-														<textarea placeholder="LinkedIn" id="linkedin" class="col-sm-5"></textarea>
+														<textarea placeholder="LinkedIn" id="linkedin" class="col-sm-5" for="Social"></textarea>
 													</div>
 												</div>
 												
-												<div class="space-4"></div>
+												<div class="space-20"></div>
+												<input type="submit" class="btn btn-info" value="Save Social info">
+												</form>
 											</div>
 											<div class="tab-pane fade" id="Company">
+												<form class="form-horizontal" role="form">
 												<div class="space-20"></div>
 				
 												<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Industry Type </label>
 															<div class="col-sm-9">
-											                                         <select class="col-sm-5" id="form-field-select-1">
+											                                         <select class="col-sm-5" id="form-field-select-1" for="Company">
 				                                        					                    <option value="">Industry Type</option>
 																    <?php echo $optionIndustryType;?>
 				                                                        					</select>
@@ -330,7 +342,7 @@ $optionCountry ="";
 														<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Company Name </label>
 															<div class="col-sm-9">
-																<input type="text" class="col-sm-5" placeholder="Company Name" id="companyname" name="companyname" required>
+																<input type="text" class="col-sm-5" placeholder="Company Name" id="companyname" name="companyname" required  for="Company">
 															</div>
 														</div>
 
@@ -339,7 +351,7 @@ $optionCountry ="";
 														<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Nature Of Biusiness </label>
 															<div class="col-sm-9">
-																<input type="text" class="col-sm-5" placeholder="Nature Of Business" id="natureofbusiness" name="natureofbusiness	" required>
+																<input type="text" class="col-sm-5" placeholder="Nature Of Business" id="natureofbusiness" name="natureofbusiness" required  for="Company">
 															</div>
 														</div>
 
@@ -348,7 +360,7 @@ $optionCountry ="";
 														<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Company URI </label>
 															<div class="col-sm-9">
-																<input type="text" class="col-sm-5" placeholder="Company URI" id="companyURL" name="companyURL" required>
+																<input type="text" class="col-sm-5" placeholder="Company URI" id="companyURL" name="companyURL" required  for="Company">
 															</div>
 														</div>
 
@@ -357,9 +369,12 @@ $optionCountry ="";
 														<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Brief Discription Of Company </label>
 															<div class="col-sm-9">
-																<textarea placeholder="Brief Discription Of Company" id="briefDescription" class="col-sm-5"></textarea>
+																<textarea placeholder="Brief Discription Of Company" id="briefDescription" class="col-sm-5"  for="Company"></textarea>
 															</div>
 														</div>
+														<div class="space-20"></div>
+														<input type="submit" class="btn btn-info" value="Save Company Details">
+														</form>
 
 
 																								
@@ -367,6 +382,8 @@ $optionCountry ="";
 											</div>
 
 											<div class="tab-pane fade" id="Billing">
+												
+												<form class="form-horizontal" role="form">
 												<div class="space-20"></div>
 
 												<div class="form-group">
@@ -398,34 +415,41 @@ $optionCountry ="";
 				                                                        			</select>
 													</div>
 												</div>
+												<div class="space-20"></div>
+												<input type="submit" class="btn btn-info" value="Submit Button">
+												</form>
 												
 				
 											</div>
 
 											
 											<div class="tab-pane fade" id="password">
+												<form class="form-horizontal" role="form">
 												<div class="space-20"></div>
 
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Current Password </label>
 													<div class="col-sm-9">
-														<input type="text" class="col-sm-5" placeholder="Current Password" id="currentpwd" name="currentpwd" required>
+														<input type="text" class="col-sm-5" placeholder="Current Password" id="currentpwd" name="currentpwd" required for="password">
 													</div>
 												</div>
 												<div class="space-4"></div>
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> New Password </label>
 													<div class="col-sm-9">
-														<input type="text" class="col-sm-5" placeholder="New Password" id="newpwd" name="newpwd" required>
+														<input type="text" class="col-sm-5" placeholder="New Password" id="newpwd" name="newpwd" required for="password">
 													</div>
 												</div>
 												<div class="space-4"></div>
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Confirm New Password </label>
 													<div class="col-sm-9">
-														<input type="text" class="col-sm-5" placeholder="Confirm New Password" id="cnfnewpwd" name="cnfnewpwd" required>
+														<input type="text" class="col-sm-5" placeholder="Confirm New Password" id="cnfnewpwd" name="cnfnewpwd" required for="password">
 													</div>
 												</div>
+												<div class="space-20"></div>
+												<input type="submit" class="btn btn-info" value="Save new Password">
+												</form>
 
 						 
 											</div>
