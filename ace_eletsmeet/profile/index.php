@@ -10,6 +10,8 @@ require_once(INCLUDES_PATH.'cm_authorize.inc.php');
 require_once(INCLUDES_PATH.'common_function.inc.php');
 require_once(INCLUDES_PATH.'profile_function.inc.php');
 
+
+
 //data population start	
 $arrIndustryType = getAllIndustryType($objDataHelper);	
 $optionIndustryType = "";
@@ -24,6 +26,14 @@ $optionTimezonesType = "";
 	for($cnt=0;$cnt< count($arrTimezonesType);$cnt++)
 	{
 		$optionTimezonesType.="<option value='".$arrTimezonesType[$cnt]['ct_id']."'>".$arrTimezonesType[$cnt]['timezones']." - ".$arrTimezonesType[$cnt]['country_name']."</option>";
+
+	}
+
+$arrDistinctCountry = getDistinctCountry($objDataHelper);
+$optionCountry ="";	
+	for($cnt=0;$cnt< count($arrDistinctCountry);$cnt++)
+	{
+		$optionCountry.="<option value='".$arrDistinctCountry[$cnt]['country_id']."'>".$arrDistinctCountry[$cnt]['country_name']." - ".$arrDistinctCountry[$cnt]['country_code']."</option>";
 
 	}
 
@@ -124,10 +134,16 @@ $optionTimezonesType = "";
 													Social Media
 												</a>
 											</li>
-											<li class="">
+											<!--li class="">
 												<a href="#Billing" data-toggle="tab" aria-expanded="false">
 													<i class="green ace-icon fa fa-credit-card  bigger-120"></i>
 													Billing & Localisation
+												</a>
+											</li-->	
+											<li class="">
+												<a href="#Company" data-toggle="tab" aria-expanded="false">
+													<i class="green ace-icon fa fa-credit-card  bigger-120"></i>
+													Company Details
 												</a>
 											</li>
 											<li class="">
@@ -143,69 +159,50 @@ $optionTimezonesType = "";
 												<div class="row">
 													<div class="col-sm-12">
 														<div class="space-20"></div>
+														
 														<div class="form-group">
-															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Industry Type </label>
-															<div class="col-sm-9">
-											                                         <select class="col-sm-5" id="form-field-select-1">
-				                                        					                    <option value="">Industry Type</option>
-																    <?php echo $optionIndustryType;?>
-				                                                        					</select>
-															</div>
-														</div>
-														<div class="space-4"></div>
-
-														<div class="form-group">
-															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Company Name </label>
-															<div class="col-sm-9">
-																<input type="text" class="col-sm-5" placeholder="Company Name" id="companyname" name="companyname" required>
+															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Email Id / Login Id </label>
+															<div class="col-sm-9" style="padding:6px 20px;">
+																<b><?php echo $strCk_user_email_address;?></b>
 															</div>
 														</div>
 
 														<div class="space-4"></div>
 
-														<div class="form-group">
-															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Nature Of Biusiness </label>
-															<div class="col-sm-9">
-																<input type="text" class="col-sm-5" placeholder="Nature Of Business" id="natureofbusiness" name="natureofbusiness	" required>
-															</div>
-														</div>
-
-														<div class="space-4"></div>
-
+														
 														<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Display Name </label>
 															<div class="col-sm-9">
-																<input type="text" class="col-sm-5" placeholder="Display Name" id="displayName" name="displayName" required>
+																<input type="text" class="col-sm-5" placeholder="Display Name" id="displayname" name="displayname" required>
+															</div>
+														</div>
+
+														<div class="space-4"></div>
+		
+														<div class="form-group">
+															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> First Name </label>
+															<div class="col-sm-9">
+																<input type="text" class="col-sm-5" placeholder="First Name" id="firstname" name="firstname" required>
 															</div>
 														</div>
 
 														<div class="space-4"></div>
 
 														<div class="form-group">
-															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Company Name </label>
+															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Last Name </label>
 															<div class="col-sm-9">
-																<input type="text" class="col-sm-5" placeholder="Company Name" id="companyname" name="companyname" required>
+																<input type="text" class="col-sm-5" placeholder="Last Name" id="lastname" name="lastname" required>
 															</div>
 														</div>
 
 														<div class="space-4"></div>
 
-														<div class="form-group">
-															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Company URI </label>
-															<div class="col-sm-9">
-																<input type="text" class="col-sm-5" placeholder="Company URI" id="companyURL" name="companyURL" required>
-															</div>
-														</div>
 
-														<div class="space-4"></div>
 
-														<div class="form-group">
-															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Brief Discription Of Company </label>
-															<div class="col-sm-9">
-																<textarea placeholder="Brief Discription Of Company" id="briefDescription" class="col-sm-5"></textarea>
-															</div>
-														</div>
-														
+
+
+
+																												
 
 													</div>
 												</div>												
@@ -221,14 +218,7 @@ $optionTimezonesType = "";
 											</div>
 											<div class="space-4"></div>
 
-											<div class="form-group">
-												<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Phone #2 </label>
-												<div class="col-sm-9">
-													<input type="text" class="col-sm-5" placeholder="Phone #2" id="phone2" name="phone2" required>
-												</div>
-											</div> 
-											<div class="space-4"></div>
-
+											
 											<div class="form-group">
 												<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Mobile Number </label>
 												<div class="col-sm-9">
@@ -248,30 +238,45 @@ $optionTimezonesType = "";
 											<div class="tab-pane fade" id="address">
 												<div class="space-20"></div>
 
-												<div class="form-group">
-													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Primary Address </label>
-													<div class="col-sm-9">
-														<textarea placeholder="Primary Address" id="address1" class="col-sm-5"></textarea>
-													</div>
-												</div>
 												
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Address </label>
+													<div class="col-sm-9">
+														<textarea placeholder="Address" id="address" class="col-sm-5"></textarea>
+													</div>
+												</div>
+												<div class="space-4"></div> 	
+													
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Land Mark </label>
+													<div class="col-sm-9">
+														<input type="text" class="col-sm-5" placeholder="Land Mark" id="landmark" name="landmark" required>
+													</div>
+												</div> 
 												<div class="space-4"></div>
+												
 
 												<div class="form-group">
-													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Address #1 </label>
+													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> City </label>
 													<div class="col-sm-9">
-														<textarea placeholder="Address #1" id="address2" class="col-sm-5"></textarea>
+														<input type="text" class="col-sm-5" placeholder="City" id="city" name="city" required>
+													</div>
+												</div> 
+												<div class="space-4"></div>
+												
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Select Country </label>
+													<div class="col-sm-9">
+														 <select class="col-sm-5" id="form-field-select-1">
+														    <option value="">Select Country</option>
+														    <?php echo $optionCountry;?>
+														</select>
 													</div>
 												</div>
 												<div class="space-4"></div>
 
-												<div class="form-group">
-													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Address #2 </label>
-													<div class="col-sm-9">
-														<textarea placeholder="Address #2" id="address3" class="col-sm-5"></textarea>
-													</div>
-												</div>
-											</div>
+
+																															     </div>
 											<div class="tab-pane fade" id="Social">
 												<div class="space-20"></div>
 
@@ -308,6 +313,59 @@ $optionTimezonesType = "";
 												
 												<div class="space-4"></div>
 											</div>
+											<div class="tab-pane fade" id="Company">
+												<div class="space-20"></div>
+				
+												<div class="form-group">
+															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Industry Type </label>
+															<div class="col-sm-9">
+											                                         <select class="col-sm-5" id="form-field-select-1">
+				                                        					                    <option value="">Industry Type</option>
+																    <?php echo $optionIndustryType;?>
+				                                                        					</select>
+															</div>
+														</div>
+														<div class="space-4"></div>
+
+														<div class="form-group">
+															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Company Name </label>
+															<div class="col-sm-9">
+																<input type="text" class="col-sm-5" placeholder="Company Name" id="companyname" name="companyname" required>
+															</div>
+														</div>
+
+														<div class="space-4"></div>
+
+														<div class="form-group">
+															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Nature Of Biusiness </label>
+															<div class="col-sm-9">
+																<input type="text" class="col-sm-5" placeholder="Nature Of Business" id="natureofbusiness" name="natureofbusiness	" required>
+															</div>
+														</div>
+
+														<div class="space-4"></div>
+																												
+														<div class="form-group">
+															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Company URI </label>
+															<div class="col-sm-9">
+																<input type="text" class="col-sm-5" placeholder="Company URI" id="companyURL" name="companyURL" required>
+															</div>
+														</div>
+
+														<div class="space-4"></div>
+
+														<div class="form-group">
+															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Brief Discription Of Company </label>
+															<div class="col-sm-9">
+																<textarea placeholder="Brief Discription Of Company" id="briefDescription" class="col-sm-5"></textarea>
+															</div>
+														</div>
+
+
+																								
+				
+											</div>
+
 											<div class="tab-pane fade" id="Billing">
 												<div class="space-20"></div>
 
