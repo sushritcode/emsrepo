@@ -130,6 +130,26 @@ function profile_form_table_map()
 	return $arrForms;
 }
 
+function updateUserProfile($paramString , $objDataHelper ,$strCK_user_id)
+{
+	
+	try
+	{
+		
+		$tableName = "user_details";
+		$criteria  = " Where user_id ='".$strCK_user_id."'";
+		$sqlQuery = "UPDATE ".$tableName." SET ".$paramString." ".$criteria;
+		$result  = $objDataHelper->putRecords("QR",$sqlQuery);
+		return true;
+		
+	}
+	catch(Exception $e)
+	{
+		throw new Exception("profile.inc.php : updateProfile : Could not update records : " . $e->getMessage(), 144);
+		
+	}
+}
+
 
 
 

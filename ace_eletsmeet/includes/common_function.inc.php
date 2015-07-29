@@ -167,4 +167,39 @@ WHERE cd.country_code = ct.country_code AND cd.country_status = '1' ORDER BY cd.
     }
 }
 
+/* -----------------------------------------------------------------------------
+  Function Name : getUpdateQueryString
+  Purpose       : to generate the update query string
+  Parameters    :  array Form values
+  Returns       :
+  Calls         : 
+  Called By     :
+  Author        : Sushrit 
+  Created  on   : July 29 , 2015
+  Modified By   :
+  Modified on   :
+  ------------------------------------------------------------------------------ */
+function getUpdateQueryString($formValues , $formTableMap)
+{
+	if(isset($formValues['formname']))
+	{
+		if($formValues['formname'] != "") 
+		{
+			$updateString = "";
+
+			foreach($formValues as $key => $value)
+			{
+				if($key != "formname")
+				{
+					if(isset($formTableMap[$formValues['formname']][$key]) && $value !="")
+					{
+						$updateString .= ($updateString!="")?" , ":"";
+						$updateString .= $formTableMap[$formValues['formname']][$key]." = \"".trim($value)."\"";
+					}
+				}
+			}
+			return $updateString;
+		}
+	}
+}
 
