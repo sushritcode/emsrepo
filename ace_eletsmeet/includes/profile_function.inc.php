@@ -130,6 +130,19 @@ function profile_form_table_map()
 	return $arrForms;
 }
 
+/* -----------------------------------------------------------------------------
+   Function Name : updateUserProfile
+Purpose       : To update the user profile tables as per the user input
+Parameters    : 
+Returns       :
+Calls         : 
+Called By     :
+Author        : Sushrit
+Created  on   : 29-July-2015
+Modified By   :
+Modified on   :
+------------------------------------------------------------------------------ */
+
 function updateUserProfile($paramString , $objDataHelper ,$strCK_user_id)
 {
 	
