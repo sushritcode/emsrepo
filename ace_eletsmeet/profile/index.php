@@ -498,4 +498,5 @@ $optionCountry ="";
         <!-- JAVA SCRIPT -->
        
     </body>
+    <script src="<?php echo JS_PATH; ?>profile.js"></script>
 </html>
