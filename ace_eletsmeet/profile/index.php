@@ -13,11 +13,18 @@ require_once(INCLUDES_PATH.'profile_function.inc.php');
 
 
 //data population start	
+
+$form_table_map = profile_form_table_map();
+$userdetails = getUserDetailsByID( $strCK_user_id , $objDataHelper);
+$userdetails = $userdetails[0];
+
+
 $arrIndustryType = getAllIndustryType($objDataHelper);	
 $optionIndustryType = "";
 	for($cnt=0;$cnt< count($arrIndustryType);$cnt++)
 	{
-		$optionIndustryType.="<option value='".$arrIndustryType[$cnt]['industry_id']."'>".$arrIndustryType[$cnt]['industry_name']."</option>";
+		$selected = ($userdetails[$form_table_map['frmCompany']['indutrytype']] == $arrIndustryType[$cnt]['industry_id'])? "selected":"";
+		$optionIndustryType.="<option value='".$arrIndustryType[$cnt]['industry_id']."' ".$selected.">".$arrIndustryType[$cnt]['industry_name']."</option>";
 
 	}
 
@@ -33,10 +40,12 @@ $arrDistinctCountry = getDistinctCountry($objDataHelper);
 $optionCountry ="";	
 	for($cnt=0;$cnt< count($arrDistinctCountry);$cnt++)
 	{
-		$optionCountry.="<option value='".$arrDistinctCountry[$cnt]['country_id']."'>".$arrDistinctCountry[$cnt]['country_name']." - ".$arrDistinctCountry[$cnt]['country_code']."</option>";
+		$selected = ($userdetails[$form_table_map['frmaddress']['country']] == $arrDistinctCountry[$cnt]['country_id'])? "selected":"";
+
+		
+		$optionCountry.="<option value='".$arrDistinctCountry[$cnt]['country_id']."' ".$selected.">".$arrDistinctCountry[$cnt]['country_name']." - ".$arrDistinctCountry[$cnt]['country_code']."</option>";
 
 	}
-
 
 //data population end
 
@@ -174,7 +183,8 @@ $optionCountry ="";
 														<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Display Name </label>
 															<div class="col-sm-9">
-																<input type="text" class="col-sm-5" placeholder="Display Name" id="displayname" name="displayname" required for="basic">
+
+																<input type="text" class="col-sm-5" placeholder="Display Name" id="displayname" name="displayname" required for="basic" value="<?php echo $userdetails[$form_table_map['frmbasic']['displayname']]; ?>">
 															</div>
 														</div>
 
@@ -183,7 +193,7 @@ $optionCountry ="";
 														<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> First Name </label>
 															<div class="col-sm-9">
-																<input type="text" class="col-sm-5" placeholder="First Name" id="firstname" name="firstname" required for="basic">
+																<input type="text" class="col-sm-5" placeholder="First Name" id="firstname" name="firstname" required for="basic" value="<?php echo $userdetails[$form_table_map['frmbasic']['firstname']]; ?>">
 															</div>
 														</div>
 
@@ -192,7 +202,7 @@ $optionCountry ="";
 														<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Last Name </label>
 															<div class="col-sm-9">
-																<input type="text" class="col-sm-5" placeholder="Last Name" id="lastname" name="lastname" required for="basic">
+																<input type="text" class="col-sm-5" placeholder="Last Name" id="lastname" name="lastname" required for="basic" value="<?php echo $userdetails[$form_table_map['frmbasic']['lastname']]; ?>">
 															</div>
 														</div>
 
@@ -217,7 +227,7 @@ $optionCountry ="";
 											<div class="form-group">
 												<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Phone #1 </label>
 												<div class="col-sm-9">
-													<input type="text" class="col-sm-5" placeholder="Phone #1" id="phone1" name="phone1" required for="contact">
+													<input type="text" class="col-sm-5" placeholder="Phone #1" id="phone1" name="phone1" required for="contact" value="<?php echo $userdetails[$form_table_map['frmcontact']['phone1']]; ?>">
 												</div>
 											</div>
 											<div class="space-4"></div>
@@ -226,7 +236,7 @@ $optionCountry ="";
 											<div class="form-group">
 												<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Mobile Number </label>
 												<div class="col-sm-9">
-													<input type="text" class="col-sm-5" placeholder="Mobile Number" id="mobile" name="mobile" required for="contact"> 
+													<input type="text" class="col-sm-5" placeholder="Mobile Number" id="mobile" name="mobile" required for="contact"  value="<?php echo $userdetails[$form_table_map['frmcontact']['mobile']]; ?>" > 
 												</div>
 											</div> 
 											<div class="space-4"></div>
@@ -234,7 +244,7 @@ $optionCountry ="";
 											<div class="form-group">
 												<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Secondry Email </label>
 												<div class="col-sm-9">
-													<input type="text" class="col-sm-5" placeholder="Secondry Email" id="SecondryEmail" name="SecondryEmail" required for="contact">
+													<input type="text" class="col-sm-5" placeholder="Secondry Email" id="SecondryEmail" name="SecondryEmail" required for="contact"  value="<?php echo $userdetails[$form_table_map['frmcontact']['SecondryEmail']]; ?>" >
 												</div>
 											</div> 
 											<div class="space-20"></div>
@@ -249,7 +259,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Address </label>
 													<div class="col-sm-9">
-														<textarea placeholder="Address" name="address" id="address" class="col-sm-5" for="address"></textarea>
+														<textarea placeholder="Address" name="address" id="address" class="col-sm-5" for="address"><?php echo $userdetails[$form_table_map['frmaddress']['address']]; ?> </textarea>
 													</div>
 												</div>
 												<div class="space-4"></div> 	
@@ -257,7 +267,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Land Mark </label>
 													<div class="col-sm-9">
-														<input type="text" class="col-sm-5" placeholder="Land Mark" id="landmark" name="landmark" required for="address">
+														<input type="text" class="col-sm-5" placeholder="Land Mark" id="landmark" name="landmark" required for="address" value="<?php echo $userdetails[$form_table_map['frmaddress']['landmark']]; ?>" >
 													</div>
 												</div> 
 												<div class="space-4"></div>
@@ -266,7 +276,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> City </label>
 													<div class="col-sm-9">
-														<input type="text" class="col-sm-5" placeholder="City" id="city" name="city" required for="address">
+														<input type="text" class="col-sm-5" placeholder="City" id="city" name="city" required for="address" value="<?php echo $userdetails[$form_table_map['frmaddress']['city']]; ?>" >
 													</div>
 												</div> 
 												<div class="space-4"></div>
@@ -293,7 +303,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Facebook ID </label>
 													<div class="col-sm-9">
-														<textarea placeholder="Facebook ID" name="facebook" id="facebook" class="col-sm-5" for="Social"></textarea>
+														<textarea placeholder="Facebook ID" name="facebook" id="facebook" class="col-sm-5" for="Social"> <?php echo $userdetails[$form_table_map['frmSocial']['facebook']];?> </textarea>
 													</div>
 												</div>
 												
@@ -301,7 +311,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Twitter </label>
 													<div class="col-sm-9">
-														<textarea placeholder="Twitter" name="twitter" id="twitter" class="col-sm-5" for="Social"></textarea>
+														<textarea placeholder="Twitter" name="twitter" id="twitter" class="col-sm-5" for="Social"><?php echo $userdetails[$form_table_map['frmSocial']['twitter']];?> </textarea>
 													</div>
 												</div>
 												
@@ -309,7 +319,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Google Plus </label>
 													<div class="col-sm-9">
-														<textarea placeholder="Google Plus" name="googleplus" id="googleplus" class="col-sm-5" for="Social"></textarea>
+														<textarea placeholder="Google Plus" name="googleplus" id="googleplus" class="col-sm-5" for="Social"><?php echo $userdetails[$form_table_map['frmSocial']['googleplus']];?> </textarea>
 													</div>
 												</div>
 												
@@ -317,7 +327,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> LinkedIn </label>
 													<div class="col-sm-9">
-														<textarea placeholder="LinkedIn" name="linkedin" id="linkedin" class="col-sm-5" for="Social"></textarea>
+														<textarea placeholder="LinkedIn" name="linkedin" id="linkedin" class="col-sm-5" for="Social"><?php echo $userdetails[$form_table_map['frmSocial']['linkedin']];?> </textarea>
 													</div>
 												</div>
 												
@@ -343,7 +353,7 @@ $optionCountry ="";
 														<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Company Name </label>
 															<div class="col-sm-9">
-																<input type="text" class="col-sm-5" placeholder="Company Name" id="companyname" name="companyname" required  for="Company">
+																<input type="text" class="col-sm-5" placeholder="Company Name" id="companyname" name="companyname" required  for="Company" value="<?php echo $userdetails[$form_table_map['frmCompany']['companyname']];?>">
 															</div>
 														</div>
 
@@ -352,7 +362,7 @@ $optionCountry ="";
 														<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Nature Of Biusiness </label>
 															<div class="col-sm-9">
-																<input type="text" class="col-sm-5" placeholder="Nature Of Business" id="natureofbusiness" name="natureofbusiness" required  for="Company">
+																<input type="text" class="col-sm-5" placeholder="Nature Of Business" id="natureofbusiness" name="natureofbusiness" required  for="Company"  value="<?php echo $userdetails[$form_table_map['frmCompany']['natureofbusiness']];?>">
 															</div>
 														</div>
 
@@ -361,7 +371,7 @@ $optionCountry ="";
 														<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Company URI </label>
 															<div class="col-sm-9">
-																<input type="text" class="col-sm-5" placeholder="Company URI" id="companyURL" name="companyURL" required  for="Company">
+																<input type="text" class="col-sm-5" placeholder="Company URI" id="companyURL" name="companyURL" required  for="Company"  value="<?php echo $userdetails[$form_table_map['frmCompany']['companyURL']];?>">
 															</div>
 														</div>
 
@@ -370,7 +380,7 @@ $optionCountry ="";
 														<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Brief Discription Of Company </label>
 															<div class="col-sm-9">
-																<textarea placeholder="Brief Discription Of Company" id="briefDescription" name="briefDescription" class="col-sm-5"  for="Company"></textarea>
+																<textarea placeholder="Brief Discription Of Company" id="briefDescription" name="briefDescription" class="col-sm-5"  for="Company"> <?php echo $userdetails[$form_table_map['frmCompany']['briefDescription']];?> </textarea>
 															</div>
 														</div>
 														<div class="space-20"></div>
