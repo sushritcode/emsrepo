@@ -14,7 +14,7 @@ function initAjax()
 function getAllElementsValURI(frmName)
 {	
 
-	var uri = "?formname="+frmName.name+"&";
+	var uri = "formname="+frmName.name+"&";
 	var len  = document.forms[frmName.name].getElementsByTagName("input").length;
 	var eleArrray = document.forms[frmName.name].getElementsByTagName("input");
 	for(var i=0;i<len;i++)

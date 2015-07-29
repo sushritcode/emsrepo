@@ -1,8 +1,8 @@
-function sendData(frmName)
+function sendData(frmName,type)
 {
 
-	var uri = getAllElementsValURI(frmName);
-	var frmAction =BASEURL+"users/save/";
+	var uri = getAllElementsValURI(document.forms[frmName]);
+	var frmAction =BASEURL+"profile/api/action.php?action=reset&";
 		xmlhttp = initAjax();
 		xmlhttp.onreadystatechange = function() 
 		{ 
