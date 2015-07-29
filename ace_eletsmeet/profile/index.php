@@ -65,6 +65,7 @@ $optionCountry ="";
          <!-- MAIN CONTAINER START -->
         <div class="main-container" id="main-container">
             <script type="text/javascript">
+		var BASEURL = "<?php echo $SITE_ROOT;?>";
                 try {
                     ace.settings.check('main-container', 'fixed')
                 } catch (e) {
@@ -196,7 +197,7 @@ $optionCountry ="";
 														</div>
 
 														<div class="space-20"></div>
-														<input type="submit" class="btn btn-info" value="Save Basic Details">
+														<input type="submit" class="btn btn-info" value="Save Basic Details" onClick="javascript:return sendData('frmbasic','reset');">
 														</form>
 
 
@@ -237,7 +238,7 @@ $optionCountry ="";
 												</div>
 											</div> 
 											<div class="space-20"></div>
-											<input type="submit" class="btn btn-info" value="Save Contact Details">
+											<input type="submit" class="btn btn-info" value="Save Contact Details" onClick="javascript:return sendData('frmcontact','reset');">
 											</form>
 											</div>
 											<div class="tab-pane fade" id="address">
@@ -280,7 +281,7 @@ $optionCountry ="";
 													</div>
 												</div>
 												<div class="space-20"></div>
-												<input type="submit" class="btn btn-info" value="Save Address Details">
+												<input type="submit" class="btn btn-info" value="Save Address Details" onClick="javascript:return sendData('frmaddress','reset');">
 												</form>
 
 
@@ -321,7 +322,7 @@ $optionCountry ="";
 												</div>
 												
 												<div class="space-20"></div>
-												<input type="submit" class="btn btn-info" value="Save Social info">
+												<input type="submit" class="btn btn-info" value="Save Social info" onClick="javascript:return sendData('frmSocial','reset');">
 												</form>
 											</div>
 											<div class="tab-pane fade" id="Company">
@@ -373,7 +374,7 @@ $optionCountry ="";
 															</div>
 														</div>
 														<div class="space-20"></div>
-														<input type="submit" class="btn btn-info" value="Save Company Details">
+														<input type="submit" class="btn btn-info" value="Save Company Details" onClick="javascript:return sendData('frmCompany','reset');">
 														</form>
 
 
@@ -448,7 +449,7 @@ $optionCountry ="";
 													</div>
 												</div>
 												<div class="space-20"></div>
-												<input type="submit" class="btn btn-info" value="Save new Password">
+												<input type="submit" class="btn btn-info" value="Save new Password" onClick="javascript:return sendData('frmbasic','resetpwd');">
 												</form>
 
 						 
