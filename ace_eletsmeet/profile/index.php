@@ -273,7 +273,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Select Country </label>
 													<div class="col-sm-9">
-														 <select class="col-sm-5" id="form-field-select-1" for="address">
+														 <select class="col-sm-5" id="form-field-select-1" for="address" name="country" id="country">
 														    <option value="">Select Country</option>
 														    <?php echo $optionCountry;?>
 														</select>
@@ -331,7 +331,7 @@ $optionCountry ="";
 												<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Industry Type </label>
 															<div class="col-sm-9">
-											                                         <select class="col-sm-5" id="form-field-select-1" for="Company">
+											                                         <select class="col-sm-5" id="form-field-select-1" for="Company" name="indutrytype" id="indutrytype">
 				                                        					                    <option value="">Industry Type</option>
 																    <?php echo $optionIndustryType;?>
 				                                                        					</select>
@@ -397,7 +397,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Select Currency </label>
 													<div class="col-sm-9">
-											                	<select class="col-sm-5" id="currency">
+											                	<select class="col-sm-5" id="currency" name="currency">
 				                                        						<option value="">Select Currency</option>
 				                                                            				<option value="INR">INR - Indian Rupees</option>
 				                                                            				<option value="USD">USD - United State Dollars</option>
@@ -409,7 +409,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Select TimeZone </label>
 													<div class="col-sm-9">
-											                	<select class="col-sm-5" id="timezone">
+											                	<select class="col-sm-5" id="timezone" name="timezone">
 				                                        						<option value="">Select TimeZone</option>
 															 <?php echo $optionTimezonesType;?>
 				                                                        			</select>
