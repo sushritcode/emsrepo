@@ -248,7 +248,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Address </label>
 													<div class="col-sm-9">
-														<textarea placeholder="Address" id="address" class="col-sm-5" for="address"></textarea>
+														<textarea placeholder="Address" name="address" id="address" class="col-sm-5" for="address"></textarea>
 													</div>
 												</div>
 												<div class="space-4"></div> 	
@@ -292,7 +292,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Facebook ID </label>
 													<div class="col-sm-9">
-														<textarea placeholder="Facebook ID" id="facebook" class="col-sm-5" for="Social"></textarea>
+														<textarea placeholder="Facebook ID" name="facebook" id="facebook" class="col-sm-5" for="Social"></textarea>
 													</div>
 												</div>
 												
@@ -300,7 +300,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Twitter </label>
 													<div class="col-sm-9">
-														<textarea placeholder="Twitter" id="twitter" class="col-sm-5" for="Social"></textarea>
+														<textarea placeholder="Twitter" name="twitter" id="twitter" class="col-sm-5" for="Social"></textarea>
 													</div>
 												</div>
 												
@@ -308,7 +308,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Google Plus </label>
 													<div class="col-sm-9">
-														<textarea placeholder="Google Plus" id="googleplus" class="col-sm-5" for="Social"></textarea>
+														<textarea placeholder="Google Plus" name="googleplus" id="googleplus" class="col-sm-5" for="Social"></textarea>
 													</div>
 												</div>
 												
@@ -316,7 +316,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> LinkedIn </label>
 													<div class="col-sm-9">
-														<textarea placeholder="LinkedIn" id="linkedin" class="col-sm-5" for="Social"></textarea>
+														<textarea placeholder="LinkedIn" name="linkedin" id="linkedin" class="col-sm-5" for="Social"></textarea>
 													</div>
 												</div>
 												
@@ -369,7 +369,7 @@ $optionCountry ="";
 														<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Brief Discription Of Company </label>
 															<div class="col-sm-9">
-																<textarea placeholder="Brief Discription Of Company" id="briefDescription" class="col-sm-5"  for="Company"></textarea>
+																<textarea placeholder="Brief Discription Of Company" id="briefDescription" name="briefDescription" class="col-sm-5"  for="Company"></textarea>
 															</div>
 														</div>
 														<div class="space-20"></div>
