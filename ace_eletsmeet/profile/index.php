@@ -159,7 +159,7 @@ $optionCountry ="";
 													<div class="col-sm-12">
 														<div class="space-20"></div>
 														
-														<form class="form-horizontal" role="form">
+														<form class="form-horizontal" role="form" name="frmbasic" id="frmbasic">
 														<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Email Id / Login Id </label>
 															<div class="col-sm-9" style="padding:6px 20px;">
@@ -211,7 +211,7 @@ $optionCountry ="";
 											</div>
 											<div class="tab-pane fade" id="contact">
 											<div class="space-20"></div>
-											<form class="form-horizontal" role="form">
+											<form class="form-horizontal" role="form" name="frmcontact" id = "frmcontact">
 
 											<div class="form-group">
 												<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Phone #1 </label>
@@ -241,7 +241,7 @@ $optionCountry ="";
 											</form>
 											</div>
 											<div class="tab-pane fade" id="address">
-											<form class="form-horizontal" role="form">
+											<form class="form-horizontal" role="form" name="frmaddress" id = "frmaddress">
 												<div class="space-20"></div>
 
 												
@@ -286,7 +286,7 @@ $optionCountry ="";
 
 																															     </div>
 											<div class="tab-pane fade" id="Social">
-												<form class="form-horizontal" role="form">
+												<form class="form-horizontal" role="form" name="frmSocial" id="frmSocial">
 												<div class="space-20"></div>
 
 												<div class="form-group">
@@ -325,7 +325,7 @@ $optionCountry ="";
 												</form>
 											</div>
 											<div class="tab-pane fade" id="Company">
-												<form class="form-horizontal" role="form">
+												<form class="form-horizontal" role="form" name="frmCompany" id="frmCompany">
 												<div class="space-20"></div>
 				
 												<div class="form-group">
@@ -383,7 +383,7 @@ $optionCountry ="";
 
 											<div class="tab-pane fade" id="Billing">
 												
-												<form class="form-horizontal" role="form">
+												<form class="form-horizontal" role="form" name="frmBilling" id="frmBilling">
 												<div class="space-20"></div>
 
 												<div class="form-group">
@@ -424,7 +424,7 @@ $optionCountry ="";
 
 											
 											<div class="tab-pane fade" id="password">
-												<form class="form-horizontal" role="form">
+												<form class="form-horizontal" role="form" name="frmpassword" id="frmpassword">
 												<div class="space-20"></div>
 
 												<div class="form-group">
