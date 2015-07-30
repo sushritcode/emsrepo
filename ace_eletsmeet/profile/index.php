@@ -105,6 +105,10 @@ $optionCountry ="";
                          <!-- SETTING CONTAINER END -->
                         
                         <!-- PAGE HEADER -->
+			<div id='ajax_loader' style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; background: transparent none repeat scroll 0% 0%; z-index: 20000;display:none;">
+			    <img src="<?php echo IMG_PATH ?>loading.gif" style="position: relative; top: 50%; left: 50%;"></img>
+			</div>
+			</script>
                         <div class="page-header">
                             <h1>
                                 My Profile<small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp;personal details</small>
@@ -115,6 +119,42 @@ $optionCountry ="";
                         <div class="row">
                             <div class="col-xs-12">
                                 <!-- PAGE CONTENT START -->
+					<div class="row" id="alert" style="display:none;">
+						<div class="col-sm-6">
+							<h3 class="header smaller lighter green">
+								<i class="ace-icon fa fa-bullhorn"></i>
+								Alerts
+							</h3>
+
+
+							<div id="succ" class="alert alert-block alert-success" style="display:none;">
+								<button data-dismiss="alert" class="close" type="button" onClick = "javascript:document.getElementById('alert').style.display = 'none';">
+									<i class="ace-icon fa fa-times"></i>
+								</button>
+
+								<p>
+									<strong>
+										<i class="ace-icon fa fa-check"></i>
+										Done !!!
+									</strong>
+									<div id="successmsg"></div>
+								</p>
+							</div>
+							<div id="err" class="alert alert-danger" style="display:none;" onClick = "javascript:document.getElementById('alert').style.display = 'none';">
+								<button data-dismiss="alert" class="close" type="button">
+									<i class="ace-icon fa fa-times"></i>
+								</button>
+
+								<strong>
+									<i class="ace-icon fa fa-times"></i>
+									Oh !!!
+								</strong>
+								<div id="errormsg"></div>
+								<br>
+							</div>
+						</div>
+					</div>
+					<div class="space-20"></div>
 					<div class="row">
 								<div class="col-sm-12">
 									<!-- #section:elements.tab -->

@@ -18,11 +18,9 @@ if(isset($_REQUEST["action"]))
 			$formMaps  = profile_form_table_map();
 			$updateparams = getUpdateQueryString($_REQUEST , $formMaps);
 			$result  = updateUserProfile($updateparams , $objDataHelper , $strCK_user_id);
-		break;
+			echo $result;
+			break;
 	}	
 }
-
-
-
-
 ?>
+
