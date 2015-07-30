@@ -120,7 +120,7 @@ $optionCountry ="";
                             <div class="col-xs-12">
                                 <!-- PAGE CONTENT START -->
 					<div class="row" id="alert" style="display:none;">
-						<div class="col-sm-6">
+						<div class="col-sm-12">
 							<h3 class="header smaller lighter green">
 								<i class="ace-icon fa fa-bullhorn"></i>
 								Alerts
@@ -224,7 +224,7 @@ $optionCountry ="";
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Display Name </label>
 															<div class="col-sm-9">
 
-																<input type="text" class="col-sm-5" placeholder="Display Name" id="displayname" name="displayname" required for="basic" value="<?php echo $userdetails[$form_table_map['frmbasic']['displayname']]; ?>">
+																<input type="text" class="col-sm-5" placeholder="Display Name" id="displayname" name="displayname" required for="basic" value="<?php echo $userdetails[$form_table_map['frmbasic']['displayname']]; ?>" validate="empty,alpha" msg="Display Name cannot be empty , only alphabets allowed">
 															</div>
 														</div>
 
