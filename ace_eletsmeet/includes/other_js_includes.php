@@ -7,7 +7,6 @@
 <![endif]-->
 
 <script src="<?php echo JS_PATH; ?>common.js"></script>
-<script src="<?php echo JS_PATH; ?>validation.js"></script>
 <script src="<?php echo JS_PATH; ?>jquery-ui.custom.js"></script>
 <script src="<?php echo JS_PATH; ?>jquery.ui.touch-punch.js"></script>
 <script src="<?php echo JS_PATH; ?>jquery.easypiechart.js"></script>
