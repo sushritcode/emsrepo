@@ -1,9 +1,5 @@
 function sendData(frmName,type)
 {
-
-	if(!validateElements(document.forms[frmName]))
-		return false;
-
 	var uri = getAllElementsValURI(document.forms[frmName]);
 	document.getElementById("ajax_loader").style.display = "";
 	var frmAction =BASEURL+"profile/api/action.php?action=reset&";
@@ -25,4 +21,18 @@ function sendData(frmName,type)
 	xmlhttp.send(null);
 	return false;
 };
-
+function showAlert(type,message)
+{
+	document.getElementById("alert").style.display = "";
+	if(type == 1)
+	{
+		document.getElementById("succ").style.display = "";
+		document.getElementById("successmsg").innerHTML = message;
+	}
+	else
+	{
+		document.getElementById("err").style.display = "";
+		document.getElementById("errormsg").innerHTML = message;
+	}
+	return true;
+}
