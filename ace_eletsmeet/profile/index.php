@@ -121,36 +121,15 @@ $optionCountry ="";
                                 <!-- PAGE CONTENT START -->
 					<div class="row" id="alert" style="display:none;">
 						<div class="col-sm-12">
-							<h3 class="header smaller lighter green">
-								<i class="ace-icon fa fa-bullhorn"></i>
-								Alerts
-							</h3>
-
-
-							<div id="succ" class="alert alert-block alert-success" style="display:none;">
-								<button data-dismiss="alert" class="close" type="button" onClick = "javascript:document.getElementById('alert').style.display = 'none';">
-									<i class="ace-icon fa fa-times"></i>
-								</button>
-
-								<p>
-									<strong>
-										<i class="ace-icon fa fa-check"></i>
-										Done !!!
-									</strong>
-									<div id="successmsg"></div>
-								</p>
+							<div id="succ" class="col-sm-12 alert alert-block alert-success" style="display:none;">
+								<div class="ace-icon fa fa-bullhorn fa fa-check" style="font-weight: bold;">
+									<span id="successmsg"> </span>
+								</div>
 							</div>
-							<div id="err" class="alert alert-danger" style="display:none;" onClick = "javascript:document.getElementById('alert').style.display = 'none';">
-								<button data-dismiss="alert" class="close" type="button">
-									<i class="ace-icon fa fa-times"></i>
-								</button>
-
-								<strong>
-									<i class="ace-icon fa fa-times"></i>
-									Oh !!!
-								</strong>
-								<div id="errormsg"></div>
-								<br>
+							<div id="err" class="alert alert-danger" style="display:none;">
+								<div class="ace-icon fa fa-bullhorn fa fa-check" style="font-weight: bold;">
+									<span id="errormsg"> </span>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -201,7 +180,14 @@ $optionCountry ="";
 													<i class="red ace-icon fa fa-lock bigger-120"></i>
 													Change Password
 												</a>
-											</li>																				</ul>
+											</li>
+											
+											<li class="">
+												<a href="#image" data-toggle="tab" aria-expanded="false">
+													<i class="red ace-icon fa fa-lock bigger-120"></i>
+													Display Picture
+												</a>
+											</li>									</ul>
 
 										<div class="tab-content">
 											<div class="tab-pane fade in active" id="basic">
@@ -472,6 +458,77 @@ $optionCountry ="";
 												
 				
 											</div>
+											<div class="tab-pane fade" id="image">	
+											<form class="form-horizontal" role="form" name="frmpicture" id="frmpicture" enctype="multipart/form-data">
+											 	<input name="MAX_FILE_SIZE" value="102400" type="hidden">
+												<div class="space-20"></div>	
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Upload Picture </label>
+													<div class="col-sm-9">
+														<!-- image start-->
+														<div class="row">
+															<div class="col-sm-4">
+																<div class="widget-box">
+																	<div class="widget-body">
+																		<div class="widget-main">
+																			<div class="form-group">
+																				<div class="col-xs-12">
+																<!-- #section:custom/file-input -->
+																					<label class="ace-file-input">
+	<input type="file" id="id-input-file-2">
+	<span data-title="Choose" class="ace-file-container">
+		<span data-title="No File ..." class="ace-file-name">
+			<i class=" ace-icon fa fa-upload"></i>
+		</span>
+	</span>
+	<a href="#" class="remove">
+		<i class=" ace-icon fa fa-times"></i>
+	</a>
+</label>
+																				</div>
+																			</div>
+																			<div class="form-group">
+																				<div class="col-xs-12">
+																					<label class="ace-file-input ace-file-multiple">
+	<input type="file" id="id-input-file-3" multiple="">
+	<span data-title="Drop files here or click to choose" class="ace-file-container">
+		<span data-title="No File ..." class="ace-file-name">
+			<i class=" ace-icon ace-icon fa fa-cloud-upload"></i>
+		</span>
+	</span>
+	<a href="#" class="remove">
+		<i class=" ace-icon fa fa-times"></i>
+	</a>
+</label>
+																<!-- /section:custom/file-input -->
+																				</div>
+																			</div>
+														<!-- #section:custom/file-input.filter -->
+																			<label>
+																				<input type="checkbox" class="ace" id="id-file-format" name="file-format">
+																				<span class="lbl"> Allow only images</span>
+																			</label>
+
+														<!-- /section:custom/file-input.filter -->
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<!-- image end-->
+													</div>
+												</div>
+												<div class="space-20"></div>
+												<input type="submit" class="btn btn-info" value="Save Picture" onClick="javascript:return sendData('frmpicture','reset');">
+
+
+												
+											
+											</form>
+
+			
+											</div>
+
 
 											
 											<div class="tab-pane fade" id="password">

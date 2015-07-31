@@ -113,3 +113,9 @@ ADD `nature_business` TEXT NULL AFTER `company_name` ,
 ADD `company_uri` VARCHAR( 255 ) NULL AFTER `nature_business` ,
 ADD `brief_desc_company` TEXT NULL AFTER `company_uri` ;
 
+
+CREATE TABLE user_images(
+user_id tinyint( 3 ) unsigned NOT NULL AUTO_INCREMENT ,
+image blob NOT NULL ,
+PRIMARY KEY ( user_id )
+)
