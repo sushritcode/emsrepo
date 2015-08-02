@@ -127,6 +127,7 @@ function profile_form_table_map()
 	$arrForms["frmSocial"] = array("facebook"=>"facebook","twitter"=>"twitter","googleplus"=>"googleplus","linkedin"=>"linkedin");
 	$arrForms["frmCompany"] = array( "companyname"=>"company_name","natureofbusiness"=>"nature_business","companyURL"=>"company_uri","briefDescription"=>"brief_desc_company","indutrytype"=>"industry_type");
 	$arrForms["frmBilling"] = array();
+	$arrForms["frmpassword"] = array("newpwd"=>"password");
 	return $arrForms;
 }
 
@@ -143,17 +144,31 @@ Modified By   :
 Modified on   :
 ------------------------------------------------------------------------------ */
 
-function updateUserProfile($paramString , $objDataHelper ,$strCK_user_id)
+function updateUserProfile($paramString , $objDataHelper ,$strCK_user_id ,$type)
 {
 	
 	try
 	{
-		
-		$tableName = "user_details";
-		$criteria  = " Where user_id ='".$strCK_user_id."'";
-		$sqlQuery = "UPDATE ".$tableName." SET ".$paramString." ".$criteria;
-		$result  = $objDataHelper->putRecords("QR",$sqlQuery);
-		return true;
+		switch($type)
+		{
+			case "reset":
+				$tableName = "user_details";
+				$criteria  = " Where user_id ='".$strCK_user_id."'";
+				$sqlQuery = "UPDATE ".$tableName." SET ".$paramString." ".$criteria;
+				$result  = $objDataHelper->putRecords("QR",$sqlQuery);
+				return true;
+				break;
+			case "resetpwd":
+				$tableName = "user_login_details";
+				$criteria  = " Where user_id ='".$strCK_user_id."' and password ='".md5(trim($_REQUEST["currentpwd"]))."'";
+				$sqlQuery = "UPDATE ".$tableName." SET ".$paramString." ".$criteria;
+				$result  = $objDataHelper->putRecords("QR",$sqlQuery);
+				if($objDataHelper->affectedRows == 0)
+					return 0;
+				else
+					return 1;
+				break;
+		}
 		
 	}
 	catch(Exception $e)

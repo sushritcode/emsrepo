@@ -17,9 +17,16 @@ if(isset($_REQUEST["action"]))
 		case "reset":
 			$formMaps  = profile_form_table_map();
 			$updateparams = getUpdateQueryString($_REQUEST , $formMaps);
-			$result  = updateUserProfile($updateparams , $objDataHelper , $strCK_user_id);
+			$result  = updateUserProfile($updateparams , $objDataHelper , $strCK_user_id , $_REQUEST["action"]);
 			echo $result;
 			break;
+		case "resetpwd":
+			$formMaps = profile_form_table_map();
+			$updateparams = getUpdateQueryString($_REQUEST , $formMaps);
+			$result  = updateUserProfile($updateparams , $objDataHelper , $strCK_user_id , $_REQUEST["action"]);
+			echo $result;
+			break;
+			
 	}	
 }
 ?>

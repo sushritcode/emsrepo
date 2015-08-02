@@ -182,12 +182,12 @@ $optionCountry ="";
 												</a>
 											</li>
 											
-											<li class="">
+											<!--li class="">
 												<a href="#image" data-toggle="tab" aria-expanded="false">
 													<i class="red ace-icon fa fa-lock bigger-120"></i>
 													Display Picture
 												</a>
-											</li>									</ul>
+											</li-->									</ul>
 
 										<div class="tab-content">
 											<div class="tab-pane fade in active" id="basic">
@@ -538,25 +538,25 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Current Password </label>
 													<div class="col-sm-9">
-														<input type="text" class="col-sm-5" placeholder="Current Password" id="currentpwd" name="currentpwd" required for="password">
+														<input type="password" class="col-sm-5" placeholder="Current Password" id="currentpwd" name="currentpwd" for="password">
 													</div>
 												</div>
 												<div class="space-4"></div>
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> New Password </label>
 													<div class="col-sm-9">
-														<input type="text" class="col-sm-5" placeholder="New Password" id="newpwd" name="newpwd" required for="password">
+														<input type="password" class="col-sm-5" placeholder="New Password" id="newpwd" name="newpwd" for="password">
 													</div>
 												</div>
 												<div class="space-4"></div>
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Confirm New Password </label>
 													<div class="col-sm-9">
-														<input type="text" class="col-sm-5" placeholder="Confirm New Password" id="cnfnewpwd" name="cnfnewpwd" required for="password">
+														<input type="password" class="col-sm-5" placeholder="Confirm New Password" id="cnfnewpwd" name="cnfnewpwd" for="password">
 													</div>
 												</div>
 												<div class="space-20"></div>
-												<input type="submit" class="btn btn-info" value="Save new Password" onClick="javascript:return sendData('frmbasic','resetpwd');">
+												<input type="submit" class="btn btn-info" value="Save new Password" onClick="javascript:return validatePassword();">
 												</form>
 
 						 
