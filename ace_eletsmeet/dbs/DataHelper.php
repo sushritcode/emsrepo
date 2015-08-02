@@ -18,6 +18,7 @@ Class DataHelper
 	var $mvarRecCount  ;		//Member Variable contains RecordCount
 	var $marrParams;            //Member Variable containing an array of IN/OUT params for Stored Procedures 
 	var $objmysqli;				//Member variable used as an object for connection object 
+	var $affectedRows = 0;
 
 	//DEFINED BY PRAVEEN
 	var $IsTransaction;			//For Checking if transaction is on
@@ -213,6 +214,7 @@ Class DataHelper
 			{
 				//Start for Sql Query  Processing 
 				$qryResult = $this->objmysqli->query($sqlstatement);
+				$this->affectedRows = mysqli_affected_rows($this->objmysqli);
 				if($qryResult == FALSE)
 				{
 					throw new Exception("Insert/Update failed ".$this->objmysqli->error,108);
