@@ -21,7 +21,7 @@ function getUserDetailsByID($user_id, $dataHelper) {
     try
     {
 
-         $strSqlStatement = "SELECT lu.user_id, lu.user_name , lu.client_id, lu.partner_id, lu.email_address, ud.nick_name, ud.first_name, ud.last_name, ud.country_name, ud.timezones, ud.gmt, ud.phone_number, ud.idd_code, ud.mobile_number, ud.secondry_email , ud.landmark , ud.city , ud.address , ud.country_name , ud.timezones , ud.gmt , ud.idd_code , ud.mobile_number , ud.industry_type , ud.company_name , ud.nature_business , ud.company_uri , ud.brief_desc_company , ud.facebook , ud.twitter , ud.googleplus , ud.linkedin FROM user_details AS ud, user_login_details AS lu, client_details AS cd WHERE lu.user_id ='" . trim($user_id) . "' AND lu.user_id = ud.user_id AND cd.client_id = lu.client_id AND lu.login_enabled = '1'; ";
+         $strSqlStatement = "SELECT lu.user_id, lu.user_name , lu.client_id, lu.partner_id, lu.email_address, ud.nick_name, ud.first_name, ud.last_name, ud.country_name, ud.timezones, ud.gmt, ud.phone_number, ud.idd_code, ud.mobile_number, ud.secondry_email , ud.landmark , ud.city , ud.address , ud.country_name , ud.timezones , ud.gmt , ud.idd_code , ud.mobile_number , ud.industry_type , ud.company_name , ud.nature_business , ud.company_uri , ud.brief_desc_company , ud.facebook , ud.twitter , ud.googleplus , ud.linkedin   ,lu.password FROM user_details AS ud, user_login_details AS lu, client_details AS cd WHERE lu.user_id ='" . trim($user_id) . "' AND lu.user_id = ud.user_id AND cd.client_id = lu.client_id AND lu.login_enabled = '1'; ";
 
         //$strSqlStatement = "SELECT lu.user_id, lu.user_name , nick_name , first_name , last_name , country_name , timezones , gmt , phone_number , idd_code , mobile_number "
         //     . "FROM user_details AS ud, user_login_details AS lu, client_details AS cd "
@@ -189,13 +189,19 @@ function getUpdateQueryString($formValues , $formTableMap)
 			$updateString = "";
 
 			foreach($formValues as $key => $value)
-			{
+			{	
 				if($key != "formname")
 				{
+					
+
 					if(isset($formTableMap[$formValues['formname']][$key]) && $value !="")
 					{
+
+					
+						$columnName = $formTableMap[$formValues['formname']][$key];
+						$columnValue = ($columnName == "password")?md5(trim($value)):trim($value);
 						$updateString .= ($updateString!="")?" , ":"";
-						$updateString .= $formTableMap[$formValues['formname']][$key]." = \"".trim($value)."\"";
+						$updateString .= $columnName." = \"".$columnValue."\"";
 					}
 				}
 			}
