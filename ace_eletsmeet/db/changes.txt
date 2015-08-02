@@ -119,3 +119,19 @@ user_id tinyint( 3 ) unsigned NOT NULL AUTO_INCREMENT ,
 image blob NOT NULL ,
 PRIMARY KEY ( user_id )
 )
+
+ALTER TABLE `personal_contact_details` ADD `updatedon` DATETIME AFTER `user_id`;
+
+CREATE TABLE IF NOT EXISTS `contact_group` (
+  `group_id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_name` varchar(200) NOT NULL,
+  `group_status` enum('0','1') DEFAULT '1',
+  PRIMARY KEY (`group_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `contact_group`
+--
+
+INSERT INTO `contact_group` (`group_id`, `group_name`, `group_status`) VALUES
+(1, 'General', '1');
