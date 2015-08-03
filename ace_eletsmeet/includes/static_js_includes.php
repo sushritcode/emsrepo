@@ -19,7 +19,7 @@
         document.write("<script src='<?php echo JS_PATH; ?>jquery.mobile.custom.js'>" + "<" + "/script>");
 </script>
 
-<script src="<?php echo JS_PATH; ?>bootstrap.js"></script>
+<script type="text/javascript" src="<?php echo JS_PATH; ?>bootstrap.js"></script>
 
 
 
