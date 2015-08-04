@@ -69,7 +69,7 @@ function disablecontact($contactid, $userid , $objDataHelper)
 	}
 
 	$sqlQuery = "Update personal_contact_details set personal_contact_status ='2' , updatedon= now() where personal_contact_id ='".$contactid."' and user_id = '".$userid."'";
-	$arrUpdateContact = $objDataHelper->fetchRecords("QR", $sqlQuery);
+	$arrUpdateContact = $objDataHelper->putRecords("QR", $sqlQuery);
 	if($objDataHelper->affectedRows == 0)
 		return 0;
 	else
@@ -105,11 +105,8 @@ function enablecontact($contactid, $userid , $objDataHelper)
 	}
 
 	$sqlQuery = "Update personal_contact_details set personal_contact_status ='1' , updatedon= now() where personal_contact_id ='".$contactid."' and user_id = '".$userid."'";
-	$arrUpdateContact = $objDataHelper->fetchRecords("QR", $sqlQuery);
-	if($objDataHelper->affectedRows == 0)
+	$arrUpdateContact = $objDataHelper->putRecords("QR", $sqlQuery);
 		return 0;
-	else
-		return 1;
 
 }
 
