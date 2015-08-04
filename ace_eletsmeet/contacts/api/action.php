@@ -16,17 +16,15 @@ if(isset($_REQUEST["action"]))
 	{
 		case "disable":	
 			$returnVal = disablecontact($_REQUEST['contactid'], $strCK_user_id , $objDataHelper);
-print "herer";
 			?>
-				<script type="text/javascript">location.href = <?php echo $SITE_ROOT."contacts/";?>;</script>
+				<script type="text/javascript">window.location.href = "<?php echo $SITE_ROOT."contacts/";?>";</script>
 			<?
 			exit;
 		break;
 		case "enable":
 			$returnVal = enablecontact($_REQUEST['contactid'], $strCK_user_id , $objDataHelper);
-print "herer";
 			?>
-				<script type="text/javascript">location.href = <?php echo $SITE_ROOT."contacts/";?>;</script>
+				<script type="text/javascript">window.location.href = "<?php echo $SITE_ROOT."contacts/";?>";</script>
 			<?
 			exit;
 		break;
