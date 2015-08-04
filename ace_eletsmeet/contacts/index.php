@@ -84,6 +84,7 @@ $contacts = getAllcontactsByUserID($strCK_user_id , $objDataHelper);
 	   <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline no-footer">
 	      <div class="row">
 		 <div class="col-xs-6">
+	            <a href="" title="Add New Contact" alt="Add New Contact"><i class="ace-icon fa fa-user bigger-130"></i><sup><b style="font-size:12px;">+</b></sup><a/>
 		    <!--div class="dataTables_length" id="dynamic-table_length">
 		       <label>
 			  Display 
