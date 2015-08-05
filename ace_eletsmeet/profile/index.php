@@ -40,10 +40,10 @@ $arrDistinctCountry = getDistinctCountry($objDataHelper);
 $optionCountry ="";	
 	for($cnt=0;$cnt< count($arrDistinctCountry);$cnt++)
 	{
-		$selected = ($userdetails[$form_table_map['frmaddress']['country']] == $arrDistinctCountry[$cnt]['country_id'])? "selected":"";
+		$selected = ($userdetails[$form_table_map['frmaddress']['country']] == $arrDistinctCountry[$cnt]['country_name'])? "selected":"";
 
 		
-		$optionCountry.="<option value='".$arrDistinctCountry[$cnt]['country_id']."' ".$selected.">".$arrDistinctCountry[$cnt]['country_name']." - ".$arrDistinctCountry[$cnt]['country_code']."</option>";
+		$optionCountry.="<option value='".$arrDistinctCountry[$cnt]['country_name']."' ".$selected.">".$arrDistinctCountry[$cnt]['country_name']." - ".$arrDistinctCountry[$cnt]['country_code']."</option>";
 
 	}
 
