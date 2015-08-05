@@ -198,7 +198,7 @@ function validatePlan($subscription_id, $user_id, $dataHelper)
 {
     if (!is_object($dataHelper))
     {
-        throw new Exception("sch_function.inc.php : scheduledPlans : DataHelper Object did not instantiate", 104);
+        throw new Exception("schedule_function.inc.php : scheduledPlans : DataHelper Object did not instantiate", 104);
     }
     try
     {
@@ -208,7 +208,7 @@ function validatePlan($subscription_id, $user_id, $dataHelper)
     }
     catch (Exception $e)
     {
-        throw new Exception("sch_function.inc.php : Fetch Schedule Plan Details Failed : ".$e->getMessage(), 1105);
+        throw new Exception("schedule_function.inc.php : Fetch Schedule Plan Details Failed : ".$e->getMessage(), 1105);
     }
 }
 
@@ -216,7 +216,7 @@ function currentSession($user_id, $subscription_id, $gmTime, $dataHelper)
 {
     if (!is_object($dataHelper))
     {
-        throw new Exception("sch_function.inc.php : scheduledPlans : DataHelper Object did not instantiate", 104);
+        throw new Exception("schedule_function.inc.php : scheduledPlans : DataHelper Object did not instantiate", 104);
     }
     try
     {
@@ -229,7 +229,7 @@ function currentSession($user_id, $subscription_id, $gmTime, $dataHelper)
     }
     catch (Exception $e)
     {
-        throw new Exception("sch_function.inc.php : Fetch Schedule Plan Details Failed : " . $e->getMessage(), 1105);
+        throw new Exception("schedule_function.inc.php : Fetch Schedule Plan Details Failed : " . $e->getMessage(), 1105);
     }
 }
 
@@ -250,7 +250,7 @@ function voiceBridgeToken($dataHelper)
     }
     catch (Exception $e)
     {
-        throw new Exception("sch_function.inc.php : Fetch Voice Failed : ".$e->getMessage(), 1109);
+        throw new Exception("schedule_function.inc.php : Fetch Voice Failed : ".$e->getMessage(), 1109);
     }
     if ($voiceBridgeStatus == "1")
     {
@@ -266,7 +266,7 @@ function isVoiceBridgeValidate($voiceBridgeToken, $dataHelper)
 {
     if (!is_object($dataHelper))
     {
-        throw new Exception("sch_function.inc.php : isVoiceBridgeValidate : DataHelper Object did not instantiate", 104);
+        throw new Exception("schedule_function.inc.php : isVoiceBridgeValidate : DataHelper Object did not instantiate", 104);
     }
     try
     {
@@ -284,7 +284,7 @@ function isVoiceBridgeValidate($voiceBridgeToken, $dataHelper)
     }
     catch (Exception $e)
     {
-        throw new Exception("sch_function.inc.php : Fetch Voice Bridge Failed : ".$e->getMessage(), 1110);
+        throw new Exception("schedule_function.inc.php : Fetch Voice Bridge Failed : ".$e->getMessage(), 1110);
     }
 }
 
@@ -292,7 +292,7 @@ function getScheduleId($dataHelper)
 {
     if (!is_object($dataHelper))
     {
-        throw new Exception("sch_function.inc.php : getScheduleId : DataHelper Object did not instantiate", 104);
+        throw new Exception("schedule_function.inc.php : getScheduleId : DataHelper Object did not instantiate", 104);
     }
     try
     {
@@ -325,7 +325,7 @@ function getScheduleId($dataHelper)
     }
     catch (Exception $e)
     {
-        throw new Exception("sch_function.inc.php : Insert Schedule Details Failed : ".$e->getMessage(), 1111);
+        throw new Exception("schedule_function.inc.php : Insert Schedule Details Failed : ".$e->getMessage(), 1111);
     }
     return $schId;
 }
@@ -334,7 +334,7 @@ function getLMInstanceByClientId($client_id, $dataHelper)
 {
     if (!is_object($dataHelper))
     {
-        throw new Exception("db_common_function.inc.php : getLMInstanceByClientId : DataHelper Object did not instantiate", 104);
+        throw new Exception("schedule_function.inc.php : getLMInstanceByClientId : DataHelper Object did not instantiate", 104);
     }
     
     try
@@ -345,26 +345,26 @@ function getLMInstanceByClientId($client_id, $dataHelper)
     }
     catch (Exception $e)
     {
-        throw new Exception("db_common_function.inc.php : getLMInstanceByClientId : Could not fetch records : " . $e->getMessage(), 1111);
+        throw new Exception("schedule_function.inc.php : getLMInstanceByClientId : Could not fetch records : " . $e->getMessage(), 1111);
     }
 }
 
 
-function scheduleDetails($schID, $user_id, $gmTime, $localTime, $meeting_title, $timezone, $gmt, $meetingAttendeePWD, $meetingModeratorPWD, $voiceBridgeToken, $inviteesCnt, $meetingRecoding, $maxSessionsMinutes, $meetingInstance, $subscription_id, $dataHelper)
+function scheduleDetails($schID, $user_id, $gmTime, $localTime, $meeting_title, $timezone, $gmt, $meetingAttendeePWD, $meetingModeratorPWD, $voiceBridgeToken, $inviteesCnt, $meetingRecoding, $maxSessionsMinutes, $meetingInstance, $subscription_id, $meeting_agenda, $dataHelper)
 {
     if (!is_object($dataHelper))
     {
-        throw new Exception("sch_function.inc.php : scheduleMeeting : DataHelper Object did not instantiate", 104);
+        throw new Exception("schedule_function.inc.php : scheduleMeeting : DataHelper Object did not instantiate", 104);
     }
     try
     {
-        $insSqlStatement = "INSERT INTO schedule_details (schedule_id , user_id , schedule_creation_time , meeting_timestamp_gmt , meeting_timestamp_local , meeting_title , meeting_agenda , meeting_timezone , meeting_gmt , attendee_password , moderator_password , welcome_message , voice_bridge , web_voice , max_participants , record_flag , meeting_duration, meta_tags, meeting_instance, subscription_id) VALUES ('".trim($schID)."' , '".trim($user_id)."' , '".trim(GM_DATE)."' , '".trim($gmTime)."' , '".trim($localTime)."' , '".trim($meeting_title)."' , 'NULL' , '".trim($timezone)."', '".trim($gmt)."', '".trim($meetingAttendeePWD)."' , '".trim($meetingModeratorPWD)."' , 'NULL' , '".trim($voiceBridgeToken)."' , '".trim($voiceBridgeToken)."' , '".trim($inviteesCnt)."' , '".trim($meetingRecoding)."' , '".trim($maxSessionsMinutes)."', 'NULL', '".trim($meetingInstance)."', '".trim($subscription_id)."')";
+        $insSqlStatement = "INSERT INTO schedule_details (schedule_id , user_id , schedule_creation_time , meeting_timestamp_gmt , meeting_timestamp_local , meeting_title , meeting_agenda , meeting_timezone , meeting_gmt , attendee_password , moderator_password , welcome_message , voice_bridge , web_voice , max_participants , record_flag , meeting_duration, meta_tags, meeting_instance, subscription_id) VALUES ('".trim($schID)."' , '".trim($user_id)."' , '".trim(GM_DATE)."' , '".trim($gmTime)."' , '".trim($localTime)."' , '".trim($meeting_title)."' , '".trim($meeting_agenda)."' , '".trim($timezone)."', '".trim($gmt)."', '".trim($meetingAttendeePWD)."' , '".trim($meetingModeratorPWD)."' , 'NULL' , '".trim($voiceBridgeToken)."' , '".trim($voiceBridgeToken)."' , '".trim($inviteesCnt)."' , '".trim($meetingRecoding)."' , '".trim($maxSessionsMinutes)."', 'NULL', '".trim($meetingInstance)."', '".trim($subscription_id)."')";
         $arrSchedule = $dataHelper->putRecords("QR", $insSqlStatement);
         return $schID;
     }
     catch (Exception $e)
     {
-        throw new Exception("sch_function.inc.php : Insert Schedule Details Failed : ".$e->getMessage(), 1101);
+        throw new Exception("schedule_function.inc.php : Insert Schedule Details Failed : ".$e->getMessage(), 1101);
     }
 }
 
@@ -374,22 +374,22 @@ function updConsumedSessions($subscription_id, $user_id, $type, $dataHelper)
     {
         if (strlen(trim($subscription_id)) <= 0)
         {
-            throw new Exception("api_function.inc.php: updConsumedSessions : Missing Parameter subscription_id.", 2081);
+            throw new Exception("schedule_function.inc.php: updConsumedSessions : Missing Parameter subscription_id.", 2081);
         }
 
         if (strlen(trim($user_id)) <= 0)
         {
-            throw new Exception("api_function.inc.php: updConsumedSessions : Missing Parameter user_id.", 2082);
+            throw new Exception("schedule_function.inc.php: updConsumedSessions : Missing Parameter user_id.", 2082);
         }
 
         if (strlen(trim($type)) <= 0)
         {
-            throw new Exception("api_function.inc.php: updConsumedSessions : Missing Parameter type.", 2083);
+            throw new Exception("schedule_function.inc.php: updConsumedSessions : Missing Parameter type.", 2083);
         }
 
         if (!is_object($dataHelper))
         {
-            throw new Exception("api_function.inc.php : updConsumedSessions : DataHelper Object did not instantiate", 104);
+            throw new Exception("schedule_function.inc.php : updConsumedSessions : DataHelper Object did not instantiate", 104);
         }
 
         $dataHelper->setParam("'" . trim($subscription_id) . "'", "I");
@@ -402,7 +402,7 @@ function updConsumedSessions($subscription_id, $user_id, $type, $dataHelper)
     }
     catch (Exception $e)
     {
-        throw new Exception("api_function.inc.php : updConsumedSessions : Could not update Consumed Sessions : " . $e->getMessage(), 2084);
+        throw new Exception("schedule_function.inc.php : updConsumedSessions : Could not update Consumed Sessions : " . $e->getMessage(), 2084);
     }
 }
 
@@ -424,12 +424,12 @@ function getClSubInfoFromUserOrderId($user_order_id, $dataHelper)
     {
         if (strlen(trim($user_order_id)) <= 0)
         {
-            throw new Exception("api_function.inc.php: getClSubInfoFromUserOrderId : Missing Parameter subscription_id.", 2081);
+            throw new Exception("schedule_function.inc.php: getClSubInfoFromUserOrderId : Missing Parameter subscription_id.", 2081);
         }
 
         if (!is_object($dataHelper))
         {
-            throw new Exception("api_function.inc.php : getClSubInfoFromUserOrderId : DataHelper Object did not instantiate", 104);
+            throw new Exception("schedule_function.inc.php : getClSubInfoFromUserOrderId : DataHelper Object did not instantiate", 104);
         }
 
         $strSqlStatement = "SELECT csm.client_subscription_id,  csm.client_id, csm.order_id FROM client_subscription_master csm,  subscription_master sm "
@@ -439,7 +439,7 @@ function getClSubInfoFromUserOrderId($user_order_id, $dataHelper)
     }
     catch (Exception $e)
     {
-        throw new Exception("api_function.inc.php : getClSubInfoFromUserOrderId : Could not get details : " . $e->getMessage(), 2084);
+        throw new Exception("schedule_function.inc.php : getClSubInfoFromUserOrderId : Could not get details : " . $e->getMessage(), 2084);
     }
 }
 
@@ -462,22 +462,22 @@ function updClientConsumedSessions($subscription_id, $client_id, $type, $dataHel
     {
         if (strlen(trim($subscription_id)) <= 0)
         {
-            throw new Exception("api_function.inc.php: updClientConsumedSessions : Missing Parameter subscription_id.", 2081);
+            throw new Exception("schedule_function.inc.php: updClientConsumedSessions : Missing Parameter subscription_id.", 2081);
         }
 
         if (strlen(trim($client_id)) <= 0)
         {
-            throw new Exception("api_function.inc.php: updClientConsumedSessions : Missing Parameter user_id.", 2082);
+            throw new Exception("schedule_function.inc.php: updClientConsumedSessions : Missing Parameter user_id.", 2082);
         }
 
         if (strlen(trim($type)) <= 0)
         {
-            throw new Exception("api_function.inc.php: updClientConsumedSessions : Missing Parameter type.", 2083);
+            throw new Exception("schedule_function.inc.php: updClientConsumedSessions : Missing Parameter type.", 2083);
         }
 
         if (!is_object($dataHelper))
         {
-            throw new Exception("api_function.inc.php : updClientConsumedSessions : DataHelper Object did not instantiate", 104);
+            throw new Exception("schedule_function.inc.php : updClientConsumedSessions : DataHelper Object did not instantiate", 104);
         }
 
         $dataHelper->setParam("'" . trim($subscription_id) . "'", "I");
@@ -490,7 +490,7 @@ function updClientConsumedSessions($subscription_id, $client_id, $type, $dataHel
     }
     catch (Exception $e)
     {
-        throw new Exception("api_function.inc.php : updClientConsumedSessions : Could not update Consumed Sessions : " . $e->getMessage(), 2084);
+        throw new Exception("schedule_function.inc.php : updClientConsumedSessions : Could not update Consumed Sessions : " . $e->getMessage(), 2084);
     }
 }
 
@@ -499,7 +499,7 @@ function inviteesDetails($schedule_id, $email_address, $strUserDetails, $arrInvi
 {
     if (!is_object($dataHelper))
     {
-        throw new Exception("sch_function.inc.php : inviteesDetails : DataHelper Object did not instantiate", 104);
+        throw new Exception("schedule_function.inc.php : inviteesDetails : DataHelper Object did not instantiate", 104);
     }
     try
     {
@@ -531,7 +531,7 @@ function inviteesDetails($schedule_id, $email_address, $strUserDetails, $arrInvi
     }
     catch (Exception $e)
     {
-        throw new Exception("sch_function.inc.php : Insert Invitees Details Failed : ".$e->getMessage(), 1102);
+        throw new Exception("schedule_function.inc.php : Insert Invitees Details Failed : ".$e->getMessage(), 1102);
     }
 }
 
@@ -577,12 +577,12 @@ function isScheduleValid($schedule_id, $dataHelper) {
     {
         if (strlen(trim($schedule_id)) <= 0)
         {
-            throw new Exception("api_function.inc.php: isScheduleValid : Missing Parameter schedule_id.", 2021);
+            throw new Exception("schedule_function.inc.php: isScheduleValid : Missing Parameter schedule_id.", 2021);
         }
 
         if (!is_object($dataHelper))
         {
-            throw new Exception("api_function.inc.php : isScheduleValid : DataHelper Object did not instantiate", 104);
+            throw new Exception("schedule_function.inc.php : isScheduleValid : DataHelper Object did not instantiate", 104);
         }
 
         $strSqlStatement = "SELECT schedule_id, schedule_status, meeting_timestamp_gmt, meeting_timestamp_local, meeting_title, " .
@@ -598,7 +598,7 @@ function isScheduleValid($schedule_id, $dataHelper) {
     }
     catch (Exception $e)
     {
-        throw new Exception("api_function.inc.php : isScheduleValid : Could not fetch records : " . $e->getMessage(), 2022);
+        throw new Exception("schedule_function.inc.php : isScheduleValid : Could not fetch records : " . $e->getMessage(), 2022);
     }
 }
 
@@ -620,7 +620,7 @@ function isScheduleInviteeValid($schedule_id, $passcode, $email_address, $SGInte
     {
         if (!is_object($dataHelper))
         {
-            throw new Exception("api_function.inc.php : isScheduleInviteeValid : DataHelper Object did not instantiate", 104);
+            throw new Exception("schedule_function.inc.php : isScheduleInviteeValid : DataHelper Object did not instantiate", 104);
         }
 
         $strSqlStatement = "SELECT sd.schedule_id, schedule_status, meeting_timestamp_gmt, meeting_timestamp_local, " .
@@ -645,7 +645,7 @@ function isScheduleInviteeValid($schedule_id, $passcode, $email_address, $SGInte
     }
     catch (Exception $e)
     {
-        throw new Exception("api_function.inc.php : isScheduleValid : Could not fetch records : " . $e->getMessage(), 2036);
+        throw new Exception("schedule_function.inc.php : isScheduleValid : Could not fetch records : " . $e->getMessage(), 2036);
     }
 }
 
@@ -667,17 +667,17 @@ function updNewSchedule($schedule_id, $schedule_status, $bbb_create_time, $bbb_m
     {
         if (strlen(trim($schedule_id)) <= 0)
         {
-            throw new Exception("api_function.inc.php: updNewSchedule : Missing Parameter schedule_id.", 2041);
+            throw new Exception("schedule_function.inc.php: updNewSchedule : Missing Parameter schedule_id.", 2041);
         }
 
         if (strlen(trim($schedule_status)) <= 0)
         {
-            throw new Exception("api_function.inc.php: updNewSchedule : Missing Parameter schedule_status.", 2042);
+            throw new Exception("schedule_function.inc.php: updNewSchedule : Missing Parameter schedule_status.", 2042);
         }
 
         if (!is_object($dataHelper))
         {
-            throw new Exception("api_function.inc.php : updNewSchedule : DataHelper Object did not instantiate", 104);
+            throw new Exception("schedule_function.inc.php : updNewSchedule : DataHelper Object did not instantiate", 104);
         }
 
         $strSqlStatement = "UPDATE schedule_details SET schedule_status = '" . trim($schedule_status) . "', " .
@@ -691,7 +691,7 @@ function updNewSchedule($schedule_id, $schedule_status, $bbb_create_time, $bbb_m
     }
     catch (Exception $e)
     {
-        throw new Exception("api_function.inc.php : updNewSchedule : Could not update schedule details : " . $e->getMessage(), 2043);
+        throw new Exception("schedule_function.inc.php : updNewSchedule : Could not update schedule details : " . $e->getMessage(), 2043);
     }
 }
 
@@ -713,17 +713,17 @@ function updInviteeStatus($schedule_id, $inv_email_address, $gmt_datetime, $data
     {
         if (strlen(trim($schedule_id)) <= 0)
         {
-            throw new Exception("api_function.inc.php: updInviteeStatus : Missing Parameter schedule_id.", 2051);
+            throw new Exception("schedule_function.inc.php: updInviteeStatus : Missing Parameter schedule_id.", 2051);
         }
 
         if (strlen(trim($inv_email_address)) <= 0)
         {
-            throw new Exception("api_function.inc.php: updInviteeStatus : Missing Parameter inv_email_address.", 2052);
+            throw new Exception("schedule_function.inc.php: updInviteeStatus : Missing Parameter inv_email_address.", 2052);
         }
 
         if (!is_object($dataHelper))
         {
-            throw new Exception("api_function.inc.php : updInviteeStatus : DataHelper Object did not instantiate", 104);
+            throw new Exception("schedule_function.inc.php : updInviteeStatus : DataHelper Object did not instantiate", 104);
         }
 
         $strSqlStatement = "UPDATE invitation_details SET meeting_status = '1', " .
@@ -737,7 +737,7 @@ function updInviteeStatus($schedule_id, $inv_email_address, $gmt_datetime, $data
     }
     catch (Exception $e)
     {
-        throw new Exception("api_function.inc.php : updInviteeStatus : Could not update invitation details : " . $e->getMessage(), 2053);
+        throw new Exception("schedule_function.inc.php : updInviteeStatus : Could not update invitation details : " . $e->getMessage(), 2053);
     }
 }
 
@@ -759,22 +759,22 @@ function updInvitationStatus($schedule_id, $invitation_status, $inv_email_addres
     {
         if (strlen(trim($schedule_id)) <= 0)
         {
-            throw new Exception("api_function.inc.php: updInvitationStatus : Missing Parameter schedule_id.", 2061);
+            throw new Exception("schedule_function.inc.php: updInvitationStatus : Missing Parameter schedule_id.", 2061);
         }
 
         if (strlen(trim($invitation_status)) <= 0)
         {
-            throw new Exception("api_function.inc.php: updInvitationStatus : Missing Parameter invitation_status.", 2062);
+            throw new Exception("schedule_function.inc.php: updInvitationStatus : Missing Parameter invitation_status.", 2062);
         }
 
         if (strlen(trim($inv_email_address)) <= 0)
         {
-            throw new Exception("api_function.inc.php: updInvitationStatus : Missing Parameter inv_email_address.", 2063);
+            throw new Exception("schedule_function.inc.php: updInvitationStatus : Missing Parameter inv_email_address.", 2063);
         }
 
         if (!is_object($dataHelper))
         {
-            throw new Exception("api_function.inc.php : updInvitationStatus : DataHelper Object did not instantiate", 104);
+            throw new Exception("schedule_function.inc.php : updInvitationStatus : DataHelper Object did not instantiate", 104);
         }
 
         $strSqlStatement = "UPDATE invitation_details SET invitation_status = '" . trim($invitation_status) . "', " .
@@ -788,7 +788,7 @@ function updInvitationStatus($schedule_id, $invitation_status, $inv_email_addres
     }
     catch (Exception $e)
     {
-        throw new Exception("api_function.inc.php : updInvitationStatus : Could not update invitation status : " . $e->getMessage(), 2064);
+        throw new Exception("schedule_function.inc.php : updInvitationStatus : Could not update invitation status : " . $e->getMessage(), 2064);
     }
 }
 
@@ -810,22 +810,22 @@ function cancelSchedule($schedule_id, $schedule_status, $gmt_datetime, $dataHelp
     {
         if (strlen(trim($schedule_id)) <= 0)
         {
-            throw new Exception("api_function.inc.php: cancelSchedule : Missing Parameter schedule_id.", 2071);
+            throw new Exception("schedule_function.inc.php: cancelSchedule : Missing Parameter schedule_id.", 2071);
         }
 
         if (strlen(trim($schedule_status)) <= 0)
         {
-            throw new Exception("api_function.inc.php: cancelSchedule : Missing Parameter schedule_status.", 2072);
+            throw new Exception("schedule_function.inc.php: cancelSchedule : Missing Parameter schedule_status.", 2072);
         }
 
         if (strlen(trim($gmt_datetime)) <= 0)
         {
-            throw new Exception("api_function.inc.php: cancelSchedule : Missing Parameter schedule_status.", 2073);
+            throw new Exception("schedule_function.inc.php: cancelSchedule : Missing Parameter schedule_status.", 2073);
         }
 
         if (!is_object($dataHelper))
         {
-            throw new Exception("api_function.inc.php : cancelSchedule : DataHelper Object did not instantiate", 104);
+            throw new Exception("schedule_function.inc.php : cancelSchedule : DataHelper Object did not instantiate", 104);
         }
 
         $dataHelper->setParam("'" . trim($schedule_id) . "'", "I");
@@ -838,14 +838,14 @@ function cancelSchedule($schedule_id, $schedule_status, $gmt_datetime, $dataHelp
     }
     catch (Exception $e)
     {
-        throw new Exception("api_function.inc.php : cancelSchedule : Could not update schedule status : " . $e->getMessage(), 2074);
+        throw new Exception("schedule_function.inc.php : cancelSchedule : Could not update schedule status : " . $e->getMessage(), 2074);
     }
 }
 
 function getUserConcurrentSessions($user_id, $subscription_id, $gmt_datetime, $dataHelper) {
     if (!is_object($dataHelper))
     {
-        throw new Exception("sch_function.inc.php : scheduledPlans : DataHelper Object did not instantiate", 104);
+        throw new Exception("schedule_function.inc.php : scheduledPlans : DataHelper Object did not instantiate", 104);
     }
     try
     {
@@ -862,6 +862,60 @@ function getUserConcurrentSessions($user_id, $subscription_id, $gmt_datetime, $d
     }
     catch (Exception $e)
     {
-        throw new Exception("api_function.inc.php : getUserConcurrentSessions : Could not fetch records : " . $e->getMessage(), 2081);
+        throw new Exception("schedule_function.inc.php : getUserConcurrentSessions : Could not fetch records : " . $e->getMessage(), 2081);
+    }
+}
+
+/* -----------------------------------------------------------------------------
+  Function Name : getScheduledMeetingList
+  Purpose       :
+  Parameters    :
+  Returns       :
+  Calls         :  datahelper.fetchRecords
+  Called By     : meeting/index.php
+  ------------------------------------------------------------------------------ */
+
+function getScheduledMeetingList($email_address, $dataHelper)
+{
+    if (!is_object($dataHelper))
+    {
+        throw new Exception("schedule_function.inc.php : getMyMeetingList : DataHelper Object did not instantiate", 104);
+    }
+    try
+    {
+         $strSqlStatement = "SELECT sd.schedule_id, sd.user_id, sd.schedule_status, sd.meeting_timestamp_gmt, sd.meeting_timestamp_local, sd.meeting_title, sd.meeting_timezone, sd.max_participants, id.invitation_creator FROM schedule_details AS sd, invitation_details AS id WHERE sd.schedule_id = id.schedule_id AND id.invitee_email_address = '".trim($email_address)."' AND schedule_status IN ('0','1')  ORDER BY meeting_timestamp_gmt ASC";
+         $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
+         return $arrResult;
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("schedule_function.inc.php : Fetch Schedule Meeting List Failed : ".$e->getMessage(), 1105);
+    }
+}
+
+/* -----------------------------------------------------------------------------
+  Function Name : getModeratorDetails
+  Purpose       :
+  Parameters    :
+  Returns       :
+  Calls         :  datahelper.fetchRecords
+  Called By     : meeting/index.php
+  ------------------------------------------------------------------------------ */
+
+function getModeratorDetails($schedule_id, $dataHelper)
+{
+    if (!is_object($dataHelper))
+    {
+        throw new Exception("schedule_function.inc.php : moderatorDetails : DataHelper Object did not instantiate", 104);
+    }
+    try
+    {
+        $strSqlStatement = "SELECT invitee_email_address, invitee_nick_name FROM invitation_details WHERE schedule_id = '".trim($schedule_id)."' AND invitation_creator = 'C'";
+        $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
+        return $arrResult;
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("schedule_function.inc.php : Fetch Moderator Details Failed : ".$e->getMessage(), 1105);
     }
 }

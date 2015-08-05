@@ -14,6 +14,7 @@ require_once(INCLUDES_PATH . 'schedule_function.inc.php');
 try
 {
     $meeting_title = $_REQUEST['title'];
+    $meeting_agenda = $_REQUEST['agenda'];
     $meeting_timestamp = $_REQUEST['schedule_dtm'];
     $inviteesCnt = $_REQUEST['inviteesCnt'];
     $arrInviteesEmail = $_REQUEST['inviteesList'];
@@ -243,7 +244,7 @@ try
 
                     try
                     {
-                        $scheduleID = scheduleDetails($schID, $strCK_user_id, $gmTime, $localTime, $meeting_title, $timezone, $gmt, $meetingAttendeePWD, $meetingModeratorPWD, $voiceBridgeToken, $inviteesCnt, $meetingRecoding, $maxSessionsMinutes, $meetingInstance, $subscriptionId, $objDataHelper);
+                        $scheduleID = scheduleDetails($schID, $strCK_user_id, $gmTime, $localTime, $meeting_title, $timezone, $gmt, $meetingAttendeePWD, $meetingModeratorPWD, $voiceBridgeToken, $inviteesCnt, $meetingRecoding, $maxSessionsMinutes, $meetingInstance, $subscriptionId, $meeting_agenda, $objDataHelper);
                     }
                     catch (Exception $e)
                     {

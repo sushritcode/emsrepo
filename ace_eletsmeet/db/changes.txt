@@ -27,3 +27,6 @@ DROP `is_admin` ;
 
 
 ALTER TABLE `login_users` CHANGE `	user_login_ip_address` `user_login_ip_address` VARCHAR( 25 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ;
+
+
+ALTER TABLE `dev_db_eletesmeet_com`.`schedule_details`     CHANGE `meeting_agenda` `meeting_agenda` TEXT NULL  COMMENT 'Agenda of meeting';

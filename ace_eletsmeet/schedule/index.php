@@ -9,7 +9,6 @@ $CONST_PAGEID = 'Schedule Page';
 require_once(INCLUDES_PATH . 'cm_authorize.inc.php');
 require_once(INCLUDES_PATH . 'common_function.inc.php');
 require_once(INCLUDES_PATH . 'schedule_function.inc.php');
-//echo GM_DATE;
 
 $stat = "FALSE";
 
@@ -299,7 +298,7 @@ else
                                                             <div class="form-group">
                                                                 <label for="form-field-1-1" class="col-sm-2 control-label no-padding-right"> Meeting Agenda </label>
                                                                 <div class="col-sm-9">
-                                                                    <textarea placeholder="Type your Meeting Agenda" id="form-field-8" class="form-control" name="sAgenda"></textarea>
+                                                                    <textarea placeholder="Type your Meeting Agenda" id="sAgenda" class="form-control limited" name="sAgenda" maxlength="100"></textarea>
                                                                 </div>
                                                             </div>                                                    
 
@@ -574,9 +573,20 @@ else
         <script type="text/javascript" src="<?php echo JS_PATH; ?>bootstrap-datepicker.js"></script>
         <script type="text/javascript" src="<?php echo JS_PATH; ?>bootstrap-timepicker.js"></script>
         <script type="text/javascript" src="<?php echo JS_PATH; ?>schedule_custom.js"></script>
+        <script type="text/javascript" src="<?php echo JS_PATH; ?>jquery.autosize.js"></script>
+        <script type="text/javascript" src="<?php echo JS_PATH; ?>jquery.inputlimiter.1.3.1.js"></script>
 
     </body>
     <script type="text/javascript">
+        $('[data-rel=tooltip]').tooltip({container:'body'});
+        $('[data-rel=popover]').popover({container:'body'});
+
+        $('textarea[class*=autosize]').autosize({append: "\n"});
+        $('textarea.limited').inputlimiter({
+                remText: '%n character%s remaining...',
+                limitText: 'max allowed : %n.'
+        });
+                                
         $(document).ready(function () {
             $('input[type="radio"]').click(function () {
                 if ($(this).attr("value") == "later")
@@ -804,8 +814,10 @@ else
             function btnSchedule(stat) {
                 $("#error-msg-sch").html("");
                 $("#error-msg-sch").css({"display":"none"});
-                var tzone = $("#timezone").val();
+                
                 var title = $("#sTitle").val();
+                var agenda = $("#sAgenda").val();
+                var tzone = $("#timezone").val();
                 var mod = $("#moderator").val();
 
                 pCount = "<?php echo $plansCount; ?>";
@@ -820,6 +832,12 @@ else
                 {
                     $("#error-msg-sch").html("Please Select Plan");
                     $("#error-msg-sch").css({"display":"block"});
+                    var textbox = document.getElementById("sPlan");
+                    textbox.focus();
+                    //textbox.scrollIntoView(alignToTop);
+                    textbox.scrollIntoView(true);
+
+    
                     //$('#schPlan').addClass('has-error');
                     //$('#schPlan').removeClass('has-error');
                 }
@@ -827,12 +845,18 @@ else
                 {
                     $("#error-msg-sch").html("Please type Meeting Title");
                     $("#error-msg-sch").css({"display":"block"});
+                    var textbox = document.getElementById("sTitle");
+                    textbox.focus();
+                    textbox.scrollIntoView(true);
                 }
                 //else if ($('#current-time:checked').val() != 'on' && $('#later-time:checked').val() != 'on') 
                 else if ($('#current-time:checked').val() != 'now' && $('#later-time:checked').val() != 'later') 
                 {
                     $("#error-msg-sch").html("Please set Meeting Time");
                     $("#error-msg-sch").css({"display":"block"});
+                    var textbox = document.getElementById("current-time");
+                    textbox.focus();
+                    textbox.scrollIntoView(true);
                }
 //               else if ($('#later-time:checked').val() == 'later') 
 //               {
@@ -853,6 +877,9 @@ else
                 {
                     $("#error-msg-sch").html("Please select Invitee from Contact List or Add Other Invitee");
                     $("#error-msg-sch").css({"display":"block"});
+                     var textbox = document.getElementById("contactList");
+                     textbox.focus();
+                    textbox.scrollIntoView(true);
                 }
                 else 
                 {
@@ -868,6 +895,7 @@ else
                             schDtm = "";
                      }
                     var title = $.trim(title);
+                    var agenda = $.trim(agenda);
                     var inviteescount = document.getElementById('inviteesCount').innerHTML;
                     var contactData = new Array();
                     var contactEmail = new Array();
@@ -890,7 +918,7 @@ else
                         type: "GET",
                         url: "createSchedule.php",
                         cache: false,
-                        data: "title="+title+"&schedule_dtm="+schDtm+"&inviteesList="+inviteesList+"&scheduleType="+schType+"&inviteesCnt="+inviteescount+"&tzone="+tzone+"&mod="+mod+"&uplan="+uplan+"&stat="+stat,
+                        data: "title="+title+"&schedule_dtm="+schDtm+"&inviteesList="+inviteesList+"&scheduleType="+schType+"&inviteesCnt="+inviteescount+"&tzone="+tzone+"&mod="+mod+"&uplan="+uplan+"&agenda="+agenda+"&stat="+stat,
                         loading: $(".loading").html(""),
                         success:    function(html) {
                             sep = "<?php echo SEPARATOR; ?>"; html = html.split(sep);
