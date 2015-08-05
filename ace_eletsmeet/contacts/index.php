@@ -221,6 +221,36 @@ $contacts = getAllcontactsByUserID($strCK_user_id , $objDataHelper);
 	      </div>
 	   </div>
 	</div>
+	<a href="#modal-table" role="button" class="blue" data-toggle="modal"> Table Inside a Modal Box </a>
+
+
+	<div tabindex="-1" class="modal fade" id="modal-table" style="display: none;" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header no-padding">
+					<div class="table-header">
+						<button aria-hidden="true" data-dismiss="modal" class="close" type="button">
+							<span class="white">×</span>
+						</button>
+						Results for "Latest Registered Domains
+					</div>
+				</div>
+
+				<div class="modal-body no-padding">
+					
+				</div>
+
+				<div class="modal-footer no-margin-top">
+					<button data-dismiss="modal" class="btn btn-sm btn-danger pull-left">
+						<i class="ace-icon fa fa-times"></i>
+						Close
+					</button>
+
+					
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div>
 
                                 
                                
