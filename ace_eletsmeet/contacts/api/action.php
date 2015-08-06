@@ -28,5 +28,21 @@ if(isset($_REQUEST["action"]))
 			<?
 			exit;
 		break;
+		case "add":
+			$formMaps  = profile_form_table_map_contacts();
+			$_REQUEST["association"] = $strCK_user_id;
+			print $insertParams = getInsertQueryString($_REQUEST , $formMaps);
+			exit;
+			$result  = updateUserProfile($insertParams , $objDataHelper , $strCK_user_id , $_REQUEST["action"]);
+			echo $result;
+		break;
+		case "update":
+			$formMaps  = profile_form_table_map();
+			$updateparams = getUpdateQueryString($_REQUEST , $formMaps);
+			$result  = updateUserProfile($updateparams , $objDataHelper , $strCK_user_id , $_REQUEST["action"]);
+			echo $result;
+
+		break;
 	}
 }
+?>
