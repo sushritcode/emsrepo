@@ -11,8 +11,25 @@ require_once(INCLUDES_PATH.'common_function.inc.php');
 require_once(INCLUDES_PATH.'contact_function.inc.php');
 
 //data population start	
-
+$form_table_map = profile_form_table_map_contacts();
 $contacts = getAllcontactsByUserID($strCK_user_id , $objDataHelper);
+
+$arrGroups = getAllgroups($strCK_user_id , $objDataHelper);
+for($i=0;$i<count($arrGroups);$i++)
+{
+	$groupOptions.="<option value='".$arrGroups[$i]['group_name']."'>";
+}
+
+$arrDistinctCountry = getDistinctCountry($objDataHelper);
+$optionCountry ="";	
+	for($cnt=0;$cnt< count($arrDistinctCountry);$cnt++)
+	{
+		$selected = ($userdetails[$form_table_map['frmaddress']['country']] == $arrDistinctCountry[$cnt]['country_name'])? "selected":"";
+
+		
+		$optionCountry.="<option value='".$arrDistinctCountry[$cnt]['country_idd_code']."' ".$selected.">".$arrDistinctCountry[$cnt]['country_name']." - ".$arrDistinctCountry[$cnt]['country_code']."</option>";
+
+	}
 
 //data population ends
 ?>
@@ -40,6 +57,7 @@ $contacts = getAllcontactsByUserID($strCK_user_id , $objDataHelper);
          <!-- MAIN CONTAINER START -->
         <div class="main-container" id="main-container">
             <script type="text/javascript">
+		var BASEURL = "<?php echo $SITE_ROOT;?>";
                 try {
                     ace.settings.check('main-container', 'fixed')
                 } catch (e) {
@@ -70,7 +88,26 @@ $contacts = getAllcontactsByUserID($strCK_user_id , $objDataHelper);
                          <!-- SETTING CONTAINER END -->
                         
                         <!-- PAGE HEADER -->
+			<div id='ajax_loader' style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; background: transparent none repeat scroll 0% 0%; z-index: 20000;display:none;">
+			    <img src="<?php echo IMG_PATH ?>loading.gif" style="position: relative; top: 50%; left: 50%;"></img>
+			</div>
+
                         <div class="page-header">
+				<div class="row" id="alert" style="display:none;">
+					<div class="col-sm-12">
+						<div id="succ" class="col-sm-12 alert alert-block alert-success" style="display:none;">
+							<div class="ace-icon fa fa-bullhorn fa fa-check" style="font-weight: bold;">
+								<span id="successmsg"> </span>
+							</div>
+						</div>
+						<div id="err" class="alert alert-danger" style="display:none;">
+							<div class="ace-icon fa fa-bullhorn fa fa-check" style="font-weight: bold;">
+								<span id="errormsg"> </span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="space-20"></div>
                             <h1>
                                 <?php echo $CONST_MODULE?><small><i class="ace-icon fa fa-angle-double-right"></i><?php echo $CONST_PAGEID;?></small>
                             </h1>
@@ -84,7 +121,13 @@ $contacts = getAllcontactsByUserID($strCK_user_id , $objDataHelper);
 	   <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline no-footer">
 	      <div class="row">
 		 <div class="col-xs-6">
-	            <a href="" title="Add New Contact" alt="Add New Contact"><i class="ace-icon fa fa-user bigger-130"></i><sup><b style="font-size:12px;">+</b></sup><a/>
+	            
+	            <a href="#modal-table" role="button" class="blue" data-toggle="modal" title="Add New Contact" alt="Add New Contact"  onClick="document.getElementById('type').value='add';document.getElementById('association').value= '<?php echo $strCK_user_id;?>';">
+			<i class="ace-icon fa fa-user bigger-130"></i>
+				<sup>
+					<b style="font-size:12px;">+</b>
+				</sup>
+		   </a>
 		    <!--div class="dataTables_length" id="dynamic-table_length">
 		       <label>
 			  Display 
@@ -113,8 +156,9 @@ $contacts = getAllcontactsByUserID($strCK_user_id , $objDataHelper);
 		       </th>
 		       <th tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" >Name</th>
 		       <th tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" >Email Address</th>
+		       <th tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" >Phone No.</th>
 		       <th tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" >Group</th>
-		       <th tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" >  Update </th>
+		       <th tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" >Update </th>
 		       <th tabindex="0" aria-controls="dynamic-table" rowspan="1" colspan="1" >Status</th>
 		       <th class="sorting_disabled" rowspan="1" colspan="1" aria-label=""></th>
 		    </tr>
@@ -140,6 +184,7 @@ $contacts = getAllcontactsByUserID($strCK_user_id , $objDataHelper);
 		       </td>
 		       <td><?php echo $contacts[$i]['contact_first_name']." ".$contacts[$i]['contact_last_name'];?></td>
 		       <td><?php echo $contacts[$i]['contact_email_address'];?></td>
+		       <td><?php echo $contacts[$i]['contact_mobile_number'];?></td>
 		       <td class="hidden-480"><?php echo  $contacts[$i]['group_name'];?></td>
 		       <td><?php echo  $contacts[$i]['updatdt'];?></td>
 		       <td class="hidden-480">
@@ -221,7 +266,6 @@ $contacts = getAllcontactsByUserID($strCK_user_id , $objDataHelper);
 	      </div>
 	   </div>
 	</div>
-	<a href="#modal-table" role="button" class="blue" data-toggle="modal"> Table Inside a Modal Box </a>
 
 
 	<div tabindex="-1" class="modal fade" id="modal-table" style="display: none;" aria-hidden="true">
@@ -232,19 +276,124 @@ $contacts = getAllcontactsByUserID($strCK_user_id , $objDataHelper);
 						<button aria-hidden="true" data-dismiss="modal" class="close" type="button">
 							<span class="white">×</span>
 						</button>
-						Results for "Latest Registered Domains
+						Add / Update a  Contact
 					</div>
 				</div>
 
 				<div class="modal-body no-padding">
-					
+					<!-- Modal data start -->
+						<div class="tab-content">
+							<div class="tab-pane fade in active" id="basic">
+								<div class="row">
+									<div class="">
+										<div class="space-10"></div>
+											<input type="hidden" name="type" id="type">
+											<form class="form-horizontal" role="form" name="frmcontact" id="frmcontact">
+												<input type="hidden" name="association"  id="association">
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-3 control-label no-padding-right"> 
+														Nick Name :
+													</label>
+													<div class="col-sm-9" style="padding:6px 20px;">
+														<b>
+															<input type="text" class="col-sm-5" placeholder="Nick Name" id="contactnickname" name="contactnickname" required for="basic" value="" >
+														</b>
+													</div>
+												 </div>
+												<div class="space-4"></div>
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-3 control-label no-padding-right"> 
+														First Name :
+													</label>
+													<div class="col-sm-9" style="padding:6px 20px;">
+														<b>
+															<input type="text" class="col-sm-5" placeholder="First Name" id="contactfirstname" name="contactfirstname" required for="basic" value="" >
+														</b>
+													</div>
+												 </div>
+												<div class="space-4"></div>
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-3 control-label no-padding-right"> 
+														Last Name :
+													</label>
+													<div class="col-sm-9" style="padding:6px 20px;">
+														<b>
+															<input type="text" class="col-sm-5" placeholder="Last Name" id="contactlastname" name="contactlastname" required for="basic" value="" >
+														</b>
+													</div>
+												 </div>
+												<div class="space-4"></div>
+
+
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-3 control-label no-padding-right"> 
+														Email Address :
+													</label>
+													<div class="col-sm-9" style="padding:6px 20px;">
+														<b>
+															<input type="text" class="col-sm-5" placeholder="Email Address" id="contactemailaddress" name="contactemailaddress" required for="basic" value="" >
+														</b>
+													</div>
+												 </div>
+												<div class="space-4"></div>
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-3 control-label no-padding-right"> 
+														Phone No. :
+													</label>
+													<div class="col-sm-9" style="padding:6px 20px;">
+														<b>
+															<input type="text" class="col-sm-5" placeholder="Phone No." id="contactphoneno" name="contactphoneno" required for="basic" value="" >
+														</b>
+													</div>
+												 </div>
+												<div class="space-4"></div>
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-3 control-label no-padding-right"> 
+														Group :
+													</label>
+													<div class="col-sm-9" style="padding:6px 20px;">
+														<b>
+															<input type="text" class="col-sm-5" list ="contactgroupoptions" placeholder="Group Name" id="contactgroup" name="contactgroup" required for="basic" value="" >
+																<datalist id="contactgroupoptions">
+																<?php echo $groupOptions;?>
+																</datalist>
+														</b>
+													</div>
+												 </div>
+												 <div class="space-4"></div>
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-3 control-label no-padding-right"> Select Country </label>
+													<div class="col-sm-9">
+														 <select class="col-sm-5" for="address" name="contact_phone_idd" id="contact_phone_idd" class="form-control">
+														    <option value="">Select Country</option>
+														    <?php echo $optionCountry;?>
+														</select>
+													</div>
+												</div>
+												<div class="space-10"></div>
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-3 control-label no-padding-right"> 
+													</label>
+													<div class="col-sm-9" style="padding:6px 20px;">
+														<b>
+															<input type="submit" onclick="javascript:return sendData('frmcontact',document.getElementById('type').value);" value="Save Contact" class="btn btn-info ">
+														</b>
+													</div>
+
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					<!-- Modal data end -->
 				</div>
 
 				<div class="modal-footer no-margin-top">
-					<button data-dismiss="modal" class="btn btn-sm btn-danger pull-left">
+					<!--button data-dismiss="modal" class="btn btn-sm btn-danger pull-left">
 						<i class="ace-icon fa fa-times"></i>
 						Close
-					</button>
+					</button-->
 
 					
 				</div>
@@ -285,4 +434,5 @@ $contacts = getAllcontactsByUserID($strCK_user_id , $objDataHelper);
         <!-- JAVA SCRIPT -->
        
     </body>
+     <script src="<?php echo JS_PATH; ?>contact.js"></script>
 </html>

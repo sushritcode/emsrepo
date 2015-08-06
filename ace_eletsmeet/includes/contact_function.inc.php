@@ -109,5 +109,57 @@ function enablecontact($contactid, $userid , $objDataHelper)
 		return 0;
 
 }
+/* -----------------------------------------------------------------------------
+   Function Name : getAllgroups
+   Purpose       : retrieve all the group names on the basis of userid.
+   Parameters    : userid, Datahelper
+   Returns       : groups
+   Calls         : datahelper.fetchRecords
+   Called By     :
+   Author        : sushrit 
+   Created  on   : aug-5-2015
+   Modified By   :
+   Modified on   :
+   ------------------------------------------------------------------------------ */
+function getAllgroups( $userid , $objDataHelper)
+{
+	if (!is_object($objDataHelper)) 
+	{
+		throw new Exception("common_function.inc.php : getPasswordRequestDetails : DataHelper Object did not instantiate", 104);
+	}
 
+	if (strlen(trim($userid)) <= 0) 
+	{
+		throw new Exception("common_function.inc.php: getPasswordRequestDetails : Missing Parameter user id.", 141);
+	}
+	$sqlQuery = "SELECT * FROM contact_group WHERE association = '".$userid."'";
+	$arrGroupsResult = $objDataHelper->fetchRecords("QR", $sqlQuery);
+	return $arrGroupsResult;
+
+}
+
+/* -----------------------------------------------------------------------------
+   Function Name : profile_form_table_map
+Purpose       : To maintain the mapping of all the html elements and table fields
+Parameters    : 
+Returns       :
+Calls         : 
+Called By     :
+Author        : Sushrit
+Created  on   : 29-July-2015
+Modified By   :
+Modified on   :
+------------------------------------------------------------------------------ */
+function profile_form_table_map_contacts()
+{
+	/*/`group_id`, `group_name`, `association`, `group_status`
+
+	//`contact_nick_name`, `contact_first_name`, `contact_last_name`, `contact_email_address`, `contact_idd_code`, `contact_mobile_number`, `contact_group_name`, `user_id`, `updatedon`, `personal_contact_status`*/
+
+	//formname
+	$arrForms = array("frmcontact"=>array());
+	//formelementname 
+	$arrForms["frmcontact"] = array("contactfirstname"=>"contact_first_name","contactlastname"=>"contact_last_name","contactnickname"=>"contact_nick_name","contactemailaddress"=>"contact_email_address","contactphoneno"=>"contact_mobile_number","contactgroup"=>"contact_group_name","contact_phone_idd"=>"contact_phone_idd");
+	return $arrForms;
+}
 ?>

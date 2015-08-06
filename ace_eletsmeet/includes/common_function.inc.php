@@ -209,4 +209,46 @@ function getUpdateQueryString($formValues , $formTableMap)
 		}
 	}
 }
+/* -----------------------------------------------------------------------------
+  Function Name : getInsertQueryString
+  Purpose       : to generate the insert query string
+  Parameters    :  array Form values
+  Returns       :
+  Calls         : 
+  Called By     :
+  Author        : Sushrit 
+  Created  on   : Aug 5 , 2015
+  Modified By   :
+  Modified on   :
+  ------------------------------------------------------------------------------ */
+function getInsertQueryString($formValues , $formTableMap)
+{
+	if(isset($formValues['formname']))
+	{
+		if($formValues['formname'] != "") 
+		{
+			$updateString = "";
+
+			foreach($formValues as $key => $value)
+			{	
+				if($key != "formname")
+				{
+					
+
+					if(isset($formTableMap[$formValues['formname']][$key]) && $value !="")
+					{
+						$columnName.=($columnName != "")?" , ":"";
+
+						$columnName.=$formTableMap[$formValues['formname']][$key];
+						$columnValue.=($columnValue != "")?" , ":"";
+						$columnValue = ($columnName == "password")?md5(trim($value)):trim($value);
+						print $columnName;
+					}
+				}
+			}
+			$insertString = " ( ".$columnName." )  VALUES ( ".$columnValue." ) ;";
+			return $insertString;
+		}
+	}
+}
 
