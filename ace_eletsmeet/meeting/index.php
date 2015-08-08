@@ -10,6 +10,8 @@ require_once(INCLUDES_PATH . 'cm_authorize.inc.php');
 //require_once(INCLUDES_PATH . 'common_function.inc.php');
 require_once(INCLUDES_PATH . 'schedule_function.inc.php');
 
+//echo $curDate = date("d-m-Y");
+
 try
 {
    $arrSchMeetingList = getScheduledMeetingList($strCk_user_email_address , $objDataHelper);
@@ -18,6 +20,8 @@ catch(Exception $e)
 {
    throw new Exception("index.php : getMyMeetingList Failed : ".$e->getMessage() , 1126);
 }
+
+echo sizeof($arrSchMeetingList);
 
 //print_r($arrSchMeetingList);
 ?>
@@ -90,7 +94,9 @@ catch(Exception $e)
                                         Scheduled Meetings
                                     </div>-->
                         
-                                <?php if((!is_array($arrSchMeetingList)) && (sizeof($arrSchMeetingList)) <= 0){ ?>
+                                <?php 
+                                
+                                if((!is_array($arrSchMeetingList)) && (sizeof($arrSchMeetingList)) <= 0){ ?>
                                     
                                     <div class="alert alert-block alert-danger">
                                         <strong >Sorry</strong>, No meeting scheduled.
@@ -184,15 +190,14 @@ catch(Exception $e)
                                                                         <span class="label label-sm label-success"> Join Meeting </span>
                                                                   <?php } ?>
                                                                   <?php if ($schStatus == "0") { ?>
-                                                                                    <span class="label label-sm label-success"> Cancel </span>
+                                                                                    <span class="label label-sm label-danger"> Cancel </span>
                                                                   <?php }  ?>
                                                            <?php }else{ ?>
                                                                   <?php if((GM_DATE > $gmtStartTime) && (GM_DATE <= $gmtEndTime)) { ?>
                                                                         <span class="label label-sm label-success"> Join Meeting </span>
                                                                   <?php } ?>
-                                                                        <span class="label label-sm label-success"> Accept </span>
-                                                                        <span class="label label-sm label-success"> Decline </span>
-                                                                                    
+                                                                        <span class="label label-sm label-success arrowed-in"> Accept </span>
+                                                                        <span class="label label-sm label-warning arrowed-in-right"> Decline </span>
                                                             <?php } ?>
 <!--                                                            <span class="label label-sm label-warning"> Expiring </span> <span class="label label-sm label-warning">Expiring</span>-->
                                                         </td>
