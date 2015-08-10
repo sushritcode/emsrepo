@@ -223,7 +223,8 @@ Class DataHelper
 				if ($this->IsTransaction <> 1){
 					$this->objmysqli->close();
 					unset($this->objmysqli);
-				}				return $qryResult;
+				}				
+                                                                        return $qryResult;
 				//End for Sql Query  Processing 
 			}
 			else if($type=='SP')

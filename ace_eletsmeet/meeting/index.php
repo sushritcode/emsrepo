@@ -9,9 +9,7 @@ $CONST_PAGEID = 'Meeting Page';
 require_once(INCLUDES_PATH . 'cm_authorize.inc.php');
 //require_once(INCLUDES_PATH . 'common_function.inc.php');
 require_once(INCLUDES_PATH . 'schedule_function.inc.php');
-
-//echo $curDate = date("d-m-Y");
-
+echo GM_DATE;
 try
 {
    $arrSchMeetingList = getScheduledMeetingList($strCk_user_email_address , $objDataHelper);
@@ -20,9 +18,6 @@ catch(Exception $e)
 {
    throw new Exception("index.php : getMyMeetingList Failed : ".$e->getMessage() , 1126);
 }
-
-echo sizeof($arrSchMeetingList);
-
 //print_r($arrSchMeetingList);
 ?>
 
@@ -90,19 +85,13 @@ echo sizeof($arrSchMeetingList);
                             <div class="col-xs-12">
                                 <!-- PAGE CONTENT START -->
                                 
-<!--                                    <div class="table-header">
+<!--                             <div class="table-header">
                                         Scheduled Meetings
                                     </div>-->
                         
                                 <?php 
-                                
-                                if((!is_array($arrSchMeetingList)) && (sizeof($arrSchMeetingList)) <= 0){ ?>
-                                    
-                                    <div class="alert alert-block alert-danger">
-                                        <strong >Sorry</strong>, No meeting scheduled.
-                                    </div>
-                                
-                                <?php }else{?>
+                                if((is_array($arrSchMeetingList)) && (count($arrSchMeetingList)) > 0){ ?>
+
                                     <div class="clearfix">
                                         <div class="pull-right tableTools-container"></div>
                                     </div>
@@ -226,8 +215,13 @@ echo sizeof($arrSchMeetingList);
                                             <!--  Actual Table End  -->
                                         </div>
                                     </div>
-                                                
                                 
+                                <?php }else{?>
+
+                                    <div class="alert alert-block alert-danger">
+                                        <strong >Sorry</strong>, No meeting scheduled.
+                                    </div>
+                                                
                                <?php } ?>
 
                                 <!-- PAGE CONTENT END -->

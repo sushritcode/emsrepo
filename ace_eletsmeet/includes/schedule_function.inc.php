@@ -883,8 +883,9 @@ function getScheduledMeetingList($email_address, $dataHelper)
     }
     try
     {
-         $strSqlStatement = "SELECT sd.schedule_id, sd.user_id, sd.schedule_status, sd.meeting_timestamp_gmt, sd.meeting_timestamp_local, sd.meeting_title, sd.meeting_timezone, sd.max_participants, id.invitation_creator FROM schedule_details AS sd, invitation_details AS id WHERE sd.schedule_id = id.schedule_id AND id.invitee_email_address = '".trim($email_address)."' AND schedule_status IN ('0','1')  ORDER BY meeting_timestamp_gmt ASC";
-         $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
+        $strSqlStatement = "SELECT sd.schedule_id, sd.user_id, sd.schedule_status, sd.meeting_timestamp_gmt, sd.meeting_timestamp_local, sd.meeting_title, sd.meeting_timezone, sd.max_participants, id.invitation_creator FROM schedule_details AS sd, invitation_details AS id WHERE sd.schedule_id = id.schedule_id AND id.invitee_email_address = '".trim($email_address)."' AND UNIX_TIMESTAMP(meeting_timestamp_gmt) >= UNIX_TIMESTAMP(UTC_TIMESTAMP())  AND schedule_status IN ('0')  ORDER BY meeting_timestamp_gmt ASC";
+        //$strSqlStatement = "SELECT sd.schedule_id, sd.user_id, sd.schedule_status, sd.meeting_timestamp_gmt, sd.meeting_timestamp_local, sd.meeting_title, sd.meeting_timezone, sd.max_participants, id.invitation_creator FROM schedule_details AS sd, invitation_details AS id WHERE sd.schedule_id = id.schedule_id AND id.invitee_email_address = '".trim($email_address)."' AND schedule_status IN ('0','1')  ORDER BY meeting_timestamp_gmt ASC"; 
+        $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
          return $arrResult;
     }
     catch (Exception $e)
