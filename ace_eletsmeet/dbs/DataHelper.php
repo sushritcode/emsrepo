@@ -213,6 +213,7 @@ Class DataHelper
 			{
 				//Start for Sql Query  Processing 
 				$qryResult = $this->objmysqli->query($sqlstatement);
+                                                                        $this->affectedRows = mysqli_affected_rows($this->objmysqli);
 				if($qryResult == FALSE)
 				{
 					throw new Exception("Insert/Update failed ".$this->objmysqli->error,108);

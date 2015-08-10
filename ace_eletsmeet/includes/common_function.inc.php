@@ -180,7 +180,7 @@ function dateFormat($gmTime, $localTime, $timezone)
 {
     $date = date_create($localTime, timezone_open("GMT"));
     $date_format = date_format(date_timezone_set($date, timezone_open($timezone)), 'P');
-    $meeting_date = date("D, F jS Y, h:i A", strtotime($localTime)) . " " . $timezone . ", GMT " . $date_format . " (" . date("D, F jS Y, h:i A", strtotime($gmTime)) . " GMT)";
+    $meeting_date = date("D, F jS Y, h:i A", strtotime($localTime)) . "  (" . $timezone . ", GMT ".$date_format.")  (" . date("D, F jS Y, h:i A", strtotime($gmTime)) . " GMT)";
     return $meeting_date;
 }
 

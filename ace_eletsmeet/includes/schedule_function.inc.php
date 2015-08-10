@@ -784,7 +784,14 @@ function updInvitationStatus($schedule_id, $invitation_status, $inv_email_addres
                 "AND meeting_status = '0'";
         $UpdResult = $dataHelper->putRecords('QR', $strSqlStatement);
         $dataHelper->clearParams();
-        return $UpdResult;
+        if($objDataHelper->affectedRows == 0)
+        {
+                return 0;
+        }else{
+                return 1;
+        }
+         //break;
+         //return $UpdResult;
     }
     catch (Exception $e)
     {
@@ -883,8 +890,11 @@ function getScheduledMeetingList($email_address, $dataHelper)
     }
     try
     {
-        $strSqlStatement = "SELECT sd.schedule_id, sd.user_id, sd.schedule_status, sd.meeting_timestamp_gmt, sd.meeting_timestamp_local, sd.meeting_title, sd.meeting_timezone, sd.max_participants, id.invitation_creator FROM schedule_details AS sd, invitation_details AS id WHERE sd.schedule_id = id.schedule_id AND id.invitee_email_address = '".trim($email_address)."' AND UNIX_TIMESTAMP(meeting_timestamp_gmt) >= UNIX_TIMESTAMP(UTC_TIMESTAMP())  AND schedule_status IN ('0')  ORDER BY meeting_timestamp_gmt ASC";
-        //$strSqlStatement = "SELECT sd.schedule_id, sd.user_id, sd.schedule_status, sd.meeting_timestamp_gmt, sd.meeting_timestamp_local, sd.meeting_title, sd.meeting_timezone, sd.max_participants, id.invitation_creator FROM schedule_details AS sd, invitation_details AS id WHERE sd.schedule_id = id.schedule_id AND id.invitee_email_address = '".trim($email_address)."' AND schedule_status IN ('0','1')  ORDER BY meeting_timestamp_gmt ASC"; 
+        //$strSqlStatement = "SELECT sd.schedule_id, sd.user_id, sd.schedule_status, sd.meeting_timestamp_gmt, sd.meeting_timestamp_local, sd.meeting_title, sd.meeting_timezone, sd.max_participants, id.invitation_creator FROM schedule_details AS sd, invitation_details AS id WHERE sd.schedule_id = id.schedule_id AND id.invitee_email_address = '".trim($email_address)."' AND UNIX_TIMESTAMP(meeting_timestamp_gmt) >= UNIX_TIMESTAMP(UTC_TIMESTAMP())  AND schedule_status IN ('0')  ORDER BY meeting_timestamp_gmt ASC";
+        $strSqlStatement = "SELECT sd.schedule_id, sd.user_id, sd.schedule_status, sd.schedule_creation_time, sd.meeting_timestamp_gmt, sd.meeting_timestamp_local, sd.meeting_title, sd.meeting_agenda, sd.meeting_timezone, sd.meeting_gmt, sd.meeting_start_time, sd.meeting_end_time, sd.voice_bridge, sd.web_voice, sd.max_participants, sd.record_flag, sd.subscription_id, id.invitation_creator "
+                . "FROM schedule_details AS sd, invitation_details AS id "
+                . "WHERE sd.schedule_id = id.schedule_id AND id.invitee_email_address = '".trim($email_address)."' "
+                . "AND schedule_status IN ('0','1') ORDER BY meeting_timestamp_gmt ASC ;";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
          return $arrResult;
     }
@@ -920,3 +930,21 @@ function getModeratorDetails($schedule_id, $dataHelper)
         throw new Exception("schedule_function.inc.php : Fetch Moderator Details Failed : ".$e->getMessage(), 1105);
     }
 }
+
+function getScheduleDetailsById($schedule_id, $email_address, $pass_code, $dataHelper) {
+    try
+    {
+        if (!is_object($dataHelper))
+        {
+            throw new Exception("schedule_function.inc.php : isScheduleInviteeValid : DataHelper Object did not instantiate", 104);
+        }
+        $strSqlStatement = "SELECT sd.schedule_id, sd.user_id, sd.schedule_status, sd.schedule_creation_time, sd.meeting_timestamp_gmt, sd.meeting_timestamp_local, sd.meeting_title, sd.meeting_agenda, sd.meeting_timezone, sd.meeting_gmt, sd.meeting_start_time, sd.meeting_end_time, sd.voice_bridge, sd.web_voice, sd.max_participants, sd.record_flag, sd.subscription_id, uld.email_address, ud.nick_name FROM schedule_details sd, user_login_details uld, user_details ud WHERE sd.user_id = uld.user_id  AND uld.user_id = ud.user_id AND sd.schedule_id='" . trim($schedule_id) . "' AND MD5(CONCAT('" . trim($schedule_id) . "',':','" . trim($email_address) . "',':','" . SECRET_KEY . "')) = '" . trim($pass_code) . "';" ;
+        $arrSchResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
+        return $arrSchResult;
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("schedule_function.inc.php : isScheduleValid : Could not fetch records : " . $e->getMessage(), 2036);
+    }
+}
+

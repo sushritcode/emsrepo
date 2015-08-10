@@ -1,9 +1,12 @@
 <!-- bootstrap & fontawesome -->
 <link rel="stylesheet" href="<?php echo CSS_PATH; ?>bootstrap.css" />
 <link rel="stylesheet" href="<?php echo CSS_PATH; ?>font-awesome.css" />
+<link rel="stylesheet" href="<?php echo CSS_PATH; ?>jquery-ui.css" />
 <link rel="stylesheet" href="<?php echo CSS_PATH; ?>jquery-ui.custom.css" />
 <link rel="stylesheet" href="<?php echo CSS_PATH; ?>datepicker.css" />
 <link rel="stylesheet" href="<?php echo CSS_PATH; ?>bootstrap-timepicker.css" />
+
+
 <!-- page specific plugin styles -->
 
 <!-- text fonts -->

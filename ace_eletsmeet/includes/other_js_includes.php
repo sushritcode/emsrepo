@@ -6,6 +6,7 @@
   <script type="text/javascript" src="<?php echo JS_PATH; ?>excanvas.js"></script>
 <![endif]-->
 
+<script type="text/javascript" src="<?php echo JS_PATH; ?>jquery-ui.js"></script>
 <script type="text/javascript" src="<?php echo JS_PATH; ?>jquery-ui.custom.js"></script>
 <script type="text/javascript" src="<?php echo JS_PATH; ?>jquery.ui.touch-punch.js"></script>
 <script type="text/javascript" src="<?php echo JS_PATH; ?>jquery.easypiechart.js"></script>
