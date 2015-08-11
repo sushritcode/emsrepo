@@ -80,7 +80,7 @@
 
 								<ul class="submenu">
 									<li class="">
-										<a href="<?php echo $base_url."contacts/"?>">
+										<a href="<?php echo $SITE_ROOT."contacts/"?>">
 											<i class="menu-icon fa fa-caret-right"></i>
 											Show Contacts
 										</a>
@@ -89,7 +89,7 @@
 									</li>
 
 									<li class="">
-										<a href="<?php echo $base_url."contacts/add"?>">
+										<a href="<?php echo $SITE_ROOT."contacts/add"?>">
 											<i class="menu-icon fa fa-caret-right"></i>
 											Add Contact
 										</a>
@@ -111,7 +111,7 @@
 
 								<ul class="submenu">
 									<li class="">
-										<a href="<?php echo $base_url."groups/"?>">
+										<a href="<?php echo $SITE_ROOT."groups/"?>">
 											<i class="menu-icon fa fa-caret-right"></i>
 											Show Groups
 										</a>
@@ -120,7 +120,7 @@
 									</li>
 
 									<li class="">
-										<a href="<?php echo $base_url."groups/add"?>">
+										<a href="<?php echo $SITE_ROOT."groups/add"?>">
 											<i class="menu-icon fa fa-caret-right"></i>
 											Add Group
 										</a>
@@ -132,14 +132,14 @@
 							</li>
 
 							<li class="">
-                                                                <a href="<?php echo $base_url."contacts/import";?>">
+                                                                <a href="<?php echo $SITE_ROOT."contacts/import";?>">
                                                                         <i class="menu-icon"></i>
                                                                         Import Addresses (csv)
                                                                 </a>
 
 							</li>
 							<li class="">
-                                                                <a href="<?php echo $base_url."contacts/exportcsv";?>">
+                                                                <a href="<?php echo $SITE_ROOT."contacts/exportcsv";?>">
                                                                         <i class="menu-icon"></i>
 
                                                                         Export Addresses (csv)
