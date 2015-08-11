@@ -233,16 +233,14 @@ function getInsertQueryString($formValues , $formTableMap)
 			{	
 				if($key != "formname")
 				{
-					
-
 					if(isset($formTableMap[$formValues['formname']][$key]) && $value !="")
 					{
+						if(trim($value) == "")
+							return -1;
 						$columnName.=($columnName != "")?" , ":"";
-
 						$columnName.=$formTableMap[$formValues['formname']][$key];
 						$columnValue.=($columnValue != "")?" , ":"";
-						$columnValue = ($columnName == "password")?md5(trim($value)):trim($value);
-						print $columnName;
+						$columnValue.="'".$value."'";
 					}
 				}
 			}

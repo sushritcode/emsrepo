@@ -17,7 +17,7 @@ $contacts = getAllcontactsByUserID($strCK_user_id , $objDataHelper);
 $arrGroups = getAllgroups($strCK_user_id , $objDataHelper);
 for($i=0;$i<count($arrGroups);$i++)
 {
-	$groupOptions.="<option value='".$arrGroups[$i]['group_name']."'>";
+	$groupOptions.="<option value='".$arrGroups[$i]['group_id']."'>".$arrGroups[$i]['group_name']."</option>";
 }
 
 $arrDistinctCountry = getDistinctCountry($objDataHelper);
@@ -88,8 +88,8 @@ $optionCountry ="";
                          <!-- SETTING CONTAINER END -->
                         
                         <!-- PAGE HEADER -->
-			<div id='ajax_loader' style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; background: transparent none repeat scroll 0% 0%; z-index: 20000;display:none;">
-			    <img src="<?php echo IMG_PATH ?>loading.gif" style="position: relative; top: 50%; left: 50%;"></img>
+			<div id='ajax_loader' style="width: 100%; height: 100%; position: fixed; left: 0px; top: 0px; background: transparent none repeat scroll 0% 0%; z-index: 20000;display:none;">
+			    <img src="<?php echo IMG_PATH ?>loading.gif" style="position: relative; top: 30%; left: 50%;"></img>
 			</div>
 
                         <div class="page-header">
@@ -353,17 +353,16 @@ $optionCountry ="";
 													</label>
 													<div class="col-sm-9" style="padding:6px 20px;">
 														<b>
-															<input type="text" class="col-sm-5" list ="contactgroupoptions" placeholder="Group Name" id="contactgroup" name="contactgroup" required for="basic" value="" >
-																<datalist id="contactgroupoptions">
+																<select class="col-sm-5" id="contactgroup" name="contactgroup">
 																<?php echo $groupOptions;?>
-																</datalist>
+																</select>
 														</b>
 													</div>
 												 </div>
 												 <div class="space-4"></div>
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-3 control-label no-padding-right"> Select Country </label>
-													<div class="col-sm-9">
+													<div class="col-sm-9" style="padding:6px 20px;">
 														 <select class="col-sm-5" for="address" name="contact_phone_idd" id="contact_phone_idd" class="form-control">
 														    <option value="">Select Country</option>
 														    <?php echo $optionCountry;?>
@@ -376,7 +375,7 @@ $optionCountry ="";
 													</label>
 													<div class="col-sm-9" style="padding:6px 20px;">
 														<b>
-															<input type="submit" onclick="javascript:return sendData('frmcontact',document.getElementById('type').value);" value="Save Contact" class="btn btn-info ">
+															<input type="submit" onclick="javascript:return sendData('frmcontact',document.getElementById('type').value);" value="Save Contact" class="btn btn-info " name="submitcontact">
 														</b>
 													</div>
 

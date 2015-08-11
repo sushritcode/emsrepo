@@ -18,31 +18,45 @@ if(isset($_REQUEST["action"]))
 			$returnVal = disablecontact($_REQUEST['contactid'], $strCK_user_id , $objDataHelper);
 			?>
 				<script type="text/javascript">window.location.href = "<?php echo $SITE_ROOT."contacts/";?>";</script>
-			<?
-			exit;
-		break;
+				<?
+				exit;
+			break;
 		case "enable":
 			$returnVal = enablecontact($_REQUEST['contactid'], $strCK_user_id , $objDataHelper);
 			?>
 				<script type="text/javascript">window.location.href = "<?php echo $SITE_ROOT."contacts/";?>";</script>
-			<?
-			exit;
-		break;
+				<?
+				exit;
+			break;
 		case "add":
 			$formMaps  = profile_form_table_map_contacts();
 			$_REQUEST["association"] = $strCK_user_id;
-			print $insertParams = getInsertQueryString($_REQUEST , $formMaps);
-			exit;
-			$result  = updateUserProfile($insertParams , $objDataHelper , $strCK_user_id , $_REQUEST["action"]);
-			echo $result;
-		break;
+			$_REQUEST["updatedon"] = date("Y-m-d H:i:s");
+			if($insertParams == -1)
+			{
+				echo "2";
+				exit;
+			}
+			$arrContact = getAllcontactsByEmailId($strCK_user_id , $_REQUEST['contactemailaddress'] , $objDataHelper);
+			if(count($arrContact) > 0)
+			{
+				echo "3";
+				exit;
+			}
+
+			$insertParams = getInsertQueryString($_REQUEST , $formMaps);
+			$result = change_user_profile($insertParams , $objDataHelper ,$strCK_user_id ,"add");
+			echo "1";
+
+			
+			break;
 		case "update":
 			$formMaps  = profile_form_table_map();
 			$updateparams = getUpdateQueryString($_REQUEST , $formMaps);
 			$result  = updateUserProfile($updateparams , $objDataHelper , $strCK_user_id , $_REQUEST["action"]);
 			echo $result;
 
-		break;
+			break;
 	}
 }
 ?>
