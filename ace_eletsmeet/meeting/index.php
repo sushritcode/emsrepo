@@ -90,6 +90,7 @@ catch(Exception $e)
 <!--                             <div class="table-header">
                                         Scheduled Meetings
                                     </div>-->
+                                <div class="alert alert-danger errorDisplay" id="mError"></div>
                         
                                 <?php 
                                 if((is_array($arrSchMeetingList)) && (count($arrSchMeetingList)) > 0){ ?>
@@ -173,39 +174,37 @@ catch(Exception $e)
                                                         <td class="hidden-480"> <?php echo $schModerator; ?> </td>
                                                         <td>
                                                             <div class="hidden-sm hidden-xs btn-group">
-                                                                    <a href="#sch-detls" data-toggle="modal" class="btn btn-xs" onclick="meetingDetails('<?php echo $schScheduleId; ?>', '<?php echo $schPassCode; ?>')" >Details</a>
-                                                                    <!--                                                                    <a href="#" id="id-btn-dialog2" class="btn btn-info btn-sm">Confirm Dialog</a>-->
+                                                                    <!--   <a href="#" id="id-btn-dialog2" class="btn btn-info btn-sm">Confirm Dialog</a>-->
+                                                                    <a href="#sch-detls" data-toggle="modal" class="btn btn-xs btn-inverse" onclick="meetingDetails('<?php echo $schScheduleId; ?>', '<?php echo $schPassCode; ?>')" alt="Details" title="Details">&nbsp;<i class="ace-icon fa fa-info bigger-120"></i>&nbsp;</a>
                                                                     <?php if((GM_DATE > $gmtStartTime) && (GM_DATE <= $gmtEndTime)) { ?>
-                                                                    <button class="btn btn-xs btn-info" onclick="joinMeeting('<?php echo $schScheduleId; ?>')">
-                                                                            <i class="ace-icon fa fa-check bigger-120"></i>
-                                                                            Join
+                                                                    <button class="btn btn-xs btn-info" onclick="joinMeeting('<?php echo $schScheduleId; ?>')" alt="Join" title="Join">
+                                                                            <i class="ace-icon fa fa-users bigger-120"></i>
                                                                     </button>
                                                                     <?php } ?>
-
+                                                                    
                                                                     <?php if (($schCreator == "C") &&   (GM_DATE > $gmtStartTime) && (GM_DATE <= $gmtEndTime) && ($schStatus == "0") ){ ?>
-                                                                    <button class="btn btn-xs btn-danger">
+                                                                    <button class="btn btn-xs btn-danger" alt="Cancel" title="Cancel">
                                                                             <i class="ace-icon fa fa-remove bigger-120"></i>
-                                                                            Cancel
                                                                     </button>
                                                                     <?php } ?>
 
-                                                                     <?php if (($schCreator == "C")  &&  (GM_DATE > $gmtStartTime) && (GM_DATE <= $gmtEndTime) && (($schStatus == "0") ||($schStatus == "1")) ){ ?>
-                                                                    <button class="btn btn-xs btn-warning">
-                                                                            <i class="ace-icon fa fa-user bigger-120">+</i>
+                                                                    <?php if (($schCreator == "C")  &&  (GM_DATE > $gmtStartTime) && (GM_DATE <= $gmtEndTime) && (($schStatus == "0") ||($schStatus == "1")) ){ ?>
+                                                                    <button class="btn btn-xs btn-warning" alt="Add Invitee" title="Add Invitee">
+                                                                            <i class="ace-icon fa fa-user bigger-120"><sup>+</sup></i>
                                                                     </button>
-                                                                    <button class="btn btn-xs btn-purple">
+                                                                    <button class="btn btn-xs btn-purple" alt="Resend Invitee Email" title="Resend Invitee Email">
                                                                             <i class="ace-icon fa fa-envelope-o bigger-120"></i>
                                                                     </button>
                                                                     <?php } ?>
                                                                     
                                                                     <?php if ($schCreator != "C") { ?>
-                                                                    <button class="btn btn-xs btn-success" onclick="inviteeStatus('<?php echo $schScheduleId; ?>',1)">
+                                                                    <button class="btn btn-xs btn-success" onclick="inviteeStatus('<?php echo $schScheduleId; ?>',1)" alt="Accept" title="Accept">
                                                                             <i class="ace-icon fa fa-thumbs-o-up bigger-120"></i>
                                                                     </button>
-                                                                    <button class="btn btn-xs btn-pink">
-                                                                            <i class="ace-icon fa fa-question bigger-120"></i>
+                                                                    <button class="btn btn-xs btn-pink" onclick="inviteeStatus('<?php echo $schScheduleId; ?>',3)" alt="MayBe" title="MayBe">
+                                                                        &nbsp;<i class="ace-icon fa fa-question bigger-120"></i>&nbsp;
                                                                     </button>
-                                                                    <button class="btn btn-xs btn-danger">
+                                                                    <button class="btn btn-xs btn-danger" onclick="inviteeStatus('<?php echo $schScheduleId; ?>',2)" alt="Decline" title="Decline">
                                                                             <i class="ace-icon fa fa-thumbs-o-down bigger-120"></i>
                                                                     </button>
                                                                     <?php } ?>
@@ -293,12 +292,17 @@ catch(Exception $e)
     </body>
     
     <script type="text/javascript">
-        
+            document.onclick=function()
+            {
+                 document.getElementById('mError').style.display="none";
+            };
+            
             var SITE_ROOT = "<?php echo $SITE_ROOT; ?>";
 
             function joinMeeting(schId) {
                 window.open(SITE_ROOT+"schedule/start.php?startId="+schId);
             }
+            
             
              function inviteeStatus (schId,iStat)
             {
@@ -310,19 +314,25 @@ catch(Exception $e)
                     data: "SchId="+schId+"&iStat="+iStat+"&Num="+Math.random(),
                     loading: $(".loading").html(""),
                     success: function(html) {
-                        if (iStat == 1) {
+                        if (iStat == 1) 
+                        {
                             $("#mError").html("You have Accepted the meeting request.");
-                            $("#mError").removeClass("alert-error").addClass("alert-success");
+                            $("#mError").removeClass("alert-danger alert-warning").addClass("alert-success");
                         }
-                        else {
+                        else if (iStat == 2) 
+                        {
                             $("#mError").html("You have Declined the meeting request.");
-                            $("#mError").removeClass("alert-success").addClass("alert-error");
+                            $("#mError").removeClass("alert-success alert-warning").addClass("alert-danger");
+                        }
+                        else 
+                        {
+                            $("#mError").html("You are not sure for this meeting request.");
+                            $("#mError").removeClass("alert-success alert-danger").addClass("alert-warning");
                         }
                         $("#mError").css({"display":"block"});
                     }
                 });
             }
-            
 
         
             function meetingDetails(schId,schdtl) {
@@ -354,30 +364,30 @@ catch(Exception $e)
                 e.preventDefault();
 
                 $( "#dialog-confirm" ).removeClass('hide').dialog({
-                        resizable: false,
-                        width: '320',
-                        modal: true,
-                        title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-exclamation-triangle red'></i> Empty the recycle bin?</h4></div>",
-                        title_html: true,
-                        buttons: [
-                                {
-                                        html: "<i class='ace-icon fa fa-trash-o bigger-110'></i>&nbsp; Delete all items",
-                                        "class" : "btn btn-danger btn-minier",
-                                        click: function() {
-                                                $( this ).dialog( "close" );
+                                resizable: false,
+                                width: '320',
+                                modal: true,
+                                title: "<div class='widget-header'><h4 class='smaller'><i class='ace-icon fa fa-exclamation-triangle red'></i> Empty the recycle bin?</h4></div>",
+                                title_html: true,
+                                buttons: [
+                                        {
+                                                html: "<i class='ace-icon fa fa-trash-o bigger-110'></i>&nbsp; Delete all items",
+                                                "class" : "btn btn-danger btn-minier",
+                                                click: function() {
+                                                        $( this ).dialog( "close" );
+                                                }
                                         }
-                                }
-                                ,
-                                {
-                                        html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; Cancel",
-                                        "class" : "btn btn-minier",
-                                        click: function() {
-                                                $( this ).dialog( "close" );
+                                        ,
+                                        {
+                                                html: "<i class='ace-icon fa fa-times bigger-110'></i>&nbsp; Cancel",
+                                                "class" : "btn btn-minier",
+                                                click: function() {
+                                                        $( this ).dialog( "close" );
+                                                }
                                         }
-                                }
-                        ]
+                                ]
+                        });
                 });
-        });
                 
                 //initiate dataTables plugin
                 var oTable1 =
