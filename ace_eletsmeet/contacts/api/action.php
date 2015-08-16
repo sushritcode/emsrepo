@@ -56,11 +56,28 @@ if(isset($_REQUEST["action"]))
 			
 			break;
 		case "update":
-			$formMaps  = profile_form_table_map();
+			$formMaps  = profile_form_table_map_contacts();
+			// for new group name and existing group name start
+			if(trim($_REQUEST["newcontactgroupname"]) != "")
+				$_REQUEST["contactgroup"] = trim($_REQUEST["newcontactgroupname"]);
+			// for new group name and existing group name end
+
 			$updateparams = getUpdateQueryString($_REQUEST , $formMaps);
-			$result  = updateUserProfile($updateparams , $objDataHelper , $strCK_user_id , $_REQUEST["action"]);
+			$result  = updateContactProfile($updateparams , $_REQUEST["contactid"] ,  $objDataHelper , $strCK_user_id , $_REQUEST["action"]);
 			echo $result;
 
+			break;
+		case "getcontact":
+			$arrContact = getContactByContactid($strCK_user_id , $_REQUEST["contactid"] ,  $objDataHelper );
+			$formMaps  = profile_form_table_map_contacts();
+			$frmName = "frmcontact";
+			$arrContactDetails = Array();
+			foreach($formMaps[$frmName] as $key => $value)
+				$arrContactDetails[$key] = $arrContact[0][$value];
+			if(count($arrContactDetails) ==0 )
+				echo "0";
+			else
+				echo json_encode($arrContactDetails);
 			break;
 	}
 }
