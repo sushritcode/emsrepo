@@ -243,5 +243,88 @@ function change_user_profile($paramString , $objDataHelper ,$strCK_user_id ,$typ
 		throw new Exception("common_function_inc.php : change_user_profile Missing Parameter.", 141);
 	}
 }
+/* -----------------------------------------------------------------------------
+   Function Name : getContactByContactid
+   Purpose       : retrieve all the contacts on the basis of contactid.
+   Parameters    : userid, Datahelper , contactid
+   Returns       : contacts
+   Calls         : datahelper.fetchRecords
+   Called By     :
+   Author        : sushrit 
+   Created  on   : aug-16-2015
+   Modified By   :
+   Modified on   :
+   ------------------------------------------------------------------------------ */
+
+function getContactByContactid($user_id , $personal_contact_id ,  $objDataHelper )
+{
+
+	if (!is_object($objDataHelper)) 
+	{
+		throw new Exception("common_function.inc.php : getContactByContactid : DataHelper Object did not instantiate", 104);
+	}
+
+	if (strlen(trim($user_id)) <= 0) 
+	{
+		throw new Exception("common_function.inc.php: getContactByContactid: Missing Parameter user id.", 141);
+	}
+	if (strlen(trim($personal_contact_id)) <= 0) 
+	{
+		throw new Exception("common_function.inc.php: getAllcontactsByEmailId : Missing Paramete personnel contact id.", 141);
+	}
+
+	try 
+	{
+
+		$strSqlStatement = "SELECT pdc.personal_contact_id, pdc.contact_nick_name, pdc.contact_first_name, pdc.contact_last_name, pdc.contact_email_address, pdc.contact_idd_code, pdc.contact_mobile_number, pdc.contact_group_name, pdc.user_id, date(pdc.updatedon) 'updatdt', pdc.personal_contact_status FROM personal_contact_details pdc WHERE pdc.user_id = '".$user_id."' AND pdc.personal_contact_id = '".trim($personal_contact_id)."'";
+		$arrContactsResult = $objDataHelper->fetchRecords("QR", $strSqlStatement);
+		return $arrContactsResult;
+	} 
+	catch (Exception $e) 
+	{
+		throw new Exception("contact_function.inc.php : getAllcontactsByUserID : Could not fetch records : " . $e->getMessage(), 144);
+	}
+
+
+
+}
+/* -----------------------------------------------------------------------------
+   Function Name : updateContactProfile
+Purpose       : To update the contact profile tables as per the user input
+Parameters    : 
+Returns       :
+Calls         : 
+Called By     :
+Author        : Sushrit
+Created  on   : 16-August-2015
+Modified By   :
+Modified on   :
+------------------------------------------------------------------------------ */
+
+function updateContactProfile($paramString ,$contactid , $objDataHelper ,$strCK_user_id ,$type)
+{
+	
+	try
+	{
+		switch($type)
+		{
+			case "update":
+				$tableName = "personal_contact_details";
+				$criteria  = " Where user_id ='".$strCK_user_id."' and personal_contact_id = '".$contactid."'";
+				$sqlQuery = "UPDATE ".$tableName." SET ".$paramString." ".$criteria;
+				$result  = $objDataHelper->putRecords("QR",$sqlQuery);
+				return true;
+				break;
+		}
+		
+	}
+	catch(Exception $e)
+	{
+		throw new Exception("contacts.inc.php : updateProfile : Could not update records : " . $e->getMessage(), 144);
+		
+	}
+}
+
+
 
 ?>
