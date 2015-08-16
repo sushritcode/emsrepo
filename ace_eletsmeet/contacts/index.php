@@ -200,8 +200,11 @@ $optionCountry ="";
 			     <!--a href="#" class="blue">
 			     <i class="ace-icon fa fa-search-plus bigger-130"></i>
 			     </a-->
-			     <a href="#" class="green">
-			     <i class="ace-icon fa fa-pencil bigger-130"></i>
+			     <a onclick="document.getElementById('type').value='update';fetchcontactdetails('<?php echo $strCK_user_id?>','<?php echo $contacts[$i]['personal_contact_id'];?>','getcontact');" alt="Edit <?php echo $contacts[$i]['contact_nick_name']?>'s details" title="Update  <?php echo $contacts[$i]['contact_nick_name']?>'s details" data-toggle="modal" class="green" role="button" href="#modal-table">
+
+				     <i class="ace-icon fa fa-pencil bigger-130"></i>
+			      </a>
+			
 			     </a>
 			      <?php if($contacts[$i]['personal_contact_status'] == '1'){?>
 			     <a href="<?php echo $SITE_ROOT."contacts/api/action.php?action=disable&contactid=".$contacts[$i]['personal_contact_id']?>" class="red">
@@ -291,6 +294,7 @@ $optionCountry ="";
 											<input type="hidden" name="type" id="type">
 											<form class="form-horizontal" role="form" name="frmcontact" id="frmcontact">
 												<input type="hidden" name="association"  id="association">
+												<input type="hidden" name="contactid"  id="contactid">
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-3 control-label no-padding-right"> 
 														Nick Name :
