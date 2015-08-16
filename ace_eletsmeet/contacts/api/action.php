@@ -44,6 +44,11 @@ if(isset($_REQUEST["action"]))
 				exit;
 			}
 
+			// for new group name and existing group name start
+				if(trim($_REQUEST["newcontactgroupname"]) != "")
+					$_REQUEST["contactgroup"] = trim($_REQUEST["newcontactgroupname"]);
+			// for new group name and existing group name end
+
 			$insertParams = getInsertQueryString($_REQUEST , $formMaps);
 			$result = change_user_profile($insertParams , $objDataHelper ,$strCK_user_id ,"add");
 			echo "1";
