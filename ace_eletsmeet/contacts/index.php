@@ -10,6 +10,7 @@ require_once(INCLUDES_PATH.'cm_authorize.inc.php');
 require_once(INCLUDES_PATH.'common_function.inc.php');
 require_once(INCLUDES_PATH.'contact_function.inc.php');
 
+
 //data population start	
 $form_table_map = profile_form_table_map_contacts();
 $contacts = getAllcontactsByUserID($strCK_user_id , $objDataHelper);
@@ -17,7 +18,7 @@ $contacts = getAllcontactsByUserID($strCK_user_id , $objDataHelper);
 $arrGroups = getAllgroups($strCK_user_id , $objDataHelper);
 for($i=0;$i<count($arrGroups);$i++)
 {
-	$groupOptions.="<option value='".$arrGroups[$i]['group_id']."'>".$arrGroups[$i]['group_name']."</option>";
+	$groupOptions.="<option value='".$arrGroups[$i]['contact_group_name']."'>".$arrGroups[$i]['contact_group_name']."</option>";
 }
 
 $arrDistinctCountry = getDistinctCountry($objDataHelper);
@@ -185,7 +186,7 @@ $optionCountry ="";
 		       <td><?php echo $contacts[$i]['contact_first_name']." ".$contacts[$i]['contact_last_name'];?></td>
 		       <td><?php echo $contacts[$i]['contact_email_address'];?></td>
 		       <td><?php echo $contacts[$i]['contact_mobile_number'];?></td>
-		       <td class="hidden-480"><?php echo  $contacts[$i]['group_name'];?></td>
+		       <td class="hidden-480"><?php echo  $contacts[$i]['contact_group_name'];?></td>
 		       <td><?php echo  $contacts[$i]['updatdt'];?></td>
 		       <td class="hidden-480">
 			  <?php if($contacts[$i]['personal_contact_status'] == '1'){?>
@@ -296,7 +297,7 @@ $optionCountry ="";
 													</label>
 													<div class="col-sm-9" style="padding:6px 20px;">
 														<b>
-															<input type="text" class="col-sm-5" placeholder="Nick Name" id="contactnickname" name="contactnickname" required for="basic" value="" >
+															<input type="text" class="col-sm-9" placeholder="Nick Name" id="contactnickname" name="contactnickname" required for="basic" value="" >
 														</b>
 													</div>
 												 </div>
@@ -307,7 +308,7 @@ $optionCountry ="";
 													</label>
 													<div class="col-sm-9" style="padding:6px 20px;">
 														<b>
-															<input type="text" class="col-sm-5" placeholder="First Name" id="contactfirstname" name="contactfirstname" required for="basic" value="" >
+															<input type="text" class="col-sm-9" placeholder="First Name" id="contactfirstname" name="contactfirstname" required for="basic" value="" >
 														</b>
 													</div>
 												 </div>
@@ -318,7 +319,7 @@ $optionCountry ="";
 													</label>
 													<div class="col-sm-9" style="padding:6px 20px;">
 														<b>
-															<input type="text" class="col-sm-5" placeholder="Last Name" id="contactlastname" name="contactlastname" required for="basic" value="" >
+															<input type="text" class="col-sm-9" placeholder="Last Name" id="contactlastname" name="contactlastname" required for="basic" value="" >
 														</b>
 													</div>
 												 </div>
@@ -331,7 +332,7 @@ $optionCountry ="";
 													</label>
 													<div class="col-sm-9" style="padding:6px 20px;">
 														<b>
-															<input type="text" class="col-sm-5" placeholder="Email Address" id="contactemailaddress" name="contactemailaddress" required for="basic" value="" >
+															<input type="text" class="col-sm-9" placeholder="Email Address" id="contactemailaddress" name="contactemailaddress" required for="basic" value="" >
 														</b>
 													</div>
 												 </div>
@@ -342,7 +343,7 @@ $optionCountry ="";
 													</label>
 													<div class="col-sm-9" style="padding:6px 20px;">
 														<b>
-															<input type="text" class="col-sm-5" placeholder="Phone No." id="contactphoneno" name="contactphoneno" required for="basic" value="" >
+															<input type="text" class="col-sm-9" placeholder="Phone No." id="contactphoneno" name="contactphoneno" required for="basic" value="" >
 														</b>
 													</div>
 												 </div>
@@ -357,13 +358,20 @@ $optionCountry ="";
 																<?php echo $groupOptions;?>
 																</select>
 														</b>
+														<div style="float:left;padding:10px;">
+<b>OR</b>
+														</div>
+  														<div style="float:left;">
+															<input type="text" value="" for="basic" name="newcontactgroupname" id="newcontactgroupname" placeholder="New Group Name">
+   														</div>
+  														<div style="clear:both;"></div>
 													</div>
 												 </div>
 												 <div class="space-4"></div>
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-3 control-label no-padding-right"> Select Country </label>
 													<div class="col-sm-9" style="padding:6px 20px;">
-														 <select class="col-sm-5" for="address" name="contact_phone_idd" id="contact_phone_idd" class="form-control">
+														 <select class="col-sm-9" for="address" name="contact_phone_idd" id="contact_phone_idd" class="form-control">
 														    <option value="">Select Country</option>
 														    <?php echo $optionCountry;?>
 														</select>
