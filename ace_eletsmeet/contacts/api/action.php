@@ -32,11 +32,6 @@ if(isset($_REQUEST["action"]))
 			$formMaps  = profile_form_table_map_contacts();
 			$_REQUEST["association"] = $strCK_user_id;
 			$_REQUEST["updatedon"] = date("Y-m-d H:i:s");
-			if($insertParams == -1)
-			{
-				echo "2";
-				exit;
-			}
 			$arrContact = getAllcontactsByEmailId($strCK_user_id , $_REQUEST['contactemailaddress'] , $objDataHelper);
 			if(count($arrContact) > 0)
 			{
@@ -50,6 +45,12 @@ if(isset($_REQUEST["action"]))
 			// for new group name and existing group name end
 
 			$insertParams = getInsertQueryString($_REQUEST , $formMaps);
+			if($insertParams == -1)
+			{
+				echo "2";
+				exit;
+			}
+
 			$result = change_user_profile($insertParams , $objDataHelper ,$strCK_user_id ,"add");
 			echo "1";
 
@@ -78,6 +79,9 @@ if(isset($_REQUEST["action"]))
 				echo "0";
 			else
 				echo json_encode($arrContactDetails);
+			break;
+		case "uploadfiledata":
+			print_r($_REQUEST);
 			break;
 	}
 }
