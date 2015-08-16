@@ -29,7 +29,7 @@ function getAllcontactsByUserID($user_id , $objDataHelper )
 	try 
 	{
 
-		$strSqlStatement = "SELECT cg.group_name , pdc.personal_contact_id, pdc.contact_nick_name, pdc.contact_first_name, pdc.contact_last_name, pdc.contact_email_address, pdc.contact_idd_code, pdc.contact_mobile_number, pdc.contact_group_name, pdc.user_id, date(pdc.updatedon) 'updatdt', pdc.personal_contact_status FROM personal_contact_details pdc , contact_group cg WHERE pdc.contact_group_name = cg.group_id AND  pdc.user_id = '".$user_id."'";
+		$strSqlStatement = "SELECT pdc.contact_group_name , pdc.personal_contact_id, pdc.contact_nick_name, pdc.contact_first_name, pdc.contact_last_name, pdc.contact_email_address, pdc.contact_idd_code, pdc.contact_mobile_number, pdc.contact_group_name, pdc.user_id, date(pdc.updatedon) 'updatdt', pdc.personal_contact_status FROM personal_contact_details pdc WHERE pdc.user_id = '".$user_id."'";
 		$arrContactsResult = $objDataHelper->fetchRecords("QR", $strSqlStatement);
 		return $arrContactsResult;
 	} 
@@ -177,7 +177,8 @@ function getAllgroups( $userid , $objDataHelper)
 	{
 		throw new Exception("common_function.inc.php: getPasswordRequestDetails : Missing Parameter user id.", 141);
 	}
-	$sqlQuery = "SELECT * FROM contact_group WHERE association = '".$userid."'";
+	//$sqlQuery = "SELECT * FROM contact_group WHERE association = '".$userid."'";
+	$sqlQuery = "SELECT distinct contact_group_name FROM personal_contact_details WHERE user_id = '".$userid."'";
 	$arrGroupsResult = $objDataHelper->fetchRecords("QR", $sqlQuery);
 	return $arrGroupsResult;
 
