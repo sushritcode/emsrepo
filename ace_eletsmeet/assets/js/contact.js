@@ -24,6 +24,7 @@ function sendData(frmName,type)
 			else 
 				showAlert(0,"Unexpected situation !!!");
 			document.getElementById("ajax_loader").style.display = "none";
+			document.getElementById('type').value="";
 		} 
 	};
 	var url = frmAction+uri;
@@ -32,6 +33,57 @@ function sendData(frmName,type)
 	xmlhttp.send(null);
 	return false;
 };
+function fetchcontactdetails(userid,contactid,type)
+{
+
+	var frmAction =BASEURL+"contacts/api/action.php?action="+type+"&";
+	xmlhttp = initAjax();
+
+	document.getElementById("ajax_loader").style.display = "";
+	xmlhttp.onreadystatechange = function()
+	{
+		if(xmlhttp.readyState==4)
+		{
+			if(xmlhttp.responseText == 0 )
+				showAlert(0,"No such contact !!!");
+			else
+			{
+				document.getElementById("contactid").value = contactid;
+				var jsonRes = xmlhttp.responseText;
+				var contactsDetails  = JSON.parse(jsonRes);
+				for(key in contactsDetails)
+				{
+					if(document.getElementById(key))
+					{
+						switch(document.getElementById(key).type)
+						{
+							case "text":	
+								document.getElementById(key).value = contactsDetails[key];
+								break;
+							case "select":
+							case "select-one":
+								for (i = 0; i< document.getElementById(key).options.length; i++)
+								{
+									if (document.getElementById(key).options[i].value == contactsDetails[key])
+									{
+										document.getElementById(key).options[i].selected = true;
+										break;
+									}
+								}
+								break;
+						} 
+					}
+				}
+			}
+			document.getElementById("ajax_loader").style.display = "none";
+		}
+	};
+	var url = frmAction+"userid="+userid+"&contactid="+contactid;
+	xmlhttp.open("POST",url,true);
+        xmlhttp.send(null);
+        return false;
+};
+
 function showAlert(type,message)
 {	
 
