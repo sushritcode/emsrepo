@@ -74,7 +74,7 @@ function getAllcontactsByEmailId($user_id , $emailaddress ,  $objDataHelper )
 	try 
 	{
 
-		$strSqlStatement = "SELECT cg.group_name , pdc.personal_contact_id, pdc.contact_nick_name, pdc.contact_first_name, pdc.contact_last_name, pdc.contact_email_address, pdc.contact_idd_code, pdc.contact_mobile_number, pdc.contact_group_name, pdc.user_id, date(pdc.updatedon) 'updatdt', pdc.personal_contact_status FROM personal_contact_details pdc , contact_group cg WHERE pdc.contact_group_name = cg.group_id AND  pdc.user_id = '".$user_id."' AND pdc.contact_email_address = '".$emailaddress."'";
+		$strSqlStatement = "SELECT pdc.personal_contact_id, pdc.contact_nick_name, pdc.contact_first_name, pdc.contact_last_name, pdc.contact_email_address, pdc.contact_idd_code, pdc.contact_mobile_number, pdc.contact_group_name, pdc.user_id, date(pdc.updatedon) 'updatdt', pdc.personal_contact_status FROM personal_contact_details pdc WHERE pdc.user_id = '".$user_id."' AND pdc.contact_email_address = '".$emailaddress."'";
 		$arrContactsResult = $objDataHelper->fetchRecords("QR", $strSqlStatement);
 		return $arrContactsResult;
 	} 
@@ -203,9 +203,10 @@ function profile_form_table_map_contacts()
 	//`contact_nick_name`, `contact_first_name`, `contact_last_name`, `contact_email_address`, `contact_idd_code`, `contact_mobile_number`, `contact_group_name`, `user_id`, `updatedon`, `personal_contact_status`*/
 
 	//formname
-	$arrForms = array("frmcontact"=>array());
+	$arrForms = array("frmcontact"=>array() , "frmFileUploadData"=>array());
 	//formelementname 
 	$arrForms["frmcontact"] = array("contactfirstname"=>"contact_first_name","contactlastname"=>"contact_last_name","contactnickname"=>"contact_nick_name","contactemailaddress"=>"contact_email_address","contactphoneno"=>"contact_mobile_number","contactgroup"=>"contact_group_name","contact_phone_idd"=>"contact_idd_code","association"=>"user_id","updatedon"=>"updatedon");
+	$arrForms["frmFileUploadData"] = array("contact_first_name"=>"selfirstname" , "contact_last_name"=>"sellastname","contact_nick_name"=>"selnickname","contact_email_address"=>"selemailaddress","contact_mobile_number"=>"selphonenumber","contact_group_name"=>"selgroupname","contact_idd_code"=>"selcountry");
 	return $arrForms;
 }
 /* -----------------------------------------------------------------------------
