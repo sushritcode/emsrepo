@@ -20,6 +20,7 @@
 </script>
 
 <script src="<?php echo JS_PATH; ?>bootstrap.js"></script>
+<script src="<?php echo JS_PATH; ?>common.js"></script>
 
 
 

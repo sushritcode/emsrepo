@@ -7,6 +7,7 @@ if(count($arrHOST) > 2 )
 }
 //$SITE_ROOT = $urlScheme."://".$_SERVER['HTTP_HOST']."/";
 $SITE_ROOT = $urlScheme."://".$_SERVER['HTTP_HOST']."/letsemeet/emsrepo/branches/sushrit/ace_eletsmeet/";
+$CHKSITE_ROOT = $urlScheme."://".$_SERVER['HTTP_HOST']."/letsemeet/emsrepo/branches/mitesh/ace_eletsmeet/";
 
 $WEBAPP_PATH = "/var/www/html/letsemeet/emsrepo/branches/sushrit/ace_eletsmeet/";
 //$WEBAPP_PATH = "/home/eletsmeet/public_html/";
@@ -50,7 +51,7 @@ define("USER_SESSION_NAME","ckUsrLetsMeetUserSession");
 /*********************Configuration Parameter End ******************/
 
 /*********************DB Connection Start******************/
-//define("DB_CONNECTIONSTRING","root:root123:localhost:db_eletesmeet_com:3306");
+//define("DB_CONNECTIONSTRING","root:root123:localhost:dev_db_eletesmeet_com:3306");
 define("DB_CONNECTIONSTRING","root:mclaren:172.16.1.53:dev_db_eletesmeet_com:3306");
 /*********************DB Connection End******************/
 
