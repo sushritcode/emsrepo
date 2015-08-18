@@ -249,4 +249,36 @@ function getInsertQueryString($formValues , $formTableMap)
 		}
 	}
 }
+/* -----------------------------------------------------------------------------
+  Function Name : getDistinctCountryByCountryName
+  Purpose       : To Get Distinct country for mall the supported time zones
+  Parameters    :  Datahelper
+  Returns       :
+  Calls         : datahelper.fetchRecords
+  Called By     :
+  Author        : Sushrit 
+  Created  on   : July 28 , 2015
+  Modified By   :
+  Modified on   :
+  ------------------------------------------------------------------------------ */
+
+function getDistinctCountryByCountryName($countryName , $dataHelper) {
+    if (!is_object($dataHelper))
+    {
+        throw new Exception("common_function.inc.php : getDistinctCountry : DataHelper Object did not instantiate", 104);
+
+    }
+    try
+    {
+        $strSqlStatement = "SELECT DISTINCT cd.country_id, cd.country_name, cd.country_code, cd.country_idd_code FROM country_details cd, country_timezones ct
+WHERE cd.country_code = ct.country_code AND cd.country_status = '1' AND TRIM(LOWER(cd.country_name)) like  '".trim(strtolower($countryName))."'";
+        $arrList = $dataHelper->fetchRecords("QR", $strSqlStatement);
+        return $arrList;
+	
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("common_function.inc.php : Fetch Distinct Country Failed : " . $e->getMessage(), 1107);
+    }
+}
 
