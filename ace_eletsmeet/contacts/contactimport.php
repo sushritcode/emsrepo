@@ -333,9 +333,9 @@ for($i=0;$i<count($arrGroups);$i++)
 				 </div>
 				<!-- Step 1 ends here -->
 				<form class="form-horizontal" role="form"  name="frmFileUploadData"  id="frmFileUploadData" style="display:none;">
-					<input type="hidden" name="type" value="uploadfiledata">
-					<input type="hidden" name="filename">
-					<input type ="hidden" name="filestring">
+					<input type="hidden" id="type" name="type" value="uploadfiledata">
+					<input type="hidden" id="filename" name="filename">
+					<input type ="hidden" id="filestring" name="filestring">
 					<table aria-describedby="dynamic-table_info" role="grid" id="dynamic-table" class="table table-striped table-bordered table-hover dataTable no-footer DTTT_selectable" style="width:600px;">
 						<thead>
 							<tr role="row">
@@ -508,6 +508,8 @@ function stopUpload(success , filepath , contents)
 		}
 		else
 		{
+			document.getElementById("filename").value = filepath;
+			//document.getElementById("filestring").value = contents;
 			makeselect();
 			document.getElementById('frmFileUploadData').style.display="";
 		}
