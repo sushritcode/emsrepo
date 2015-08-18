@@ -57,6 +57,7 @@ if(isset($_REQUEST["action"]))
 			
 			break;
 		case "update":
+			$_REQUEST['updatedon'] = date('Y-m-d H:i:s');
 			$formMaps  = profile_form_table_map_contacts();
 			// for new group name and existing group name start
 			if(trim($_REQUEST["newcontactgroupname"]) != "")
@@ -81,7 +82,61 @@ if(isset($_REQUEST["action"]))
 				echo json_encode($arrContactDetails);
 			break;
 		case "uploadfiledata":
-			print_r($_REQUEST);
+			$checkKeys = Array("contact_email_address","contact_mobile_number");
+
+			$filename = $_REQUEST['filename'];
+			$filecontents = file($filename);	
+			$formname = $_REQUEST["formname"];
+			$formMaps  = profile_form_table_map_contacts();
+
+			for($i=0;$i<count($filecontents);$i++)
+			{
+				$arrFileLive = explode(",",$filecontents[$i]);
+
+				$index1 = $_REQUEST[$formMaps[$formname]['contact_email_address']];
+				$index2 = $_REQUEST[$formMaps[$formname]['contact_mobile_number']];
+				$queryString = $columns = "";
+				if($arrFileLive[$index1] != "" &&  $arrFileLive[$index2] != "")
+				{
+					$arrContact = getAllcontactsByEmailId($strCK_user_id , $arrFileLive[$index1] , $objDataHelper);
+					if(count($arrContact) ==  0)
+					{
+						foreach($formMaps[$formname] as $key => $value)
+						{
+							if($queryString != "")
+								$queryString.=",";
+							if($columns != "")
+								$columns.=",";
+							$columns.=$key;
+
+
+							if($value == "selgroupname")
+								$queryString.= "'".$_REQUEST[$value]."' ";
+
+							elseif ($value == "selcountry")
+							{
+								$arrCountry = getDistinctCountryByCountryName($arrFileLive[$_REQUEST[$value]],$objDataHelper);
+								if(count($arrCountry) > 0)
+									$queryString.="'".$arrCountry[0]['country_idd_code']."' ";
+								else 
+									$queryString.="'91'";
+							}
+							else			
+								$queryString.="'".$arrFileLive[$_REQUEST[$value]]."' ";
+
+						}
+							$columns.=", user_id";
+							$queryString.=", '".$strCK_user_id."'";
+						$queryString= "Insert into personal_contact_details (".$columns.") VALUES (".$queryString.");";
+						$result  = $objDataHelper->putRecords("QR",$queryString);
+										
+					}
+				}
+
+			}
+			echo  "1";
+			exit;
+
 			break;
 	}
 }
