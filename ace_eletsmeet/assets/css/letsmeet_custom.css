@@ -1,8 +1,16 @@
+.cPointer {
+     cursor: pointer;
+}
+
 .timezone {
     display: none;
 }
 
-.form-group.required .control-label::after {
-    color: red;
-    content: "*";
+.form-group.required .control-label:after { 
+   content:"*";
+   color:red;
+}
+
+.errorDisplay {
+     display:none;
 }
