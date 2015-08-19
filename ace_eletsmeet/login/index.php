@@ -144,13 +144,13 @@ if (isset($_POST['fgt_submit'])) {
                                             <div class="space-6"></div>
 
                                             <form method="POST" action="<?php echo $SITE_ROOT . 'login/index.php'; //$_SERVER['PHP_SELF']; ?>" name="frmLogin">
-<?php if (count($errors)): ?>
-                                                    <div class="alert alert-danger">
-    <?php foreach ($errors as $error): ?>
-                                                            <span><?php echo $error; ?></span><br />    
-    <?php endforeach; ?>
-                                                    </div>
-<?php endif; ?>
+                                            <?php if (count($errors)): ?>
+                                                                                                <div class="alert alert-danger">
+                                                <?php foreach ($errors as $error): ?>
+                                                                                                        <span><?php echo $error; ?></span><br />    
+                                                <?php endforeach; ?>
+                                                                                                </div>
+                                            <?php endif; ?>
 
                                                 <fieldset>
                                                     <div class="form-group <?php echo $errEmailClass; ?>">

@@ -15,7 +15,7 @@ $strPassCode = trim($_REQUEST['SchDtl']);
 
 try
 {
-   $arrSchDtls = getScheduleDetailsById($strScheduleId, $strCk_user_email_address , $strPassCode, $objDataHelper);
+   $arrSchDtls = isScheduleValid($strScheduleId, $strCk_user_email_address , $strPassCode, $objDataHelper);
 }
 catch(Exception $e)
 {
@@ -57,7 +57,7 @@ catch (Exception $a)
         </div>
         <div class="modal-body">-->
             <div class="well">
-                <h3 class="smaller"><?php echo $Meeting_Title; ?></h3>
+                <h4 class="smaller"><?php echo $Meeting_Title; ?></h4>
                 <hr>
                 <div>
                     <h5 class="lighter smaller"><i class="ace-icon fa fa-calendar  green"></i> <?php echo $Meeting_Time; ?> </h5>

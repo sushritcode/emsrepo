@@ -571,36 +571,36 @@ function createMeeting($schedule_id, $email_address)
   Modified By   :
   Modified on   :
   ------------------------------------------------------------------------------ */
-
-function isScheduleValid($schedule_id, $dataHelper) {
-    try
-    {
-        if (strlen(trim($schedule_id)) <= 0)
-        {
-            throw new Exception("schedule_function.inc.php: isScheduleValid : Missing Parameter schedule_id.", 2021);
-        }
-
-        if (!is_object($dataHelper))
-        {
-            throw new Exception("schedule_function.inc.php : isScheduleValid : DataHelper Object did not instantiate", 104);
-        }
-
-        $strSqlStatement = "SELECT schedule_id, schedule_status, meeting_timestamp_gmt, meeting_timestamp_local, meeting_title, " .
-                "meeting_timezone, meeting_gmt, user_details.user_id, user_login_details.email_address, user_details.nick_name, subscription_master.subscription_id, subscription_master.number_of_invitee, subscription_master.order_id " .
-                "FROM schedule_details, user_details, user_login_details, subscription_master " .
-                "WHERE schedule_details.user_id = user_details.user_id " .
-                "user_login_details.user_id = user_details.user_id " .
-                "AND schedule_details.subscription_id = subscription_master.subscription_id " .
-                "AND schedule_id='" . trim($schedule_id) . "'";
-        $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
-        $dataHelper->clearParams();
-        return $arrResult;
-    }
-    catch (Exception $e)
-    {
-        throw new Exception("schedule_function.inc.php : isScheduleValid : Could not fetch records : " . $e->getMessage(), 2022);
-    }
-}
+//
+//function isScheduleValid($schedule_id, $dataHelper) {
+//    try
+//    {
+//        if (strlen(trim($schedule_id)) <= 0)
+//        {
+//            throw new Exception("schedule_function.inc.php: isScheduleValid : Missing Parameter schedule_id.", 2021);
+//        }
+//
+//        if (!is_object($dataHelper))
+//        {
+//            throw new Exception("schedule_function.inc.php : isScheduleValid : DataHelper Object did not instantiate", 104);
+//        }
+//
+//        $strSqlStatement = "SELECT schedule_id, schedule_status, meeting_timestamp_gmt, meeting_timestamp_local, meeting_title, " .
+//                "meeting_timezone, meeting_gmt, user_details.user_id, user_login_details.email_address, user_details.nick_name, subscription_master.subscription_id, subscription_master.number_of_invitee, subscription_master.order_id " .
+//                "FROM schedule_details, user_details, user_login_details, subscription_master " .
+//                "WHERE schedule_details.user_id = user_details.user_id " .
+//                "user_login_details.user_id = user_details.user_id " .
+//                "AND schedule_details.subscription_id = subscription_master.subscription_id " .
+//                "AND schedule_id='" . trim($schedule_id) . "'";
+//        $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
+//        $dataHelper->clearParams();
+//        return $arrResult;
+//    }
+//    catch (Exception $e)
+//    {
+//        throw new Exception("schedule_function.inc.php : isScheduleValid : Could not fetch records : " . $e->getMessage(), 2022);
+//    }
+//}
 
 /* -----------------------------------------------------------------------------
   Function Name : isScheduleInviteeValid
@@ -812,7 +812,7 @@ function updInvitationStatus($schedule_id, $invitation_status, $inv_email_addres
   Modified on   :
   ------------------------------------------------------------------------------ */
 
-function cancelSchedule($schedule_id, $schedule_status, $gmt_datetime, $dataHelper) {
+function cancelSchedule($schedule_id, $schedule_status, $gmt_datetime, $cancel_reason,$dataHelper) {
     try
     {
         if (strlen(trim($schedule_id)) <= 0)
@@ -838,6 +838,7 @@ function cancelSchedule($schedule_id, $schedule_status, $gmt_datetime, $dataHelp
         $dataHelper->setParam("'" . trim($schedule_id) . "'", "I");
         $dataHelper->setParam("'" . trim($schedule_status) . "'", "I");
         $dataHelper->setParam("'" . trim($gmt_datetime) . "'", "I");
+        $dataHelper->setParam("'" . trim($cancel_reason) . "'", "I");
         $dataHelper->setParam("result", "O");
         $arrCancelSchedule = $dataHelper->putRecords("SP", "CancelSchedule");
         $dataHelper->clearParams();
@@ -931,14 +932,19 @@ function getModeratorDetails($schedule_id, $dataHelper)
     }
 }
 
-function getScheduleDetailsById($schedule_id, $email_address, $pass_code, $dataHelper) {
+function isScheduleValid($schedule_id, $email_address, $pass_code, $dataHelper) {
     try
     {
         if (!is_object($dataHelper))
         {
             throw new Exception("schedule_function.inc.php : isScheduleInviteeValid : DataHelper Object did not instantiate", 104);
         }
-        $strSqlStatement = "SELECT sd.schedule_id, sd.user_id, sd.schedule_status, sd.schedule_creation_time, sd.meeting_timestamp_gmt, sd.meeting_timestamp_local, sd.meeting_title, sd.meeting_agenda, sd.meeting_timezone, sd.meeting_gmt, sd.meeting_start_time, sd.meeting_end_time, sd.voice_bridge, sd.web_voice, sd.max_participants, sd.record_flag, sd.subscription_id, uld.email_address, ud.nick_name FROM schedule_details sd, user_login_details uld, user_details ud WHERE sd.user_id = uld.user_id  AND uld.user_id = ud.user_id AND sd.schedule_id='" . trim($schedule_id) . "' AND MD5(CONCAT('" . trim($schedule_id) . "',':','" . trim($email_address) . "',':','" . SECRET_KEY . "')) = '" . trim($pass_code) . "';" ;
+        $strSqlStatement = "SELECT sd.schedule_id, sd.user_id, sd.schedule_status, sd.schedule_creation_time, sd.meeting_timestamp_gmt, sd.meeting_timestamp_local, sd.meeting_title, sd.meeting_agenda, sd.meeting_timezone, sd.meeting_gmt, sd.meeting_start_time, sd.meeting_end_time, sd.voice_bridge, sd.web_voice, sd.max_participants, sd.record_flag, sd.subscription_id, uld.email_address, ud.nick_name, sm.subscription_id, sm.number_of_invitee, sm.order_id "
+                . "FROM schedule_details sd, user_login_details uld, user_details ud, subscription_master sm "
+                . "WHERE sd.user_id = uld.user_id  AND uld.user_id = ud.user_id "
+                . "AND sd.subscription_id = sm.subscription_id "
+                . "AND sd.schedule_id='" . trim($schedule_id) . "' "
+                . "AND MD5(CONCAT('" . trim($schedule_id) . "',':','" . trim($email_address) . "',':','" . SECRET_KEY . "')) = '" . trim($pass_code) . "';" ;
         $arrSchResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrSchResult;
     }
@@ -948,3 +954,47 @@ function getScheduleDetailsById($schedule_id, $email_address, $pass_code, $dataH
     }
 }
 
+function getScheduleDetailsById($schedule_id, $dataHelper) {
+    try
+    {
+        if (!is_object($dataHelper))
+        {
+            throw new Exception("schedule_function.inc.php : isScheduleInviteeValid : DataHelper Object did not instantiate", 104);
+        }
+        //$strSqlStatement = "SELECT sd.schedule_id, sd.user_id, sd.schedule_status, sd.schedule_creation_time, sd.meeting_timestamp_gmt, sd.meeting_timestamp_local, sd.meeting_title, sd.meeting_agenda, sd.meeting_timezone, sd.meeting_gmt, sd.meeting_start_time, sd.meeting_end_time, sd.voice_bridge, sd.web_voice, sd.max_participants, sd.record_flag, sd.subscription_id FROM schedule_details sd WHERE sd.schedule_id='".trim($schedule_id)."';";
+        $strSqlStatement = "SELECT schedule_id, schedule_status, meeting_timestamp_gmt, meeting_timestamp_local, meeting_title, " .
+        "meeting_timezone, meeting_gmt, cancel_reason, user_details.user_id, user_login_details.email_address, user_details.nick_name, subscription_master.subscription_id, subscription_master.number_of_invitee, subscription_master.order_id " .
+        "FROM schedule_details, user_details, user_login_details, subscription_master " .
+        "WHERE schedule_details.user_id = user_login_details.user_id " .
+        "AND user_login_details.user_id = user_details.user_id " .
+        "AND schedule_details.subscription_id = subscription_master.subscription_id " .
+        "AND schedule_id='" . trim($schedule_id) . "'";
+        $arrSchResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
+        return $arrSchResult;
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("schedule_function.inc.php : getScheduleDetailsById : Could not fetch records : " . $e->getMessage(), 2036);
+    }
+}
+
+function setScheduleCounter($schedule_id, $dataHelper)
+{
+    if (!is_object($dataHelper))
+    {
+        throw new Exception("sch_function.inc.php : setScheduleCounter : DataHelper Object did not instantiate", 104);
+    }
+    try
+    {
+        $strSqlStatement = "SELECT max_participants FROM schedule_details WHERE schedule_id = '".$schedule_id."'";
+        $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
+        $maxParticipants = $arrResult[0]['max_participants'];
+        $maxP = $maxParticipants + 1;
+        $updStatement = "UPDATE schedule_details SET max_participants = '".$maxP."' WHERE schedule_id = '".$schedule_id."'";
+        $updResponse = $dataHelper->putRecords("QR", $updStatement);
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("sch_function.inc.php : Update Schedule Participants Counter Failed : ".$e->getMessage(), 1104);
+    }
+}

@@ -24,5 +24,4 @@ catch(Exception $e)
 }
 
 return $inviteeStatus;
-
 ?>

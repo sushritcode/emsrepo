@@ -887,7 +887,7 @@ else
                      {
                             var schType = "L";
                             var schDtm = $('#sch_date').val() + " " +  $('#sch_time').val();
-                            alert(schDtm);
+                            //alert(schDtm);
                      }
                      else
                      {
