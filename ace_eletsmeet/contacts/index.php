@@ -120,15 +120,15 @@ $optionCountry ="";
                                 <!-- PAGE CONTENT START -->
                                     <div class="clearfix">
                                         <div class="pull-right tableTools-container"></div>
-
-					<div class="ColVis btn-group" title="Show/hide columns">
-						<button class="ColVis_Button ColVis_MasterButton btn btn-white btn-info btn-bold"  href="#modal-table" role="button" data-toggle="modal" title="Add New Contact" alt="Add New Contact"  onClick="document.getElementById('type').value='add';document.getElementById('association').value= '<?php echo $strCK_user_id;?>';">
-						<span>
-							<i class="ace-icon fa fa-user bigger-110 blue" ></i><sup><b style="font-size:12px;">+</b></sup>
-						</span>
+                                        <div class="">
+						<button class="ColVis_Button ColVis_MasterButton btn btn-white btn-info btn-bold" onclick="document.getElementById('type').value='add';document.getElementById('association').value= 'usr0000006';" alt="Add New Contact" title="Add New Contact" data-toggle="modal" role="button" href="#modal-table">
+							<i class="ace-icon fa fa-user bigger-130"></i>
+							<sup>
+								<b style="font-size:12px;">+</b>
+							</sup>
 						</button>
 					</div>
-	
+					
                                     </div>
                                     <div class="table-header">
 					My Contacts
