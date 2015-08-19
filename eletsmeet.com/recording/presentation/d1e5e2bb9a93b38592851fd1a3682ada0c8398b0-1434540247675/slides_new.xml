@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<popcorn>
-  <chattimeline in="8" direction="down" name="Mitesh" message="&#10;      HELLO&#10;    " target="chat"/>
-  <chattimeline in="381" direction="down" name="Mitesh" message="&#10;      HELLO&#10;    " target="chat"/>
-  <chattimeline in="675" direction="down" name="Sushrit Shrivatava" message="&#10;      ellow&#10;    " target="chat"/>
-  <chattimeline in="696" direction="down" name="Sushrit Shrivatava" message="&#10;      a / s / l please&#10;    " target="chat"/>
-  <chattimeline in="712" direction="down" name="Mitesh" message="&#10;      BYE....&#10;    " target="chat"/>
-</popcorn>
