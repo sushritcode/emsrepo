@@ -22,11 +22,11 @@ try
         exit;
     }
 
-//    if (sizeof($arrUserSessionDetails) <= 0 && $CONST_MODULE == "meeting")
-//    {
-//        header("Location: ".$SITE_ROOT);
-//        exit;
-//    }
+    if (sizeof($arrUserSessionDetails) <= 0 && $CONST_MODULE == "meeting")
+    {
+        header("Location: ".$SITE_ROOT);
+        exit;
+    }
 //    
 //    if (sizeof($arrUserSessionDetails) <= 0 && $CONST_MODULE == "profile")
 //    {

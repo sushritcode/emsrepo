@@ -57,9 +57,9 @@
 					<!-- Address book start-->
 					<li class="">
 						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-star"></i>
+							<i class="menu-icon fa fa-users"></i>
 							<span class="menu-text">
-								Address Book
+								Contacts
 							</span>
 
 							<b class="arrow fa fa-angle-down"></b>
@@ -82,71 +82,22 @@
 									<li class="">
 										<a href="<?php echo $SITE_ROOT."contacts/"?>">
 											<i class="menu-icon fa fa-caret-right"></i>
-											Show Contacts
+											My Contacts
 										</a>
 
 										<b class="arrow"></b>
 									</li>
-
-									<li class="">
-										<a href="<?php echo $SITE_ROOT."contacts/add"?>">
-											<i class="menu-icon fa fa-caret-right"></i>
-											Add Contact
-										</a>
-
-										<b class="arrow"></b>
-									</li>
-
-								</ul>
-							</li>
-							<li class="">
-								<a href="#" class="dropdown-toggle">
-									<i class="menu-icon fa fa-caret-right"></i>
-
-									Manage Groups
-									<b class="arrow fa fa-angle-down"></b>
-								</a>
-
-								<b class="arrow"></b>
-
-								<ul class="submenu">
-									<li class="">
-										<a href="<?php echo $SITE_ROOT."groups/"?>">
-											<i class="menu-icon fa fa-caret-right"></i>
-											Show Groups
-										</a>
-
-										<b class="arrow"></b>
-									</li>
-
-									<li class="">
-										<a href="<?php echo $SITE_ROOT."groups/add"?>">
-											<i class="menu-icon fa fa-caret-right"></i>
-											Add Group
-										</a>
-
-										<b class="arrow"></b>
-									</li>
-
+									
 								</ul>
 							</li>
 
 							<li class="">
-                                                                <a href="<?php echo $SITE_ROOT."contacts/import";?>">
+                                                                <a href="<?php echo $SITE_ROOT."contacts/contactimport.php";?>">
                                                                         <i class="menu-icon"></i>
                                                                         Import Addresses (csv)
                                                                 </a>
 
 							</li>
-							<li class="">
-                                                                <a href="<?php echo $SITE_ROOT."contacts/exportcsv";?>">
-                                                                        <i class="menu-icon"></i>
-
-                                                                        Export Addresses (csv)
-                                                                </a>
-
-							</li>
-
 						</ul>
 					</li>
 					<!-- Address book end -->
@@ -154,7 +105,7 @@
 
 					<li class="">
 						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-star"></i>
+							<i class="menu-icon fa fa-calendar"></i>
 							<span class="menu-text">
 								Meetings
 							</span>
@@ -177,36 +128,26 @@
 
 								<ul class="submenu">
 									<li class="">
-										<a href="top-menu.html">
+										<a href="<?php echo $SITE_ROOT;?>schedule/">
 											<i class="menu-icon fa fa-caret-right"></i>
 											Schedule Meeting
 										</a>
 
 										<b class="arrow"></b>
 									</li>
-
 									<li class="">
-										<a href="two-menu-1.html">
+										<a href="<?php echo $SITE_ROOT;?>meeting/">
 											<i class="menu-icon fa fa-caret-right"></i>
-											Cancel Meeting
-										</a>
-
-										<b class="arrow"></b>
-									</li>
-									<li class="">
-										<a href="two-menu-1.html">
-											<i class="menu-icon fa fa-caret-right"></i>
-											Merge Meetings
+											My Meeting
 										</a>
 
 										<b class="arrow"></b>
 									</li>
 
-
 									<li class="">
-										<a href="two-menu-2.html">
+										<a href="<?php echo $SITE_ROOT;?>meeting/">
 											<i class="menu-icon fa fa-caret-right"></i>
-											Postpone Meeting
+											Archive Meeting
 										</a>
 
 										<b class="arrow"></b>
@@ -293,61 +234,6 @@
 						</ul>
 					</li>
 					<!-- Settings book start-->
-					<li class="">
-						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-star"></i>
-							<span class="menu-text">
-								Moderators
-							</span>
-
-							<b class="arrow fa fa-angle-down"></b>
-						</a>
-
-						<b class="arrow"></b>
-
-						<ul class="submenu">
-							<li class="">
-								<a href="#" class="dropdown-toggle">
-									<i class="menu-icon fa fa-caret-right"></i>
-
-									Manage Moderators
-									<b class="arrow fa fa-angle-down"></b>
-								</a>
-
-								<b class="arrow"></b>
-
-								<ul class="submenu">
-									<li class="">
-										<a href="top-menu.html">
-											<i class="menu-icon fa fa-caret-right"></i>
-											Add Moderator
-										</a>
-
-										<b class="arrow"></b>
-									</li>
-
-									<li class="">
-										<a href="two-menu-1.html">
-											<i class="menu-icon fa fa-caret-right"></i>
-											Edit Moderator Details
-										</a>
-
-										<b class="arrow"></b>
-									</li>
-
-									<li class="">
-										<a href="two-menu-2.html">
-											<i class="menu-icon fa fa-caret-right"></i>
-											Disable Moderator
-										</a>
-
-										<b class="arrow"></b>
-									</li>
-
-								</ul>
-							</li>
-						</ul>
-					</li>
 					<li class="">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-star"></i>

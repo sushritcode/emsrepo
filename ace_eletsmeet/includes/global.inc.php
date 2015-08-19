@@ -73,3 +73,32 @@ define("RELAY_EMAIL_FLAG", 0); //1 = On & 0= Off
 define("RELAY_MAIL_API",$SITE_ROOT."api/sendmail.php?");
 //define("RELAY_MAIL_API",$SITE_ROOT."includes/relay_mail.php?"); // Used for Live Server
 /********************Email Informations End**********************/
+
+
+define("VOICE_BRIDGE_LENGTH",5);
+define("VOICE_BRIDGE_PREFIX",7);
+define("PERSONAL_CONTACT_TYPE","P");
+define("CLIENT_CONTACT_TYPE","C");
+
+define("MODERATOR_PWD","mppwd");
+define("ATTENDEE_PWD","appwd");
+define("MEETING_RECORD_FLAG","true");
+define("MEETING_START_GRACE_INTERVAL",60);
+define("MEETING_END_GRACE_INTERVAL",60);
+define("DAEMON_MEETING_OVERDUE_GRACE_INTERVAL",60);
+define("DAEMON_MEETING_END_GRACE_INTERVAL",5);
+define("DEFAULT_INVITEE_LIMIT",30);
+define("MEETING_LIST_GRACE_INTERVAL",60);
+define("JOIN_MEETING_WELCOME_MSG","Welcome to LetsMeet");
+
+define("VIDEO_SERVER_API","/bigbluebutton/api/");
+define("VIDEO_SERVER_CREATE_API","create?");
+define("VIDEO_SERVER_JOIN_API","join?");
+define("VIDEO_SERVER_IS_MEETING_RUNNING_API","isMeetingRunning?");
+define("VIDEO_SERVER_GET_RECORDING_API","getRecordings?");
+define("VIDEO_SERVER_END_MEETING_API","end?");
+define("VIDEO_SERVER_GET_MEETING_INFO_API","getMeetingInfo?");
+define("MEETING_LOGOUT_URL",$SITE_ROOT);
+
+//define("MEETING_END_TIME",240);
+//define("GRACE_PERIOD",180);

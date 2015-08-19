@@ -19,6 +19,10 @@
     <li class="active">Profile</li>
     <?php } ?>
     
+    <?php if ($CONST_MODULE == "schedule"){ ?>
+    <li class="active">Schedule</li>
+    <?php } ?>
+    
 </ul><!-- /.breadcrumb -->
 
 <!-- #section:basics/content.searchbox -->
