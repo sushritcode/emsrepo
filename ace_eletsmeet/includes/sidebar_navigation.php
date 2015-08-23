@@ -175,62 +175,23 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="#" class="dropdown-toggle">
+								<a href="<?php echo $SITE_ROOT;?>profile">
 									<i class="menu-icon fa fa-caret-right"></i>
 
-									Manage Account
+									Update Profile
 									<b class="arrow fa fa-angle-down"></b>
 								</a>
 
-								<b class="arrow"></b>
-
-								<ul class="submenu">
-									<li class="">
-										<a href="top-menu.html">
-											<i class="menu-icon fa fa-caret-right"></i>
-											Update Password
-										</a>
-
-										<b class="arrow"></b>
-									</li>
-
-									<li class="">
-										<a href="two-menu-1.html">
-											<i class="menu-icon fa fa-caret-right"></i>
-											Edit Profile
-										</a>
-
-										<b class="arrow"></b>
-									</li>
-
-									<li class="">
-										<a href="two-menu-2.html">
-											<i class="menu-icon fa fa-caret-right"></i>
-											Edit Company Profile
-										</a>
-
-										<b class="arrow"></b>
-									</li>
-
-								</ul>
 							</li>
 							<li class="">
-                                                                <a href="#" class="dropdown-toggle">
+                                                                <a href="<?php echo $SITE_ROOT;?>profile/profilepic.php">
+									<i class="menu-icon fa fa-caret-right"></i>
                                                                         <i class="menu-icon"></i>
 
-                                                                        Import Addresses (csv)
+                                                                        Update Profile Pic
                                                                 </a>
 
 							</li>
-							<li class="">
-                                                                <a href="#" class="dropdown-toggle">
-                                                                        <i class="menu-icon fa"></i>
-
-                                                                        Export Addresses (csv)
-                                                                </a>
-
-							</li>
-
 						</ul>
 					</li>
 					<!-- Settings book start-->
