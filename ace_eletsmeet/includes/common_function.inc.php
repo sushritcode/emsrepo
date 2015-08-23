@@ -406,4 +406,39 @@ WHERE cd.country_code = ct.country_code AND cd.country_status = '1' AND TRIM(LOW
         throw new Exception("common_function.inc.php : Fetch Distinct Country Failed : " . $e->getMessage(), 1107);
     }
 }
+/* -----------------------------------------------------------------------------
+   Function Name : getUserImage
+Purpose       : To fetch the user profile pic tables as per the user input
+Parameters    : 
+Returns       :
+Calls         : 
+Called By     :
+Author        : Sushrit
+Created  on   : 23-August-2015
+Modified By   :
+Modified on   :
+------------------------------------------------------------------------------ */
+function getUserImage($user_id , $objDataHelper)
+{	try
+	{	
+
+		if (strlen(trim($user_id)) <= 0) 
+		{
+			throw new Exception("common_function.inc.php: getUserImage : Missing Parameter user_id.", 141);
+		}
+		if(!isset($objDataHelper))
+		{
+			throw new Exception("common_function.inc.php: getUserImage : Datahlper not set.", 141);
+		}
+		$strQueryUserImage = "Select * from user_images where user_id ='".$user_id."'";
+		$arrUserImage = $objDataHelper->fetchRecords("QR",$strQueryUserImage);
+		return $arrUserImage;
+	}
+	catch(Exception $e)
+	{
+		throw new Exception("common_.inc.php : getUserImage : Could not find records : " . $e->getMessage(), 144);
+
+	}
+
+}
 
