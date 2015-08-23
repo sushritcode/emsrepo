@@ -1,4 +1,11 @@
 <?php 
+	//display image start
+		$arrDisplayImg = getUserImage($strCK_user_id , $objDataHelper );
+                $displayImage = "<img class=\"nav-user-photo\" src=\"".AVATARS_PATH."avatar2.png\" alt=\"".$strCk_user_nick_name."'s Photo\" title=\"".$strCk_user_nick_name."'s Photo\" />";
+		if(count($arrDisplayImg) > 0 )
+			$displayImage = "<img class=\"nav-user-photo\"  src=\"data:image/jpeg;base64,". base64_encode($arrDisplayImg[0]['image']) ."\" alt=\"".$strCk_user_nick_name."'s Photo\" title=\"".$strCk_user_nick_name."'s Photo\"  />";
+	// display image stop 
+	
 ?>
 <script type="text/javascript">
     try 
@@ -292,11 +299,10 @@
                     </li>
                 </ul>
             </li>
-
             <!-- #section:basics/navbar.user_menu -->
             <li class="light-blue">
                 <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                    <img class="nav-user-photo" src="<?php echo AVATARS_PATH; ?>avatar2.png" alt="<?php echo $strCk_user_nick_name; ?>'s Photo" title="<?php echo $strCk_user_nick_name; ?>'s Photo" />
+		    <?php echo $displayImage;?>
                     <span class="user-info"><small>Welcome,</small><?php echo $strCk_user_nick_name; ?></span>
                     <i class="ace-icon fa fa-caret-down"></i>
                 </a>
