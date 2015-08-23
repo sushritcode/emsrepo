@@ -180,4 +180,62 @@ function updateUserProfile($paramString , $objDataHelper ,$strCK_user_id ,$type)
 
 
 
+/* -----------------------------------------------------------------------------
+   Function Name : updateUserImage
+Purpose       : To update the user profile tables as per the user input
+Parameters    : 
+Returns       :
+Calls         : 
+Called By     :
+Author        : Sushrit
+Created  on   : 23-August-2015
+Modified By   :
+Modified on   :
+------------------------------------------------------------------------------ */
+function updateUserImage($user_id , $fileContents , $objDataHelper)
+{	try
+	{	
+
+		if (strlen(trim($user_id)) <= 0) 
+		{
+			throw new Exception("profile_function.inc.php: updateUserImage : Missing Parameter user_id.", 141);
+		}
+		if (strlen(trim($fileContents)) <= 0) 
+		{
+			throw new Exception("profile_function.inc.php: updateUserImage : Missing Parameter file contents.", 141);
+		}
+
+		if(!isset($objDataHelper))
+		{
+			throw new Exception("profile_function.inc.php: updateUserImage : Datahlper not set.", 141);
+		}
+		
+		$arrUserImage = getUserImage($user_id , $objDataHelper);
+		if(count($arrUserImage) == 0)
+		{
+		
+			$insertQuery = "Insert into user_images (user_id , image ) VALUES ('".$user_id."' , '".$fileContents."');";
+			$objDataHelper->putRecords("QR",$insertQuery);
+			return true;
+			
+		}
+		else
+		{
+			$updateQuery = "Update user_images set image='".$fileContents."' where user_id = '".$user_id."'";
+			$objDataHelper->putRecords("QR",$updateQuery);
+			return true;
+			
+		}
+		return false;
+	}
+	catch(Exception $e)
+	{
+		throw new Exception("profile.inc.php : updateUserImage : Could not find records : " . $e->getMessage(), 144);
+
+	}
+
+}
+
+
+
 
