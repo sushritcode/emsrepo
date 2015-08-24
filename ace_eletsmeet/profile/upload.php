@@ -25,6 +25,8 @@ require_once(INCLUDES_PATH.'profile_function.inc.php');
 	try
 	{
    		$contents  = addslashes(file_get_contents($target_path));
+	//	$thumbnail = createThumbnail($target_path , "/tmp/thumb/", 32 , 32);
+	//	print "here".$thumbnail;
 		$res = updateUserImage($strCK_user_id , $contents , $objDataHelper);
 		if(!$res)
 		 $result = 3;
