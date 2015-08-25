@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `contact_group` (
 INSERT INTO `contact_group` (`group_id`, `group_name`, `group_status`) VALUES
 (1, 'General', '1');
 
-CREATE TABLE IF NOT EXISTS `user_inibox` (
+CREATE TABLE IF NOT EXISTS `user_inbox` (
   `msg_id` int(10) NOT NULL AUTO_INCREMENT,
   `msg_to` varchar(50) NOT NULL,
   `msg_from` varchar(50) NOT NULL,
