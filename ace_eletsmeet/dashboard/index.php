@@ -7,6 +7,7 @@ require_once(INCLUDES_PATH.'cm_authfunc.inc.php');
 $CONST_MODULE = 'dashboard';
 $CONST_PAGEID = 'Dashboard Home';
 require_once(INCLUDES_PATH.'cm_authorize.inc.php');
+require_once(INCLUDES_PATH.'common_function.inc.php');
 ?>
 
 <!DOCTYPE html>
