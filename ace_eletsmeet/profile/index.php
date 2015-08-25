@@ -4,7 +4,7 @@ require_once(CLASSES_PATH.'error.inc.php');
 require_once(DBS_PATH.'DataHelper.php');
 require_once(DBS_PATH.'objDataHelper.php');
 require_once(INCLUDES_PATH.'cm_authfunc.inc.php');
-$CONST_MODULE = 'profile';
+$CONST_MODULE = 'personal details';
 $CONST_PAGEID = 'My Profile';
 require_once(INCLUDES_PATH.'cm_authorize.inc.php');
 require_once(INCLUDES_PATH.'common_function.inc.php');
@@ -111,7 +111,7 @@ $optionCountry ="";
 			</script>
                         <div class="page-header">
                             <h1>
-                                My Profile<small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp;personal details</small>
+                                <?php echo $CONST_PAGEID;?><small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp;<?php echo $CONST_MODULE;?></small>
                             </h1>
                         </div>
                         <!-- PAGE HEADER -->
