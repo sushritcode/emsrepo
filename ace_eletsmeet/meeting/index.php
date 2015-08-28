@@ -5,12 +5,9 @@ require_once(DBS_PATH . 'DataHelper.php');
 require_once(DBS_PATH . 'objDataHelper.php');
 require_once(INCLUDES_PATH . 'cm_authfunc.inc.php');
 $CONST_MODULE = 'meeting';
-$CONST_PAGEID = 'Meeting Page';
+$CONST_PAGEID = 'Scheduled Meeting';
 require_once(INCLUDES_PATH . 'cm_authorize.inc.php');
-//require_once(INCLUDES_PATH . 'common_function.inc.php');
 require_once(INCLUDES_PATH . 'schedule_function.inc.php');
-
-//echo GM_DATE;
 
 try
 {
@@ -186,11 +183,10 @@ catch(Exception $e)
                                                                     <button href="#sch-cancel" data-toggle="modal" class="btn btn-sm btn-danger" onclick="cancelMeeting('<?php echo $schScheduleId; ?>', '<?php echo $schPassCode; ?>')" alt="Cancel" title="Cancel"><i class="ace-icon fa fa-remove bigger-120"></i></button>
                                                                     <?php } ?>
 
-                                                                    <?php //if (($schCreator == "C") && (GM_DATE > $gmtStartTime) && (GM_DATE <= $gmtEndTime) && (($schStatus == "0") ||($schStatus == "1")) ){ ?>
+                                                                    <?php if (($schCreator == "C") && (GM_DATE > $gmtStartTime) && (GM_DATE <= $gmtEndTime) && (($schStatus == "0") ||($schStatus == "1")) ){ ?>
                                                                     <button href="#sch-addinvitee" data-toggle="modal" class="btn btn-sm btn-warning" onclick="addInvitee('<?php echo $schScheduleId; ?>', '<?php echo $schPassCode; ?>')" alt="Add Invitee" title="Add Invitee"><i class="ace-icon fa fa-user bigger-120"><sup>+</sup></i></button>
                                                                     <button href="#sch-sendinvitee" data-toggle="modal" class="btn btn-sm btn-purple" onclick="sendInvitee('<?php echo $schScheduleId; ?>', '<?php echo $schPassCode; ?>')" alt="Resend Invitee Email" title="Resend Invitee Email"><i class="ace-icon fa fa-envelope-o bigger-120"></i></button>
-<!--                                                                    <button class="btn btn-sm btn-purple" alt="Resend Invitee Email" title="Resend Invitee Email"><i class="ace-icon fa fa-envelope-o bigger-120"></i></button>-->
-                                                                    <?php //} ?>
+                                                                    <?php } ?>
                                                                     
                                                                     <?php if ($schCreator != "C") { ?>
                                                                     <button class="btn btn-sm btn-success" onclick="inviteeStatus('<?php echo $schScheduleId; ?>',1)" alt="Accept" title="Accept"><i class="ace-icon fa fa-thumbs-o-up bigger-120"></i></button>

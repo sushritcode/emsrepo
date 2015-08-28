@@ -100,7 +100,7 @@ function scheduledPlans($user_id, $datetime, $dataHelper) {
   Function Name : getCombineGroupList
   Purpose       : To Get Contact Group List from client_contact_details and personal_contact_details  Table
   Parameters    : user_id, client_id, Datahelper
-  Returns       : 
+  Returns       :
   Calls         : datahelper.fetchRecords
   Called By     :
   Author        : Mitesh Shah
@@ -109,8 +109,7 @@ function scheduledPlans($user_id, $datetime, $dataHelper) {
   Modified on   :
   ------------------------------------------------------------------------------- */
 
-function getCombineGroupList($user_id, $client_id, $dataHelper)
-{
+function getCombineGroupList($user_id, $client_id, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("schedule_function.inc.php : getCombineGroupList : DataHelper Object did not instantiate", 104);
@@ -133,7 +132,7 @@ function getCombineGroupList($user_id, $client_id, $dataHelper)
   Function Name : getCombineContactList
   Purpose       : To Get Contact List from client_contact_details and personal_contact_details  Table
   Parameters    : user_id, client_id, Datahelper
-  Returns       : 
+  Returns       :
   Calls         : datahelper.fetchRecords
   Called By     :
   Author        : Mitesh Shah
@@ -142,8 +141,7 @@ function getCombineGroupList($user_id, $client_id, $dataHelper)
   Modified on   :
   ------------------------------------------------------------------------------ */
 
-function getCombineContactList($user_id, $client_id, $dataHelper)
-{
+function getCombineContactList($user_id, $client_id, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("schedule_function.inc.php : getCombineContactList : DataHelper Object did not instantiate", 104);
@@ -171,8 +169,7 @@ function getCombineContactList($user_id, $client_id, $dataHelper)
   Called By     : autoSuggest.php
   ------------------------------------------------------------------------------ */
 
-function autoSuggest($client_id, $user_id, $word, $dataHelper)
-{
+function autoSuggest($client_id, $user_id, $word, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("schedule_function.inc.php : autoSuggest : DataHelper Object did not instantiate", 104);
@@ -180,40 +177,38 @@ function autoSuggest($client_id, $user_id, $word, $dataHelper)
     try
     {
         $strSqlStatement = "SELECT client_contact_details.client_contact_id, client_contact_details.contact_nick_name AS nick_name, client_contact_details.contact_email_address, client_contact_details.contact_idd_code, client_contact_details.contact_mobile_number, client_contact_details.contact_group_name "
-            . "FROM client_contact_details, user_login_details "
-            . "WHERE client_contact_details.client_id = user_login_details.client_id AND client_contact_details.client_id = '".$client_id."' AND user_login_details.user_id = '".$user_id."' AND client_contact_details.client_contact_status = '1' AND client_contact_details.contact_nick_name LIKE '".trim($word)."%' UNION "
-            . "SELECT personal_contact_details.personal_contact_id, personal_contact_details.contact_nick_name AS nick_name, personal_contact_details.contact_email_address, personal_contact_details.contact_idd_code, personal_contact_details.contact_mobile_number, personal_contact_details.contact_group_name "
-            . "FROM personal_contact_details, user_login_details "
-            . "WHERE personal_contact_details.user_id = user_login_details.user_id AND personal_contact_details.user_id = '".$user_id."' AND user_login_details.client_id = '".$client_id."' AND personal_contact_details.personal_contact_status = '1' AND personal_contact_details.contact_nick_name LIKE '".trim($word)."%' ORDER BY nick_name;"; 
+                . "FROM client_contact_details, user_login_details "
+                . "WHERE client_contact_details.client_id = user_login_details.client_id AND client_contact_details.client_id = '" . $client_id . "' AND user_login_details.user_id = '" . $user_id . "' AND client_contact_details.client_contact_status = '1' AND client_contact_details.contact_nick_name LIKE '" . trim($word) . "%' UNION "
+                . "SELECT personal_contact_details.personal_contact_id, personal_contact_details.contact_nick_name AS nick_name, personal_contact_details.contact_email_address, personal_contact_details.contact_idd_code, personal_contact_details.contact_mobile_number, personal_contact_details.contact_group_name "
+                . "FROM personal_contact_details, user_login_details "
+                . "WHERE personal_contact_details.user_id = user_login_details.user_id AND personal_contact_details.user_id = '" . $user_id . "' AND user_login_details.client_id = '" . $client_id . "' AND personal_contact_details.personal_contact_status = '1' AND personal_contact_details.contact_nick_name LIKE '" . trim($word) . "%' ORDER BY nick_name;";
         $arrList = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrList;
     }
     catch (Exception $e)
     {
-        throw new Exception("schedule_function.inc.php : Fetch Auto Suggest Failed : ".$e->getMessage(), 1106);
+        throw new Exception("schedule_function.inc.php : Fetch Auto Suggest Failed : " . $e->getMessage(), 1106);
     }
 }
 
-function validatePlan($subscription_id, $user_id, $dataHelper)
-{
+function validatePlan($subscription_id, $user_id, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("schedule_function.inc.php : scheduledPlans : DataHelper Object did not instantiate", 104);
     }
     try
     {
-        $strSqlStatement = "SELECT subscription_id, user_id, subscription_date, subscription_start_date_gmt, subscription_end_date_gmt, subscription_start_date_local, subscription_end_date_local, subscription_status, order_id, plan_id, plan_name, plan_desc, plan_for, plan_type, number_of_sessions, number_of_mins_per_sessions, plan_period, number_of_invitee, meeting_recording, disk_space, is_free, plan_cost_inr, plan_cost_oth, concurrent_sessions, talk_time_mins, autorenew_flag, consumed_number_of_sessions, consumed_talk_time_mins FROM subscription_master WHERE user_id = '".trim($user_id)."' AND subscription_id = '".trim($subscription_id)."'";
+        $strSqlStatement = "SELECT subscription_id, user_id, subscription_date, subscription_start_date_gmt, subscription_end_date_gmt, subscription_start_date_local, subscription_end_date_local, subscription_status, order_id, plan_id, plan_name, plan_desc, plan_for, plan_type, number_of_sessions, number_of_mins_per_sessions, plan_period, number_of_invitee, meeting_recording, disk_space, is_free, plan_cost_inr, plan_cost_oth, concurrent_sessions, talk_time_mins, autorenew_flag, consumed_number_of_sessions, consumed_talk_time_mins FROM subscription_master WHERE user_id = '" . trim($user_id) . "' AND subscription_id = '" . trim($subscription_id) . "'";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrResult;
     }
     catch (Exception $e)
     {
-        throw new Exception("schedule_function.inc.php : Fetch Schedule Plan Details Failed : ".$e->getMessage(), 1105);
+        throw new Exception("schedule_function.inc.php : Fetch Schedule Plan Details Failed : " . $e->getMessage(), 1105);
     }
 }
 
-function currentSession($user_id, $subscription_id, $gmTime, $dataHelper)
-{
+function currentSession($user_id, $subscription_id, $gmTime, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("schedule_function.inc.php : scheduledPlans : DataHelper Object did not instantiate", 104);
@@ -233,8 +228,7 @@ function currentSession($user_id, $subscription_id, $gmTime, $dataHelper)
     }
 }
 
-function voiceBridgeToken($dataHelper)
-{
+function voiceBridgeToken($dataHelper) {
     $length = VOICE_BRIDGE_LENGTH;
     $random = "";
     srand((double) microtime() * 1000000);
@@ -243,14 +237,14 @@ function voiceBridgeToken($dataHelper)
     {
         $random .= substr($char_list, (rand() % (strlen($char_list))), 1);
     }
-    $voiceBridgeToken = VOICE_BRIDGE_PREFIX.$random;
+    $voiceBridgeToken = VOICE_BRIDGE_PREFIX . $random;
     try
     {
         $voiceBridgeStatus = isVoiceBridgeValidate($voiceBridgeToken, $dataHelper);
     }
     catch (Exception $e)
     {
-        throw new Exception("schedule_function.inc.php : Fetch Voice Failed : ".$e->getMessage(), 1109);
+        throw new Exception("schedule_function.inc.php : Fetch Voice Failed : " . $e->getMessage(), 1109);
     }
     if ($voiceBridgeStatus == "1")
     {
@@ -262,15 +256,14 @@ function voiceBridgeToken($dataHelper)
     }
 }
 
-function isVoiceBridgeValidate($voiceBridgeToken, $dataHelper)
-{
+function isVoiceBridgeValidate($voiceBridgeToken, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("schedule_function.inc.php : isVoiceBridgeValidate : DataHelper Object did not instantiate", 104);
     }
     try
     {
-        $strSqlStatement = "SELECT voice_bridge FROM schedule_details WHERE voice_bridge = '".$voiceBridgeToken."'";
+        $strSqlStatement = "SELECT voice_bridge FROM schedule_details WHERE voice_bridge = '" . $voiceBridgeToken . "'";
         $arrList = $dataHelper->fetchRecords("QR", $strSqlStatement);
         if (!empty($arrList))
         {
@@ -284,12 +277,11 @@ function isVoiceBridgeValidate($voiceBridgeToken, $dataHelper)
     }
     catch (Exception $e)
     {
-        throw new Exception("schedule_function.inc.php : Fetch Voice Bridge Failed : ".$e->getMessage(), 1110);
+        throw new Exception("schedule_function.inc.php : Fetch Voice Bridge Failed : " . $e->getMessage(), 1110);
     }
 }
 
-function getScheduleId($dataHelper)
-{
+function getScheduleId($dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("schedule_function.inc.php : getScheduleId : DataHelper Object did not instantiate", 104);
@@ -320,23 +312,22 @@ function getScheduleId($dataHelper)
 //                break;
 //            default: break;
 //        }
-          //$schId = uniqid("letsmeet",TRUE);
-          $schId = uniqid('',FALSE);
+        //$schId = uniqid("letsmeet",TRUE);
+        $schId = uniqid('', FALSE);
     }
     catch (Exception $e)
     {
-        throw new Exception("schedule_function.inc.php : Insert Schedule Details Failed : ".$e->getMessage(), 1111);
+        throw new Exception("schedule_function.inc.php : Insert Schedule Details Failed : " . $e->getMessage(), 1111);
     }
     return $schId;
 }
 
-function getLMInstanceByClientId($client_id, $dataHelper)
-{
+function getLMInstanceByClientId($client_id, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("schedule_function.inc.php : getLMInstanceByClientId : DataHelper Object did not instantiate", 104);
     }
-    
+
     try
     {
         $strSqlStatement = "SELECT client_id, partner_id, logout_url, rt_server_name, rt_server_salt, rt_server_api_url, status FROM client_details  WHERE status = '1' AND client_id = '" . trim($client_id) . "'";
@@ -349,27 +340,24 @@ function getLMInstanceByClientId($client_id, $dataHelper)
     }
 }
 
-
-function scheduleDetails($schID, $user_id, $gmTime, $localTime, $meeting_title, $timezone, $gmt, $meetingAttendeePWD, $meetingModeratorPWD, $voiceBridgeToken, $inviteesCnt, $meetingRecoding, $maxSessionsMinutes, $meetingInstance, $subscription_id, $meeting_agenda, $dataHelper)
-{
+function scheduleDetails($schID, $user_id, $gmTime, $localTime, $meeting_title, $timezone, $gmt, $meetingAttendeePWD, $meetingModeratorPWD, $voiceBridgeToken, $inviteesCnt, $meetingRecoding, $maxSessionsMinutes, $meetingInstance, $subscription_id, $meeting_agenda, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("schedule_function.inc.php : scheduleMeeting : DataHelper Object did not instantiate", 104);
     }
     try
     {
-        $insSqlStatement = "INSERT INTO schedule_details (schedule_id , user_id , schedule_creation_time , meeting_timestamp_gmt , meeting_timestamp_local , meeting_title , meeting_agenda , meeting_timezone , meeting_gmt , attendee_password , moderator_password , welcome_message , voice_bridge , web_voice , max_participants , record_flag , meeting_duration, meta_tags, meeting_instance, subscription_id) VALUES ('".trim($schID)."' , '".trim($user_id)."' , '".trim(GM_DATE)."' , '".trim($gmTime)."' , '".trim($localTime)."' , '".trim($meeting_title)."' , '".trim($meeting_agenda)."' , '".trim($timezone)."', '".trim($gmt)."', '".trim($meetingAttendeePWD)."' , '".trim($meetingModeratorPWD)."' , 'NULL' , '".trim($voiceBridgeToken)."' , '".trim($voiceBridgeToken)."' , '".trim($inviteesCnt)."' , '".trim($meetingRecoding)."' , '".trim($maxSessionsMinutes)."', 'NULL', '".trim($meetingInstance)."', '".trim($subscription_id)."')";
+        $insSqlStatement = "INSERT INTO schedule_details (schedule_id , user_id , schedule_creation_time , meeting_timestamp_gmt , meeting_timestamp_local , meeting_title , meeting_agenda , meeting_timezone , meeting_gmt , attendee_password , moderator_password , welcome_message , voice_bridge , web_voice , max_participants , record_flag , meeting_duration, meta_tags, meeting_instance, subscription_id) VALUES ('" . trim($schID) . "' , '" . trim($user_id) . "' , '" . trim(GM_DATE) . "' , '" . trim($gmTime) . "' , '" . trim($localTime) . "' , '" . trim($meeting_title) . "' , '" . trim($meeting_agenda) . "' , '" . trim($timezone) . "', '" . trim($gmt) . "', '" . trim($meetingAttendeePWD) . "' , '" . trim($meetingModeratorPWD) . "' , 'NULL' , '" . trim($voiceBridgeToken) . "' , '" . trim($voiceBridgeToken) . "' , '" . trim($inviteesCnt) . "' , '" . trim($meetingRecoding) . "' , '" . trim($maxSessionsMinutes) . "', 'NULL', '" . trim($meetingInstance) . "', '" . trim($subscription_id) . "')";
         $arrSchedule = $dataHelper->putRecords("QR", $insSqlStatement);
         return $schID;
     }
     catch (Exception $e)
     {
-        throw new Exception("schedule_function.inc.php : Insert Schedule Details Failed : ".$e->getMessage(), 1101);
+        throw new Exception("schedule_function.inc.php : Insert Schedule Details Failed : " . $e->getMessage(), 1101);
     }
 }
 
-function updConsumedSessions($subscription_id, $user_id, $type, $dataHelper)
-{
+function updConsumedSessions($subscription_id, $user_id, $type, $dataHelper) {
     try
     {
         if (strlen(trim($subscription_id)) <= 0)
@@ -418,8 +406,8 @@ function updConsumedSessions($subscription_id, $user_id, $type, $dataHelper)
   Modified By   :
   Modified on   :
   ------------------------------------------------------------------------------ */
-function getClSubInfoFromUserOrderId($user_order_id, $dataHelper)
-{
+
+function getClSubInfoFromUserOrderId($user_order_id, $dataHelper) {
     try
     {
         if (strlen(trim($user_order_id)) <= 0)
@@ -433,7 +421,7 @@ function getClSubInfoFromUserOrderId($user_order_id, $dataHelper)
         }
 
         $strSqlStatement = "SELECT csm.client_subscription_id,  csm.client_id, csm.order_id FROM client_subscription_master csm,  subscription_master sm "
-                . " WHERE csm.order_id = sm.order_id AND sm.order_id = '".trim($user_order_id)."'";
+                . " WHERE csm.order_id = sm.order_id AND sm.order_id = '" . trim($user_order_id) . "'";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrResult;
     }
@@ -456,8 +444,7 @@ function getClSubInfoFromUserOrderId($user_order_id, $dataHelper)
   Modified on   :
   ------------------------------------------------------------------------------ */
 
-function updClientConsumedSessions($subscription_id, $client_id, $type, $dataHelper)
-{
+function updClientConsumedSessions($subscription_id, $client_id, $type, $dataHelper) {
     try
     {
         if (strlen(trim($subscription_id)) <= 0)
@@ -494,9 +481,7 @@ function updClientConsumedSessions($subscription_id, $client_id, $type, $dataHel
     }
 }
 
-
-function inviteesDetails($schedule_id, $email_address, $strUserDetails, $arrInviteesEmail, $moderator, $dataHelper)
-{
+function inviteesDetails($schedule_id, $email_address, $strUserDetails, $arrInviteesEmail, $moderator, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("schedule_function.inc.php : inviteesDetails : DataHelper Object did not instantiate", 104);
@@ -506,7 +491,7 @@ function inviteesDetails($schedule_id, $email_address, $strUserDetails, $arrInvi
         $userDetails = explode(":", $strUserDetails);
         if (strlen($email_address) > 0)
         {
-            $insSchedulerStatement = "INSERT INTO invitation_details (schedule_id, invitee_email_address, invitation_creator, invitee_nick_name, invitee_idd_code, invitee_mobile_number, invitation_status, invitation_creation_dtm, meeting_status) VALUES ('".$schedule_id."' , '".$email_address."' , 'C' , '".$userDetails[0]."' , '".$userDetails[1]."' , '".$userDetails[2]."' , '0' , '".GM_DATE."' , '0')";
+            $insSchedulerStatement = "INSERT INTO invitation_details (schedule_id, invitee_email_address, invitation_creator, invitee_nick_name, invitee_idd_code, invitee_mobile_number, invitation_status, invitation_creation_dtm, meeting_status) VALUES ('" . $schedule_id . "' , '" . $email_address . "' , 'C' , '" . $userDetails[0] . "' , '" . $userDetails[1] . "' , '" . $userDetails[2] . "' , '0' , '" . GM_DATE . "' , '0')";
             $scheduler = $dataHelper->putRecords("QR", $insSchedulerStatement);
         }
         $inviteesEmail = explode(",", $arrInviteesEmail);
@@ -519,11 +504,11 @@ function inviteesDetails($schedule_id, $email_address, $strUserDetails, $arrInvi
         {
             if ((strlen($moderator) > 0) && ($moderator == $invitees[$i][0]))
             {
-                $insSqlStatement = "INSERT INTO invitation_details (schedule_id, invitee_email_address, invitation_creator, invitee_nick_name, invitee_idd_code, invitee_mobile_number, invitation_status, invitation_creation_dtm, meeting_status) VALUES ('".$schedule_id."' , '".$invitees[$i][0]."' , 'M', '".$invitees[$i][1]."' , '".$invitees[$i][2]."' , '".$invitees[$i][3]."' , '0' , '".GM_DATE."' , '0')";
+                $insSqlStatement = "INSERT INTO invitation_details (schedule_id, invitee_email_address, invitation_creator, invitee_nick_name, invitee_idd_code, invitee_mobile_number, invitation_status, invitation_creation_dtm, meeting_status) VALUES ('" . $schedule_id . "' , '" . $invitees[$i][0] . "' , 'M', '" . $invitees[$i][1] . "' , '" . $invitees[$i][2] . "' , '" . $invitees[$i][3] . "' , '0' , '" . GM_DATE . "' , '0')";
             }
             else
             {
-                $insSqlStatement = "INSERT INTO invitation_details (schedule_id, invitee_email_address, invitee_nick_name, invitee_idd_code, invitee_mobile_number, invitation_status, invitation_creation_dtm, meeting_status) VALUES ('".$schedule_id."' , '".$invitees[$i][0]."' , '".$invitees[$i][1]."' , '".$invitees[$i][2]."' , '".$invitees[$i][3]."' , '0' , '".GM_DATE."' , '0')";
+                $insSqlStatement = "INSERT INTO invitation_details (schedule_id, invitee_email_address, invitee_nick_name, invitee_idd_code, invitee_mobile_number, invitation_status, invitation_creation_dtm, meeting_status) VALUES ('" . $schedule_id . "' , '" . $invitees[$i][0] . "' , '" . $invitees[$i][1] . "' , '" . $invitees[$i][2] . "' , '" . $invitees[$i][3] . "' , '0' , '" . GM_DATE . "' , '0')";
             }
             $inviteesStat = $dataHelper->putRecords("QR", $insSqlStatement);
         }
@@ -531,7 +516,7 @@ function inviteesDetails($schedule_id, $email_address, $strUserDetails, $arrInvi
     }
     catch (Exception $e)
     {
-        throw new Exception("schedule_function.inc.php : Insert Invitees Details Failed : ".$e->getMessage(), 1102);
+        throw new Exception("schedule_function.inc.php : Insert Invitees Details Failed : " . $e->getMessage(), 1102);
     }
 }
 
@@ -544,11 +529,10 @@ function inviteesDetails($schedule_id, $email_address, $strUserDetails, $arrInvi
   Called By     : start.php
   ------------------------------------------------------------------------------ */
 
-function createMeeting($schedule_id, $email_address)
-{
-    $PSCD = md5($schedule_id.":".$email_address.":".SECRET_KEY);
-    $jmData = "SCID=".$schedule_id."&EMID=".urlencode($email_address)."&PSCD=".$PSCD."&PRID=".PRID;
-    $jmUrl = INT_API_ROOT."join/jmx.php?".$jmData;
+function createMeeting($schedule_id, $email_address) {
+    $PSCD = md5($schedule_id . ":" . $email_address . ":" . SECRET_KEY);
+    $jmData = "SCID=" . $schedule_id . "&EMID=" . urlencode($email_address) . "&PSCD=" . $PSCD . "&PRID=" . PRID;
+    $jmUrl = INT_API_ROOT . "join/jmx.php?" . $jmData;
     $curlurl = curl_init($jmUrl);
     curl_setopt($curlurl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curlurl, CURLOPT_HEADER, false);
@@ -571,6 +555,7 @@ function createMeeting($schedule_id, $email_address)
   Modified By   :
   Modified on   :
   ------------------------------------------------------------------------------ */
+
 //
 //function isScheduleValid($schedule_id, $dataHelper) {
 //    try
@@ -784,14 +769,16 @@ function updInvitationStatus($schedule_id, $invitation_status, $inv_email_addres
                 "AND meeting_status = '0'";
         $UpdResult = $dataHelper->putRecords('QR', $strSqlStatement);
         $dataHelper->clearParams();
-        if($objDataHelper->affectedRows == 0)
+        if ($objDataHelper->affectedRows == 0)
         {
-                return 0;
-        }else{
-                return 1;
+            return 0;
         }
-         //break;
-         //return $UpdResult;
+        else
+        {
+            return 1;
+        }
+        //break;
+        //return $UpdResult;
     }
     catch (Exception $e)
     {
@@ -812,7 +799,7 @@ function updInvitationStatus($schedule_id, $invitation_status, $inv_email_addres
   Modified on   :
   ------------------------------------------------------------------------------ */
 
-function cancelSchedule($schedule_id, $schedule_status, $gmt_datetime, $cancel_reason,$dataHelper) {
+function cancelSchedule($schedule_id, $schedule_status, $gmt_datetime, $cancel_reason, $dataHelper) {
     try
     {
         if (strlen(trim($schedule_id)) <= 0)
@@ -883,8 +870,7 @@ function getUserConcurrentSessions($user_id, $subscription_id, $gmt_datetime, $d
   Called By     : meeting/index.php
   ------------------------------------------------------------------------------ */
 
-function getScheduledMeetingList($email_address, $dataHelper)
-{
+function getScheduledMeetingList($email_address, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("schedule_function.inc.php : getMyMeetingList : DataHelper Object did not instantiate", 104);
@@ -894,14 +880,14 @@ function getScheduledMeetingList($email_address, $dataHelper)
         //$strSqlStatement = "SELECT sd.schedule_id, sd.user_id, sd.schedule_status, sd.meeting_timestamp_gmt, sd.meeting_timestamp_local, sd.meeting_title, sd.meeting_timezone, sd.max_participants, id.invitation_creator FROM schedule_details AS sd, invitation_details AS id WHERE sd.schedule_id = id.schedule_id AND id.invitee_email_address = '".trim($email_address)."' AND UNIX_TIMESTAMP(meeting_timestamp_gmt) >= UNIX_TIMESTAMP(UTC_TIMESTAMP())  AND schedule_status IN ('0')  ORDER BY meeting_timestamp_gmt ASC";
         $strSqlStatement = "SELECT sd.schedule_id, sd.user_id, sd.schedule_status, sd.schedule_creation_time, sd.meeting_timestamp_gmt, sd.meeting_timestamp_local, sd.meeting_title, sd.meeting_agenda, sd.meeting_timezone, sd.meeting_gmt, sd.meeting_start_time, sd.meeting_end_time, sd.voice_bridge, sd.web_voice, sd.max_participants, sd.record_flag, sd.subscription_id, id.invitation_creator "
                 . "FROM schedule_details AS sd, invitation_details AS id "
-                . "WHERE sd.schedule_id = id.schedule_id AND id.invitee_email_address = '".trim($email_address)."' "
+                . "WHERE sd.schedule_id = id.schedule_id AND id.invitee_email_address = '" . trim($email_address) . "' "
                 . "AND schedule_status IN ('0','1') ORDER BY meeting_timestamp_gmt ASC ;";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
-         return $arrResult;
+        return $arrResult;
     }
     catch (Exception $e)
     {
-        throw new Exception("schedule_function.inc.php : Fetch Schedule Meeting List Failed : ".$e->getMessage(), 1105);
+        throw new Exception("schedule_function.inc.php : Fetch Schedule Meeting List Failed : " . $e->getMessage(), 1105);
     }
 }
 
@@ -914,21 +900,50 @@ function getScheduledMeetingList($email_address, $dataHelper)
   Called By     : meeting/index.php
   ------------------------------------------------------------------------------ */
 
-function getModeratorDetails($schedule_id, $dataHelper)
-{
+function getModeratorDetails($schedule_id, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("schedule_function.inc.php : moderatorDetails : DataHelper Object did not instantiate", 104);
     }
     try
     {
-        $strSqlStatement = "SELECT invitee_email_address, invitee_nick_name FROM invitation_details WHERE schedule_id = '".trim($schedule_id)."' AND invitation_creator = 'C'";
+        $strSqlStatement = "SELECT invitee_email_address, invitee_nick_name FROM invitation_details WHERE schedule_id = '" . trim($schedule_id) . "' AND invitation_creator = 'C'";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrResult;
     }
     catch (Exception $e)
     {
-        throw new Exception("schedule_function.inc.php : Fetch Moderator Details Failed : ".$e->getMessage(), 1105);
+        throw new Exception("schedule_function.inc.php : Fetch Moderator Details Failed : " . $e->getMessage(), 1105);
+    }
+}
+
+/* -----------------------------------------------------------------------------
+  Function Name : getScheduledMeetingList
+  Purpose       :
+  Parameters    :
+  Returns       :
+  Calls         :  datahelper.fetchRecords
+  Called By     : meeting/index.php
+  ------------------------------------------------------------------------------ */
+
+function getArchiveMeetingList($email_address, $dataHelper) {
+    if (!is_object($dataHelper))
+    {
+        throw new Exception("schedule_function.inc.php : getMyMeetingList : DataHelper Object did not instantiate", 104);
+    }
+    try
+    {
+        $strSqlStatement = "SELECT sd.schedule_id, sd.user_id, sd.schedule_status, sd.schedule_creation_time, sd.meeting_timestamp_gmt, sd.meeting_timestamp_local, sd.meeting_title, sd.meeting_agenda, sd.meeting_timezone, sd.meeting_gmt, sd.meeting_start_time, sd.meeting_end_time, sd.voice_bridge, sd.web_voice, sd.max_participants, sd.record_flag, sd.subscription_id, id.invitation_creator "
+                . "FROM schedule_details AS sd, invitation_details AS id "
+                . "WHERE sd.schedule_id = id.schedule_id AND id.invitee_email_address = '" . trim($email_address) . "' "
+                . "AND ( (sd.meeting_timestamp_gmt < '".GM_DATE."' AND sd.schedule_status NOT IN ('0','1') ) OR sd.schedule_status IN ('2','3','4','5') ) "
+                . "ORDER BY sd.meeting_timestamp_gmt DESC ;";
+        $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
+        return $arrResult;
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("schedule_function.inc.php : Fetch Schedule Meeting List Failed : " . $e->getMessage(), 1105);
     }
 }
 
@@ -944,7 +959,7 @@ function isScheduleValid($schedule_id, $email_address, $pass_code, $dataHelper) 
                 . "WHERE sd.user_id = uld.user_id  AND uld.user_id = ud.user_id "
                 . "AND sd.subscription_id = sm.subscription_id "
                 . "AND sd.schedule_id='" . trim($schedule_id) . "' "
-                . "AND MD5(CONCAT('" . trim($schedule_id) . "',':','" . trim($email_address) . "',':','" . SECRET_KEY . "')) = '" . trim($pass_code) . "';" ;
+                . "AND MD5(CONCAT('" . trim($schedule_id) . "',':','" . trim($email_address) . "',':','" . SECRET_KEY . "')) = '" . trim($pass_code) . "';";
         $arrSchResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrSchResult;
     }
@@ -963,12 +978,12 @@ function getScheduleDetailsById($schedule_id, $dataHelper) {
         }
         //$strSqlStatement = "SELECT sd.schedule_id, sd.user_id, sd.schedule_status, sd.schedule_creation_time, sd.meeting_timestamp_gmt, sd.meeting_timestamp_local, sd.meeting_title, sd.meeting_agenda, sd.meeting_timezone, sd.meeting_gmt, sd.meeting_start_time, sd.meeting_end_time, sd.voice_bridge, sd.web_voice, sd.max_participants, sd.record_flag, sd.subscription_id FROM schedule_details sd WHERE sd.schedule_id='".trim($schedule_id)."';";
         $strSqlStatement = "SELECT schedule_id, schedule_status, meeting_timestamp_gmt, meeting_timestamp_local, meeting_title, " .
-        "meeting_timezone, meeting_gmt, cancel_reason, user_details.user_id, user_login_details.email_address, user_details.nick_name, subscription_master.subscription_id, subscription_master.number_of_invitee, subscription_master.order_id " .
-        "FROM schedule_details, user_details, user_login_details, subscription_master " .
-        "WHERE schedule_details.user_id = user_login_details.user_id " .
-        "AND user_login_details.user_id = user_details.user_id " .
-        "AND schedule_details.subscription_id = subscription_master.subscription_id " .
-        "AND schedule_id='" . trim($schedule_id) . "'";
+                "meeting_timezone, meeting_gmt, cancel_reason, user_details.user_id, user_login_details.email_address, user_details.nick_name, subscription_master.subscription_id, subscription_master.number_of_invitee, subscription_master.order_id " .
+                "FROM schedule_details, user_details, user_login_details, subscription_master " .
+                "WHERE schedule_details.user_id = user_login_details.user_id " .
+                "AND user_login_details.user_id = user_details.user_id " .
+                "AND schedule_details.subscription_id = subscription_master.subscription_id " .
+                "AND schedule_id='" . trim($schedule_id) . "'";
         $arrSchResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrSchResult;
     }
@@ -978,23 +993,22 @@ function getScheduleDetailsById($schedule_id, $dataHelper) {
     }
 }
 
-function setScheduleCounter($schedule_id, $dataHelper)
-{
+function setScheduleCounter($schedule_id, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("sch_function.inc.php : setScheduleCounter : DataHelper Object did not instantiate", 104);
     }
     try
     {
-        $strSqlStatement = "SELECT max_participants FROM schedule_details WHERE schedule_id = '".$schedule_id."'";
+        $strSqlStatement = "SELECT max_participants FROM schedule_details WHERE schedule_id = '" . $schedule_id . "'";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         $maxParticipants = $arrResult[0]['max_participants'];
         $maxP = $maxParticipants + 1;
-        $updStatement = "UPDATE schedule_details SET max_participants = '".$maxP."' WHERE schedule_id = '".$schedule_id."'";
+        $updStatement = "UPDATE schedule_details SET max_participants = '" . $maxP . "' WHERE schedule_id = '" . $schedule_id . "'";
         $updResponse = $dataHelper->putRecords("QR", $updStatement);
     }
     catch (Exception $e)
     {
-        throw new Exception("sch_function.inc.php : Update Schedule Participants Counter Failed : ".$e->getMessage(), 1104);
+        throw new Exception("sch_function.inc.php : Update Schedule Participants Counter Failed : " . $e->getMessage(), 1104);
     }
 }

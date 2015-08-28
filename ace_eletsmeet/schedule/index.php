@@ -298,7 +298,7 @@ else
                                                             <div class="form-group">
                                                                 <label for="form-field-1-1" class="col-sm-2 control-label no-padding-right"> Meeting Agenda </label>
                                                                 <div class="col-sm-9">
-                                                                    <textarea placeholder="Type your Meeting Agenda" id="sAgenda" class="form-control limited" name="sAgenda" maxlength="100"></textarea>
+                                                                    <textarea placeholder="Type your Meeting Agenda" id="sAgenda" class="form-control limited" name="sAgenda" maxlength="250"></textarea>
                                                                 </div>
                                                             </div>                                                    
 
@@ -327,8 +327,9 @@ else
                                                                         </label>
                                                                     </span>
                                                                     <div class="space-8"></div>
+                                                                    
                                                                     <?php if (count($arrTimezoneList) > 0){ ?>
-                                                                    <div id="timezoneShow" class="form-group timezone">
+                                                                    <div id="time-zone" class="form-group display-none">
                                                                         <label for="form-field-1-1" class="col-sm-2 control-label no-padding-right"> Select Timezone </label>
                                                                         <div class="col-sm-5">
                                                                             <?php echo $timezone; ?>
@@ -572,7 +573,6 @@ else
         <!-- JAVA SCRIPT -->
         <script type="text/javascript" src="<?php echo JS_PATH; ?>bootstrap-datepicker.js"></script>
         <script type="text/javascript" src="<?php echo JS_PATH; ?>bootstrap-timepicker.js"></script>
-        <script type="text/javascript" src="<?php echo JS_PATH; ?>schedule_custom.js"></script>
         <script type="text/javascript" src="<?php echo JS_PATH; ?>jquery.autosize.js"></script>
         <script type="text/javascript" src="<?php echo JS_PATH; ?>jquery.inputlimiter.1.3.1.js"></script>
 
@@ -580,13 +580,35 @@ else
     <script type="text/javascript">
         $('[data-rel=tooltip]').tooltip({container:'body'});
         $('[data-rel=popover]').popover({container:'body'});
-
         $('textarea[class*=autosize]').autosize({append: "\n"});
         $('textarea.limited').inputlimiter({
                 remText: '%n character%s remaining...',
                 limitText: 'max allowed : %n.'
         });
-                                
+       
+        function showTimezone()
+        {
+            if (document.getElementById("time-zone").style.display == "block") 
+            {
+                document.getElementById("time-zone").style.display = "none";
+            } 
+            else 
+            {
+                document.getElementById("time-zone").style.display = "block";
+            }
+        }
+
+        function currentZone()
+        {
+            var tzone = $("#timezone").val();
+            var sep = "$:$";
+            tzone = tzone.split(sep);
+            timeZone = tzone[0] + " - " + tzone[1] + ", GMT" + tzone[2];
+            $("#curZone").html(timeZone);
+            $("#timezoneTitle").html("Meeting Timezone : ");
+            showTimezone();
+        }
+       
         $(document).ready(function () {
             $('input[type="radio"]').click(function () {
                 if ($(this).attr("value") == "later")

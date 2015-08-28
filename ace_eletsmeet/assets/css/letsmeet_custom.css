@@ -2,7 +2,11 @@
      cursor: pointer;
 }
 
-.timezone {
+/*.timezone {
+    display: none;
+}*/
+
+.display-none{
     display: none;
 }
 

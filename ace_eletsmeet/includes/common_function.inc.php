@@ -258,3 +258,152 @@ function getMeetingInviteeList($schedule_id, $dataHelper)
         throw new Exception("db_common_function.inc.php : getMeetingInviteeList : Could not fetch Invitee List : " . $e->getMessage(), 1111);
     }
 }
+
+/* -----------------------------------------------------------------------------
+  Function Name : getDistinctCountry
+  Purpose       : To Get Distinct country for mall the supported time zones
+  Parameters    :  Datahelper
+  Returns       :
+  Calls         : datahelper.fetchRecords
+  Called By     :
+  Author        : Sushrit 
+  Created  on   : July 28 , 2015
+  Modified By   :
+  Modified on   :
+  ------------------------------------------------------------------------------ */
+
+function getDistinctCountry($dataHelper) {
+    if (!is_object($dataHelper))
+    {
+        throw new Exception("common_function.inc.php : getDistinctCountry : DataHelper Object did not instantiate", 104);
+
+    }
+    try
+    {
+        $strSqlStatement = "SELECT DISTINCT cd.country_id, cd.country_name, cd.country_code, cd.country_idd_code FROM country_details cd, country_timezones ct
+WHERE cd.country_code = ct.country_code AND cd.country_status = '1' ORDER BY cd.country_name";
+        $arrList = $dataHelper->fetchRecords("QR", $strSqlStatement);
+        return $arrList;
+	
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("common_function.inc.php : Fetch Distinct Country Failed : " . $e->getMessage(), 1107);
+    }
+}
+/* -----------------------------------------------------------------------------
+  Function Name : getUpdateQueryString
+  Purpose       : to generate the update query string
+  Parameters    :  array Form values
+  Returns       :
+  Calls         : 
+  Called By     :
+  Author        : Sushrit 
+  Created  on   : July 29 , 2015
+  Modified By   :
+  Modified on   :
+  ------------------------------------------------------------------------------ */
+function getUpdateQueryString($formValues , $formTableMap)
+{
+	if(isset($formValues['formname']))
+	{
+		if($formValues['formname'] != "") 
+		{
+			$updateString = "";
+
+			foreach($formValues as $key => $value)
+			{	
+				if($key != "formname")
+				{
+					
+
+					if(isset($formTableMap[$formValues['formname']][$key]) && $value !="")
+					{
+
+					
+						$columnName = $formTableMap[$formValues['formname']][$key];
+						$columnValue = ($columnName == "password")?md5(trim($value)):trim($value);
+						$updateString .= ($updateString!="")?" , ":"";
+						$updateString .= $columnName." = \"".$columnValue."\"";
+					}
+				}
+			}
+			return $updateString;
+		}
+	}
+}
+
+/* -----------------------------------------------------------------------------
+  Function Name : getInsertQueryString
+  Purpose       : to generate the insert query string
+  Parameters    :  array Form values
+  Returns       :
+  Calls         : 
+  Called By     :
+  Author        : Sushrit 
+  Created  on   : Aug 5 , 2015
+  Modified By   :
+  Modified on   :
+  ------------------------------------------------------------------------------ */
+
+function getInsertQueryString($formValues , $formTableMap)
+{
+	if(isset($formValues['formname']))
+	{
+		if($formValues['formname'] != "") 
+		{
+			$updateString = "";
+
+			foreach($formValues as $key => $value)
+			{	
+				if($key != "formname")
+				{
+					if(isset($formTableMap[$formValues['formname']][$key]) && $value !="")
+					{
+						if(trim($value) == "")
+							return -1;
+						$columnName.=($columnName != "")?" , ":"";
+						$columnName.=$formTableMap[$formValues['formname']][$key];
+						$columnValue.=($columnValue != "")?" , ":"";
+						$columnValue.="'".$value."'";
+					}
+				}
+			}
+			$insertString = " ( ".$columnName." )  VALUES ( ".$columnValue." ) ;";
+			return $insertString;
+		}
+	}
+}
+/* -----------------------------------------------------------------------------
+  Function Name : getDistinctCountryByCountryName
+  Purpose       : To Get Distinct country for mall the supported time zones
+  Parameters    :  Datahelper
+  Returns       :
+  Calls         : datahelper.fetchRecords
+  Called By     :
+  Author        : Sushrit 
+  Created  on   : July 28 , 2015
+  Modified By   :
+  Modified on   :
+  ------------------------------------------------------------------------------ */
+
+function getDistinctCountryByCountryName($countryName , $dataHelper) {
+    if (!is_object($dataHelper))
+    {
+        throw new Exception("common_function.inc.php : getDistinctCountry : DataHelper Object did not instantiate", 104);
+
+    }
+    try
+    {
+        $strSqlStatement = "SELECT DISTINCT cd.country_id, cd.country_name, cd.country_code, cd.country_idd_code FROM country_details cd, country_timezones ct
+WHERE cd.country_code = ct.country_code AND cd.country_status = '1' AND TRIM(LOWER(cd.country_name)) like  '".trim(strtolower($countryName))."'";
+        $arrList = $dataHelper->fetchRecords("QR", $strSqlStatement);
+        return $arrList;
+	
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("common_function.inc.php : Fetch Distinct Country Failed : " . $e->getMessage(), 1107);
+    }
+}
+
