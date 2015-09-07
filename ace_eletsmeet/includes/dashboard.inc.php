@@ -43,4 +43,31 @@ function getFrequentInvitees( $userid , $objDataHelper , $noOfInvitees )
 }
 
 
+//SELECT user_id, (
+CASE WHEN nick_name IS NULL OR nick_name = '' THEN 0  ELSE 1 END +
+CASE WHEN first_name IS NULL OR first_name = '' THEN 0 ELSE 1 END +
+CASE WHEN last_name IS NULL OR last_name = '' THEN 0  ELSE 1 END +
+CASE WHEN secondry_email IS NULL OR secondry_email = '' THEN 0  ELSE 1 END +
+CASE WHEN landmark IS NULL OR landmark = '' THEN 0  ELSE 1 END +
+CASE WHEN city IS NULL OR city = '' THEN 0  ELSE 1 END +
+CASE WHEN address IS NULL OR address = '' THEN 0  ELSE 1 END +
+CASE WHEN country_name IS NULL OR country_name = '' THEN 0  ELSE 1 END +
+CASE WHEN timezones IS NULL OR timezones = '' THEN 0  ELSE 1 END +
+CASE WHEN gmt IS NULL OR gmt = '' THEN 0  ELSE 1 END +
+CASE WHEN phone_number IS NULL OR phone_number = '' THEN 0  ELSE 1 END +
+CASE WHEN idd_code IS NULL OR idd_code = '' THEN 0  ELSE 1 END +
+CASE WHEN mobile_number IS NULL OR mobile_number = '' THEN 0  ELSE 1 END +
+CASE WHEN industry_type IS NULL OR industry_type = '' THEN 0  ELSE 1 END +
+CASE WHEN company_name IS NULL OR company_name = '' THEN 0  ELSE 1 END +
+CASE WHEN nature_business IS NULL OR nature_business = '' THEN 0  ELSE 1 END +
+CASE WHEN company_uri IS NULL OR company_uri = '' THEN 0  ELSE 1 END +
+CASE WHEN brief_desc_company IS NULL OR brief_desc_company = '' THEN 0  ELSE 1 END +
+CASE WHEN facebook IS NULL OR facebook = '' THEN 0  ELSE 1 END +
+CASE WHEN twitter IS NULL OR twitter = '' THEN 0  ELSE 1 END +
+CASE WHEN googleplus IS NULL OR googleplus = '' THEN 0  ELSE 1 END +
+CASE WHEN linkedin IS NULL OR linkedin = '' THEN 0  ELSE 1 END 
+) * 100 / 22
+FROM user_details
+WHERE 1 
+
 
