@@ -52,7 +52,7 @@ define("USER_SESSION_NAME","ckUsrLetsMeetUserSession");
 
 /*********************DB Connection Start******************/
 //define("DB_CONNECTIONSTRING","root:root123:localhost:dev_db_eletesmeet_com:3306");
-define("DB_CONNECTIONSTRING","root:mclaren:172.16.1.53:dev_db_eletesmeet_com:3306");
+define("DB_CONNECTIONSTRING","root:mclaren:172.16.1.40:dev_db_eletesmeet_com:3306");
 /*********************DB Connection End******************/
 
 /********************Error Logging Parameter Start************/
@@ -70,7 +70,8 @@ define("CONST_NOREPLY_EID", "letsmeet@eletsmeet.com");
 
 define("CONST_PRODUCT_NAME", "LetsMeet");
 define("RELAY_EMAIL_FLAG", 0); //1 = On & 0= Off
-define("RELAY_MAIL_API",$SITE_ROOT."api/sendmail.php?");
+//define("RELAY_MAIL_API",$SITE_ROOT."api/sendmail.php?");
+define("RELAY_MAIL_API","http://eletsmeet.com/api/sendmail.php?");
 //define("RELAY_MAIL_API",$SITE_ROOT."includes/relay_mail.php?"); // Used for Live Server
 /********************Email Informations End**********************/
 
