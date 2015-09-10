@@ -58,11 +58,11 @@ function isUserEmailAddressExists($email_address, $dataHelper) {
     {
         throw new Exception("common_function.inc.php: isUserEmailAddressExists : Missing Parameter email_address.", 141);
     }
-
     try
     {
         $strSqlStatement = "SELECT user_id, email_address FROM user_login_details WHERE email_address='" . trim($email_address) . "';";
         $arrAuthResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
+
         return $arrAuthResult;
     }
     catch (Exception $e)
