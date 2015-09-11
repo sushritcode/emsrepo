@@ -94,6 +94,23 @@ catch (Exception $e)
 {
     throw new Exception("index.php : getTotalHostMeetingCountByID Failed : " . $e->getMessage(), 1125);
 }
+
+try
+{
+    $arrMinuteBaseMeetingGraph = getMinuteBaseMeetingGraphByID($strCK_user_id, $objDataHelper);
+}
+catch (Exception $e)
+{
+    throw new Exception("index.php : getMinuteBaseMeetingGraphByID Failed : " . $e->getMessage(), 1125);
+}
+
+print_r($arrMinuteBaseMeetingGraph);
+
+ for ($i = 0; $i < sizeof($arrMinuteBaseMeetingGraph); $i++)
+{
+    $arrMinuteBaseMeetingGraphArr .= $arrMinuteBaseMeetingGraph[$i][0].",";
+}
+        
 ?>
 
 <!DOCTYPE html>
@@ -161,7 +178,7 @@ catch (Exception $e)
                                 <!-- PAGE CONTENT START -->
                                 <div class="row">
 
-                                    <div class="col-sm-7 infobox-container">
+                                    <div class="col-sm-6 infobox-container">
                                         
                                         <div class="infobox infobox-green">
                                             <div class="infobox-icon">
@@ -230,10 +247,9 @@ catch (Exception $e)
                                         
                                     </div>
 
-
                                     <div class="vspace-12-sm"></div>
 
-                                    <div class="col-sm-5">
+                                    <div class="col-sm-6">
                                         <div class="widget-box">
                                             <div class="widget-header widget-header-flat widget-header-small">
                                                 <h5 class="widget-title">
@@ -248,10 +264,6 @@ catch (Exception $e)
                                             </div>
                                         </div>
                                     </div>
-
-
-
-
 
                                 </div>
 
@@ -315,6 +327,22 @@ catch (Exception $e)
                                             </div>
                                     </div>
                                     
+                                    <div class="col-sm-6">
+                                        <div class="widget-box">
+                                            <div class="widget-header widget-header-flat widget-header-small">
+                                                <h5 class="widget-title">
+                                                    <i class="ace-icon fa fa-signal"></i>
+                                                    Meeting Statistics
+                                                </h5>
+                                            </div>
+                                            <div class="widget-body">
+                                                <div class="widget-main">
+                                                  <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>               
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
 
                                 <!-- PAGE CONTENT END -->
@@ -346,6 +374,8 @@ catch (Exception $e)
         <?php include (INCLUDES_PATH . 'other_js_includes.php'); ?>  
         <!-- JAVA SCRIPT -->
 
+        <script type="text/javascript" src="<?php echo JS_PATH; ?>highcharts.js"></script>
+        <script type="text/javascript" src="<?php echo JS_PATH; ?>exporting.js"></script>
 
         <script type="text/javascript">
             jQuery(function ($) {
@@ -378,13 +408,13 @@ catch (Exception $e)
 //                });
 
 
-//flot chart resize plugin, somehow manipulates default browser resize event to optimize it!
-//but sometimes it brings up errors with normal resize event handlers
+                //flot chart resize plugin, somehow manipulates default browser resize event to optimize it!
+                //but sometimes it brings up errors with normal resize event handlers
                 $.resize.throttleWindow = false;
 
                 var placeholder = $('#piechart-placeholder').css({'width': '90%', 'min-height': '150px'});
-                //var data =[{"label":"Canceled","data":"3","color":"#2091CF"},{"label":"Completed","data":"31","color":"#68BC31"},{"label":"Overdue","data":"61","color":"#DA5430"}] ;
                 var data = <?php echo json_encode($arrMeetingOverview); ?>;
+                
                 function drawPieChart(placeholder, data, position) {
                     $.plot(placeholder, data, {
                         series: {
@@ -440,8 +470,74 @@ catch (Exception $e)
                         $tooltip.hide();
                         previousPoint = null;
                     }
-
                 });
+                
+                
+                
+    $('#container').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Monthly Average Meeting'
+        },
+//        subtitle: {
+//            text: 'Source: WorldClimate.com'
+//        },
+        xAxis: {
+            categories: [
+                'Jan',
+                'Feb',
+                'Mar',
+                'Apr',
+                'May',
+                'Jun',
+                'Jul',
+                'Aug',
+                'Sep',
+                'Oct',
+                'Nov',
+                'Dec'
+            ],
+            crosshair: true
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Duration (minute)'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: 'Tokyo',
+            data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+            color: "#68BC31"
+        }, {
+            name: 'London',
+            data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2],
+            color: "#2091CF"
+        }, {
+            name: 'Berlin',
+            data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1],
+            color: "#DA5430"
+        }]
+    });
+
+                
+                
             })
         </script>
 

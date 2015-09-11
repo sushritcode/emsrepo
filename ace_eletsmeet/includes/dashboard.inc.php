@@ -188,4 +188,25 @@ function getMeetingOverviewByID($email_address, $dataHelper) {
     }
 }
 
+function getMinuteBaseMeetingGraphByID($user_id, $dataHelper) {
+    if (!is_object($dataHelper))
+    {
+        throw new Exception("dashboard.inc.php : getMinuteBaseMeetingGraphByID : DataHelper Object did not instantiate", 104);
+    }
+    try
+    {
+        echo $strSqlStatement = "SELECT COUNT(schedule_id) AS 'SchedueCount', SUM(IFNULL(TIMESTAMPDIFF( MINUTE , meeting_start_time, meeting_end_time),0)) AS 'TotalMinute', DATE( meeting_start_time ) AS 'DateOfMeeting'
+FROM schedule_details
+WHERE user_id = '".trim($user_id)."'
+AND schedule_status = '2'
+GROUP BY DateOfMeeting
+LIMIT 0 , 30;";
+        $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
+        return $arrResult;
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("dashboard.inc.php : getMinuteBaseMeetingGraphByID : Could not fetch records : " . $e->getMessage(), 144);
+    }
+}
 
