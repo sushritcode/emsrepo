@@ -1,4 +1,21 @@
 <?php
+if ($CONST_MODULE=="dashboard")
+{
+        $strDashBoardActiveClass= "active";
+}
+else
+{ 
+    $strDashBoardActiveClass= "";
+}
+
+if ($CONST_MODULE=="contact")
+{
+        $strContactsActiveClass= "active open";
+}
+else
+{ 
+    $strContactsActiveClass= "";
+}
 
 if ( ($CONST_MODULE=="meeting") || ($CONST_MODULE=="schedule") )
 {
@@ -62,8 +79,8 @@ else
             </div><!-- /.sidebar-shortcuts -->
 
             <ul class="nav nav-list">
-                <li class="">
-                    <a href="index.html">
+                <li class="<?php echo $strDashBoardActiveClass;?>">
+                    <a href="<?php echo $SITE_ROOT; ?>dashboard/">
                         <i class="menu-icon fa fa-tachometer"></i>
                         <span class="menu-text"> Dashboard </span>
                     </a>
@@ -71,49 +88,55 @@ else
                     <b class="arrow"></b>
                 </li>
                 <!-- Address book start-->
-                <li class="">
+                <li class="<?php echo $strContactsActiveClass;?>">
                     <a href="#" class="dropdown-toggle">
                         <i class="menu-icon fa fa-users"></i>
                         <span class="menu-text">
                             Contacts
                         </span>
-
                         <b class="arrow fa fa-angle-down"></b>
                     </a>
 
                     <b class="arrow"></b>
 
                     <ul class="submenu">
-                        <li class="">
-                            <a href="#" class="dropdown-toggle">
-                                <i class="menu-icon fa fa-caret-right"></i>
-
-                                Manage Contacts
-                                <b class="arrow fa fa-angle-down"></b>
-                            </a>
-
-                            <b class="arrow"></b>
-
-                            <ul class="submenu">
-                                <li class="">
-                                    <a href="<?php echo $SITE_ROOT . "contacts/" ?>">
-                                        <i class="menu-icon fa fa-caret-right"></i>
-                                        My Contacts
-                                    </a>
-
-                                    <b class="arrow"></b>
-                                </li>
-
-                            </ul>
-                        </li>
-
-                        <li class="">
-                            <a href="<?php echo $SITE_ROOT . "contacts/contactimport.php"; ?>">
-                                <i class="menu-icon"></i>
-                                Import Addresses (csv)
-                            </a>
-
-                        </li>
+                        <?php if($CONST_PAGEID=="My Contacts") { ?>
+                            <li class="active">
+                                <a href="<?php echo $SITE_ROOT; ?>contacts/">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    My Contacts
+                                </a>
+                                <b class="arrow"></b>
+                            </li>
+                        <?php }else{?>
+                            <li class="">
+                                <a href="<?php echo $SITE_ROOT; ?>contacts/">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    My Contacts
+                                </a>
+                                <b class="arrow"></b>
+                            </li>
+                        <?php } ?>
+                            
+                        <?php if($CONST_PAGEID=="Contacts Import") { ?>
+                            <li class="active">
+                                <a href="<?php echo $SITE_ROOT; ?>contacts/contactimport.php">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Import Contacts
+                                </a>
+                                <b class="arrow"></b>
+                            </li>
+                        <?php }else{?>
+                            <li class="">
+                                <a href="<?php echo $SITE_ROOT; ?>contacts/contactimport.php">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    Import Contacts
+                                </a>
+                                <b class="arrow"></b>
+                            </li>
+                        <?php } ?>
+                            
+                        
                     </ul>
                 </li>
                 <!-- Address book end -->

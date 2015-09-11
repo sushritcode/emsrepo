@@ -180,6 +180,7 @@ if (isset($_POST['fgt_submit'])) {
                                                         </button>
                                                     </div>
                                                     <div class="space-4"></div>
+                                                    
                                                 </fieldset>
                                             </form>
 
@@ -332,10 +333,11 @@ if (isset($_POST['fgt_submit'])) {
         </div><!-- /.main-container -->
 
         <!-- JAVA SCRIPT -->
-<?php include (INCLUDES_PATH . 'static_js_includes.php'); ?>  
+        <?php include (INCLUDES_PATH . 'static_js_includes.php'); ?>  
         <!-- JAVA SCRIPT -->
 
         <!-- inline scripts related to this page -->
+        
         <script type="text/javascript">
             jQuery(function ($) {
                 $(document).on('click', '.toolbar a[data-target]', function (e) {

@@ -4,7 +4,7 @@ require_once(CLASSES_PATH.'error.inc.php');
 require_once(DBS_PATH.'DataHelper.php');
 require_once(DBS_PATH.'objDataHelper.php');
 require_once(INCLUDES_PATH.'cm_authfunc.inc.php');
-$CONST_MODULE = 'Contacts';
+$CONST_MODULE = 'contact';
 $CONST_PAGEID = 'My Contacts';
 require_once(INCLUDES_PATH.'cm_authorize.inc.php');
 require_once(INCLUDES_PATH.'common_function.inc.php');
@@ -77,7 +77,7 @@ $optionCountry ="";
                     
                     <!-- BREADCRUMBS N SEARCH BAR START -->
                     <div class="breadcrumbs" id="breadcrumbs">
-                        
+                                                <?php include (INCLUDES_PATH.'breadcrumbs_navigation.php'); ?>   
                     </div>
                     <!-- BREADCRUMBS N SEARCH BAR END -->                    
                    
@@ -109,8 +109,11 @@ $optionCountry ="";
 					</div>
 				</div>
 				<div class="space-20"></div>
-                            <h1>
+<!--                            <h1>
                                 <?php echo $CONST_MODULE?><small><i class="ace-icon fa fa-angle-double-right"></i><?php echo $CONST_PAGEID;?></small>
+                            </h1>-->
+                            <h1>
+                                Contacts<small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp;My Contacts</small>
                             </h1>
                         </div>
                         <!-- PAGE HEADER -->

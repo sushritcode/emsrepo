@@ -12,15 +12,34 @@
         <a href="<?php echo $SITE_ROOT; ?>">Home</a>
     </li>
     <?php if ($CONST_MODULE == "dashboard"){ ?>
-    <li class="active">Dashboard</li>
+        <li class="active">Dashboard</li>
     <?php }  ?>
         
     <?php if ($CONST_MODULE == "profile"){ ?>
-    <li class="active">Profile</li>
+        <li class="active">Profile</li>
     <?php } ?>
     
-    <?php if ($CONST_MODULE == "schedule"){ ?>
-    <li class="active">Schedule</li>
+    <?php if ( ($CONST_MODULE=="meeting") || ($CONST_MODULE=="schedule") ){ ?>
+        <li class="">Meetings</li>
+        <?php if($CONST_PAGEID=="Schedule Page") { ?>
+            <li class="active">Schedule Meeting</li>
+        <?php } ?>
+        <?php if($CONST_PAGEID=="Scheduled Meeting") { ?>
+            <li class="active">My Meeting</li>
+        <?php } ?>
+        <?php if($CONST_PAGEID=="Archived Meeting") { ?>
+            <li class="active">Archive Meeting</li>
+        <?php } ?>
+    <?php } ?>
+    
+    <?php if ($CONST_MODULE == "contact"){ ?>
+        <li class="">Contact</li>
+        <?php if($CONST_PAGEID=="My Contacts") { ?>
+            <li class="active">My Contacts</li>
+        <?php } ?>
+        <?php if($CONST_PAGEID=="Contacts Import") { ?>
+            <li class="active">Import Addresses (csv)</li>
+        <?php } ?>
     <?php } ?>
     
 </ul><!-- /.breadcrumb -->

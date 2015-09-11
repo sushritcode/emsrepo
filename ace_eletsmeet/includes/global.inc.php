@@ -54,7 +54,7 @@ define("USER_SESSION_NAME","ckUsrLetsMeetUserSession");
 
 /*********************DB Connection Start******************/
 //define("DB_CONNECTIONSTRING","root:mclaren:localhost:dev_db_eletesmeet_com:3306");
-define("DB_CONNECTIONSTRING","root:mclaren:172.16.1.53:dev_db_eletesmeet_com:3306");
+define("DB_CONNECTIONSTRING","root:mclaren:172.16.1.40:dev_db_eletesmeet_com:3306");
 /*********************DB Connection End******************/
 
 /********************Error Logging Parameter Start************/

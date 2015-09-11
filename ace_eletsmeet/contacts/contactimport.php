@@ -4,7 +4,7 @@ require_once(CLASSES_PATH.'error.inc.php');
 require_once(DBS_PATH.'DataHelper.php');
 require_once(DBS_PATH.'objDataHelper.php');
 require_once(INCLUDES_PATH.'cm_authfunc.inc.php');
-$CONST_MODULE = 'Import';
+$CONST_MODULE = 'contact';
 $CONST_PAGEID = 'Contacts Import';
 require_once(INCLUDES_PATH.'cm_authorize.inc.php');
 require_once(INCLUDES_PATH.'common_function.inc.php');
@@ -284,7 +284,7 @@ for($i=0;$i<count($arrGroups);$i++)
 				</div>
 				<div class="space-20"></div>
                             <h1>
-                                Dashboard<small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp;<?php echo $CONST_PAGEID?></small>
+                                Contacts<small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp;Contacts Import</small>
                             </h1>
                         </div>
                         <!-- PAGE HEADER -->

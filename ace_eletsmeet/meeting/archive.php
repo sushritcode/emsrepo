@@ -116,7 +116,8 @@ catch(Exception $e)
                                                             <th> Meeting Title </th>
                                                             <th><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> Meeting Datetime </th>
                                                             <th class="hidden-480"> No. of Invitee </th>
-                                                            <th class="hidden-480"><i class="ace-icon fa fa-user bigger-110 hidden-480"></i> Moderator </th>                                                           
+                                                            <th class="hidden-480"><i class="ace-icon fa fa-user bigger-110 hidden-480"></i> Moderator </th>
+                                                            <th class="hidden-480"> Status </th>
                                                             <th></th>
                                                     </tr>
                                                 </thead>
@@ -136,7 +137,23 @@ catch(Exception $e)
                                                         $schDateTime = $arrSchMeetingList[$intCntr]["meeting_timestamp_local"];
                                                         $schGmtTime = $arrSchMeetingList[$intCntr]["meeting_timestamp_gmt"];
                                                         $schCreator = $arrSchMeetingList[$intCntr]["invitation_creator"];
-                                                        $schStatus = $arrSchMeetingList[$intCntr]["schedule_status"]; 
+                                                        $schStatus = $arrSchMeetingList[$intCntr]["schedule_status"];
+                                                        switch($schStatus)
+                                                        {
+                                                           case 0: $aStatus = "<span class=\"label label-sm label-warning\">Scheduled</span>";
+                                                              break;
+                                                           case 1: $aStatus = "<span class=\"label label-sm label-warning\">Started</span>";
+                                                              break;
+                                                           case 2: $aStatus = "<span class=\"label label-sm label-success\">Completed</span>";
+                                                              break;
+                                                           case 3: $aStatus = "<span class=\"label label-sm label-inverse\">Cancelled</span>";
+                                                              break;
+                                                           case 4: $aStatus = "<span class=\"label label-sm label-warning\">Overdue</span>";
+                                                              break;
+                                                           case 5: $aStatus = "<span class=\"label label-sm label-danger\">Error</span>";
+                                                              break;
+                                                           default: break;
+                                                        }
                                                         
                                                         if($schCreator == "C") 
                                                         {
@@ -171,6 +188,7 @@ catch(Exception $e)
                                                         <td><?php echo $schDateTime; ?></td>
                                                         <td class="hidden-480"> <?php echo $schInviteeCount; ?> </td>
                                                         <td class="hidden-480"> <?php echo $schModerator; ?> </td>
+                                                        <td class="hidden-480"> <?php echo $aStatus; ?> </td>
                                                         <td>
                                                             <div class="hidden-sm hidden-xs btn-group">                                                                    
                                                                     <button href="#sch-detls" data-toggle="modal" class="btn btn-sm btn-inverse" onclick="meetingDetails('<?php echo $schScheduleId; ?>', '<?php echo $schPassCode; ?>')" alt="Details" title="Details"><i class="ace-icon fa fa-info bigger-110"></i></button>
@@ -272,7 +290,7 @@ catch(Exception $e)
                             bAutoWidth: false,
                             "aoColumns": [
                                 {"bSortable": false},
-                                null, null, null, null,
+                                null, null, null, null,null,
                                 {"bSortable": false}
                             ],
                             "aaSorting": [],
@@ -383,7 +401,7 @@ catch(Exception $e)
                 //ColVis extension
                 var colvis = new $.fn.dataTable.ColVis(oTable1, {
                     "buttonText": "<i class='fa fa-search'></i>",
-                    "aiExclude": [0, 5],
+                    "aiExclude": [0,6],
                     "bShowAll": true,
                     //"bRestore": true,
                     "sAlign": "right",
