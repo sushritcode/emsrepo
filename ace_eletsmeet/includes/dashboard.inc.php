@@ -195,12 +195,7 @@ function getMinuteBaseMeetingGraphByID($user_id, $dataHelper) {
     }
     try
     {
-        echo $strSqlStatement = "SELECT COUNT(schedule_id) AS 'SchedueCount', SUM(IFNULL(TIMESTAMPDIFF( MINUTE , meeting_start_time, meeting_end_time),0)) AS 'TotalMinute', DATE( meeting_start_time ) AS 'DateOfMeeting'
-FROM schedule_details
-WHERE user_id = '".trim($user_id)."'
-AND schedule_status = '2'
-GROUP BY DateOfMeeting
-LIMIT 0 , 30;";
+        $strSqlStatement = "SELECT COUNT(sd.schedule_id) AS 'SchedueCount', SUM(IFNULL(TIMESTAMPDIFF( MINUTE , meeting_start_time, meeting_end_time),0)) AS 'TotalMinute',  DATE_FORMAT( meeting_start_time,'%d-%m-%Y' ) AS 'DateOfMeeting' FROM schedule_details AS sd WHERE user_id = '".trim($user_id)."' AND schedule_status = '2' GROUP BY DateOfMeeting  ORDER BY DateOfMeeting;";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrResult;
     }

@@ -933,7 +933,7 @@ function getArchiveMeetingList($email_address, $dataHelper) {
     }
     try
     {
-        echo $strSqlStatement = "SELECT sd.schedule_id, sd.user_id, sd.schedule_status, sd.schedule_creation_time, sd.meeting_timestamp_gmt, sd.meeting_timestamp_local, sd.meeting_title, sd.meeting_agenda, sd.meeting_timezone, sd.meeting_gmt, sd.meeting_start_time, sd.meeting_end_time, sd.voice_bridge, sd.web_voice, sd.max_participants, sd.record_flag, sd.subscription_id, id.invitation_creator "
+         $strSqlStatement = "SELECT sd.schedule_id, sd.user_id, sd.schedule_status, sd.schedule_creation_time, sd.meeting_timestamp_gmt, sd.meeting_timestamp_local, sd.meeting_title, sd.meeting_agenda, sd.meeting_timezone, sd.meeting_gmt, sd.meeting_start_time, sd.meeting_end_time, sd.voice_bridge, sd.web_voice, sd.max_participants, sd.record_flag, sd.subscription_id, id.invitation_creator "
                 . "FROM schedule_details AS sd, invitation_details AS id "
                 . "WHERE sd.schedule_id = id.schedule_id AND id.invitee_email_address = '" . trim($email_address) . "' "
                 . "AND ( (sd.meeting_timestamp_gmt < '".GM_DATE."' AND sd.schedule_status NOT IN ('0','1') ) OR sd.schedule_status IN ('2','3','4','5') ) "
