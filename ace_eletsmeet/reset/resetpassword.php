@@ -61,9 +61,7 @@ try
                     {
                         try
                         {
-			print "1";
                             $arrUpdPwdResult = resetUserPassword($strEmail, MD5($new_password), $objDataHelper);
-			print "2";
                             if ($arrUpdPwdResult)
                             {
                                 print $success = 'Password changed successfully. Click here to <a href="' . $SITE_ROOT . '">SIGN IN.</a>';

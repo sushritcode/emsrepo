@@ -210,7 +210,7 @@ $optionCountry ="";
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Display Name </label>
 															<div class="col-sm-9">
 
-																<input type="text" class="col-sm-5" placeholder="Display Name" id="displayname" name="displayname" required for="basic" value="<?php echo $userdetails[$form_table_map['frmbasic']['displayname']]; ?>" validate="empty,alpha" msg="Display Name cannot be empty , only alphabets allowed">
+																<input type="text" class="col-sm-5" placeholder="Display Name" id="displayname" name="displayname" required for="basic" value="<?php echo $userdetails[$form_table_map['frmbasic']['displayname']]; ?>" validate="yes" msg="Display Name cannot be empty , only alphabets allowed">
 															</div>
 														</div>
 
@@ -219,7 +219,7 @@ $optionCountry ="";
 														<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> First Name </label>
 															<div class="col-sm-9">
-																<input type="text" class="col-sm-5" placeholder="First Name" id="firstname" name="firstname" required for="basic" value="<?php echo $userdetails[$form_table_map['frmbasic']['firstname']]; ?>">
+																<input type="text" class="col-sm-5" placeholder="First Name" id="firstname" name="firstname" required for="basic" value="<?php echo $userdetails[$form_table_map['frmbasic']['firstname']]; ?>" validate="yes" msg="First Name cannot be empty">
 															</div>
 														</div>
 
@@ -228,7 +228,7 @@ $optionCountry ="";
 														<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Last Name </label>
 															<div class="col-sm-9">
-																<input type="text" class="col-sm-5" placeholder="Last Name" id="lastname" name="lastname" required for="basic" value="<?php echo $userdetails[$form_table_map['frmbasic']['lastname']]; ?>">
+																<input type="text" class="col-sm-5" placeholder="Last Name" id="lastname" name="lastname" required for="basic" value="<?php echo $userdetails[$form_table_map['frmbasic']['lastname']]; ?>" validate="yes" msg="Last Name cannot be empty">
 															</div>
 														</div>
 
