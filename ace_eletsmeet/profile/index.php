@@ -152,7 +152,7 @@ $optionCountry ="";
 												</a>
 											</li>
 											<li class="">
-												<a href="#address" data-toggle="tab" aria-expanded="false">
+												<a href="#addressdtls" data-toggle="tab" aria-expanded="false">
 													<i class="green ace-icon fa fa-home bigger-120"></i>
 													Address details
 												</a>
@@ -262,7 +262,7 @@ $optionCountry ="";
 											<div class="form-group">
 												<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Mobile Number </label>
 												<div class="col-sm-9">
-													<input type="text" class="col-sm-5" placeholder="Mobile Number" id="mobile" name="mobile" required for="contact"  value="<?php echo $userdetails[$form_table_map['frmcontact']['mobile']]; ?>" > 
+													<input type="text" class="col-sm-5" placeholder="Mobile Number" id="mobile" name="mobile" required for="contact"  value="<?php echo $userdetails[$form_table_map['frmcontact']['mobile']]; ?>" validate="yes" msg="Please enter Mobile number"> 
 												</div>
 											</div> 
 											<div class="space-4"></div>
@@ -277,7 +277,7 @@ $optionCountry ="";
 											<input type="submit" class="btn btn-info" value="Save Contact Details" onClick="javascript:return sendData('frmcontact','reset');">
 											</form>
 											</div>
-											<div class="tab-pane fade" id="address">
+											<div class="tab-pane fade" id="addressdtls">
 											<form class="form-horizontal" role="form" name="frmaddress" id = "frmaddress">
 												<div class="space-20"></div>
 
@@ -285,7 +285,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Address </label>
 													<div class="col-sm-9">
-														<textarea placeholder="Address" name="address" id="address" class="col-sm-5" for="address"><?php echo $userdetails[$form_table_map['frmaddress']['address']]; ?> </textarea>
+														<textarea placeholder="Address" name="address" id="address" class="col-sm-5" for="address"  validate="yes" msg="Please enter your address for correspondance"><?php echo trim($userdetails[$form_table_map['frmaddress']['address']]);?></textarea>
 													</div>
 												</div>
 												<div class="space-4"></div> 	
@@ -293,7 +293,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Land Mark </label>
 													<div class="col-sm-9">
-														<input type="text" class="col-sm-5" placeholder="Land Mark" id="landmark" name="landmark" required for="address" value="<?php echo $userdetails[$form_table_map['frmaddress']['landmark']]; ?>" >
+														<input type="text" class="col-sm-5" placeholder="Land Mark" id="landmark" name="landmark" required for="address" value="<?php echo $userdetails[$form_table_map['frmaddress']['landmark']]; ?>" validate="yes" msg="Please enter the landmark" >
 													</div>
 												</div> 
 												<div class="space-4"></div>
@@ -302,7 +302,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> City </label>
 													<div class="col-sm-9">
-														<input type="text" class="col-sm-5" placeholder="City" id="city" name="city" required for="address" value="<?php echo $userdetails[$form_table_map['frmaddress']['city']]; ?>" >
+														<input type="text" class="col-sm-5" placeholder="City" id="city" name="city" required for="address" value="<?php echo $userdetails[$form_table_map['frmaddress']['city']]; ?>" validate="yes" msg="Please enter nearst landmark" >
 													</div>
 												</div> 
 												<div class="space-4"></div>
@@ -310,7 +310,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Select Country </label>
 													<div class="col-sm-9">
-														 <select class="col-sm-5" id="form-field-select-1" for="address" name="country" id="country">
+														 <select class="col-sm-5" id="form-field-select-1" for="address" name="country" id="country" validate="yes" msg="Please select the country">
 														    <option value="">Select Country</option>
 														    <?php echo $optionCountry;?>
 														</select>
@@ -368,7 +368,7 @@ $optionCountry ="";
 												<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Industry Type </label>
 															<div class="col-sm-9">
-											                                         <select class="col-sm-5" id="form-field-select-1" for="Company" name="indutrytype" id="indutrytype">
+											                                         <select class="col-sm-5" id="form-field-select-1" for="Company" name="indutrytype" id="indutrytype" validate="yes" msg="Please select the industry type">
 				                                        					                    <option value="">Industry Type</option>
 																    <?php echo $optionIndustryType;?>
 				                                                        					</select>
@@ -379,7 +379,7 @@ $optionCountry ="";
 														<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Company Name </label>
 															<div class="col-sm-9">
-																<input type="text" class="col-sm-5" placeholder="Company Name" id="companyname" name="companyname" required  for="Company" value="<?php echo $userdetails[$form_table_map['frmCompany']['companyname']];?>">
+																<input type="text" class="col-sm-5" placeholder="Company Name" id="companyname" name="companyname" required  for="Company" value="<?php echo $userdetails[$form_table_map['frmCompany']['companyname']];?>" validate="yes" msg="Please enter the name of the company">
 															</div>
 														</div>
 
@@ -388,7 +388,7 @@ $optionCountry ="";
 														<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Nature Of Biusiness </label>
 															<div class="col-sm-9">
-																<input type="text" class="col-sm-5" placeholder="Nature Of Business" id="natureofbusiness" name="natureofbusiness" required  for="Company"  value="<?php echo $userdetails[$form_table_map['frmCompany']['natureofbusiness']];?>">
+																<input type="text" class="col-sm-5" placeholder="Nature Of Business" id="natureofbusiness" name="natureofbusiness" required  for="Company"  value="<?php echo $userdetails[$form_table_map['frmCompany']['natureofbusiness']];?>" validate="yes" msg="Please mention the nature of business">
 															</div>
 														</div>
 
@@ -406,7 +406,7 @@ $optionCountry ="";
 														<div class="form-group">
 															<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Brief Discription Of Company </label>
 															<div class="col-sm-9">
-																<textarea placeholder="Brief Discription Of Company" id="briefDescription" name="briefDescription" class="col-sm-5"  for="Company"> <?php echo $userdetails[$form_table_map['frmCompany']['briefDescription']];?> </textarea>
+																<textarea placeholder="Brief Discription Of Company" id="briefDescription" name="briefDescription" class="col-sm-5"  for="Company" validate="yes" msg="please enter a brief description"> <?php echo $userdetails[$form_table_map['frmCompany']['briefDescription']];?> </textarea>
 															</div>
 														</div>
 														<div class="space-20"></div>
@@ -538,7 +538,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Current Password </label>
 													<div class="col-sm-9">
-														<input type="password" class="col-sm-5" placeholder="Current Password" id="currentpwd" name="currentpwd" for="password">
+														<input type="password" class="col-sm-5" placeholder="Current Password" id="currentpwd" name="currentpwd" for="password" validate="yes" msg="Please enter the Current Password">
 													</div>
 												</div>
 												<div class="space-4"></div>
