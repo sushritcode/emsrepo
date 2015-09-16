@@ -9,7 +9,7 @@ $CONST_PAGEID = 'Schedule Page';
 require_once(INCLUDES_PATH . 'cm_authorize.inc.php');
 require_once(INCLUDES_PATH . 'common_function.inc.php');
 require_once(INCLUDES_PATH . 'schedule_function.inc.php');
-//require_once(INCLUDES_PATH."mail_common_function.inc.php");
+require_once(INCLUDES_PATH."mail_common_function.inc.php");
 
 try
 {
@@ -326,14 +326,14 @@ try
 
                         if ($invitees)
                         {
-//                            try
-//                            {
-//                                $scheduleMail = scheduleMail($strCk_user_email_address, $strCk_user_nick_name, $inviteesEmailArr, $scheduleID, $gmTime, $localTime, $timezone, $meeting_title, $scheduleType);
-//                            }
-//                            catch (Exception $e)
-//                            {
-//                                throw new Exception("createSchedule.php : scheduleMail Failed : ".$e->getMessage(), 1134);
-//                            }
+                            try
+                            {
+                                $scheduleMail = scheduleMail($strCk_user_email_address, $strCk_user_nick_name, $inviteesEmailArr, $scheduleID, $gmTime, $localTime, $timezone, $meeting_title, $scheduleType);
+                            }
+                            catch (Exception $e)
+                            {
+                                throw new Exception("createSchedule.php : scheduleMail Failed : ".$e->getMessage(), 1134);
+                            }
                         }
 
                         $meeting_dtm = dateFormat($gmTime, $localTime, $timezone);

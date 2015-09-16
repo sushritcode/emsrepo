@@ -879,10 +879,11 @@ else
                     //textbox.scrollIntoView(alignToTop);
                     //textbox.scrollIntoView(true);
                     pageScroll();
-                    return false;
+    
+                    //$('#schPlan').addClass('has-error');
+                    //$('#schPlan').removeClass('has-error');
                 }
-                
-                if($.trim(title).length == 0) 
+                else if($.trim(title).length == 0) 
                 {
                     $("#error-msg-sch").html("Please type Meeting Title");
                     $("#error-msg-sch").css({"display":"block"});
@@ -890,41 +891,18 @@ else
                     textbox.focus();
                     //textbox.scrollIntoView(true);
                     pageScroll();
-                    return false;
                 }
-                
-                if ($('#current-time:checked').val() != 'now' && $('#later-time:checked').val() != 'later') 
+                else if ($('#current-time:checked').val() != 'now' && $('#later-time:checked').val() != 'later') 
                 {
                     $("#error-msg-sch").html("Please set Meeting Time");
                     $("#error-msg-sch").css({"display":"block"});
                     var textbox = document.getElementById("current-time");
                     textbox.focus();
                     //textbox.scrollIntoView(true);                   
-                    pageScroll();
-                    return false;
+                     pageScroll();
                 }
                 
-                if ($('#later-time:checked').val() == 'later' && $('#sch_date').val() == '') 
-                {
-                    // var schedule_date = document.getElementById('sch_date').value;
-                     //var schedule_time = document.getElementById('sch_time').value;
-                    // if (schedule_date == "") 
-                     //{
-                           $("#error-msg-sch").html("Please select Date");
-                           $("#error-msg-sch").css({"display":"block"});
-                     //}
-//                      else if (schedule_time == "") 
-//                     {
-//                           $("#error-msg-sch").html("Please select Time");
-//                           $("#error-msg-sch").css({"display":"block"});
-//                     }
-                    var textbox = document.getElementById("sch_date");
-                    textbox.focus();
-                    pageScroll();
-                    return false;
-                }
-                
-                if (document.getElementById('inviteesCount').innerHTML < 1) 
+                else if (document.getElementById('inviteesCount').innerHTML < 1) 
                 {
                     $("#error-msg-sch").html("Please select Invitee from Contact List or Add Other Invitee");
                     $("#error-msg-sch").css({"display":"block"});
@@ -932,11 +910,9 @@ else
                     textbox.focus();
                     //textbox.scrollIntoView(true);
                     pageScroll();
-                     return false;
                 }
-//                else 
-//                {
-
+                else 
+                {
                     if ($('#later-time:checked').val() == 'later') 
                     {
                             var schType = "L";
@@ -995,7 +971,7 @@ else
                             }
                         }
                     });
-//                }
+                }
             }
             
 //            function f_click( t )

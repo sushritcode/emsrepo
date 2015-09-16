@@ -38,7 +38,7 @@ try
 //    echo "<hr<pre/>";
 
     if (sizeof($arrOverdueSchList) > 0)
-    {echo "here";
+    {
         for ($intCntr = 0; $intCntr < sizeof($arrOverdueSchList); $intCntr++)
         {
             $Schedule_Id = $arrOverdueSchList[$intCntr]['schedule_id'];

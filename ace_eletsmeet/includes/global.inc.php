@@ -31,8 +31,8 @@ define("PROFILE_URL",$SITE_ROOT."profile/");
 /*********************Configuration Parameter Start ******************/
 $CONST_SITETITLE = "Welcome to LetsMeet";
 
-define("CLIENT_ID","cl00001");
-define("PARTNER_ID","pr00001");
+//define("CLIENT_ID","cl00001");
+//define("PARTNER_ID","pr00001");
 define("PRID",1);
 define("SEPARATOR",chr(124));
 
@@ -43,6 +43,7 @@ $regValidTime = strtotime(gmdate("Y-m-d H:i:s", strtotime($gmDate)) . " +3 day")
 define("REG_VALID_DATE",$regValidTime );
 
 define("INT_API_ROOT",$SITE_ROOT);
+define("JMX_API_ROOT",$SITE_ROOT."join/");
 
 define("CUSTOM_LOGO_NAME",str_replace("." , "_", $_SERVER['HTTP_HOST']).".png"); 
 define("CUSTOM_LOGO_TITLE",$_SERVER['HTTP_HOST']);
@@ -50,6 +51,7 @@ define("CUSTOM_LOGO_TITLE",$_SERVER['HTTP_HOST']);
 define("REG_SECRET_KEY","L3tSm3e7qUadr1DG3");
 define("SECRET_KEY","qUadr1DG3Le75m3e7");
 define("USER_SESSION_NAME","ckUsrLetsMeetUserSession");
+
 /*********************Configuration Parameter End ******************/
 
 /*********************DB Connection Start******************/
@@ -71,8 +73,8 @@ define("SHOW_TRACE",true);
 define("CONST_NOREPLY_EID", "letsmeet@eletsmeet.com");
 
 define("CONST_PRODUCT_NAME", "LetsMeet");
-define("RELAY_EMAIL_FLAG", 0); //1 = On & 0= Off
-define("RELAY_MAIL_API",$SITE_ROOT."api/sendmail.php?");
+define("RELAY_EMAIL_FLAG", 2); //1 = On & 0= Off
+define("RELAY_MAIL_API",$SITE_ROOT."includes/sendmail.php?");
 //define("RELAY_MAIL_API",$SITE_ROOT."includes/relay_mail.php?"); // Used for Live Server
 /********************Email Informations End**********************/
 
