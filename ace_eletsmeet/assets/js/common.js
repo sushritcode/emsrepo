@@ -105,8 +105,8 @@ function findFormGroup(ele)
 function validateForm(frmName) 
 {
 	var errArr = document.forms[frmName].getElementsByTagName("err");
-        for(var k=0;k < errArr.length;k++)
-                deleteElements(errArr[k]);
+	while(errArr.length > 0)
+                deleteElements(errArr[0]);
 
 	var err = true;
 	if(!document.forms[frmName])
