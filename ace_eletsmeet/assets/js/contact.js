@@ -7,6 +7,7 @@ function sendData(frmName,type)
 	document.getElementById("err").style.display = "none";
 	document.getElementById("errormsg").innerHTML="";
 	var uri = getAllElementsValURI(document.forms[frmName]);
+	if(!uri) return false;
 	document.getElementById("ajax_loader").style.display = "";
 	var frmAction =BASEURL+"contacts/api/action.php?action="+type+"&";
 	xmlhttp = initAjax();
