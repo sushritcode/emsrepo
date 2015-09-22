@@ -44,4 +44,4 @@ require_once(INCLUDES_PATH.'profile_function.inc.php');
    
    sleep(1);
 ?>
-<script language="javascript" type="text/javascript">alert("helllo");window.top.window.stopUpload(<?php echo $result; ?>);</script>   
+<script language="javascript" type="text/javascript">window.top.window.stopUpload(<?php echo $result; ?>);</script>   

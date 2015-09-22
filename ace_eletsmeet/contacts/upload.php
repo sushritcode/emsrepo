@@ -1,4 +1,4 @@
-/<?php
+<?php
    // Edit upload location here
    $destination_path = "/tmp/";
 
@@ -14,5 +14,4 @@
    
    sleep(1);
 ?>
-
 <script language="javascript" type="text/javascript">window.top.window.stopUpload(<?php echo $result; ?> , "<?php echo $target_path;?>", "<?php echo $contents;?>");</script>   

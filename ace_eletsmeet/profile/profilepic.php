@@ -377,6 +377,7 @@ function stopUpload(success)
 	document.getElementById('f1_upload_process').style.visibility = 'hidden';
 	document.getElementById('f1_upload_form').innerHTML = result + '<label>File: <input name="myfile" type="file" size="30" /><\/label><label><input type="submit" name="submitBtn" class="sbtn" value="Upload" /><\/label>';
 	document.getElementById('f1_upload_form').style.visibility = 'visible';      
+	location.reload();
 	return true;   
 }
 
