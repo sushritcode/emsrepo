@@ -17,7 +17,10 @@ function sendData(frmName,type)
 		{
 
 			if(xmlhttp.responseText == 1 )
+			{
 				showAlert(1,"You updated the contact information !!!");
+				location.reload();
+			}
 			else if(xmlhttp.responseText == 2 )
 				showAlert(0,"Please fill in all the lfields");
 			else if(xmlhttp.responseText == 3 )
