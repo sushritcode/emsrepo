@@ -179,11 +179,13 @@ catch(Exception $e)
                                                                     <button class="btn btn-sm btn-info" onclick="joinMeeting('<?php echo $schScheduleId; ?>')" alt="Join" title="Join"><i class="ace-icon fa fa-users bigger-120"></i></button>
                                                                     <?php } ?>
                                                                     
-                                                                    <?php if (($schCreator == "C") && (GM_DATE > $gmtStartTime) && (GM_DATE <= $gmtEndTime) && ($schStatus == "0") ){ ?>
+                                                                    <?php //if (($schCreator == "C") && (GM_DATE > $gmtStartTime) && (GM_DATE <= $gmtEndTime) && ($schStatus == "0") ){ ?>
+                                                                    <?php if (($schCreator == "C") && ($schStatus == "0") ){ ?>
                                                                     <button href="#sch-cancel" data-toggle="modal" class="btn btn-sm btn-danger" onclick="cancelMeeting('<?php echo $schScheduleId; ?>', '<?php echo $schPassCode; ?>')" alt="Cancel" title="Cancel"><i class="ace-icon fa fa-remove bigger-120"></i></button>
                                                                     <?php } ?>
 
-                                                                    <?php if (($schCreator == "C") && (GM_DATE > $gmtStartTime) && (GM_DATE <= $gmtEndTime) && (($schStatus == "0") ||($schStatus == "1")) ){ ?>
+                                                                    <?php //if (($schCreator == "C") && (GM_DATE > $gmtStartTime) && (GM_DATE <= $gmtEndTime) && (($schStatus == "0") ||($schStatus == "1")) ){ ?>
+                                                                    <?php if (($schCreator == "C") && (($schStatus == "0") ||($schStatus == "1")) ){ ?>
                                                                     <button href="#sch-addinvitee" data-toggle="modal" class="btn btn-sm btn-warning" onclick="addInvitee('<?php echo $schScheduleId; ?>', '<?php echo $schPassCode; ?>')" alt="Add Invitee" title="Add Invitee"><i class="ace-icon fa fa-user bigger-120"><sup>+</sup></i></button>
                                                                     <button href="#sch-sendinvitee" data-toggle="modal" class="btn btn-sm btn-purple" onclick="sendInvitee('<?php echo $schScheduleId; ?>', '<?php echo $schPassCode; ?>')" alt="Resend Invitee Email" title="Resend Invitee Email"><i class="ace-icon fa fa-envelope-o bigger-120"></i></button>
                                                                     <?php } ?>

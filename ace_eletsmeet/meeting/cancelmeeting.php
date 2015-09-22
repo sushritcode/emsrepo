@@ -9,6 +9,8 @@ $CONST_PAGEID = 'Meeting Page';
 require_once(INCLUDES_PATH . 'cm_authorize.inc.php');
 require_once(INCLUDES_PATH . 'common_function.inc.php');
 require_once(INCLUDES_PATH . 'schedule_function.inc.php');
+require_once(INCLUDES_PATH. "mail_common_function.inc.php");
+
 
 $strScheduleId = trim($_REQUEST['SchId']);
 $strPassCode = trim($_REQUEST['SchDtl']);
@@ -39,12 +41,17 @@ if (isset($_POST['txtCanReason']))
     {
        throw new Exception("index.php : getScheduleDetailsById Failed : ".$e->getMessage() , 1126);
     }
-
+    //print_r($arrSchDtls); exit;
+    
     //$Schedule_Id = trim($arrSchDtls[0]['schedule_id']);
     $Schedule_Status = trim($arrSchDtls[0]['schedule_status']);
     $User_Id = trim($arrSchDtls[0]['user_id']);
     $Subscription_Id = trim($arrSchDtls[0]['subscription_id']);
     $UserOrder_Id = $arrSchDtls[0]["order_id"];
+    $Meeting_Title = trim($arrSchDtls[0]['meeting_title']);
+    $Meeting_Time = dateFormat(trim($arrSchDtls[0]['meeting_timestamp_gmt']), trim($arrSchDtls[0]['meeting_timestamp_local']), trim($arrSchDtls[0]['meeting_timezone']));
+    $Creator_Email = trim($arrSchDtls[0]['email_address']);
+    $Meeting_Hosted_By = trim($arrSchDtls[0]['nick_name']);
 
 
     if (trim($Schedule_Status) == "0")
@@ -77,6 +84,7 @@ if (isset($_POST['txtCanReason']))
                 throw new Exception("Error in updConsumedSessions.".$a->getMessage(), 4103);
             }
             $strUpdConStatus = trim($arrUpdConSession[0]['@result']);
+            
             if ($strUpdConStatus == 1)
             {
                 try
@@ -105,7 +113,7 @@ if (isset($_POST['txtCanReason']))
             //Get the meeting invitee list
             try
             {
-                $arrInviteesList = getMeetingInviteeList($Schedule_Id, $objDataHelper);
+                $arrInviteesList = getMeetingInviteeList($strScheduleId, $objDataHelper);
             }
             catch (Exception $a)
             {
@@ -119,7 +127,14 @@ if (isset($_POST['txtCanReason']))
             }
             $InviteesEmailnNick = substr($InviteesEmailnNick, 0, -1);
 
-            //cancelMeetingMail($Meeting_Title, $Meeting_Time, $Creator_Email, $Meeting_Hosted_By, $InviteesEmailnNick);
+            try
+            {
+                $SendCancelMail = cancelMeetingMail($Meeting_Title, $Meeting_Time, $Creator_Email, $Meeting_Hosted_By, $InviteesEmailnNick, $strCanReason);
+            }
+            catch(Exception $e)
+            {
+               throw new Exception("addInvitee.php : createInviteesMeetingMail Failed : ".$e->getMessage() , 1145);
+            }
 
             echo"<div id='msg'>yes</div>";
         }
@@ -203,7 +218,7 @@ $(document).ready(function () {
                 else 
                 {
                     $('#error-msg').css({"display":"block"});
-                    $('#error-msg').html('Error while canceling meeting,Please try later.');
+                    $('#error-msg').html('Error while canceling meeting, Please try later.');
                 }
             });
             return false;

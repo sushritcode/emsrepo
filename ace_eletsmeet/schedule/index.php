@@ -189,7 +189,7 @@ else
         <!-- CSS n JS CONTENT AREA -->
         <?php include (INCLUDES_PATH . 'css_include.php'); ?>
         <!-- CSS n JS CONTENT AREA -->
-        <style>
+<!--        <style>
 .overlay {
     position: absolute;
     top: 0;
@@ -210,13 +210,13 @@ else
     top: 25%;
     z-index: 10001;
 }
-        </style>
+        </style>-->
         
     </head>
 
     <body class="no-skin">
         
-        <div class="overlay" style='display:none' id='loadingmessage1'></div>
+        <div class="overlay" style="display:none" id="loadinglayer"></div>
         
         <!-- TOP NAVIGATION BAR START -->
         <div id="navbar" class="navbar navbar-default">
@@ -273,7 +273,7 @@ else
 <!--                                <div id='loadingmessage' style='display:none' class="overlay">
                                         <img src='<?php echo IMG_PATH; ?>loader.gif'/>
                                     </div>-->
-                                    <div id='loadingmessage' class="loading_modal" style='display:none'><img src='<?php echo IMG_PATH; ?>loader.gif'/></div>
+                                    <div id="loadingmessage" class="loading_modal loading_modal_left_48" style="display:none"><img src="<?php echo IMG_PATH; ?>loader.gif"/></div>
 
 
                                 <?php if ($stat == "TRUE"){ ?>
@@ -396,7 +396,7 @@ else
                                                                     <div class="col-sm-4 no-padding-right">
                                                                         <label class="col-sm-3 no-padding-right">Time</label>
                                                                         <div class="input-group col-sm-7">
-                                                                            <input id="sch_time" type="text" class="form-control" readonly="true" contenteditable="false" data-format="HH:mm PP"/>
+                                                                            <input id="sch_time" type="text" class="form-control" readonly="true" contenteditable="false"  data-format="HH:mm PP"/>
                                                                             <span class="input-group-addon">
                                                                                 <i class="fa fa-clock-o bigger-110"></i>
                                                                             </span>                                                                           
@@ -643,7 +643,7 @@ else
             todayHighlight: true,
             endDate: '<?php echo $maxDate; ?>',
             startDate: '<?php echo $curDate; ?>'
-        })
+        });
 
         //show datepicker when clicking on the icon
 //    .next().on(ace.click_event, function(){
@@ -652,13 +652,14 @@ else
 
 
         $('#sch_time').timepicker({
-            minuteStep: 1,
+            defaultTime: false,
+            minuteStep: 5,
 //         showSeconds: false,
-            showMeridian: false,
+            showMeridian: true,
             language: 'en',
-            pick12HourFormat: false,
+            pick12HourFormat: true,
             showInputs: false
-        })
+        });
 
 //    .next().on(ace.click_event, function(){
 //            $(this).prev().focus();
@@ -906,23 +907,98 @@ else
                 
                 if ($('#later-time:checked').val() == 'later' && $('#sch_date').val() == '') 
                 {
-                    // var schedule_date = document.getElementById('sch_date').value;
-                     //var schedule_time = document.getElementById('sch_time').value;
-                    // if (schedule_date == "") 
-                     //{
-                           $("#error-msg-sch").html("Please select Date");
-                           $("#error-msg-sch").css({"display":"block"});
-                     //}
-//                      else if (schedule_time == "") 
-//                     {
-//                           $("#error-msg-sch").html("Please select Time");
-//                           $("#error-msg-sch").css({"display":"block"});
-//                     }
+                    $("#error-msg-sch").html("Please select Date");
+                    $("#error-msg-sch").css({"display":"block"});
                     var textbox = document.getElementById("sch_date");
                     textbox.focus();
                     pageScroll();
                     return false;
                 }
+                
+                 if ($('#later-time:checked').val() == 'later' && $('#sch_time').val() == '') 
+                {
+                    $("#error-msg-sch").html("Please select Time");
+                    $("#error-msg-sch").css({"display":"block"});
+                    var textbox = document.getElementById("sch_time");
+                    textbox.focus();
+                    pageScroll();
+                    return false;
+                }
+                
+                if ($('#later-time:checked').val() == 'later' && $('#sch_date').val() != '') 
+                {
+                    var syscurdate = '<?php echo date("d-m-Y"); ?>';
+                    var syscurtime = '<?php echo date("g:i A"); ?>';
+                      
+                    //alert('syscurdate'+syscurdate);
+                    //alert('syscurtime'+syscurtime);
+                      
+                    //var currentTime = new Date(); 
+                    //var hours = currentTime.getHours();
+                    //var minutes = currentTime.getMinutes();
+                    
+                    //alert('currentTime'+currentTime);
+                    //alert('hours'+hours);
+                    //alert('minutes'+minutes);
+                    
+                    var sch_date = $("#sch_date").val();
+                    //var dateParts = sch_date.split("-");
+                    
+                    //alert('sch_date'+sch_date);
+                    //alert('dateParts'+dateParts);
+                     
+                    var sch_time = $("#sch_time").val();
+                    //var timeParts = sch_time.split(":"); 
+                    
+                    //alert('sch_time'+sch_time);
+                    //alert('timeParts'+timeParts);
+                    
+                    //alert('D1 ' + syscurdate +" "+syscurtime);
+                    //alert('D2 ' + sch_date+" "+sch_time);
+                    
+                    if( (syscurdate +" "+syscurtime) >= (sch_date+" "+sch_time)) 
+                    {
+                       $("#error-msg-sch").html("Time you have selected is past Time");
+                       $("#error-msg-sch").css({"display":"block"});
+                       var textbox = document.getElementById("sch_time");
+                       textbox.focus();
+                       pageScroll();
+                       return false;
+                    }
+                   
+                    
+                    
+                    // var ampm = syscurtime.split(':')[1].split(' ')[1];
+                     
+//                    var checkindate = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]); 
+//                    var nowdate = new Date();
+//                    
+//                    alert('checkindate'+checkindate);
+//                    alert('nowdate'+nowdate);
+                     
+                   
+                    
+//                    var differenceDate = parseInt(nowdate) - parseInt(checkindate); 
+//                    alert('diff'+differenceDate);
+                     
+                    
+                    
+                    //alert(currentTime);
+                    //alert(sch_time);
+                    //alert(sch_date);
+                   
+                    
+//                    if(  ( differenceDate == 0) && ( (parseInt(timeParts[0]) < parseInt(hours) )  ||  ((parseInt(timeParts[0]) == parseInt(hours) )  && (parseInt(timeParts[1]) < parseInt(minutes))) ) )
+//                    {
+//                       //alert("The Date and Time you have selected is before the Current Date and Time");
+//                       $("#error-msg-sch").html("Time you have selected is past Time");
+//                       $("#error-msg-sch").css({"display":"block"});
+//                       var textbox = document.getElementById("sch_time");
+//                       textbox.focus();
+//                       pageScroll();
+//                       return false;
+//                    } 
+                }              
                 
                 if (document.getElementById('inviteesCount').innerHTML < 1) 
                 {
@@ -971,17 +1047,17 @@ else
                         return false;
                     }
                     
-                    $('#loadingmessage1').show();
+                    $('#loadinglayer').show();
                     $('#loadingmessage').show();
                        
                     $.ajax({
-                        type: "GET",
-                        url: "createSchedule.php",
-                        cache: false,
-                        data: "title="+title+"&schedule_dtm="+schDtm+"&inviteesList="+inviteesList+"&scheduleType="+schType+"&inviteesCnt="+inviteescount+"&tzone="+tzone+"&mod="+mod+"&uplan="+uplan+"&agenda="+agenda+"&stat="+stat,
-                        //loading: $(".loading").html(""),
-                        success:    function(html) {
-                              $('#loadingmessage1').hide();
+                            type: "GET",
+                            url: "createSchedule.php",
+                            cache: false,
+                            data: "title="+title+"&schedule_dtm="+schDtm+"&inviteesList="+inviteesList+"&scheduleType="+schType+"&inviteesCnt="+inviteescount+"&tzone="+tzone+"&mod="+mod+"&uplan="+uplan+"&agenda="+agenda+"&stat="+stat,
+                            //loading: $(".loading").html(""),
+                            success: function(html) {
+                            $('#loadinglayer').hide();
                             sep = "<?php echo SEPARATOR; ?>"; html = html.split(sep);
                             if(html[0] == 1) 
                             {

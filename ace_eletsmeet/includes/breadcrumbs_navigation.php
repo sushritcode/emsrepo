@@ -41,6 +41,10 @@
             <li class="active">Import Addresses (csv)</li>
         <?php } ?>
     <?php } ?>
+            
+            <?php if ($CONST_MODULE == "join"){ ?>
+        <li class="active">Join Meeting</li>
+    <?php }  ?>
     
 </ul><!-- /.breadcrumb -->
 

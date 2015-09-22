@@ -64,11 +64,17 @@ catch (Exception $a)
                 </div>        
                 <div class="space"></div>
                 <div>
-                    <h5 class="lighter smaller"><i class="ace-icon fa fa-user  blue"></i> Hosted By <?php echo $User_NickName; ?> </h5>
+                    <h5 class="lighter smaller"><i class="ace-icon fa fa-user  blue"></i> Hosted By : <?php echo $User_NickName; ?> </h5>
                 </div>        
                 <div class="space"></div>
+                <?php  if (strlen($Meeting_Agenda) > 0) {?>
                 <div>
-                    <h5 class="lighter smaller">Number of Participants <?php echo sizeof($arrInviteesList); ?></h5>
+                    <h5 class="lighter smaller">Agenda Of Meeting : <?php echo $Meeting_Agenda; ?> </h5>
+                </div>        
+                <div class="space"></div>
+                <?php } ?>
+                <div>
+                    <h5 class="lighter smaller">Number of Participants : <label class="blue"><?php echo sizeof($arrInviteesList); ?></label></h5>
                 </div>
                 <div class="space"></div>
                 <div>
