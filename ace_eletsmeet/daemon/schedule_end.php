@@ -7,7 +7,7 @@ require_once($DAEMON_WEBAPP_PATH.'dbs/DataHelper.php');
 require_once($DAEMON_WEBAPP_PATH.'dbs/objDataHelper.php');
 require_once($DAEMON_WEBAPP_PATH.'includes/daemon_function.inc.php');
 require_once($DAEMON_WEBAPP_PATH.'includes/api_function.inc.php');
-require_once($DAEMON_WEBAPP_PATH.'includes/common_function.inc.php');
+//require_once($DAEMON_WEBAPP_PATH.'includes/common_function.inc.php');
 require_once($DAEMON_WEBAPP_PATH.'includes/utilities.php');
 
 header('Content-type: text/plain; charset=utf-8');
@@ -32,6 +32,7 @@ try
     {
         throw new Exception("Error in getCreatedScheduleList.".$a->getMessage(), 4102);
     }
+    
 //    echo "<pre/>";
 //    print_r($arrCreatedSchList);
 //    echo "<pre/>";   
@@ -50,7 +51,6 @@ try
             //Added by Mitesh Shah 29-12-2014 
             try
             {
-
                 $meetingInstanceDtls = getLMInstanceByClientId($Client_Id, $objDataHelper);
                 //print_r($meetingInstanceDtls);
             }
@@ -66,7 +66,6 @@ try
             //$Salt = VIDEO_SERVER_SALT;
             $Salt = $LMInstanceSalt;
         
-            
             //$IS_MEETING_RUNNING_API_URL = $Meeting_Instance.VIDEO_SERVER_API.VIDEO_SERVER_IS_MEETING_RUNNING_API;
             $IS_MEETING_RUNNING_API_URL = $Meeting_Instance.$LMInstanceAPIUrl.VIDEO_SERVER_IS_MEETING_RUNNING_API;
             
@@ -117,7 +116,6 @@ try
                   if ($strUpdateSchStatus == 1)
                       {
                              //update Client Subscription Data for Consumed session
-                             
                       }
             }
             

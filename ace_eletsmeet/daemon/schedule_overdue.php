@@ -6,10 +6,10 @@ require_once($DAEMON_WEBAPP_PATH.'classes/error.inc.php');
 require_once($DAEMON_WEBAPP_PATH.'dbs/DataHelper.php');
 require_once($DAEMON_WEBAPP_PATH.'dbs/objDataHelper.php');
 require_once($DAEMON_WEBAPP_PATH.'includes/daemon_function.inc.php');
-require_once($DAEMON_WEBAPP_PATH.'includes/common_function.inc.php');
+//require_once($DAEMON_WEBAPP_PATH.'includes/common_function.inc.php');
 require_once($DAEMON_WEBAPP_PATH.'includes/utilities.php');
 
-//header('Content-type: text/plain; charset=utf-8');
+header('Content-type: text/plain; charset=utf-8');
 
 try
 {
@@ -38,7 +38,7 @@ try
 //    echo "<hr<pre/>";
 
     if (sizeof($arrOverdueSchList) > 0)
-    {echo "here";
+    {
         for ($intCntr = 0; $intCntr < sizeof($arrOverdueSchList); $intCntr++)
         {
             $Schedule_Id = $arrOverdueSchList[$intCntr]['schedule_id'];
