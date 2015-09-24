@@ -177,11 +177,6 @@ else
         $errorMsg = "You are not subscribed to any plan. Please contact support to subscribe.";
     }
 }
-//echo $gDtm;
-//echo "<hr>";
-//echo $eDtm;
-//echo "<hr>";
-//echo $stat;
 ?>
 
 <!DOCTYPE html>
@@ -194,10 +189,35 @@ else
         <!-- CSS n JS CONTENT AREA -->
         <?php include (INCLUDES_PATH . 'css_include.php'); ?>
         <!-- CSS n JS CONTENT AREA -->
+<!--        <style>
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 10000;
+}
+
+.loading_modal{
+    border-radius: 5px;
+    left: 50%;
+    line-height: 200px;
+    margin-left: -150px;
+    position: fixed;
+    text-align: center;
+    top: 25%;
+    z-index: 10001;
+}
+        </style>-->
+        
     </head>
 
     <body class="no-skin">
-
+        
+        <div class="overlay" style="display:none" id="loadinglayer"></div>
+        
         <!-- TOP NAVIGATION BAR START -->
         <div id="navbar" class="navbar navbar-default">
             <?php include (INCLUDES_PATH . 'top_navigation.php'); ?>    
@@ -232,6 +252,8 @@ else
                     <!--  PAGE CONTENT START -->
                     <div class="page-content">
 
+                        
+  
                         <!-- SETTING CONTAINER START -->
                         <!--IF NEEDED then WE ADD -->
                         <!-- SETTING CONTAINER END -->
@@ -248,12 +270,13 @@ else
                             <div class="col-xs-12" id="mainContentDiv">
                                 <!-- PAGE CONTENT START -->
 
+<!--                                <div id='loadingmessage' style='display:none' class="overlay">
+                                        <img src='<?php echo IMG_PATH; ?>loader.gif'/>
+                                    </div>-->
+                                    <div id="loadingmessage" class="loading_modal loading_modal_left_48" style="display:none"><img src="<?php echo IMG_PATH; ?>loader.gif"/></div>
+
 
                                 <?php if ($stat == "TRUE"){ ?>
-
-<!--                                    <div class="alert alert-block alert-success">
-                                        <strong >Welcome</strong>, Your subscribed plan has expired. Please contact support to subscribe.
-                                    </div>-->
 
                                     <div class="alert alert-block alert-danger errorDisplay"  id="error-msg-sch"></div>
 
@@ -298,7 +321,7 @@ else
                                                             <div class="form-group">
                                                                 <label for="form-field-1-1" class="col-sm-2 control-label no-padding-right"> Meeting Agenda </label>
                                                                 <div class="col-sm-9">
-                                                                    <textarea placeholder="Type your Meeting Agenda" id="sAgenda" class="form-control limited" name="sAgenda" maxlength="100"></textarea>
+                                                                    <textarea placeholder="Type your Meeting Agenda" id="sAgenda" class="form-control limited" name="sAgenda" maxlength="250"></textarea>
                                                                 </div>
                                                             </div>                                                    
 
@@ -327,8 +350,9 @@ else
                                                                         </label>
                                                                     </span>
                                                                     <div class="space-8"></div>
+                                                                    
                                                                     <?php if (count($arrTimezoneList) > 0){ ?>
-                                                                    <div id="timezoneShow" class="form-group timezone">
+                                                                    <div id="time-zone" class="form-group display-none">
                                                                         <label for="form-field-1-1" class="col-sm-2 control-label no-padding-right"> Select Timezone </label>
                                                                         <div class="col-sm-5">
                                                                             <?php echo $timezone; ?>
@@ -372,7 +396,7 @@ else
                                                                     <div class="col-sm-4 no-padding-right">
                                                                         <label class="col-sm-3 no-padding-right">Time</label>
                                                                         <div class="input-group col-sm-7">
-                                                                            <input id="sch_time" type="text" class="form-control" readonly="true" contenteditable="false"/>
+                                                                            <input id="sch_time" type="text" class="form-control" readonly="true" contenteditable="false"  data-format="HH:mm PP"/>
                                                                             <span class="input-group-addon">
                                                                                 <i class="fa fa-clock-o bigger-110"></i>
                                                                             </span>                                                                           
@@ -510,7 +534,7 @@ else
                                         <div class="row">
                                             <div class="col-xs-12">
                                                 <div class="clearfix form-actions">
-                                                    <div class="col-md-offset-4 col-md-12">
+                                                    <div class="col-md-offset-4">
                                                             <button type="button" class="btn btn-info" onclick="btnSchedule('N');">
                                                                     <i class="ace-icon fa fa-check bigger-110"></i>
                                                                     Schedule
@@ -532,18 +556,10 @@ else
                                     </div>
                                 <?php } ?>
 
-
-
                                 <!-- PAGE CONTENT END -->
                             </div>
                             
                         </div> 
-
-
-
-
-
-
 
                     </div>
                     <!-- PAGE CONTENT END -->
@@ -572,7 +588,6 @@ else
         <!-- JAVA SCRIPT -->
         <script type="text/javascript" src="<?php echo JS_PATH; ?>bootstrap-datepicker.js"></script>
         <script type="text/javascript" src="<?php echo JS_PATH; ?>bootstrap-timepicker.js"></script>
-        <script type="text/javascript" src="<?php echo JS_PATH; ?>schedule_custom.js"></script>
         <script type="text/javascript" src="<?php echo JS_PATH; ?>jquery.autosize.js"></script>
         <script type="text/javascript" src="<?php echo JS_PATH; ?>jquery.inputlimiter.1.3.1.js"></script>
 
@@ -580,13 +595,35 @@ else
     <script type="text/javascript">
         $('[data-rel=tooltip]').tooltip({container:'body'});
         $('[data-rel=popover]').popover({container:'body'});
-
         $('textarea[class*=autosize]').autosize({append: "\n"});
         $('textarea.limited').inputlimiter({
                 remText: '%n character%s remaining...',
                 limitText: 'max allowed : %n.'
         });
-                                
+       
+        function showTimezone()
+        {
+            if (document.getElementById("time-zone").style.display == "block") 
+            {
+                document.getElementById("time-zone").style.display = "none";
+            } 
+            else 
+            {
+                document.getElementById("time-zone").style.display = "block";
+            }
+        }
+
+        function currentZone()
+        {
+            var tzone = $("#timezone").val();
+            var sep = "$:$";
+            tzone = tzone.split(sep);
+            timeZone = tzone[0] + " - " + tzone[1] + ", GMT" + tzone[2];
+            $("#curZone").html(timeZone);
+            $("#timezoneTitle").html("Meeting Timezone : ");
+            showTimezone();
+        }
+       
         $(document).ready(function () {
             $('input[type="radio"]').click(function () {
                 if ($(this).attr("value") == "later")
@@ -606,7 +643,7 @@ else
             todayHighlight: true,
             endDate: '<?php echo $maxDate; ?>',
             startDate: '<?php echo $curDate; ?>'
-        })
+        });
 
         //show datepicker when clicking on the icon
 //    .next().on(ace.click_event, function(){
@@ -615,14 +652,14 @@ else
 
 
         $('#sch_time').timepicker({
-            minuteStep: 1,
-            showSeconds: true,
-            showMeridian: false,
+            defaultTime: false,
+            minuteStep: 5,
+//         showSeconds: false,
+            showMeridian: true,
             language: 'en',
-            pick12HourFormat: false,
-            showInputs: false,
-            defaultTime:false
-        })
+            pick12HourFormat: true,
+            showInputs: false
+        });
 
 //    .next().on(ace.click_event, function(){
 //            $(this).prev().focus();
@@ -674,8 +711,9 @@ else
                                         }
                                     }
                                 }
-                            } else {
-                                //$("#contactList").html("<div class='alert alert-info mR10'>No Contact List Available</div>");
+                            } 
+                            else 
+                            {
                                 $("#contactList").html("<div class='alert alert-block alert-info'><strong >Sorry</strong>, No Contact List Available.</div>");
                             }
                         }
@@ -747,7 +785,6 @@ else
             vals = val.split(":");
             val = vals[0]+":"+escape(vals[1])+":"+vals[2]+":"+vals[3];
             oContact = document.getElementById('inviteesList');
-            //oContact.innerHTML = oContact.innerHTML + "<div type=text id="+email+" class=oInvitees><input type=text name="+val+" value="+urlencode(vals[1])+"  readonly=readonly class=inputInviteesList><img src=<?php echo IMG_PATH; ?>closered.png alt=Delete id="+email+" onclick=removeInvitee('"+escape(id)+"','"+email+"','"+val+"','"+eType+"');  class=cPointer title=Remove Invitee /></div>";
             oContact.innerHTML = oContact.innerHTML + "<div class='input-group' style='padding-bottom: 1px;' id="+email+" ><span class='input-group-addon'><i class='ace-icon fa fa-user'></i></span><input type=text name="+val+" value="+urlencode(vals[1])+"  readonly='readonly' class='form-control' style='font-size: small; background-color: #ffffff none repeat scroll 0 0 !important;'/><span class='input-group-addon'><img src='<?php echo IMG_PATH; ?>closered.png' id="+email+" onclick=removeInvitee('"+escape(id)+"','"+email+"','"+val+"','"+eType+"');  class='cPointer' title='Remove "+urlencode(vals[1])+"' alt='Remove "+urlencode(vals[1])+"'/><span class='lbl'></span></span></div>";                                                                                           
             moderator(email, escape(vals[1]), "aM");
             iCounter();
@@ -810,6 +847,10 @@ else
                 $("#error-msg-aoi").css({"display":"none"});
             }
             
+            function pageScroll(){
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+            }
+            
              // Validate Schedule Meeting Details
             function btnSchedule(stat) {
                 $("#error-msg-sch").html("");
@@ -821,6 +862,7 @@ else
                 var mod = $("#moderator").val();
 
                 pCount = "<?php echo $plansCount; ?>";
+                
                 if (pCount > 1)
                 {
                     uplan = $("#sPlan").val();
@@ -828,6 +870,7 @@ else
                     uplan = $("#sPlan").attr("name");
                 }
                 userPlan = uplan.split("$:$");
+                
                 if (uplan.length == 0) 
                 {
                     $("#error-msg-sch").html("Please Select Plan");
@@ -835,77 +878,166 @@ else
                     var textbox = document.getElementById("sPlan");
                     textbox.focus();
                     //textbox.scrollIntoView(alignToTop);
-                    textbox.scrollIntoView(true);
-
-    
-                    //$('#schPlan').addClass('has-error');
-                    //$('#schPlan').removeClass('has-error');
+                    //textbox.scrollIntoView(true);
+                    pageScroll();
+                    return false;
                 }
-                else if($.trim(title).length == 0) 
+                
+                if($.trim(title).length == 0) 
                 {
                     $("#error-msg-sch").html("Please type Meeting Title");
                     $("#error-msg-sch").css({"display":"block"});
                     var textbox = document.getElementById("sTitle");
                     textbox.focus();
-                    textbox.scrollIntoView(true);
+                    //textbox.scrollIntoView(true);
+                    pageScroll();
+                    return false;
                 }
-                //else if ($('#current-time:checked').val() != 'on' && $('#later-time:checked').val() != 'on') 
-                else if ($('#current-time:checked').val() != 'now' && $('#later-time:checked').val() != 'later') 
+                
+                if ($('#current-time:checked').val() != 'now' && $('#later-time:checked').val() != 'later') 
                 {
                     $("#error-msg-sch").html("Please set Meeting Time");
                     $("#error-msg-sch").css({"display":"block"});
                     var textbox = document.getElementById("current-time");
                     textbox.focus();
-                    textbox.scrollIntoView(true);
-               }
-//               else if ($('#later-time:checked').val() == 'later') 
-//               {
-//                   var schedule_date = document.getElementById('sch_date').value;
-//                   var schedule_time = document.getElementById('sch_time').value;
-//                     if (schedule_date == "") 
-//                     {
-//                          $("#error-msg-sch").html("Please select Date");
-//                          $("#error-msg-sch").css({"display":"block"});
-//                     }
-//                      else if (schedule_time == "") 
-//                     {
-//                          $("#error-msg-sch").html("Please select Time");
-//                          $("#error-msg-sch").css({"display":"block"});
-//                     }
-//               }
-                else if (document.getElementById('inviteesCount').innerHTML < 1) 
+                    //textbox.scrollIntoView(true);                   
+                    pageScroll();
+                    return false;
+                }
+                
+                if ($('#later-time:checked').val() == 'later' && $('#sch_date').val() == '') 
+                {
+                    $("#error-msg-sch").html("Please select Date");
+                    $("#error-msg-sch").css({"display":"block"});
+                    var textbox = document.getElementById("sch_date");
+                    textbox.focus();
+                    pageScroll();
+                    return false;
+                }
+                
+                 if ($('#later-time:checked').val() == 'later' && $('#sch_time').val() == '') 
+                {
+                    $("#error-msg-sch").html("Please select Time");
+                    $("#error-msg-sch").css({"display":"block"});
+                    var textbox = document.getElementById("sch_time");
+                    textbox.focus();
+                    pageScroll();
+                    return false;
+                }
+                
+                if ($('#later-time:checked').val() == 'later' && $('#sch_date').val() != '') 
+                {
+                    var syscurdate = '<?php echo date("d-m-Y"); ?>';
+                    var syscurtime = '<?php echo date("g:i A"); ?>';
+                      
+                    //alert('syscurdate'+syscurdate);
+                    //alert('syscurtime'+syscurtime);
+                      
+                    //var currentTime = new Date(); 
+                    //var hours = currentTime.getHours();
+                    //var minutes = currentTime.getMinutes();
+                    
+                    //alert('currentTime'+currentTime);
+                    //alert('hours'+hours);
+                    //alert('minutes'+minutes);
+                    
+                    var sch_date = $("#sch_date").val();
+                    //var dateParts = sch_date.split("-");
+                    
+                    //alert('sch_date'+sch_date);
+                    //alert('dateParts'+dateParts);
+                     
+                    var sch_time = $("#sch_time").val();
+                    //var timeParts = sch_time.split(":"); 
+                    
+                    //alert('sch_time'+sch_time);
+                    //alert('timeParts'+timeParts);
+                    
+                    //alert('D1 ' + syscurdate +" "+syscurtime);
+                    //alert('D2 ' + sch_date+" "+sch_time);
+                    
+                    if( (syscurdate +" "+syscurtime) >= (sch_date+" "+sch_time)) 
+                    {
+                       $("#error-msg-sch").html("Time you have selected is past Time");
+                       $("#error-msg-sch").css({"display":"block"});
+                       var textbox = document.getElementById("sch_time");
+                       textbox.focus();
+                       pageScroll();
+                       return false;
+                    }
+                   
+                    
+                    
+                    // var ampm = syscurtime.split(':')[1].split(' ')[1];
+                     
+//                    var checkindate = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]); 
+//                    var nowdate = new Date();
+//                    
+//                    alert('checkindate'+checkindate);
+//                    alert('nowdate'+nowdate);
+                     
+                   
+                    
+//                    var differenceDate = parseInt(nowdate) - parseInt(checkindate); 
+//                    alert('diff'+differenceDate);
+                     
+                    
+                    
+                    //alert(currentTime);
+                    //alert(sch_time);
+                    //alert(sch_date);
+                   
+                    
+//                    if(  ( differenceDate == 0) && ( (parseInt(timeParts[0]) < parseInt(hours) )  ||  ((parseInt(timeParts[0]) == parseInt(hours) )  && (parseInt(timeParts[1]) < parseInt(minutes))) ) )
+//                    {
+//                       //alert("The Date and Time you have selected is before the Current Date and Time");
+//                       $("#error-msg-sch").html("Time you have selected is past Time");
+//                       $("#error-msg-sch").css({"display":"block"});
+//                       var textbox = document.getElementById("sch_time");
+//                       textbox.focus();
+//                       pageScroll();
+//                       return false;
+//                    } 
+                }              
+                
+                if (document.getElementById('inviteesCount').innerHTML < 1) 
                 {
                     $("#error-msg-sch").html("Please select Invitee from Contact List or Add Other Invitee");
                     $("#error-msg-sch").css({"display":"block"});
-                     var textbox = document.getElementById("contactList");
-                     textbox.focus();
-                    textbox.scrollIntoView(true);
+                    var textbox = document.getElementById("contactList");
+                    textbox.focus();
+                    //textbox.scrollIntoView(true);
+                    pageScroll();
+                     return false;
                 }
-                else 
-                {
-                     if ($('#later-time:checked').val() == 'later') 
-                     {
+//                else 
+//                {
+
+                    if ($('#later-time:checked').val() == 'later') 
+                    {
                             var schType = "L";
                             var schDtm = $('#sch_date').val() + " " +  $('#sch_time').val();
-                            //alert(schDtm);
-                     }
-                     else
-                     {
+                    }
+                    else
+                    {
                             schType = "N";
                             schDtm = "";
-                     }
+                    }
+                    
                     var title = $.trim(title);
                     var agenda = $.trim(agenda);
                     var inviteescount = document.getElementById('inviteesCount').innerHTML;
                     var contactData = new Array();
                     var contactEmail = new Array();
                     var paren = document.getElementById('inviteesList');
+                    
                     for (i=0;i<paren.childNodes.length;i++) 
                     {
                         contactEmail = paren.childNodes[i].id;
                         var firstparent = eval("document.getElementById('"+contactEmail+"')");
                         contactData.push(firstparent.childNodes[1].name);
                     }
+                    
                     inviteesList = contactData;
                     var maxLimit = userPlan[2];
                     if (parseInt(inviteescount) > parseInt(maxLimit) && parseInt(maxLimit) != 0) 
@@ -914,13 +1046,18 @@ else
                         $("#error-msg-sch").css({"display":"block"});
                         return false;
                     }
+                    
+                    $('#loadinglayer').show();
+                    $('#loadingmessage').show();
+                       
                     $.ajax({
-                        type: "GET",
-                        url: "createSchedule.php",
-                        cache: false,
-                        data: "title="+title+"&schedule_dtm="+schDtm+"&inviteesList="+inviteesList+"&scheduleType="+schType+"&inviteesCnt="+inviteescount+"&tzone="+tzone+"&mod="+mod+"&uplan="+uplan+"&agenda="+agenda+"&stat="+stat,
-                        loading: $(".loading").html(""),
-                        success:    function(html) {
+                            type: "GET",
+                            url: "createSchedule.php",
+                            cache: false,
+                            data: "title="+title+"&schedule_dtm="+schDtm+"&inviteesList="+inviteesList+"&scheduleType="+schType+"&inviteesCnt="+inviteescount+"&tzone="+tzone+"&mod="+mod+"&uplan="+uplan+"&agenda="+agenda+"&stat="+stat,
+                            //loading: $(".loading").html(""),
+                            success: function(html) {
+                            $('#loadinglayer').hide();
                             sep = "<?php echo SEPARATOR; ?>"; html = html.split(sep);
                             if(html[0] == 1) 
                             {
@@ -934,16 +1071,16 @@ else
                             }
                         }
                     });
-                }
+//                }
             }
             
-            function f_click( t )
-            {
-              at = t.getAttributeNode("href");
-              window.open( at.value );
-              t.removeAttributeNode( at );
-              document.getElementsByTagName("a")[0].setAttribute("class", "disabled");
-            }
+//            function f_click( t )
+//            {
+//              at = t.getAttributeNode("href");
+//              window.open( at.value );
+//              t.removeAttributeNode( at );
+//              document.getElementsByTagName("a")[0].setAttribute("class", "disabled");
+//            }
             
     </script>
 </html>
