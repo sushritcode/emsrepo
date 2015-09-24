@@ -7,6 +7,7 @@ function sendData(frmName,type)
 	document.getElementById("err").style.display = "none";
 	document.getElementById("errormsg").innerHTML="";
 	var uri = getAllElementsValURI(document.forms[frmName]);
+	if(!uri) return false;
 	document.getElementById("ajax_loader").style.display = "";
 	var frmAction =BASEURL+"contacts/api/action.php?action="+type+"&";
 	xmlhttp = initAjax();
@@ -16,7 +17,10 @@ function sendData(frmName,type)
 		{
 
 			if(xmlhttp.responseText == 1 )
+			{
 				showAlert(1,"You updated the contact information !!!");
+				location.reload();
+			}
 			else if(xmlhttp.responseText == 2 )
 				showAlert(0,"Please fill in all the lfields");
 			else if(xmlhttp.responseText == 3 )
