@@ -7,8 +7,9 @@ require_once(DBS_PATH.'objDataHelper.php');
 require_once(INCLUDES_PATH.'schedule_function.inc.php');
 require_once(INCLUDES_PATH.'api_function.inc.php');
 require_once(INCLUDES_PATH . 'common_function.inc.php');
-require_once(INCLUDES_PATH.'utilities.php');
-
+require_once(INCLUDES_PATH. 'utilities.php');
+$CONST_MODULE = 'join';
+$CONST_PAGEID = 'JMX Page';
 //header('Content-type: text/plain; charset=utf-8');
 
 try
