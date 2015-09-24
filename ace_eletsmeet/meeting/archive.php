@@ -5,7 +5,7 @@ require_once(DBS_PATH . 'DataHelper.php');
 require_once(DBS_PATH . 'objDataHelper.php');
 require_once(INCLUDES_PATH . 'cm_authfunc.inc.php');
 $CONST_MODULE = 'meeting';
-$CONST_PAGEID = 'Meeting Page';
+$CONST_PAGEID = 'Archived Meeting';
 require_once(INCLUDES_PATH . 'cm_authorize.inc.php');
 //require_once(INCLUDES_PATH . 'common_function.inc.php');
 require_once(INCLUDES_PATH . 'schedule_function.inc.php');
@@ -14,7 +14,7 @@ require_once(INCLUDES_PATH . 'schedule_function.inc.php');
 
 try
 {
-   $arrSchMeetingList = getScheduledMeetingList($strCk_user_email_address , $objDataHelper);
+   $arrSchMeetingList = getArchiveMeetingList($strCk_user_email_address , $objDataHelper);
 }
 catch(Exception $e)
 {
@@ -78,7 +78,7 @@ catch(Exception $e)
                         <!-- PAGE HEADER -->
                         <div class="page-header">
                             <h1>
-                                Scheduled<small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp;meetings</small>
+                                Archived<small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp;meetings</small>
                             </h1>
                         </div>
                         <!-- PAGE HEADER -->
@@ -90,15 +90,15 @@ catch(Exception $e)
 <!--                             <div class="table-header">
                                         Scheduled Meetings
                                     </div>-->
+                                <div class="alert alert-danger errorDisplay" id="mError"></div>
                         
-                                <?php 
-                                if((is_array($arrSchMeetingList)) && (count($arrSchMeetingList)) > 0){ ?>
+                                <?php if((is_array($arrSchMeetingList)) && (count($arrSchMeetingList)) > 0){ ?>
 
                                     <div class="clearfix">
                                         <div class="pull-right tableTools-container"></div>
                                     </div>
                                     <div class="table-header">
-                                        Scheduled Meetings
+                                        Archived Meetings
                                     </div>
                                     <div>
                                         <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline no-footer">
@@ -116,7 +116,8 @@ catch(Exception $e)
                                                             <th> Meeting Title </th>
                                                             <th><i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> Meeting Datetime </th>
                                                             <th class="hidden-480"> No. of Invitee </th>
-                                                            <th class="hidden-480"><i class="ace-icon fa fa-user bigger-110 hidden-480"></i> Moderator </th>                                                           
+                                                            <th class="hidden-480"><i class="ace-icon fa fa-user bigger-110 hidden-480"></i> Moderator </th>
+                                                            <th class="hidden-480"> Status </th>
                                                             <th></th>
                                                     </tr>
                                                 </thead>
@@ -136,7 +137,23 @@ catch(Exception $e)
                                                         $schDateTime = $arrSchMeetingList[$intCntr]["meeting_timestamp_local"];
                                                         $schGmtTime = $arrSchMeetingList[$intCntr]["meeting_timestamp_gmt"];
                                                         $schCreator = $arrSchMeetingList[$intCntr]["invitation_creator"];
-                                                        $schStatus = $arrSchMeetingList[$intCntr]["schedule_status"]; 
+                                                        $schStatus = $arrSchMeetingList[$intCntr]["schedule_status"];
+                                                        switch($schStatus)
+                                                        {
+                                                           case 0: $aStatus = "<span class=\"label label-sm label-warning\">Scheduled</span>";
+                                                              break;
+                                                           case 1: $aStatus = "<span class=\"label label-sm label-warning\">Started</span>";
+                                                              break;
+                                                           case 2: $aStatus = "<span class=\"label label-sm label-success\">Completed</span>";
+                                                              break;
+                                                           case 3: $aStatus = "<span class=\"label label-sm label-inverse\">Cancelled</span>";
+                                                              break;
+                                                           case 4: $aStatus = "<span class=\"label label-sm label-warning\">Overdue</span>";
+                                                              break;
+                                                           case 5: $aStatus = "<span class=\"label label-sm label-danger\">Error</span>";
+                                                              break;
+                                                           default: break;
+                                                        }
                                                         
                                                         if($schCreator == "C") 
                                                         {
@@ -156,8 +173,9 @@ catch(Exception $e)
                                                         }
                                                         $schInviteeCount = $arrSchMeetingList[$intCntr]["max_participants"];
                                                         
-                                                        $gmtStartTime = date("Y-m-d H:i:s" , strtotime($mGtm."-".MEETING_START_GRACE_INTERVAL." min"));
-                                                        $gmtEndTime = date("Y-m-d H:i:s" , strtotime($mGtm."+".MEETING_END_GRACE_INTERVAL." min"));
+                                                        $gmtStartTime = date("Y-m-d H:i:s" , strtotime($schGmtTime."-".MEETING_START_GRACE_INTERVAL." min"));
+                                                        $gmtEndTime = date("Y-m-d H:i:s" , strtotime($schGmtTime."+".MEETING_END_GRACE_INTERVAL." min"));
+                                                        $schPassCode = md5($schScheduleId . ":" . $strCk_user_email_address . ":" . SECRET_KEY);
                                                     ?>
                                                     <tr>
                                                         <td class="center">
@@ -170,47 +188,10 @@ catch(Exception $e)
                                                         <td><?php echo $schDateTime; ?></td>
                                                         <td class="hidden-480"> <?php echo $schInviteeCount; ?> </td>
                                                         <td class="hidden-480"> <?php echo $schModerator; ?> </td>
-<!--                                                        <td class="hidden-480">
-                                                           <?php if($schCreator == "C") { ?>
-                                                                  
-                                                                  <?php if((GM_DATE > $gmtStartTime) && (GM_DATE <= $gmtEndTime)) { ?>
-                                                                        <span class="label label-sm label-success"> Join Meeting </span>
-                                                                  <?php } ?>
-                                                                  <?php if ($schStatus == "0") { ?>
-                                                                        <span class="label label-sm label-danger"> Cancel </span>
-                                                                  <?php }  ?>
-                                                           <?php }else{ ?>
-                                                                  <?php if((GM_DATE > $gmtStartTime) && (GM_DATE <= $gmtEndTime)) { ?>
-                                                                        <span class="label label-sm label-success"> Join Meeting </span>
-                                                                  <?php } ?>
-                                                                        <span class="label label-sm label-success arrowed-in"> Accept </span>
-                                                                        <span class="label label-sm label-warning arrowed-in-right"> Decline </span>
-                                                            <?php } ?>
-                                                            <span class="label label-sm label-warning"> Expiring </span> <span class="label label-sm label-warning">Expiring</span>
-                                                        </td>-->
+                                                        <td class="hidden-480"> <?php echo $aStatus; ?> </td>
                                                         <td>
-                                                            <div class="hidden-sm hidden-xs btn-group">
-                                                                    <a href="#sch-detls" data-toggle="modal" class="btn btn-xs">Details</a>
-                                                                    <button class="btn btn-xs btn-info">
-                                                                            <i class="ace-icon fa fa-check bigger-120"></i>
-                                                                            Join
-                                                                    </button>
-                                                                    <button class="btn btn-xs btn-danger">
-                                                                            <i class="ace-icon fa fa-remove bigger-120"></i>
-                                                                            Cancel
-                                                                    </button>
-                                                                    <button class="btn btn-xs btn-warning">
-                                                                            <i class="ace-icon fa fa-user bigger-120">+</i>
-                                                                    </button>
-                                                                    <button class="btn btn-xs btn-purple">
-                                                                            <i class="ace-icon fa fa-envelope-o bigger-120"></i>
-                                                                    </button>
-                                                                    <button class="btn btn-xs btn-success">
-                                                                            <i class="ace-icon fa fa-thumbs-o-up bigger-120"></i>
-                                                                    </button>
-                                                                    <button class="btn btn-xs btn-danger">
-                                                                            <i class="ace-icon fa fa-thumbs-o-down bigger-120"></i>
-                                                                    </button>
+                                                            <div class="hidden-sm hidden-xs btn-group">                                                                    
+                                                                    <button href="#sch-detls" data-toggle="modal" class="btn btn-sm btn-inverse" onclick="meetingDetails('<?php echo $schScheduleId; ?>', '<?php echo $schPassCode; ?>')" alt="Details" title="Details"><i class="ace-icon fa fa-info bigger-110"></i></button>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -220,31 +201,30 @@ catch(Exception $e)
                                             <!--  Actual Table End  -->
                                         </div>
                                     </div>
+                                    <!--  pop up-->
                                     <div id="sch-detls" class="modal fade" tabindex="-1">
-                                        <div class="modal-dialog">
+                                        <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header no-padding">
                                                     <div class="table-header">
                                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                                             <span class="white">&times;</span>
                                                         </button>
-                                                        Results for "Latest Registered Domains
+                                                        &nbsp;
                                                     </div>
                                                 </div>
-                                                <div class="modal-body no-padding">
-                                                    <h1>Welcome</h1>wELCOME
+                                                <div class="modal-body">
+                                                    <div id="SubDetails"></div>
                                                 </div>
                                             </div>  
                                         </div>
                                     </div>
-                                
+                                    
                                 <?php }else{?>
-
                                     <div class="alert alert-block alert-danger">
-                                        <strong >Sorry</strong>, No meeting scheduled.
-                                    </div>
-                                                
-                               <?php } ?>
+                                        <strong >Sorry</strong>, No Meetings In Archive.
+                                    </div>       
+                                <?php } ?>
 
                                 <!-- PAGE CONTENT END -->
                             </div>
@@ -282,6 +262,25 @@ catch(Exception $e)
     </body>
     
     <script type="text/javascript">
+            var SITE_ROOT = "<?php echo $SITE_ROOT; ?>";
+          
+            document.onclick=function()
+            {
+                 document.getElementById('mError').style.display="none";
+            };
+                            
+            function meetingDetails(schId,schdtl) {
+            $.ajax({
+                type: "GET",
+                url: SITE_ROOT+"meeting/meetingdetails.php",
+                cache: false,
+                data: "SchId="+schId+"&SchDtl="+schdtl+"&Num="+Math.random(),
+                loading: $(".loading").html(""),
+                success: function(html) {
+                    $("#SubDetails").html(html);
+                }
+            }); }
+        
             jQuery(function ($) {
                 //initiate dataTables plugin
                 var oTable1 =
@@ -291,7 +290,7 @@ catch(Exception $e)
                             bAutoWidth: false,
                             "aoColumns": [
                                 {"bSortable": false},
-                                null, null, null, null,
+                                null, null, null, null,null,
                                 {"bSortable": false}
                             ],
                             "aaSorting": [],
@@ -402,7 +401,7 @@ catch(Exception $e)
                 //ColVis extension
                 var colvis = new $.fn.dataTable.ColVis(oTable1, {
                     "buttonText": "<i class='fa fa-search'></i>",
-                    "aiExclude": [0, 5],
+                    "aiExclude": [0,6],
                     "bShowAll": true,
                     //"bRestore": true,
                     "sAlign": "right",

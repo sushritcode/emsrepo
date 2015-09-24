@@ -5,12 +5,9 @@ require_once(DBS_PATH . 'DataHelper.php');
 require_once(DBS_PATH . 'objDataHelper.php');
 require_once(INCLUDES_PATH . 'cm_authfunc.inc.php');
 $CONST_MODULE = 'meeting';
-$CONST_PAGEID = 'Meeting Page';
+$CONST_PAGEID = 'Scheduled Meeting';
 require_once(INCLUDES_PATH . 'cm_authorize.inc.php');
-//require_once(INCLUDES_PATH . 'common_function.inc.php');
 require_once(INCLUDES_PATH . 'schedule_function.inc.php');
-
-//echo GM_DATE;
 
 try
 {
@@ -182,21 +179,72 @@ catch(Exception $e)
                                                                     <button class="btn btn-sm btn-info" onclick="joinMeeting('<?php echo $schScheduleId; ?>')" alt="Join" title="Join"><i class="ace-icon fa fa-users bigger-120"></i></button>
                                                                     <?php } ?>
                                                                     
-                                                                    <?php if (($schCreator == "C") && (GM_DATE > $gmtStartTime) && (GM_DATE <= $gmtEndTime) && ($schStatus == "0") ){ ?>
+                                                                    <?php //if (($schCreator == "C") && (GM_DATE > $gmtStartTime) && (GM_DATE <= $gmtEndTime) && ($schStatus == "0") ){ ?>
+                                                                    <?php if (($schCreator == "C") && ($schStatus == "0") ){ ?>
                                                                     <button href="#sch-cancel" data-toggle="modal" class="btn btn-sm btn-danger" onclick="cancelMeeting('<?php echo $schScheduleId; ?>', '<?php echo $schPassCode; ?>')" alt="Cancel" title="Cancel"><i class="ace-icon fa fa-remove bigger-120"></i></button>
                                                                     <?php } ?>
 
                                                                     <?php //if (($schCreator == "C") && (GM_DATE > $gmtStartTime) && (GM_DATE <= $gmtEndTime) && (($schStatus == "0") ||($schStatus == "1")) ){ ?>
+                                                                    <?php if (($schCreator == "C") && (($schStatus == "0") ||($schStatus == "1")) ){ ?>
                                                                     <button href="#sch-addinvitee" data-toggle="modal" class="btn btn-sm btn-warning" onclick="addInvitee('<?php echo $schScheduleId; ?>', '<?php echo $schPassCode; ?>')" alt="Add Invitee" title="Add Invitee"><i class="ace-icon fa fa-user bigger-120"><sup>+</sup></i></button>
                                                                     <button href="#sch-sendinvitee" data-toggle="modal" class="btn btn-sm btn-purple" onclick="sendInvitee('<?php echo $schScheduleId; ?>', '<?php echo $schPassCode; ?>')" alt="Resend Invitee Email" title="Resend Invitee Email"><i class="ace-icon fa fa-envelope-o bigger-120"></i></button>
-<!--                                                                    <button class="btn btn-sm btn-purple" alt="Resend Invitee Email" title="Resend Invitee Email"><i class="ace-icon fa fa-envelope-o bigger-120"></i></button>-->
-                                                                    <?php //} ?>
+                                                                    <?php } ?>
                                                                     
                                                                     <?php if ($schCreator != "C") { ?>
                                                                     <button class="btn btn-sm btn-success" onclick="inviteeStatus('<?php echo $schScheduleId; ?>',1)" alt="Accept" title="Accept"><i class="ace-icon fa fa-thumbs-o-up bigger-120"></i></button>
                                                                     <button class="btn btn-sm btn-pink" onclick="inviteeStatus('<?php echo $schScheduleId; ?>',3)" alt="MayBe" title="MayBe"><i class="ace-icon fa fa-question bigger-120"></i></button>
                                                                     <button class="btn btn-sm btn-danger" onclick="inviteeStatus('<?php echo $schScheduleId; ?>',2)" alt="Decline" title="Decline"><i class="ace-icon fa fa-thumbs-o-down bigger-120"></i></button>
                                                                     <?php } ?>
+                                                            </div>
+                                                            <div class="hidden-md hidden-lg">
+                                                                    <div class="inline pos-rel">
+                                                                            <button data-position="auto" data-toggle="dropdown" class="btn btn-minier btn-yellow dropdown-toggle" aria-expanded="false">
+                                                                                    <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+                                                                            </button>
+
+                                                                            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close" style="">
+                                                                                    <li>
+                                                                                            <a data-rel="tooltip" class="tooltip-info" href="#sch-detls" data-original-title="Details" onclick="meetingDetails('<?php echo $schScheduleId; ?>', '<?php echo $schPassCode; ?>')" alt="Details" title="Details">
+                                                                                                    <span class="">
+                                                                                                            <i class="ace-icon fa fa-info bigger-120"></i>
+                                                                                                    </span>
+                                                                                            </a>
+                                                                                    </li>
+                                                                                    <?php if((GM_DATE > $gmtStartTime) && (GM_DATE <= $gmtEndTime)) { ?>    
+                                                                                    <li>
+                                                                                            <a data-rel="tooltip" class="tooltip-success" href="#" data-original-title="Join" onclick="joinMeeting('<?php echo $schScheduleId; ?>')" alt="Join" title="Join">
+                                                                                                    <span class="green">
+                                                                                                            <i class="ace-icon fa fa-users bigger-120"></i>
+                                                                                                    </span>
+                                                                                            </a>
+                                                                                    </li>
+                                                                                    <?php } ?>
+                                                                                    
+                                                                                    <?php if ($schCreator != "C") { ?>
+                                                                                    <li>
+                                                                                            <a data-rel="tooltip" class="tooltip-error" href="#" data-original-title="Accept" onclick="inviteeStatus('<?php echo $schScheduleId; ?>',1)" alt="Accept" title="Accept">
+                                                                                                    <span class="red">
+                                                                                                            <i class="ace-icon fa fa-question bigger-120"></i>
+                                                                                                    </span>
+                                                                                            </a>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                            <a data-rel="tooltip" class="tooltip-error" href="#" data-original-title="MayBe" onclick="inviteeStatus('<?php echo $schScheduleId; ?>',3)" alt="MayBe" title="MayBe">
+                                                                                                    <span class="red">
+                                                                                                            <i class="ace-icon fa fa-thumbs-o-down bigger-120"></i>
+                                                                                                    </span>
+                                                                                            </a>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                            <a data-rel="tooltip" class="tooltip-error" href="#" data-original-title="Decline" onclick="inviteeStatus('<?php echo $schScheduleId; ?>',2)" alt="Decline" title="Decline">
+                                                                                                    <span class="red">
+                                                                                                            <i class="ace-icon fa fa-thumbs-o-up bigger-120"></i>
+                                                                                                    </span>
+                                                                                            </a>
+                                                                                    </li>
+                                                                                    <?php } ?>
+                                                                            </ul>
+                                                                    </div>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -230,7 +278,7 @@ catch(Exception $e)
                                             <div class="modal-content">
                                                 <div class="modal-header no-padding">
                                                     <div class="table-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="PageRefresh();">
                                                             <span class="white">&times;</span>
                                                         </button>
                                                         &nbsp;
@@ -373,6 +421,14 @@ catch(Exception $e)
                 }
             }); }
         
+            function AutoRefresh( t ) {
+               setTimeout("location.reload(true);", t);
+            }
+            
+            function PageRefresh( ) {
+              location.reload(true);
+            }
+            
             function cancelMeeting(schId,schdtl) {
             $.ajax({
                 type: "GET",

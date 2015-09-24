@@ -9,7 +9,7 @@ $CONST_PAGEID = 'Meeting Page';
 require_once(INCLUDES_PATH . 'cm_authorize.inc.php');
 require_once(INCLUDES_PATH . 'common_function.inc.php');
 require_once(INCLUDES_PATH . 'schedule_function.inc.php');
-require_once(INCLUDES_PATH."mail_common_function.inc.php");
+require_once(INCLUDES_PATH. "mail_common_function.inc.php");
 
 $strScheduleId = trim($_REQUEST['SchId']);
 $strPassCode = trim($_REQUEST['SchDtl']);
@@ -84,10 +84,14 @@ if(  (isset($_POST['SchId'])) &&  (isset($_POST['txtInviteeEmail'])) && (isset($
 }
 ?>
 <div class="well">
+    
+    <div class="overlay" style="display:none" id="loadinglayer"></div>
+        
     <h4 class="smaller"><?php echo $Meeting_Title; ?></h4>
     <hr>
     <div id="success-msg" class="alert alert-success errorDisplay"></div>
     <div id="send-invitee">
+        <div id="loadingmessage" class="loading_modal loading_modal_left_30" style="display:none"><img src="<?php echo IMG_PATH; ?>loader.gif"/></div>
         <div id="error-msg" class="alert alert-danger errorDisplay"></div>        
         <form name="frmSendInvitee" method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
              <div>
@@ -163,6 +167,8 @@ $(document).ready(function () {
             }
             else
             {
+                $('#loadinglayer').show();
+                $('#loadingmessage').show();
                 //return true;
                 $.post("sendinviteemail.php", {SchId: SchId, SchDtl: SchDtl, txtInviteeEmail: checkVal}, function (data)
                 {
@@ -171,7 +177,7 @@ $(document).ready(function () {
                     var sep  = "<?php echo SEPARATOR; ?>";
                     var html = response.split(sep);
                     if (html[0] == 1) 
-                    {
+                    {  $('#loadinglayer').hide();
                         $("#success-msg").html(html[1]);
                         $("#error-msg").removeClass("alert-error");
                         $("#success-msg").addClass("alert-success");

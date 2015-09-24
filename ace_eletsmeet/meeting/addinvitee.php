@@ -9,6 +9,8 @@ $CONST_PAGEID = 'Meeting Page';
 require_once(INCLUDES_PATH . 'cm_authorize.inc.php');
 require_once(INCLUDES_PATH . 'common_function.inc.php');
 require_once(INCLUDES_PATH . 'schedule_function.inc.php');
+require_once(INCLUDES_PATH."mail_common_function.inc.php");
+
 
 $strScheduleId = trim($_REQUEST['SchId']);
 $strPassCode = trim($_REQUEST['SchDtl']);
@@ -98,14 +100,14 @@ $Meeting_Title = trim($arrSchValidDtls[0]['meeting_title']);
                      throw new Exception("addInvitee.php : setScheduleCounter Failed : ".$e->getMessage() , 1144);
                   }
 
-//                  try
-//                  {
-//                      $jMail = createInviteesMeetingMail($strScheduleId , $gmTime , $localTime , $timezone , $meeting_title , $strCk_email_address , $strCk_nick_name, $strInviteEmail);
-//                  }
-//                  catch(Exception $e)
-//                  {
-//                     throw new Exception("addInvitee.php : createInviteesMeetingMail Failed : ".$e->getMessage() , 1145);
-//                  }
+                  try
+                  {
+                      $jMail = createInviteesMeetingMail($strScheduleId , $gmTime , $localTime , $timezone , $meeting_title , $strCk_user_email_address , $strCk_user_nick_name, $strInviteEmail);
+                  }
+                  catch(Exception $e)
+                  {
+                     throw new Exception("addInvitee.php : createInviteesMeetingMail Failed : ".$e->getMessage() , 1145);
+                  }
                   $stat = "1";
                   $msg = "Invitee "."$strInviteEmail"." Added Successfully.";
                }
