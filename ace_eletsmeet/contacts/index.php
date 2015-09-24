@@ -4,7 +4,7 @@ require_once(CLASSES_PATH.'error.inc.php');
 require_once(DBS_PATH.'DataHelper.php');
 require_once(DBS_PATH.'objDataHelper.php');
 require_once(INCLUDES_PATH.'cm_authfunc.inc.php');
-$CONST_MODULE = 'Contacts';
+$CONST_MODULE = 'contact';
 $CONST_PAGEID = 'My Contacts';
 require_once(INCLUDES_PATH.'cm_authorize.inc.php');
 require_once(INCLUDES_PATH.'common_function.inc.php');
