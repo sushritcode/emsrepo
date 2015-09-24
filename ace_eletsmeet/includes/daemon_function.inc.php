@@ -192,7 +192,7 @@ function getCreatedScheduleList($till_date, $dataHelper)
         }
 
         //$strSqlStatement = "SELECT schedule_id, meeting_instance, schedule_status FROM schedule_details WHERE schedule_status = '1' AND meeting_timestamp_gmt <= '".trim($till_date)."';";
-        $strSqlStatement = "SELECT schedule_id, meeting_instance, schedule_status, moderator_password, sd.user_id, client_id, partner_id FROM schedule_details sd,  user_details ud WHERE schedule_status = '1' AND meeting_timestamp_gmt <= '".trim($till_date)."' AND sd.user_id = ud.user_id";
+        $strSqlStatement = "SELECT schedule_id, meeting_instance, schedule_status, moderator_password, sd.user_id, client_id, partner_id FROM schedule_details sd,  user_login_details uld WHERE schedule_status = '1' AND meeting_timestamp_gmt <= '".trim($till_date)."' AND sd.user_id = uld.user_id";
         $arrCreatedSchList = $dataHelper->fetchRecords("QR", $strSqlStatement);
         $dataHelper->clearParams();
         return $arrCreatedSchList;
@@ -308,5 +308,23 @@ function UpdateEndSchedule($schedule_id, $old_schedule_status, $new_schedule_sta
     catch (Exception $e)
     {
         throw new Exception("daemon_function.inc.php : UpdateEndSchedule : Could not update schedule status : ".$e->getMessage(), 4022);
+    }
+}
+
+function getLMInstanceByClientId($client_id, $dataHelper) {
+    if (!is_object($dataHelper))
+    {
+        throw new Exception("schedule_function.inc.php : getLMInstanceByClientId : DataHelper Object did not instantiate", 104);
+    }
+
+    try
+    {
+        $strSqlStatement = "SELECT client_id, partner_id, logout_url, rt_server_name, rt_server_salt, rt_server_api_url, status FROM client_details  WHERE status = '1' AND client_id = '" . trim($client_id) . "'";
+        $arrInstanceList = $dataHelper->fetchRecords("QR", $strSqlStatement);
+        return $arrInstanceList;
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("schedule_function.inc.php : getLMInstanceByClientId : Could not fetch records : " . $e->getMessage(), 1111);
     }
 }

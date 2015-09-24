@@ -6,10 +6,10 @@ if(count($arrHOST) > 2 )
     $urlScheme = "http";
 }
 //$SITE_ROOT = $urlScheme."://".$_SERVER['HTTP_HOST']."/";
-$SITE_ROOT = $urlScheme."://".$_SERVER['HTTP_HOST']."/letsemeet/emsrepo/branches/sushrit/ace_eletsmeet/";
-$CHKSITE_ROOT = $urlScheme."://".$_SERVER['HTTP_HOST']."/letsemeet/emsrepo/branches/mitesh/ace_eletsmeet/";
+$SITE_ROOT = $urlScheme."://".$_SERVER['HTTP_HOST']."/emsrepo/trunk/ace_eletsmeet/";
+$CHKSITE_ROOT = $urlScheme."://".$_SERVER['HTTP_HOST']."/emsrepo/trunk/ace_eletsmeet/";
 
-$WEBAPP_PATH = "/var/www/html/letsemeet/emsrepo/branches/sushrit/ace_eletsmeet/";
+$WEBAPP_PATH = "/var/www/html/emsrepo/trunk/ace_eletsmeet/";
 //$WEBAPP_PATH = "/home/eletsmeet/public_html/";
 
 /*********************Includes Configuration files ******************/
@@ -29,8 +29,8 @@ define("PROFILE_URL",$SITE_ROOT."profile/");
 /*********************Configuration Parameter Start ******************/
 $CONST_SITETITLE = "Welcome to LetsMeet";
 
-define("CLIENT_ID","cl00001");
-define("PARTNER_ID","pr00001");
+//define("CLIENT_ID","cl00001");
+//define("PARTNER_ID","pr00001");
 define("PRID",1);
 define("SEPARATOR",chr(124));
 
@@ -41,6 +41,7 @@ $regValidTime = strtotime(gmdate("Y-m-d H:i:s", strtotime($gmDate)) . " +3 day")
 define("REG_VALID_DATE",$regValidTime );
 
 define("INT_API_ROOT",$SITE_ROOT);
+define("JMX_API_ROOT",$SITE_ROOT."join/");
 
 define("CUSTOM_LOGO_NAME",str_replace("." , "_", $_SERVER['HTTP_HOST']).".png"); 
 define("CUSTOM_LOGO_TITLE",$_SERVER['HTTP_HOST']);
@@ -52,7 +53,7 @@ define("USER_SESSION_NAME","ckUsrLetsMeetUserSession");
 
 /*********************DB Connection Start******************/
 //define("DB_CONNECTIONSTRING","root:root123:localhost:dev_db_eletesmeet_com:3306");
-define("DB_CONNECTIONSTRING","root:mclaren:172.16.1.53:dev_db_eletesmeet_com:3306");
+define("DB_CONNECTIONSTRING","root:mclaren:172.16.1.40:dev_db_eletesmeet_com:3306");
 /*********************DB Connection End******************/
 
 /********************Error Logging Parameter Start************/
@@ -69,8 +70,8 @@ define("SHOW_TRACE",true);
 define("CONST_NOREPLY_EID", "letsmeet@eletsmeet.com");
 
 define("CONST_PRODUCT_NAME", "LetsMeet");
-define("RELAY_EMAIL_FLAG", 0); //1 = On & 0= Off
-define("RELAY_MAIL_API",$SITE_ROOT."api/sendmail.php?");
+define("RELAY_EMAIL_FLAG", 2); //1 = On & 0= Off
+define("RELAY_MAIL_API",$SITE_ROOT."includes/sendmail.php?");
 //define("RELAY_MAIL_API",$SITE_ROOT."includes/relay_mail.php?"); // Used for Live Server
 /********************Email Informations End**********************/
 
