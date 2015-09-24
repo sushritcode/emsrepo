@@ -239,7 +239,7 @@ $optionCountry ="";
 													</label>
 													<div class="col-sm-9" style="padding:6px 20px;">
 														<b>
-															<input type="text" class="col-sm-9" placeholder="Nick Name" id="contactnickname" name="contactnickname" required for="basic" value="" >
+															<input type="text" class="col-sm-9" placeholder="Nick Name" id="contactnickname" name="contactnickname" required for="basic" value="" validate="yes" msg="Please the nick name" >
 														</b>
 													</div>
 												 </div>
@@ -250,7 +250,7 @@ $optionCountry ="";
 													</label>
 													<div class="col-sm-9" style="padding:6px 20px;">
 														<b>
-															<input type="text" class="col-sm-9" placeholder="First Name" id="contactfirstname" name="contactfirstname" required for="basic" value="" >
+															<input type="text" class="col-sm-9" placeholder="First Name" id="contactfirstname" name="contactfirstname" required for="basic" value="" validate="yes" msg="Please enter the first name">
 														</b>
 													</div>
 												 </div>
@@ -261,7 +261,7 @@ $optionCountry ="";
 													</label>
 													<div class="col-sm-9" style="padding:6px 20px;">
 														<b>
-															<input type="text" class="col-sm-9" placeholder="Last Name" id="contactlastname" name="contactlastname" required for="basic" value="" >
+															<input type="text" class="col-sm-9" placeholder="Last Name" id="contactlastname" name="contactlastname" required for="basic" value="" validate="yes" msg="Please enter the last name" >
 														</b>
 													</div>
 												 </div>
@@ -274,7 +274,7 @@ $optionCountry ="";
 													</label>
 													<div class="col-sm-9" style="padding:6px 20px;">
 														<b>
-															<input type="text" class="col-sm-9" placeholder="Email Address" id="contactemailaddress" name="contactemailaddress" required for="basic" value="" >
+															<input type="text" class="col-sm-9" placeholder="Email Address" id="contactemailaddress" name="contactemailaddress" required for="basic" value="" validate="yes" msg="Please enter the email address">
 														</b>
 													</div>
 												 </div>
@@ -285,7 +285,7 @@ $optionCountry ="";
 													</label>
 													<div class="col-sm-9" style="padding:6px 20px;">
 														<b>
-															<input type="text" class="col-sm-9" placeholder="Phone No." id="contactphoneno" name="contactphoneno" required for="basic" value="" >
+															<input type="text" class="col-sm-9" placeholder="Phone No." id="contactphoneno" name="contactphoneno" required for="basic" value="" validate="yes" msg="Please enter the contact phoone number">
 														</b>
 													</div>
 												 </div>
@@ -313,7 +313,7 @@ $optionCountry ="";
 												<div class="form-group">
 													<label for="form-field-1" class="col-sm-3 control-label no-padding-right"> Select Country </label>
 													<div class="col-sm-9" style="padding:6px 20px;">
-														 <select class="col-sm-9" for="address" name="contact_phone_idd" id="contact_phone_idd" class="form-control">
+														 <select class="col-sm-9" for="address" name="contact_phone_idd" id="contact_phone_idd" class="form-control" validate="yes" msg="Please enter the country name">
 														    <option value="">Select Country</option>
 														    <?php echo $optionCountry;?>
 														</select>
