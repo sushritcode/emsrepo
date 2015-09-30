@@ -244,7 +244,7 @@ try
 
                     try
                     {
-                        $scheduleID = scheduleDetails($schID, $strCK_user_id, $gmTime, $localTime, $meeting_title, $timezone, $gmt, $meetingAttendeePWD, $meetingModeratorPWD, $voiceBridgeToken, $inviteesCnt, $meetingRecoding, $maxSessionsMinutes, $meetingInstance, $subscriptionId, $meeting_agenda, $objDataHelper);
+                        $scheduleID = insScheduleDetails($schID, $strCK_user_id, $gmTime, $localTime, $meeting_title, $timezone, $gmt, $meetingAttendeePWD, $meetingModeratorPWD, $voiceBridgeToken, $inviteesCnt, $meetingRecoding, $maxSessionsMinutes, $meetingInstance, $subscriptionId, $meeting_agenda, $objDataHelper);
                     }
                     catch (Exception $e)
                     {
@@ -306,7 +306,7 @@ try
 
                         try
                         {
-                           $invitees = inviteesDetails($scheduleID, $strCk_user_email_address, $strUserDetails, $arrInviteesEmail, $moderator, $objDataHelper);
+                           $invitees = insInviteesDetails($scheduleID, $strCk_user_email_address, $strUserDetails, $arrInviteesEmail, $moderator, $objDataHelper);
                         }
                         catch (Exception $e)
                         {

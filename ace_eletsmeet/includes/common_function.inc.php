@@ -217,7 +217,7 @@ function updInviteeIPHeaders($schedule_id, $inv_email_address, $ip_address, $inv
 
         $strSqlStatement ="UPDATE invitation_details SET meeting_joined_ip_address = '" . trim($ip_address) . "', "
                 . "meeting_joined_headers = '" . trim($inv_headers) . "' WHERE invitee_email_address = '" . trim($inv_email_address) . "' "
-                . "AND schedule_id IN (SELECT schedule_id  FROM schedule_details WHERE schedule_status NOT IN('2','5') AND schedule_id = '" . trim($schedule_id) . "' );";
+                . "AND schedule_id IN (SELECT schedule_id  FROM schedule_details WHERE schedule_status NOT IN('2','5') AND schedule_id = '" . trim($schedule_id) . "');";
         $Result = $dataHelper->putRecords('QR', $strSqlStatement);
         $dataHelper->clearParams();
         return $Result;

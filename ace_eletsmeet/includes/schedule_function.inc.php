@@ -340,10 +340,10 @@ function getLMInstanceByClientId($client_id, $dataHelper) {
     }
 }
 
-function scheduleDetails($schID, $user_id, $gmTime, $localTime, $meeting_title, $timezone, $gmt, $meetingAttendeePWD, $meetingModeratorPWD, $voiceBridgeToken, $inviteesCnt, $meetingRecoding, $maxSessionsMinutes, $meetingInstance, $subscription_id, $meeting_agenda, $dataHelper) {
+function insScheduleDetails($schID, $user_id, $gmTime, $localTime, $meeting_title, $timezone, $gmt, $meetingAttendeePWD, $meetingModeratorPWD, $voiceBridgeToken, $inviteesCnt, $meetingRecoding, $maxSessionsMinutes, $meetingInstance, $subscription_id, $meeting_agenda, $dataHelper) {
     if (!is_object($dataHelper))
     {
-        throw new Exception("schedule_function.inc.php : scheduleMeeting : DataHelper Object did not instantiate", 104);
+        throw new Exception("schedule_function.inc.php : insScheduleDetails : DataHelper Object did not instantiate", 104);
     }
     try
     {
@@ -481,7 +481,7 @@ function updClientConsumedSessions($subscription_id, $client_id, $type, $dataHel
     }
 }
 
-function inviteesDetails($schedule_id, $email_address, $strUserDetails, $arrInviteesEmail, $moderator, $dataHelper) {
+function insInviteesDetails($schedule_id, $email_address, $strUserDetails, $arrInviteesEmail, $moderator, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("schedule_function.inc.php : inviteesDetails : DataHelper Object did not instantiate", 104);
@@ -608,7 +608,7 @@ function isScheduleInviteeValid($schedule_id, $passcode, $email_address, $SGInte
             throw new Exception("schedule_function.inc.php : isScheduleInviteeValid : DataHelper Object did not instantiate", 104);
         }
 
-        $strSqlStatement = "SELECT sd.schedule_id, schedule_status, meeting_timestamp_gmt, meeting_timestamp_local, " .
+         $strSqlStatement = "SELECT sd.schedule_id, schedule_status, meeting_timestamp_gmt, meeting_timestamp_local, " .
                 "DATE_SUB(meeting_timestamp_gmt, INTERVAL " . trim($SGInterval) . " MINUTE) AS start_grace_time, " .
                 "DATE_ADD(meeting_timestamp_gmt, INTERVAL " . trim($EGInterval) . " MINUTE) AS end_grace_time, " .
                 "meeting_title, meeting_agenda, meeting_timezone, meeting_gmt, attendee_password, moderator_password, " .
@@ -622,7 +622,7 @@ function isScheduleInviteeValid($schedule_id, $passcode, $email_address, $SGInte
                 "AND ud.user_id = uld.user_id " .
                 "AND sd.schedule_id = id.schedule_id " .
                 "AND sd.subscription_id = sm.subscription_id " .
-                "AND sd.schedule_id='" . trim($schedule_id) . "' " .
+                "AND sd.schedule_id ='" . trim($schedule_id) . "' " .
                 "AND MD5(CONCAT('" . trim($schedule_id) . "',':','" . trim($email_address) . "',':','" . SECRET_KEY . "')) = '" . trim($passcode) . "' " .
                 "AND invitee_email_address = '" . trim($email_address) . "'";
         $arrSchResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
@@ -977,7 +977,7 @@ function getScheduleDetailsById($schedule_id, $dataHelper) {
             throw new Exception("schedule_function.inc.php : isScheduleInviteeValid : DataHelper Object did not instantiate", 104);
         }
         //$strSqlStatement = "SELECT sd.schedule_id, sd.user_id, sd.schedule_status, sd.schedule_creation_time, sd.meeting_timestamp_gmt, sd.meeting_timestamp_local, sd.meeting_title, sd.meeting_agenda, sd.meeting_timezone, sd.meeting_gmt, sd.meeting_start_time, sd.meeting_end_time, sd.voice_bridge, sd.web_voice, sd.max_participants, sd.record_flag, sd.subscription_id FROM schedule_details sd WHERE sd.schedule_id='".trim($schedule_id)."';";
-        $strSqlStatement = "SELECT schedule_id, schedule_status, meeting_timestamp_gmt, meeting_timestamp_local, meeting_title, " .
+        $strSqlStatement = "SELECT schedule_id, schedule_status, meeting_timestamp_gmt, meeting_timestamp_local, meeting_title, meeting_agenda, meeting_timezone, meeting_gmt, voice_bridge," .
                 "meeting_timezone, meeting_gmt, cancel_reason, user_details.user_id, user_login_details.email_address, user_details.nick_name, subscription_master.subscription_id, subscription_master.number_of_invitee, subscription_master.order_id " .
                 "FROM schedule_details, user_details, user_login_details, subscription_master " .
                 "WHERE schedule_details.user_id = user_login_details.user_id " .

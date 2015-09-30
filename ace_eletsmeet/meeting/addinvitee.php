@@ -84,7 +84,7 @@ $Meeting_Title = trim($arrSchValidDtls[0]['meeting_title']);
                   $strUserDetails = "";
                   try
                   {
-                     $invitees = inviteesDetails($strScheduleId , "" , $strUserDetails , $arrInviteeEmailNick , $moderator , $objDataHelper);
+                     $invitees = insInviteesDetails($strScheduleId , "" , $strUserDetails , $arrInviteeEmailNick , $moderator , $objDataHelper);
                   }
                   catch(Exception $e)
                   {
