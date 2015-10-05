@@ -312,18 +312,30 @@ try
                         {
                             throw new Exception("createSchedule.php : inviteesDetails Failed : ".$e->getMessage(), 1133);
                         }
-
+                        
+                        try
+                        {
+                           $insRequest = insUrlRequest($scheduleID, $strCk_user_email_address, $arrInviteesEmail, $objDataHelper);
+                        }
+                        catch (Exception $e)
+                        {
+                            throw new Exception("createSchedule.php : inviteesDetails Failed : ".$e->getMessage(), 1133);
+                        }
+                          
                         $inviteesEmail = explode(",", $arrInviteesEmail);
                         for ($i = 0; $i < sizeof($inviteesEmail); $i++)
                         {
                             $inviteesDetails[] = explode(":", $inviteesEmail[$i]);
                         }
+                        
                         for ($i = 0; $i < sizeof($inviteesDetails); $i++)
                         {
                             $inviteesEmailArr .= $inviteesDetails[$i][0].",";
                         }
                         $inviteesEmailArr = substr($inviteesEmailArr, 0, -1);
 
+                        //print_r($inviteesEmailArr); exit;
+                        
                         if ($invitees)
                         {
                             try
