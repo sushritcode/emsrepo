@@ -1012,3 +1012,64 @@ function setScheduleCounter($schedule_id, $dataHelper) {
         throw new Exception("sch_function.inc.php : Update Schedule Participants Counter Failed : " . $e->getMessage(), 1104);
     }
 }
+
+function insUrlRequest($schedule_id, $email_address, $arrInviteesEmail, $dataHelper) {
+    if (!is_object($dataHelper))
+    {
+        throw new Exception("schedule_function.inc.php : inviteesDetails : DataHelper Object did not instantiate", 104);
+    }
+    try
+    {
+        $strPRID = 1;
+        
+        if (strlen($email_address) > 0)
+        {
+            $strTime = time();
+            $CreatorPassCode = md5($schedule_id.":".$email_address.":".SECRET_KEY);
+            $CreatorHashID = md5($schedule_id.":".$email_address.":".$CreatorPassCode.":".$strPRID);
+            $CreatorParamObj  = json_encode(array("SCID"=>"$schedule_id","EMID"=>"$email_address","PSCD"=>"$CreatorPassCode", "PRID"=>"$strPRID"));
+            $insCreatorURLRequest = "INSERT INTO url_request (schedule_id, email_address, param_object, hash_id, request_datetime, flag) VALUES ('".$schedule_id."', '".$email_address."', '".$CreatorParamObj."', '".$CreatorHashID."', '" . GM_DATE . "', '0')";
+            $CreatorURLRequest = $dataHelper->putRecords("QR", $insCreatorURLRequest);
+        }
+        $inviteesEmail = explode(",", $arrInviteesEmail);
+        for ($i = 0; $i < sizeof($inviteesEmail); $i++)
+        {
+            $invitees[] = explode(":", $inviteesEmail[$i]);
+        }
+
+        for ($i = 0; $i < sizeof($invitees); $i++)
+        {
+            $strTime = time();
+            $strInviteEmail = $invitees[$i][0];
+            
+            $InviteePassCode = md5($schedule_id.":".$strInviteEmail.":".SECRET_KEY);
+            $InviteeHashID = md5($schedule_id.":".$strInviteEmail.":".$InviteePassCode.":".$strPRID);
+            $InviteeParamObj  = json_encode(array("SCID"=>"$schedule_id","EMID"=>"$strInviteEmail","PSCD"=>"$InviteePassCode", "PRID"=>"$strPRID"));
+            $insInviteeURLRequest = "INSERT INTO url_request (schedule_id, email_address, param_object, hash_id, request_datetime, flag) VALUES ('".$schedule_id."', '".$strInviteEmail."','".$InviteeParamObj."', '".$InviteeHashID."', '" . GM_DATE . "', '0')";
+            $InviteeURLRequest = $dataHelper->putRecords("QR", $insInviteeURLRequest);
+        }
+        return true;
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("schedule_function.inc.php : Insert URL Request Details Failed : " . $e->getMessage(), 1102);
+    }
+}
+
+
+function getURLRequestByMID($strMID, $dataHelper) {
+    if (!is_object($dataHelper))
+    {
+        throw new Exception("sch_function.inc.php : setScheduleCounter : DataHelper Object did not instantiate", 104);
+    }
+    try
+    {
+        $strSqlStatement = "SELECT * FROM url_request WHERE hash_id = '" . $strMID . "'";
+        $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
+        return $arrResult;
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("sch_function.inc.php : Update Schedule Participants Counter Failed : " . $e->getMessage(), 1104);
+    }
+}

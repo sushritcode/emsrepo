@@ -1052,7 +1052,7 @@ else
                        
                     $.ajax({
                             type: "GET",
-                            url: "createSchedule.php",
+                            url: "createschedule.php",
                             cache: false,
                             data: "title="+title+"&schedule_dtm="+schDtm+"&inviteesList="+inviteesList+"&scheduleType="+schType+"&inviteesCnt="+inviteescount+"&tzone="+tzone+"&mod="+mod+"&uplan="+uplan+"&agenda="+agenda+"&stat="+stat,
                             //loading: $(".loading").html(""),

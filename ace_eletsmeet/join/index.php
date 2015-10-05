@@ -10,14 +10,22 @@ require_once(INCLUDES_PATH . 'utilities.php');
 $CONST_MODULE = 'join';
 $CONST_PAGEID = 'Join Meeting';
 
-$strSCID = trim($_REQUEST["SCID"]);   //schedule_id
-$strEMID = trim($_REQUEST["EMID"]);   //email_address
-$strPSCD = trim($_REQUEST["PSCD"]);   //passcode
-//$strPRID = trim($_REQUEST["PRID"]);   //protocol id
+$strMID = trim($_REQUEST["MID"]);   //MID
 
-//    echo "<pre>";
-//    print_r($_REQUEST);
-//    echo "<pre>";
+$arrURLResponse = getURLRequestByMID($strMID, $objDataHelper);
+    
+$strParamObject = $arrURLResponse [0]['param_object'];
+$arrParamObject = json_decode($strParamObject, true);
+
+$strSCID = trim($arrParamObject['SCID']);   //schedule_id
+$strEMID = trim($arrParamObject['EMID']);   //email_address
+$strPSCD = trim($arrParamObject['PSCD']);   //passcode
+$strPRID = trim($arrParamObject['PRID']);   //protocol id
+               
+//$strSCID = trim($_REQUEST["SCID"]);   //schedule_id
+//$strEMID = trim($_REQUEST["EMID"]);   //email_address
+//$strPSCD = trim($_REQUEST["PSCD"]);   //passcode
+//$strPRID = trim($_REQUEST["PRID"]);   //protocol id
     
 $Joinee_IP_Address = $_SERVER['REMOTE_ADDR'];
 $arrHead = apache_request_headers();
@@ -25,10 +33,9 @@ $arrHeaders = array_change_key_case($arrHead, CASE_LOWER);
 $clientBrowser = trim($arrHeaders['user-agent']);
 
 //Update the invitee IP Address and Headers
-//$IPUpdate = updInviteeIPHeaders($strSCID, $strEMID, $Joinee_IP_Address, $clientBrowser, $objDataHelper);
+$IPUpdate = updInviteeIPHeaders($strSCID, $strEMID, $Joinee_IP_Address, $clientBrowser, $objDataHelper);
 
-$strPRID = 1;
-$strResponse = verifyScheduleInvite($strSCID, $strEMID, $strPSCD, $strPRID, $objDataHelper);
+$strResponse = verifyScheduleInvite($strMID, $strSCID, $strEMID, $strPSCD, $strPRID, $objDataHelper);
 
 showForm($strResponse, $objDataHelper);
 exit;
@@ -59,6 +66,7 @@ function showForm($strResponse, $objDataHelper)
     $PLN_ID = trim($arrResult[15]);  //plan_id
     $PLN_TYPE = trim($arrResult[16]);  //plan_type
     $PRID = trim($arrResult[17]); //protocol id
+    $MID = trim($arrResult[18]); //MID
 
     $Current_GMT_Datetime = GM_DATE;
     
@@ -353,7 +361,7 @@ function showForm($strResponse, $objDataHelper)
                                    
                                     <div class="col-sm-10">
                                         <div class="well">
-                                            <h3><?php echo $STATUS; ?><?php echo $User_NickName; ?> invited you to "<?php echo $Meeting_Title; ?>" </h3>
+                                            <h3><?php echo $User_NickName; ?> invited you to "<?php echo $Meeting_Title; ?>" </h3>
                                             <hr>
                                             <div>
                                                 <h5 class="lighter smaller"><i class="ace-icon fa fa-calendar  green"></i> <?php echo $Meeting_Time; ?> </h5>
@@ -396,18 +404,19 @@ function showForm($strResponse, $objDataHelper)
                                                                 if (trim($MTSTATUS) == "1")
                                                                 {
                                                                 ?>
-                                                                    <div class='alert alert-block alert-info'>This meeting has been already created. If you exited and want to join again click button below.</div>
+                                                                    <div class='alert alert-block alert-info'>This meeting has been already started. If you exited and want to join again click button below.</div>
                                                                     <?php
                                                                 }
                                                                 else
                                                                 {
                                                                     ?>
-                                                                    <div class='alert alert-block alert-info'>This meeting has been already created.</div>
+                                                                    <div class='alert alert-block alert-info'>This meeting has been already started.</div>
                                                                     <?php
                                                                 }
                                                             }
                                                             ?>
                                                             <button name="join_submit" class="btn btn-success" type="submit">JOIN MEETING</button>
+                                                            <input type='hidden' name ='MID' value='<?php echo $MID; ?>'>
                                                             <input type='hidden' name ='SCID' value='<?php echo $SCH_ID; ?>'>
                                                             <input type='hidden' name ='EMID' value='<?php echo $INV_EMAIL; ?>'>
                                                             <input type='hidden' name ='PSCD' value='<?php echo $PSCD; ?>'>
@@ -434,6 +443,7 @@ function showForm($strResponse, $objDataHelper)
                                                     <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="frmJoin">
                                                         <div class='alert alert-block alert-info'>This meeting has been already running. If you exited and want to join again click button below.</div>
                                                         <button name="join_submit" class="btn btn-success btn-sm" type="submit"><i class="ace-icon fa fa-users bigger-120"></i>&nbsp;Join Meeting</button>
+                                                        <input type='hidden' name ='MID' value='<?php echo $MID; ?>'>
                                                         <input type='hidden' name ='SCID' value='<?php echo $SCH_ID; ?>'>
                                                         <input type='hidden' name ='EMID' value='<?php echo $INV_EMAIL; ?>'>
                                                         <input type='hidden' name ='PSCD' value='<?php echo $PSCD; ?>'>
@@ -476,7 +486,7 @@ function showForm($strResponse, $objDataHelper)
                                                                 <button name="response_submit" class="btn btn-success btn-sm" type="submit" value="Accept Request" id="rResponse"><i class="ace-icon fa fa-thumbs-o-up bigger-120"></i>&nbsp;Accept</button>
                                                                 <button name="response_submit" class="btn btn-danger btn-sm" type="submit" value="Decline Request" id="rResponse"><i class="ace-icon fa fa-thumbs-o-down bigger-120"></i>&nbsp;Decline</button>
                                                                 <button name="response_submit" class="btn btn-grey btn-sm" type="submit" value="Maybe Request" id="rResponse"><i class="ace-icon fa fa-question bigger-120"></i>&nbsp;Maybe</button>
-                                                
+                                                                <input type='hidden' name ='MID' value='<?php echo $MID; ?>'>
                                                                 <input type='hidden' name ='SCID' value='<?php echo $SCH_ID; ?>'>
                                                                 <input type='hidden' name ='EMID' value='<?php echo $INV_EMAIL; ?>'>
                                                                 <input type='hidden' name ='PSCD' value='<?php echo $PSCD; ?>'>
@@ -558,7 +568,7 @@ function showForm($strResponse, $objDataHelper)
                                     
                                     <div class="col-sm-2">
                                         <div class="well">
-                                             Hello
+                                            Hello <h6 class="smaller"><?php echo $STATUS; ?></h6>
                                         </div>
                                     </div>
                                 </div>
@@ -599,7 +609,7 @@ function showForm($strResponse, $objDataHelper)
 <?php
 }
 
-function verifyScheduleInvite($strSCID, $strEMID, $strPSCD, $strPRID, $objDataHelper)
+function verifyScheduleInvite($strMID, $strSCID, $strEMID, $strPSCD, $strPRID, $objDataHelper)
 {
     try
     {
@@ -712,7 +722,7 @@ function verifyScheduleInvite($strSCID, $strEMID, $strPSCD, $strPRID, $objDataHe
             $MESSAGE = "Error, invalid meeting information.";
         }
 
-         $RESPONSE = $STATUS.SEPARATOR.$MESSAGE.SEPARATOR.$Schedule_Id.SEPARATOR.$Schedule_Status.SEPARATOR.$SG_Time.SEPARATOR.$EG_Time.SEPARATOR.$Invitee_Email.SEPARATOR.$Invitation_Creator.SEPARATOR.$Meeting_Status.SEPARATOR.$User_Id.SEPARATOR.$Client_Id.SEPARATOR.$User_Email.SEPARATOR.$User_NickName.SEPARATOR.$strPSCD.SEPARATOR.$Subscription_Id.SEPARATOR.$Plan_Id.SEPARATOR.$Plan_Type.SEPARATOR.$strPRID;
+         $RESPONSE = $STATUS.SEPARATOR.$MESSAGE.SEPARATOR.$Schedule_Id.SEPARATOR.$Schedule_Status.SEPARATOR.$SG_Time.SEPARATOR.$EG_Time.SEPARATOR.$Invitee_Email.SEPARATOR.$Invitation_Creator.SEPARATOR.$Meeting_Status.SEPARATOR.$User_Id.SEPARATOR.$Client_Id.SEPARATOR.$User_Email.SEPARATOR.$User_NickName.SEPARATOR.$strPSCD.SEPARATOR.$Subscription_Id.SEPARATOR.$Plan_Id.SEPARATOR.$Plan_Type.SEPARATOR.$strPRID.SEPARATOR.$strMID;
          
         return $RESPONSE;
     }
