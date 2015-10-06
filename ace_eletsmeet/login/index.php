@@ -9,6 +9,7 @@ $CONST_PAGEID = 'Login Page';
 require_once(INCLUDES_PATH.'cm_authorize.inc.php');
 require_once(INCLUDES_PATH.'common_function.inc.php');
 require_once(INCLUDES_PATH.'profile_function.inc.php');
+require_once(INCLUDES_PATH.'mail_common_function.inc.php');
 
 $Login_IP_Address = $_SERVER['REMOTE_ADDR'];
 
@@ -56,61 +57,13 @@ if (isset($_POST['lgn_submit'])) {
     }
 }
 
-//if (isset($_POST['forgot_email']))
-if (isset($_POST['fgt_submit'])) {
-    //$strEmail = trim($_POST['txtEmail']);
-    $forgot_email = trim($_POST['forgot_email']);
-
-    try {
-        $arrIsValidEmailResult = isUserEmailAddressExists($forgot_email, $objDataHelper);
-    } catch (Exception $a) {
-        throw new Exception("index.php : isEmailIdExists : Error while Validating EmailId" . $a->getMessage(), 61333333);
-    }
-
-    if (is_array($arrIsValidEmailResult) && sizeof($arrIsValidEmailResult) > 0) {
-        echo "<div id='msg'>yes</div>";
-        $userId = $arrIsValidEmailResult[0]['user_id'];
-        $email_address = $arrIsValidEmailResult[0]['email_address'];
-
-        $currentTime = GM_DATE;
-        $strTimeStamp = strtotime($currentTime);
-        $Token = md5($email_address . ":" . $strTimeStamp . ":" . REG_SECRET_KEY);
-        $ResetPwdData = "em=" . $email_address . "&ms=" . $strTimeStamp . "&cd=" . $Token;
-
-        try {
-            $arrPasswordRequestDtls = getPasswordRequestDtls($email_address, $objDataHelper);
-            if (is_array($arrPasswordRequestDtls) && sizeof($arrPasswordRequestDtls) > 0) {
-                try {
-                    deletePasswordRequestDtls($email_address, $objDataHelper);
-                } catch (Exception $e) {
-                    throw new Exception("index.php : deleteRequestPwd : Error in deleting" . $a->getMessage(), 61333333);
-                }
-            }
-            try {
-                $insertPwd = addPasswordRequestDtls($userId, $email_address, $currentTime, $objDataHelper);
-            } catch (Exception $e) {
-                throw new Exception("index.php : addPwdRequestDtm : Error in adding pwdDetails" . $a->getMessage(), 61333333);
-            }
-        } catch (Exception $e) {
-            throw new Exception("index.php : getRequestPwdDetails : Error in getting details" . $a->getMessage(), 61333333);
-        }
-
-//            try
-//            {
-//                resetPasswordMail($strEmail, $ResetPwdData, $CONST_NOREPLY_EID);
-//            }
-//            catch (Exception $e)
-//            {
-//                throw new Exception("index.php : resetPasswordMail : Error in password reset".$a->getMessage(), 61333333);
-//            }
-    } else {
-        echo "<div id='msg'>no</div>";
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
+            <script type="text/javascript">
+	 	var BASEURL = "<?php echo $SITE_ROOT;?>"; 
+	</script>
         <!-- HEAD CONTENT AREA -->
 <?php include (INCLUDES_PATH . 'head.php'); ?>
         <!-- HEAD CONTENT AREA -->
@@ -121,6 +74,10 @@ if (isset($_POST['fgt_submit'])) {
     </head>
 
     <body class="login-layout">
+			<div id='ajax_loader' style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; background: transparent none repeat scroll 0% 0%; z-index: 20000;display:none;">
+                            <img src="<?php echo IMG_PATH ?>loading.gif" style="position: relative; top: 50%; left: 50%;"></img>
+                        </div>
+                        
         <div class="main-container">
             <div class="main-content">
                 <div class="row">
@@ -144,13 +101,13 @@ if (isset($_POST['fgt_submit'])) {
                                             <div class="space-6"></div>
 
                                             <form method="POST" action="<?php echo $SITE_ROOT . 'login/index.php'; //$_SERVER['PHP_SELF']; ?>" name="frmLogin">
-                                            <?php if (count($errors)): ?>
-                                                                                                <div class="alert alert-danger">
-                                                <?php foreach ($errors as $error): ?>
-                                                                                                        <span><?php echo $error; ?></span><br />    
-                                                <?php endforeach; ?>
-                                                                                                </div>
-                                            <?php endif; ?>
+<?php if (count($errors)): ?>
+                                                    <div class="alert alert-danger">
+    <?php foreach ($errors as $error): ?>
+                                                            <span><?php echo $error; ?></span><br />    
+    <?php endforeach; ?>
+                                                    </div>
+<?php endif; ?>
 
                                                 <fieldset>
                                                     <div class="form-group <?php echo $errEmailClass; ?>">
@@ -180,7 +137,6 @@ if (isset($_POST['fgt_submit'])) {
                                                         </button>
                                                     </div>
                                                     <div class="space-4"></div>
-                                                    
                                                 </fieldset>
                                             </form>
 
@@ -204,11 +160,25 @@ if (isset($_POST['fgt_submit'])) {
                                             <h4 class="header red lighter bigger">
                                                 <i class="ace-icon fa fa-key"></i>&nbsp;Retrieve Password
                                             </h4>
+						<div class="row" id="alert" style="display:none;">
+                                        		<div class="col-sm-12">
+                                                		<div id="succ" class="col-sm-12 alert alert-block alert-success" style="display:none;">
+                                                        			<div class="ace-icon fa fa-bullhorn fa fa-check" style="font-weight: bold;">
+                                                                			<span id="successmsg"> </span>
+                                                        			</div>
+                                                		</div>
+                                                		<div id="err" class="alert alert-danger" style="display:none;">
+                                                        			<div class="ace-icon fa fa-bullhorn fa fa-check" style="font-weight: bold;">
+                                                                			<span id="errormsg"> </span>
+                                                        			</div>
+                                                		</div>
+                                        		</div>
+                                		</div>
 
                                             <div class="space-6"></div>
                                             <p>Enter your email and to receive instructions</p>
 
-                                            <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="frmFgtPwd">
+                                            <form name="frmFgtPwd">
                                                 <fieldset>
                                                     <label class="block clearfix">
                                                         <span class="block input-icon input-icon-right">
@@ -218,9 +188,10 @@ if (isset($_POST['fgt_submit'])) {
                                                     </label>
 
                                                     <div class="clearfix">
-                                                        <button class="width-35 pull-right btn btn-sm btn-danger" name="fgt_submit">
+							<input type="button" class="width-40 pull-right btn btn-sm btn-danger" name="SendPassowrd" value="Send Password" onClick="javascript:return forgotPwd('frmFgtPwd','forgotpwd');">
+                                                        <!--button class="width-35 pull-right btn btn-sm btn-danger" name="fgt_submit" data-target="#forgot-box">
                                                             <i class="ace-icon fa fa-lightbulb-o"></i>&nbsp;<span class="bigger-110">Send Me!</span>
-                                                        </button>
+                                                        </button-->
                                                     </div>
                                                 </fieldset>
                                             </form>
@@ -333,11 +304,10 @@ if (isset($_POST['fgt_submit'])) {
         </div><!-- /.main-container -->
 
         <!-- JAVA SCRIPT -->
-        <?php include (INCLUDES_PATH . 'static_js_includes.php'); ?>  
+<?php include (INCLUDES_PATH . 'static_js_includes.php'); ?>  
         <!-- JAVA SCRIPT -->
 
         <!-- inline scripts related to this page -->
-        
         <script type="text/javascript">
             jQuery(function ($) {
                 $(document).on('click', '.toolbar a[data-target]', function (e) {
