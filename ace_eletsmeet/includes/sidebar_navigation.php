@@ -79,14 +79,15 @@ else
             </div><!-- /.sidebar-shortcuts -->
 
             <ul class="nav nav-list">
+                
                 <li class="<?php echo $strDashBoardActiveClass;?>">
                     <a href="<?php echo $SITE_ROOT; ?>dashboard/">
                         <i class="menu-icon fa fa-tachometer"></i>
                         <span class="menu-text"> Dashboard </span>
                     </a>
-
                     <b class="arrow"></b>
                 </li>
+                
                 <!-- Address book start-->
                 <li class="<?php echo $strContactsActiveClass;?>">
                     <a href="#" class="dropdown-toggle">
@@ -96,9 +97,7 @@ else
                         </span>
                         <b class="arrow fa fa-angle-down"></b>
                     </a>
-
                     <b class="arrow"></b>
-
                     <ul class="submenu">
                         <?php if($CONST_PAGEID=="My Contacts") { ?>
                             <li class="active">
@@ -134,14 +133,12 @@ else
                                 </a>
                                 <b class="arrow"></b>
                             </li>
-                        <?php } ?>
-                            
-                        
+                        <?php } ?>  
                     </ul>
                 </li>
                 <!-- Address book end -->
+                
                 <!-- Meetings book start-->
-
                 <li class="<?php echo $strMeetingActiveClass;?>">
                     <a href="#" class="dropdown-toggle">
                         <i class="menu-icon fa fa-calendar"></i>

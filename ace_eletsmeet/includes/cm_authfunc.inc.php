@@ -162,7 +162,7 @@ function updUserLastLoginDtls($email_address, $user_id, $datetime, $ipaddress, $
 
     try
     {
-        $strSqlStatement = "UPDATE user_login_details SET user_lastlogin_dtm = '" . trim($datetime) . "', user_login_ip_address = '" . trim($ipaddress) . "' WHERE user_name = '" . trim($email_address) . "' AND user_id='" . trim($user_id) . "';";
+        $strSqlStatement = "UPDATE user_login_details SET user_last_login_dtm = '" . trim($datetime) . "', user_login_ip_address = '" . trim($ipaddress) . "' WHERE user_name = '" . trim($email_address) . "' AND user_id='" . trim($user_id) . "';";
         $arrAuthResult = $dataHelper->putRecords("QR", $strSqlStatement);
         return $arrAuthResult;
     }
@@ -198,7 +198,7 @@ function getUserLoginDetailsByUserName($user_name, $dataHelper) {
 
     try
     {
-        $strSqlStatement = "SELECT ud.user_id, user_name, cd.client_id, cd.partner_id, email_address, role, login_enabled, createdOn, createdBy, user_lastlogin_dtm, user_login_ip_address, cd.client_name, cd.client_logo_flag, cd.client_logo_url "
+        $strSqlStatement = "SELECT ud.user_id, user_name, cd.client_id, cd.partner_id, email_address, role, login_enabled, created_on, created_by, user_last_login_dtm, user_login_ip_address, cd.client_name, cd.client_logo_flag, cd.client_logo_url "
                 . "FROM user_details AS ud, user_login_details AS lu, client_details AS cd "
                 . "WHERE lu.user_name ='" . trim($user_name) . "' "
                 . "ANd lu.user_id = ud.user_id AND cd.client_id = lu.client_id AND lu.login_enabled = '1'; ";
