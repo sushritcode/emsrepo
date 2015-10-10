@@ -91,6 +91,15 @@ $Meeting_Title = trim($arrSchValidDtls[0]['meeting_title']);
                      throw new Exception("addInvitee.php : inviteesDetails Failed : ".$e->getMessage() , 1143);
                   }
 
+                   try
+                   {
+                       $insRequest = insUrlRequest($strScheduleId, "", $arrInviteeEmailNick, $objDataHelper);
+                   }
+                   catch (Exception $e)
+                   {
+                        throw new Exception("createSchedule.php : inviteesDetails Failed : ".$e->getMessage(), 1133);
+                   }
+                  
                   try
                   {
                      $counter = setScheduleCounter($strScheduleId , $objDataHelper);

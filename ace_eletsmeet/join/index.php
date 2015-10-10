@@ -11,31 +11,15 @@ $CONST_MODULE = 'join';
 $CONST_PAGEID = 'Join Meeting';
 
 $strMID = trim($_REQUEST["MID"]);   //MID
-
-$arrURLResponse = getURLRequestByMID($strMID, $objDataHelper);
-    
-$strParamObject = $arrURLResponse [0]['param_object'];
-$arrParamObject = json_decode($strParamObject, true);
-
-$strSCID = trim($arrParamObject['SCID']);   //schedule_id
-$strEMID = trim($arrParamObject['EMID']);   //email_address
-$strPSCD = trim($arrParamObject['PSCD']);   //passcode
-$strPRID = trim($arrParamObject['PRID']);   //protocol id
                
 //$strSCID = trim($_REQUEST["SCID"]);   //schedule_id
 //$strEMID = trim($_REQUEST["EMID"]);   //email_address
 //$strPSCD = trim($_REQUEST["PSCD"]);   //passcode
-//$strPRID = trim($_REQUEST["PRID"]);   //protocol id
-    
-$Joinee_IP_Address = $_SERVER['REMOTE_ADDR'];
-$arrHead = apache_request_headers();
-$arrHeaders = array_change_key_case($arrHead, CASE_LOWER);
-$clientBrowser = trim($arrHeaders['user-agent']);
+//$strPRID = trim($_REQUEST["PRID"]);   //protocol id 
 
-//Update the invitee IP Address and Headers
-$IPUpdate = updInviteeIPHeaders($strSCID, $strEMID, $Joinee_IP_Address, $clientBrowser, $objDataHelper);
 
-$strResponse = verifyScheduleInvite($strMID, $strSCID, $strEMID, $strPSCD, $strPRID, $objDataHelper);
+//$strResponse = verifyScheduleInvite($strMID, $strSCID, $strEMID, $strPSCD, $strPRID, $objDataHelper);
+$strResponse = verifyScheduleInvite($strMID, $objDataHelper);
 
 showForm($strResponse, $objDataHelper);
 exit;
@@ -331,7 +315,7 @@ function showForm($strResponse, $objDataHelper)
                         <!-- PAGE HEADER -->
                         <div class="page-header">
                             <h1>
-                                Join Meeting <?php echo $STATUS; ?>
+                                Join Meeting
                             </h1>
                         </div>
                         <!-- PAGE HEADER -->
@@ -583,12 +567,13 @@ function showForm($strResponse, $objDataHelper)
                     <!-- PAGE CONTENT END -->
 
                 </div>
+                <span style="color: #fff;"><?php echo $STATUS;?></span>
             </div>
             <!--  MAIN CONTENT END -->
 
             <!-- FOOTER START -->
             <div class="footer">
-                <?php include (INCLUDES_PATH . 'footer.php'); ?>  
+                <?php include (INCLUDES_PATH . 'footer.php'); ?>
             </div>
             <!-- FOOTER END -->
 
@@ -609,10 +594,21 @@ function showForm($strResponse, $objDataHelper)
 <?php
 }
 
-function verifyScheduleInvite($strMID, $strSCID, $strEMID, $strPSCD, $strPRID, $objDataHelper)
+//function verifyScheduleInvite($strMID, $strSCID, $strEMID, $strPSCD, $strPRID, $objDataHelper)
+function verifyScheduleInvite($strMID, $objDataHelper)
 {
     try
     {
+        $arrURLResponse = getURLRequestByMID($strMID, $objDataHelper);
+    
+        $strParamObject = $arrURLResponse [0]['param_object'];
+        $arrParamObject = json_decode($strParamObject, true);
+
+        $strSCID = trim($arrParamObject['SCID']);    //schedule_id
+        $strEMID = trim($arrParamObject['EMID']);   //email_address
+        $strPSCD = trim($arrParamObject['PSCD']); //passcode
+        $strPRID = trim($arrParamObject['PRID']);    //protocol id
+        
         if (strlen(trim($strSCID)) <= 0)
         {
             $STATUS = -1;
@@ -648,6 +644,14 @@ function verifyScheduleInvite($strMID, $strSCID, $strEMID, $strPSCD, $strPRID, $
 
         if (trim($STATUS) == "")
         {
+            $Joinee_IP_Address = $_SERVER['REMOTE_ADDR'];
+            $arrHead = apache_request_headers();
+            $arrHeaders = array_change_key_case($arrHead, CASE_LOWER);
+            $clientBrowser = trim($arrHeaders['user-agent']);
+
+            //Update the invitee IP Address and Headers
+            $IPUpdate = updInviteeIPHeaders($strSCID, $strEMID, $Joinee_IP_Address, $clientBrowser, $objDataHelper);
+
             $SG_Interval = MEETING_START_GRACE_INTERVAL;
             $EG_Interval = MEETING_END_GRACE_INTERVAL;
             
