@@ -210,7 +210,7 @@ $(document).ready(function () {
                     $.post("addinvitee.php", {txtScheduleId: SchId, txtScheduleDtls: SchDtl, txtName: iNick, txtEmail: iEmail}, function (data)
                     {
                         var response=data;
-                        $("#response").html(data);                       
+                        $("#response").html(data);     
                         var sep  = "<?php echo SEPARATOR; ?>";
                         var html = response.split(sep);
                         if (html[0] == 1) 
