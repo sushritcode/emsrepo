@@ -60,7 +60,7 @@ define("DB_CONNECTIONSTRING","root:mclaren:172.16.1.40:dev_db_eletesmeet_com:330
 /*********************DB Connection End******************/
 
 /********************Error Logging Parameter Start************/
-define('DEBUG_LOG', 0); //1 = On & 0= Off
+define('DEBUG_LOG', 1); //1 = On & 0= Off
 define("ERROR_LOG_EMAIL","mitesh.shah@quadridge.com");
 define("ERROR_LOG_FILE_NAME","eletsmeet_com_error_log.log");
 define("LOG_ERROR", true);
