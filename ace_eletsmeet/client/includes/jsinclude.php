@@ -1,0 +1,1 @@
+<script src="<?php echo CLIENT_JS_PATH; ?>jquery.js"></script>
