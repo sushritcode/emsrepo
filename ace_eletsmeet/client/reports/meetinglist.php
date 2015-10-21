@@ -11,26 +11,32 @@ require_once(CLIENT_INCLUDES_PATH . 'client_authorize.inc.php');
 require_once(CLIENT_INCLUDES_PATH . 'client_db_function.inc.php');
 
 try
-{   
+{  
+    //$strUser_ID = trim($_REQUEST["userid"]);
+    $strUserId = trim($_REQUEST["txtUserId"]);
+    
     try
     {
-        $arrMeetingCountNDuration = getMeetingCountNDurationByClient($strSetClient_ID, $objDataHelper);
+        $arrMeetingListByUser = getMeetingListByUserId($strUserId, $objDataHelper);
     }
     catch (Exception $a)
     {
         throw new Exception("index.php : getNumberOfLicenseList : Error in populating List." . $a->getMessage(), 541);
     }
-    $TotalMeeting = $arrMeetingCountNDuration[0]['TotalMeetings'];
-    $TotalDuration = $arrMeetingCountNDuration[0]['TotalDuration'];
     
-    try
+    try 
     {
-        $arrMeetingListByUser = getMeetingCountByClientUser($strSetClient_ID, $objDataHelper);
-    }
-    catch (Exception $a)
-    {
-        throw new Exception("index.php : getMeetingListByUserID : Error in populating List.".$a->getMessage(), 541);
+    $arrUserDetls = getUserDetailsByUserId($strUserId, $objDataHelper);
     } 
+    catch (Exception $e) 
+    {
+        throw new Exception("index.php : updInvitationStatus Failed : " . $e->getMessage(), 1126);
+    }
+    //print_r($arrUserDetls);
+    $strDBUserId = trim($arrUserDetls[0]['user_id']);
+    $strDBUserName = trim($arrUserDetls[0]['user_name']);
+    $strDBUserEmail = trim($arrUserDetls[0]['email_address']);
+    
 }
 catch (Exception $e)
 {
@@ -94,7 +100,7 @@ catch (Exception $e)
                         <!-- PAGE HEADER -->
                         <div class="page-header">
                             <h1>
-                                Meeting<small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp; meeting&#39;s &amp; Duration&#39;s</small>
+                                Meeting<small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp; meeting&#39;s</small>
                             </h1>
                         </div>
                         <!-- PAGE HEADER -->
@@ -103,20 +109,15 @@ catch (Exception $e)
                             <div class="col-xs-12">
                                 <!-- PAGE CONTENT START -->
                                 
-                                    <div class="alert alert-danger errorDisplay" id="mError"></div>
                               
 <!--                                    <h4 class="header smaller lighter blue"><span>Total No. Of License : <strong><?php echo $strTotalLicense; ?></strong></span>&nbsp;&nbsp;<span>Total No. Of Consumed License : <strong><?php echo $strConsumedLicense; ?></strong></span></h4>-->
                                 
                                     <div class="clearfix">
                                         <div class="pull-right tableTools-container"></div> 
-                                        <div>
-                                            <h5 class="header smaller lighter blue">Total No. Of Meetings : <span class="pink"><strong><?php echo $TotalMeeting; ?></strong></span>&nbsp;&amp;&nbsp;Total Duration : <span class="purple"><strong><?php echo $TotalDuration; ?></strong> Minutes</span></h5>
-                                        </div>
                                     </div>
                                     
-                                    
                                     <div class="table-header">
-                                        Meeting List 
+                                        Meeting List of <span><strong>"<?php echo $strDBUserName; ?>"</strong></span>
                                     </div>
                                     
                                     <div>
@@ -128,50 +129,119 @@ catch (Exception $e)
                                                      <tr> 
                                                         <th class="center">
                                                             <label class="pos-rel">
-                                                                    <i class="ace-icon fa fa-user hidden-480"></i>
+                                                                    <i class="ace-icon fa fa-calendar hidden-480"></i>
                                                                     <span class="lbl"></span>
                                                             </label>
                                                         </th>
-                                                        <th> Username </th>
-                                                        <th> Total No. of Meetings </th>
-                                                        <th> Total Meeting Duration (in Mins) </th>
+                                                        <th> Creation Time </th>
+                                                        <th> Meeting Date </th>
+                                                        <th> Title </th>
+                                                        <th> Meeting Start Time </th>
+                                                        <th> Meeting End Time </th>
+                                                        <th> No. Of Participants </th>
+                                                        <th> Status</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php  for($intCntr = 0; $intCntr < sizeof($arrMeetingListByUser); $intCntr++) {
-                                                        $UserID = $arrMeetingListByUser[$intCntr]["user_id"];
-                                                        $UserName = $arrMeetingListByUser[$intCntr]["user_name"];
-                                                        $UserEmail = $arrMeetingListByUser[$intCntr]["email_address"];
-                                                        $TotalMeetings = $arrMeetingListByUser[$intCntr]["TotalMeetings"];
-                                                        $TotalDuration = $arrMeetingListByUser[$intCntr]["TotalDuration"];
+                                                        $SchID = $arrMeetingListByUser[$intCntr]["schedule_id"];
+                                                        $SchStatus = $arrMeetingListByUser[$intCntr]["schedule_status"];
+                                                        $SchCreationTime = $arrMeetingListByUser[$intCntr]["schedule_creation_time"];
+                                                        $MeetingTimeGMT = $arrMeetingListByUser[$intCntr]["meeting_timestamp_gmt"];
+                                                        $MeetingTimeLocal = $arrMeetingListByUser[$intCntr]["meeting_timestamp_local"];
+                                                        $MTitle = $arrMeetingListByUser[$intCntr]["meeting_title"];
+                                                        $MeetingTimezone = $arrMeetingListByUser[$intCntr]["meeting_timezone"];
+                                                        $MeetingGMT = $arrMeetingListByUser[$intCntr]["meeting_gmt"];
+                                                        $MeetingStartTime = $arrMeetingListByUser[$intCntr]["meeting_start_time"];
+                                                        if (strlen($MeetingStartTime) <= 0) 
+                                                        {
+                                                            $MeetingStartTime = "---";
+                                                        }
+                                                        $MeetingEndTime = $arrMeetingListByUser[$intCntr]["meeting_end_time"];
+                                                        if (strlen($MeetingEndTime) <= 0) 
+                                                        {
+                                                            $MeetingEndTime = "---";
+                                                        }
+                                                        $MaxParticipants = $arrMeetingListByUser[$intCntr]["max_participants"];
+                                                        
+                                                        $schPassCode = md5($SchID . ":" . $strDBUserEmail . ":" . SECRET_KEY);
+                                                        
+                                                        
+                                                        switch($SchStatus)
+                                                        {
+                                                           case 0: $MeetingStatus = "<span class=\"label label-sm label-warning\">Scheduled</span>";
+                                                              break;
+                                                           case 1: $MeetingStatus = "<span class=\"label label-sm label-warning\">Started</span>";
+                                                              break;
+                                                           case 2: $MeetingStatus = "<span class=\"label label-sm label-success\">Completed</span>";
+                                                              break;
+                                                           case 3: $MeetingStatus = "<span class=\"label label-sm label-inverse\">Cancelled</span>";
+                                                              break;
+                                                           case 4: $MeetingStatus = "<span class=\"label label-sm label-warning\">Overdue</span>";
+                                                              break;
+                                                           case 5: $MeetingStatus = "<span class=\"label label-sm label-danger\">Error</span>";
+                                                              break;
+                                                           default: break;
+                                                        }
+                                                        $MeetingTitle = implode(" " , array_splice(explode(" " , $MTitle) , 0 , 5));
+                                                        if (count(explode(" ",$MeetingTitle)) > 5)
+                                                        {
+                                                            $MeetingTitle = $MeetingTitle."...";
+                                                        }
+                                                        else if (strlen($MeetingTitle) > 20) 
+                                                        {
+                                                            $MeetingTitle = substr($MeetingTitle,0,20)."...";
+                                                        }
                                                     ?>
                                                     <tr>
                                                         <td class="center">
                                                             <label class="pos-rel">
-                                                                    <i class="ace-icon fa fa-user hidden-480"></i>
+                                                                    <i class="ace-icon fa fa-calendar hidden-480"></i>
                                                                 <span class="lbl"></span>
                                                             </label>
                                                         </td>
-                                                        <td><?php echo $UserName; ?></td>
-                                                        <td><?php echo $TotalMeetings; ?></td>
-                                                        <td><?php echo $TotalDuration; ?></td>
+                                                        <td><?php echo $SchCreationTime." ".$SchID; ?></td>
+                                                        <td><?php echo $MeetingTimeLocal; ?></td>
+                                                        <td><?php echo $MeetingTitle; ?></td>
+<!--                                                        <td><?php //echo $MeetingTimezone." ". $MeetingGMT; ?></td>-->
+                                                        <td><?php echo $MeetingStartTime; ?></td>
+                                                        <td><?php echo $MeetingEndTime; ?></td>
+                                                        <td><?php echo $MaxParticipants; ?></td>
+                                                        <td><?php echo $MeetingStatus; ?></td>
                                                         <td>
                                                             <div class="hidden-sm hidden-xs btn-group">
-                                                                    <button class="btn btn-sm" onclick="showDetails('<?php echo $UserID; ?>');" alt="More Details" title="More Details"><i class="ace-icon fa fa-info"></i></button>
+                                                                <button href="#sch-detls" data-toggle="modal" class="btn btn-sm btn-inverse" onclick="meetingDetails('<?php echo $SchID; ?>','<?php echo $strDBUserEmail; ?>', '<?php echo $schPassCode; ?>')" alt="Details" title="Details"><i class="ace-icon fa fa-info bigger-110"></i></button>
                                                             </div>
                                                         </td>
                                                     </tr>
                                                     <?php } ?>
-                                                    
                                                 </tbody>
                                             </table>
                                             <!--  Actual Table End  -->
-                                            <form name="mDetails" id="mDetails" method="POST" action="meetinglist.php">
-                                                <input type="hidden" id="txtUserId" name="txtUserId">
-                                            </form>
+                                            <hr>
+                                            <div><a class="btn btn-sm btn-grey pull-right" href="<?php echo $CLIENT_SITE_ROOT.'reports/' ?>"><i class="ace-icon fa fa-arrow-left"></i>Go Back</a></div>
                                         </div>
                                     </div>
+                                                                   
+                                    <!--  pop up-->
+                                    <div id="sch-detls" class="modal fade" tabindex="-1">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header no-padding">
+                                                    <div class="table-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                            <span class="white">&times;</span>
+                                                        </button>
+                                                        &nbsp;
+                                                    </div>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div id="SubDetails"></div>
+                                                </div>
+                                            </div>  
+                                        </div>
+                                    </div>                                                                                                          
 
                                 <!-- PAGE CONTENT END -->
                             </div>
@@ -214,12 +284,6 @@ catch (Exception $e)
             {
                  document.getElementById('mError').style.display="none";
             };
-            
-            function showDetails(userid)
-            {
-                 document.getElementById("mDetails").txtUserId.value=userid;
-                 document.getElementById("mDetails").submit();
-            } 
                  
             jQuery(function ($) {
                 //initiate dataTables plugin
@@ -230,7 +294,7 @@ catch (Exception $e)
                             bAutoWidth: false,
                             "aoColumns": [
                                 {"bSortable": false},
-                                null, null, null,
+                                null, null, null,null, null, null,null, 
                                 {"bSortable": false}
                             ],
                             "aaSorting": [],
@@ -323,7 +387,7 @@ catch (Exception $e)
                 //ColVis extension
                 var colvis = new $.fn.dataTable.ColVis(oTable1, {
                     "buttonText": "<i class='fa fa-search'></i>",
-                    "aiExclude": [0,4],
+                    "aiExclude": [0,8],
                     "bShowAll": true,
                     "bRestore": true,
                     "sAlign": "right",
@@ -371,5 +435,18 @@ catch (Exception $e)
                 }
 
             });
+            
+           function meetingDetails(schId,email,schdtl) {
+            $.ajax({
+                type: "GET",
+                url: CLIENT_SITE_ROOT+"reports/meetingdetails.php",
+                cache: false,
+                data: "SchId="+schId+"&Email="+email+"&SchDtl="+schdtl+"&Num="+Math.random(),
+                loading: $(".loading").html(""),
+                success: function(html) {
+                    $("#SubDetails").html(html);
+                }
+            }); }
+            
         </script>
 </html>

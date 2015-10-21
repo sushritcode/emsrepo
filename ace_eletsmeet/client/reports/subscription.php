@@ -6,7 +6,7 @@ require_once(CLIENT_DBS_PATH . 'DataHelper.php');
 require_once(CLIENT_DBS_PATH . 'objDataHelper.php');
 require_once(CLIENT_INCLUDES_PATH . 'client_authfunc.inc.php');
 $CLIENT_CONST_MODULE = 'cl_reports';
-$CLIENT_CONST_PAGEID = 'Meeting Report_1';
+$CLIENT_CONST_PAGEID = 'Meeting Report_2';
 require_once(CLIENT_INCLUDES_PATH . 'client_authorize.inc.php');
 require_once(CLIENT_INCLUDES_PATH . 'client_db_function.inc.php');
 
@@ -14,23 +14,16 @@ try
 {   
     try
     {
-        $arrMeetingCountNDuration = getMeetingCountNDurationByClient($strSetClient_ID, $objDataHelper);
+        $arrSubscriptionInfo = getClientSubscriptionInfo($strSetPartner_ID, $strSetClient_ID, $objDataHelper);
     }
     catch (Exception $a)
     {
         throw new Exception("index.php : getNumberOfLicenseList : Error in populating List." . $a->getMessage(), 541);
     }
-    $TotalMeeting = $arrMeetingCountNDuration[0]['TotalMeetings'];
-    $TotalDuration = $arrMeetingCountNDuration[0]['TotalDuration'];
-    
-    try
-    {
-        $arrMeetingListByUser = getMeetingCountByClientUser($strSetClient_ID, $objDataHelper);
-    }
-    catch (Exception $a)
-    {
-        throw new Exception("index.php : getMeetingListByUserID : Error in populating List.".$a->getMessage(), 541);
-    } 
+   
+//    echo "<pre>";
+//    print_r($arrSubscriptionInfo);
+//    echo "<pre>"; 
 }
 catch (Exception $e)
 {
@@ -123,53 +116,74 @@ catch (Exception $e)
                                         <div id="dynamic-table_wrapper" class="dataTables_wrapper form-inline no-footer">
                                             <!--  Actual Table Start  -->
                                              <table id="dynamic-table" class="table table-striped table-bordered table-hover dataTable no-footer DTTT_selectable" role="grid" aria-describedby="dynamic-table_info">
-<!--                                             <table id="dynamic-table" class="table table-striped table-bordered table-hover">-->
                                                 <thead>
                                                      <tr> 
                                                         <th class="center">
                                                             <label class="pos-rel">
-                                                                    <i class="ace-icon fa fa-user hidden-480"></i>
+                                                                    <i class="ace-icon fa fa-certificate hidden-480"></i>
                                                                     <span class="lbl"></span>
                                                             </label>
                                                         </th>
-                                                        <th> Username </th>
-                                                        <th> Total No. of Meetings </th>
-                                                        <th> Total Meeting Duration (in Mins) </th>
+                                                        <th> Plan Name </th>
+                                                        <th> Start Date</th>
+                                                        <th> End Date </th>
+                                                        <th> No. of Days Left</th>
+                                                        <th> Status</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <?php  for($intCntr = 0; $intCntr < sizeof($arrMeetingListByUser); $intCntr++) {
-                                                        $UserID = $arrMeetingListByUser[$intCntr]["user_id"];
-                                                        $UserName = $arrMeetingListByUser[$intCntr]["user_name"];
-                                                        $UserEmail = $arrMeetingListByUser[$intCntr]["email_address"];
-                                                        $TotalMeetings = $arrMeetingListByUser[$intCntr]["TotalMeetings"];
-                                                        $TotalDuration = $arrMeetingListByUser[$intCntr]["TotalDuration"];
+                                                    <?php  for($intCntr = 0; $intCntr < sizeof($arrSubscriptionInfo); $intCntr++) {
+                                                        $PlanName = $arrSubscriptionInfo[$intCntr]["plan_name"];
+                                                        $SubStartDate = $arrSubscriptionInfo[$intCntr]["subscription_start_date_gmt"];
+                                                        $SubEndDate = $arrSubscriptionInfo[$intCntr]["subscription_end_date_gmt"];
+                                                        $DiffDays = $arrSubscriptionInfo[$intCntr]["diff_days"];
+                                                         if ($DiffDays <= 0) 
+                                                         {
+                                                            $strColor = "style=\"background-color: #fcf4f2; color: #bd7f75;\"";
+                                                         }
+                                                         else if ($DiffDays <= 30) 
+                                                         {
+                                                            $strColor = "style=\"background-color: #fef6eb; color: #d9993e;\"";
+                                                         }
+                                                         else
+                                                         {
+                                                             $strColor = "style=\"background-color: #edf3ea; color: #7b9e6c;\"";
+                                                         }
+                                                         
+                                                         $SubStatus = $arrSubscriptionInfo[$intCntr]["subscription_status"];
+                                                         switch($SubStatus)
+                                                         {
+                                                            case 0: $SubStatus = "<span class=\"label label-sm label-warning\">Requestd</span>";
+                                                               break;
+                                                            case 1: $SubStatus = "<span class=\"label label-sm label-info\">Trial</span>";
+                                                               break;
+                                                            case 2: $SubStatus = "<span class=\"label label-sm label-success\">Subscribed</span>";
+                                                               break;
+                                                            case 3: $SubStatus = "<span class=\"label label-sm label-danger\">Expired</span>";
+                                                               break;
+                                                            default: break;
+                                                         }
                                                     ?>
                                                     <tr>
                                                         <td class="center">
                                                             <label class="pos-rel">
-                                                                    <i class="ace-icon fa fa-user hidden-480"></i>
+                                                                    <i class="ace-icon fa fa-certificate hidden-480"></i>
                                                                 <span class="lbl"></span>
                                                             </label>
                                                         </td>
-                                                        <td><?php echo $UserName; ?></td>
-                                                        <td><?php echo $TotalMeetings; ?></td>
-                                                        <td><?php echo $TotalDuration; ?></td>
-                                                        <td>
-                                                            <div class="hidden-sm hidden-xs btn-group">
-                                                                    <button class="btn btn-sm" onclick="showDetails('<?php echo $UserID; ?>');" alt="More Details" title="More Details"><i class="ace-icon fa fa-info"></i></button>
-                                                            </div>
-                                                        </td>
+                                                        <td><?php echo $PlanName; ?></td>
+                                                        <td><?php echo $SubStartDate; ?></td>
+                                                        <td><?php echo $SubEndDate; ?></td>
+                                                        <td><?php echo $DiffDays; ?></td>
+                                                        <td><?php echo $SubStatus; ?></td>
+                                                        <td>&nbsp;</td>
                                                     </tr>
                                                     <?php } ?>
                                                     
                                                 </tbody>
                                             </table>
                                             <!--  Actual Table End  -->
-                                            <form name="mDetails" id="mDetails" method="POST" action="meetinglist.php">
-                                                <input type="hidden" id="txtUserId" name="txtUserId">
-                                            </form>
                                         </div>
                                     </div>
 
@@ -215,12 +229,7 @@ catch (Exception $e)
                  document.getElementById('mError').style.display="none";
             };
             
-            function showDetails(userid)
-            {
-                 document.getElementById("mDetails").txtUserId.value=userid;
-                 document.getElementById("mDetails").submit();
-            } 
-                 
+                
             jQuery(function ($) {
                 //initiate dataTables plugin
                 var oTable1 =
@@ -230,7 +239,7 @@ catch (Exception $e)
                             bAutoWidth: false,
                             "aoColumns": [
                                 {"bSortable": false},
-                                null, null, null,
+                                null, null, null,null,null,
                                 {"bSortable": false}
                             ],
                             "aaSorting": [],
@@ -323,7 +332,7 @@ catch (Exception $e)
                 //ColVis extension
                 var colvis = new $.fn.dataTable.ColVis(oTable1, {
                     "buttonText": "<i class='fa fa-search'></i>",
-                    "aiExclude": [0,4],
+                    "aiExclude": [0,6],
                     "bShowAll": true,
                     "bRestore": true,
                     "sAlign": "right",

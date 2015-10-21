@@ -13,7 +13,7 @@ if ($CLIENT_CONST_MODULE == "cl_user") {
 
 
 if ($CLIENT_CONST_MODULE == "cl_reports") {
-    $strReportActiveClass = "active";
+    $strReportActiveClass = "active open";
 } else {
     $strReportActiveClass = "";
 }
@@ -87,52 +87,64 @@ if ($CLIENT_CONST_MODULE == "cl_reports") {
                     <b class="arrow"></b>
                 </li>
                 
-                <li class="<?php echo $strReportActiveClass; ?>">
+<!--                <li class="<?php echo $strReportActiveClass; ?>">
                     <a href="<?php echo $CLIENT_SITE_ROOT; ?>reports/">
                         <i class="menu-icon fa fa-bar-chart-o"></i>
                         <span class="menu-text"> Reports </span>
                     </a>
                     <b class="arrow"></b>
-                </li>
+                </li>-->
 
 
 
                 <!-- Meetings book start-->
-<!--                <li class="<?php echo $strMeetingActiveClass; ?>">
+               <li class="<?php echo $strReportActiveClass; ?>">
                     <a href="#" class="dropdown-toggle">
-                        <i class="menu-icon fa fa-calendar"></i>
-                        <span class="menu-text">
-                            Meetings
-                        </span>
+                        <i class="menu-icon fa fa-bar-chart-o"></i>
+                        <span class="menu-text">Reports</span>
                         <b class="arrow fa fa-angle-down"></b>
                     </a>
 
                     <b class="arrow"></b>
 
                     <ul class="submenu">
-                    <?php if ($CONST_PAGEID == "Schedule Page") { ?>
+                        <?php if ($CLIENT_CONST_PAGEID == "Meeting Report_1") { ?>
                             <li class="active">
-                                <a href="<?php echo $SITE_ROOT; ?>schedule/">
-                                    <i class="menu-icon fa fa-caret-right"></i>
-                                    Schedule Meeting
+                                <a href="<?php echo $CLIENT_SITE_ROOT; ?>reports/">
+                                     <i class="menu-icon fa fa-caret-right"></i>
+                                        Meeting Reports
                                 </a>
                                 <b class="arrow"></b>
                             </li>
                         <?php } else { ?>
                             <li class="">
-                                <a href="<?php echo $SITE_ROOT; ?>schedule/">
+                                <a href="<?php echo $CLIENT_SITE_ROOT; ?>reports/">
                                     <i class="menu-icon fa fa-caret-right"></i>
-                                    Schedule Meeting
+                                        Meeting Reports
                                 </a>
                                 <b class="arrow"></b>
                             </li>
                         <?php } ?>
-
                         
-
-                        
+                        <?php if ($CLIENT_CONST_PAGEID == "Meeting Report_2") { ?>
+                            <li class="active">
+                                <a href="<?php echo $CLIENT_SITE_ROOT; ?>reports/subscription.php">
+                                     <i class="menu-icon fa fa-caret-right"></i>
+                                        Subscription Reports
+                                </a>
+                                <b class="arrow"></b>
+                            </li>
+                        <?php } else { ?>
+                            <li class="">
+                                <a href="<?php echo $CLIENT_SITE_ROOT; ?>reports/subscription.php">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                        Subscription Reports
+                                </a>
+                                <b class="arrow"></b>
+                            </li>
+                        <?php } ?>
                     </ul>
-                </li>-->
+                </li>
                 <!-- Meetings book end-->
             </ul>
 
