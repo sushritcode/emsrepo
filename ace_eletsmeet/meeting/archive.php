@@ -130,7 +130,7 @@ catch(Exception $e)
                                                         {
                                                             $schTitle = $schTitle."...";
                                                         }
-                                                        else if (strlen($smTitle) > 20) 
+                                                        else if (strlen($schTitle) > 20) 
                                                         {
                                                             $schTitle = substr($schTitle,0,20)."...";
                                                         }

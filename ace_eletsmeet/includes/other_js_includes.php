@@ -14,6 +14,7 @@
 <script type="text/javascript" src="<?php echo JS_PATH; ?>flot/jquery.flot.js"></script>
 <script type="text/javascript" src="<?php echo JS_PATH; ?>flot/jquery.flot.pie.js"></script>
 <script type="text/javascript" src="<?php echo JS_PATH; ?>flot/jquery.flot.resize.js"></script>
+               
 
 <!-- ace scripts -->
 <script type="text/javascript" src="<?php echo JS_PATH; ?>ace/elements.scroller.js"></script>

@@ -22,25 +22,13 @@ try
         exit;
     }
     
-     if (sizeof($arrClientCookieDtls) <= 0 && $CLIENT_CONST_MODULE == "clprofile")
+     if (sizeof($arrClientCookieDtls) <= 0 && $CLIENT_CONST_MODULE == "cl_profile")
     {
         header("Location: " . $CLIENT_SITE_ROOT);
         exit;
     }
-    
-     if (sizeof($arrClientCookieDtls) <= 0 && $CLIENT_CONST_MODULE == "clsubscription")
-    {
-        header("Location: " . $CLIENT_SITE_ROOT);
-        exit;
-    }
-    
-    if (sizeof($arrClientCookieDtls) <= 0 && $CLIENT_CONST_MODULE == "clcontact")
-    {
-        header("Location: " . $CLIENT_SITE_ROOT);
-        exit;
-    }
-    
-     if (sizeof($arrClientCookieDtls) <= 0 && $CLIENT_CONST_MODULE == "clreports")
+       
+     if (sizeof($arrClientCookieDtls) <= 0 && $CLIENT_CONST_MODULE == "cl_reports")
     {
         header("Location: " . $CLIENT_SITE_ROOT);
         exit;

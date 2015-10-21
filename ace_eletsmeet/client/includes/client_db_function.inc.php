@@ -1,4 +1,11 @@
 <?php
+function dateFormat($gmTime, $localTime, $timezone)
+{
+    $date = date_create($localTime, timezone_open("GMT"));
+    $date_format = date_format(date_timezone_set($date, timezone_open($timezone)), 'P');
+    $meeting_date = date("D, F jS Y, h:i A", strtotime($localTime)) . "  (" . $timezone . ", GMT ".$date_format.")  (" . date("D, F jS Y, h:i A", strtotime($gmTime)) . " GMT)";
+    return $meeting_date;
+}
 
 /* -----------------------------------------------------------------------------
   Function Name : GetCountryDetails
@@ -870,10 +877,10 @@ function getMeetingCountByClientUser($client_id, $dataHelper) {
 
     try
     {
-        $strSqlQuery = "SELECT pd.partner_id, cd.client_id, cd.client_name, uld.user_id, uld.user_name, COUNT(uld.user_id) AS 'TotalMeetings', "
+        $strSqlQuery = "SELECT pd.partner_id, cd.client_id, cd.client_name, uld.user_id, uld.user_name, uld.email_address, COUNT(uld.user_id) AS 'TotalMeetings', "
 . "SUM(IFNULL(TIMESTAMPDIFF(MINUTE,sd.meeting_start_time, sd.meeting_end_time),0)) AS 'TotalDuration' "
 . "FROM partner_details AS pd, client_details AS cd, user_login_details AS uld, schedule_details AS sd "
-. "WHERE pd.partner_id = cd.partner_id AND cd.client_id = uld.client_id AND uld.user_id = sd.user_id "
+. "WHERE sd.schedule_id IN (SELECT schedule_id FROM invitation_details) AND pd.partner_id = cd.partner_id AND cd.client_id = uld.client_id AND uld.user_id = sd.user_id "
 . "AND cd.client_id = '" . trim($client_id) . "' GROUP BY pd.partner_id, uld.client_id, uld.user_id ORDER BY uld.user_name;"; 
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlQuery);
         return $arrResult;
@@ -881,6 +888,88 @@ function getMeetingCountByClientUser($client_id, $dataHelper) {
     catch (Exception $e)
     {
         throw new Exception("client_db_function.inc.php : Error in getMeetingCountByClientUser." . $e->getMessage(), 734);
+    }
+}
+
+function getMeetingListByUserId($user_id, $dataHelper) {
+    if (!is_object($dataHelper))
+    {
+        throw new Exception("client_db_function.inc.php : getMeetingListByUserId    : DataHelper Object did not instantiate", 104);
+    }
+
+    try
+    {
+        $strSqlQuery = "SELECT * FROM schedule_details WHERE user_id ='".trim($user_id)."' ORDER BY meeting_timestamp_local DESC;"; 
+        $arrResult = $dataHelper->fetchRecords("QR", $strSqlQuery);
+        return $arrResult;
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("client_db_function.inc.php : Error in getMeetingListByUserId." . $e->getMessage(), 734);
+    }
+}
+
+function isScheduleValid($schedule_id, $email_address, $pass_code, $dataHelper) {
+    try
+    {
+        if (!is_object($dataHelper))
+        {
+            throw new Exception("schedule_function.inc.php : isScheduleInviteeValid : DataHelper Object did not instantiate", 104);
+        }
+                $strSqlStatement = "SELECT sd.schedule_id, sd.user_id, sd.schedule_status, sd.schedule_creation_time, sd.meeting_timestamp_gmt, sd.meeting_timestamp_local, sd.meeting_title, sd.meeting_agenda, sd.meeting_timezone, sd.meeting_gmt, sd.meeting_start_time, sd.meeting_end_time, sd.voice_bridge, sd.web_voice, sd.max_participants, sd.record_flag, sd.subscription_id, uld.email_address, ud.nick_name, sm.subscription_id, sm.number_of_invitee, sm.order_id "
+                . "FROM schedule_details sd, user_login_details uld, user_details ud, subscription_master sm "
+                . "WHERE sd.user_id = uld.user_id  AND uld.user_id = ud.user_id "
+                . "AND sd.subscription_id = sm.subscription_id "
+                . "AND sd.schedule_id='" . trim($schedule_id) . "' "
+                . "AND MD5(CONCAT('" . trim($schedule_id) . "',':','" . trim($email_address) . "',':','" . SECRET_KEY . "')) = '" . trim($pass_code) . "';";
+        $arrSchResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
+        return $arrSchResult;
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("schedule_function.inc.php : isScheduleValid : Could not fetch records : " . $e->getMessage(), 2036);
+    }
+}
+
+function getMeetingInviteeList($schedule_id, $dataHelper)
+{
+    if (!is_object($dataHelper))
+    {
+        throw new Exception("db_common_function.inc.php : getContactList : DataHelper Object did not instantiate", 104);
+    }
+    try
+    {
+        $strSqlStatement = "SELECT invitation_id, schedule_id, invitee_email_address, invitee_nick_name, invitee_idd_code, invitee_mobile_number, invitation_creator, invitation_creation_dtm, invitation_status, invitation_status_dtm, meeting_status, meeting_status_join_dtm, meeting_status_left_dtm FROM invitation_details WHERE schedule_id = '" . trim($schedule_id) . "'";
+        $arrMeetingInviteList = $dataHelper->fetchRecords("QR", $strSqlStatement);
+        return $arrMeetingInviteList;
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("db_common_function.inc.php : getMeetingInviteeList : Could not fetch Invitee List : " . $e->getMessage(), 1111);
+    }
+}
+
+function getClientSubscriptionInfo($partner_id, $client_id, $dataHelper) {
+    if (!is_object($dataHelper))
+    {
+        throw new Exception("report_function.inc.php : getClientSubscriptionInfo : DataHelper Object did not instantiate", 104);
+    }
+
+    try
+    {
+        $strSqlQuery = "SELECT pd.partner_name, cd.client_name, cd.client_id, cd.status, csm.plan_name, csm.subscription_start_date_gmt, "
+. "csm.subscription_end_date_gmt, DATEDIFF(csm.subscription_end_date_gmt, DATE_FORMAT(NOW(), '%Y-%m-%d')) AS diff_days, csm.subscription_status "
+. "FROM partner_details AS pd, client_details AS cd, client_subscription_master AS csm "
+. "WHERE pd.partner_id = cd.partner_id AND cd.client_id = csm.client_id "
+. "AND cd.client_id = '" . trim($client_id) . "' "
+. "AND pd.partner_id = '" . trim($partner_id) . "' "
+. "ORDER BY pd.partner_name, cd.client_name, csm.subscription_end_date_gmt DESC;";
+        $arrResult = $dataHelper->fetchRecords("QR", $strSqlQuery);
+        return $arrResult;
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("report_function.inc.php : Error in getClientSubscriptionInfo." . $e->getMessage(), 734);
     }
 }
 

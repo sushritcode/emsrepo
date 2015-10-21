@@ -12,37 +12,63 @@ require_once(CLIENT_INCLUDES_PATH . 'client_dashboard.inc.php');
 
 try
 {
-    $arrLicenseCount = getTotalLicenseCountByID($strSetClient_ID, $objDataHelper);
+    $arrLicenseCount = getLicenseCountByID($strSetClient_ID, $objDataHelper);
 }
 catch (Exception $e)
 {
-    throw new Exception("index.php : getPersonalContactCountByID Failed : " . $e->getMessage(), 1125);
+    throw new Exception("index.php : getLicenseCountByID Failed : " . $e->getMessage(), 1125);
 }
-
 $strTotalLicense = $arrLicenseCount[0]['TotalLicense'];
 
-//try
-//{
-//    $arrHostMeetingCount = getTotalHostMeetingCountByID($strCK_user_id, $objDataHelper);
-//}
-//catch (Exception $e)
-//{
-//    throw new Exception("index.php : getTotalHostMeetingCountByID Failed : " . $e->getMessage(), 1125);
-//}
-//
-//$strTotalHostMeetingCount = $arrHostMeetingCount[0]['TotalMeetingCreated'];
-//
-//try
-//{
-//    $arrMeetingDuration = getTotalMeetingDurationByID($strCK_user_id, $objDataHelper);
-//}
-//catch (Exception $e)
-//{
-//    throw new Exception("index.php : getTotalHostMeetingCountByID Failed : " . $e->getMessage(), 1125);
-//}
-//
-//$strTotalMeetingDuration = $arrMeetingDuration[0]['TotalDuration'];
-//
+try
+{
+    $arrContactCount = getContactCountByID($strSetClient_ID, $objDataHelper);
+}
+catch (Exception $e)
+{
+    throw new Exception("index.php : getContactCountByID Failed : " . $e->getMessage(), 1125);
+}
+$strTotalContacts = $arrContactCount[0]['TotalContacts'];
+
+try
+{
+    $arrHostMeetingCount = getMeetingCountByID($strSetClient_ID, $objDataHelper);
+}
+catch (Exception $e)
+{
+    throw new Exception("index.php : getMeetingCountByID Failed : " . $e->getMessage(), 1125);
+}
+$strTotalMeeting = $arrHostMeetingCount[0]['TotalMeeting'];
+
+try
+{
+    $arrMeetingDuration = getMeetingDurationByID($strSetClient_ID, $objDataHelper);
+}
+catch (Exception $e)
+{
+    throw new Exception("index.php : getMeetingDurationByID Failed : " . $e->getMessage(), 1125);
+}
+$strTotalDuration = $arrMeetingDuration[0]['TotalMinutes'];
+
+try
+{
+    $arrMeetingOverview = getMeetingOverviewByID($strSetClient_ID, $objDataHelper);
+}
+catch (Exception $e)
+{
+    throw new Exception("index.php : getMeetingOverviewByID Failed : " . $e->getMessage(), 1125);
+}
+//print_r($arrMeetingOverview);
+
+ try
+{
+    $arrSubscriptionInfo = getClientSubscriptionInfo($strSetPartner_ID, $strSetClient_ID, $objDataHelper);
+}
+catch (Exception $a)
+{
+    throw new Exception("index.php : getNumberOfLicenseList : Error in populating List." . $a->getMessage(), 541);
+}
+
 //try
 //{
 //    $arrInviteMeetingCount = getTotalInviteMeetingCountByID($strCk_user_email_address, $objDataHelper);
@@ -190,63 +216,50 @@ $strTotalLicense = $arrLicenseCount[0]['TotalLicense'];
                                 <!-- PAGE CONTENT START -->
                                 <div class="row">
 
-                                    <div class="col-sm-6 infobox-container">
+                                    <div class="col-sm-4 infobox-container">
                                         
                                         <div class="infobox infobox-green">
                                             <div class="infobox-icon">
-                                                <i class="ace-icon fa fa-phone"></i>
+                                                <i class="ace-icon fa fa-pencil-square-o "></i>
                                             </div>
                                             <div class="infobox-data">
                                                 <span class="infobox-data-number"><?php echo $strTotalLicense; ?></span>
                                                 <div class="infobox-content">Total No. of License</div>
                                             </div>
-                                            <!--                                                <div class="stat stat-success">8%</div>-->
+                                            <!--   <div class="stat stat-success">8%</div>-->
+                                        </div>
+                                        
+                                        <div class="infobox infobox-red">
+                                            <div class="infobox-icon">
+                                                <i class="ace-icon fa fa-phone"></i>
+                                            </div>
+                                            <div class="infobox-data">
+                                                <span class="infobox-data-number"><?php echo $strTotalContacts; ?></span>
+                                                <div class="infobox-content">Total No. of Contacts</div>
+                                            </div>
                                         </div>
 
-<!--                                        <div class="infobox infobox-blue">
+                                        <div class="infobox infobox-green2">
                                             <div class="infobox-icon">
                                                 <i class="ace-icon fa fa-users"></i>
                                             </div>
                                             <div class="infobox-data">
-                                                <span class="infobox-data-number"><?php echo $strTotalHostMeetingCount; ?></span>
-                                                <div class="infobox-content small">Total Meeting Hosted</div>
-                                            </div>
-                                                                                            <div class="stat stat-success">8%</div>
-                                        </div>
-
-                                        <div class="infobox infobox-red">
-                                            <div class="infobox-icon">
-                                                <i class="ace-icon fa fa-exchange"></i>
-                                            </div>
-                                            <div class="infobox-data">
-                                                <span class="infobox-data-number"><?php echo $strTotalMeetingInviteCount; ?></span>
-                                                <div class="infobox-content">Total Meeting Joined</div>
+                                                <span class="infobox-data-number"><?php echo $strTotalMeeting; ?></span>
+                                                <div class="infobox-content">Total Meeting Hosted</div>
                                             </div>
                                         </div>
-
+                                        
                                         <div class="infobox infobox-pink">
                                             <div class="infobox-icon">
                                                 <i class="ace-icon fa fa-comments-o"></i>
                                             </div>
                                             <div class="infobox-data">
-                                                <span class="infobox-data-number"><?php echo $strTotalMeetingDuration; ?></span>
-                                                <div class="infobox-content small">Total Meeting Minutes</div>
+                                                <span class="infobox-data-number"><?php echo $strTotalDuration; ?></span>
+                                                <div class="infobox-content">Total Meeting Minutes</div>
                                             </div>
-                                                                                            <div class="stat stat-success">8%</div>
                                         </div>
 
-                                        <div class="infobox infobox-orange">
-                                            <div class="infobox-icon">
-                                                <i class="ace-icon fa fa- fa-envelope-o"></i>
-                                            </div>
-                                            <div class="infobox-data">
-                                                <span class="infobox-data-number"><?php echo $strTotalDistinctInviteeCount; ?></span>
-                                                <div class="infobox-content small">Total Distinct Invitee</div>
-                                            </div>
-                                                                                            <div class="stat stat-success">8%</div>
-                                        </div>
-                                        
-                                        <div class="infobox infobox-orange">
+ <!--                                 <div class="infobox infobox-orange">
                                             <div class="infobox-icon">
                                                 <i class="ace-icon fa fa- fa-user"></i>
                                             </div>
@@ -261,21 +274,120 @@ $strTotalLicense = $arrLicenseCount[0]['TotalLicense'];
 
                                     <div class="vspace-12-sm"></div>
 
-<!--                                    <div class="col-sm-6">
+                                    <div class="col-sm-4">
                                         <div class="widget-box">
                                             <div class="widget-header widget-header-flat widget-header-small">
                                                 <h5 class="widget-title">
-                                                    <i class="ace-icon fa fa-signal"></i>
+                                                    <i class="ace-icon fa fa-asterisk"></i>
                                                     Meeting Statistics
                                                 </h5>
                                             </div>
                                             <div class="widget-body">
                                                 <div class="widget-main">
-                                                    <div id="piechart-placeholder"></div>                                                
+                                                    <div class="center">
+                                                         <?php  for($intCntr = 0; $intCntr < sizeof($arrMeetingOverview); $intCntr++) {  
+                                                             $strLabel = $arrMeetingOverview[$intCntr]['label'];
+                                                             $strData  = $arrMeetingOverview[$intCntr]['data'];
+                                                             $strColor = $arrMeetingOverview[$intCntr]['color'];
+                                                         ?>
+                                                        <div class="infobox infobox-<?php echo $strColor;?> infobox-small infobox-dark">
+                                                                <div class="infobox-icon">
+                                                                        <i class="ace-icon fa fa-users"></i>
+                                                                </div>
+                                                                <div class="infobox-data">
+                                                                        <div class="infobox-content"><?php echo $strLabel; ?></div>
+                                                                        <div class="infobox-content"><?php echo $strData ?></div>
+                                                                </div>
+                                                        </div>
+<!--                                                        <div class="infobox infobox-<?php echo $strColor;?> infobox-small infobox-dark">
+                                                                <div class="infobox-progress">
+                                                                        <div data-size="39" data-percent="<?php echo $strData ?>" class="easy-pie-chart percentage" style="height: 39px; width: 39px; line-height: 38px;">
+                                                                                <span class="percent"><?php echo $strData ?></span>%
+                                                                        <canvas height="39" width="39"></canvas></div>
+                                                                </div>
+
+                                                                <div class="infobox-data">
+                                                                        <div class="infobox-content"><?php echo $strLabel; ?></div>
+                                                                </div>
+                                                        </div>-->
+                                                         <?php } ?>
+                                                    </div>  
+                                                    <div class="hr hr-dotted"></div>
+                                                    <p><i><a href="<?php echo $CLIENT_SITE_ROOT."reports/"?>">Click to see more...</a></i></p>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>-->
+                                    </div>
+                                    
+                                     <div class="vspace-12-sm"></div>
+                                     
+                                     <div class="col-sm-4">
+                                        <div class="widget-box">
+                                            <div class="widget-header widget-header-flat widget-header-small">
+                                                <h5 class="widget-title">
+                                                    <i class="ace-icon fa fa-asterisk"></i>
+                                                    Subscription Information
+                                                </h5>
+                                            </div>
+                                            <div class="widget-body">
+                                                <div class="widget-main">
+                                                    
+                                                    <table class="table table-bordered table-striped">
+                                                            <thead class="thin-border-bottom">
+                                                                    <tr>
+                                                                        <th><small><i class="ace-icon fa fa-caret-right blue"></i>Plan Name</small></th>
+                                                                            <th><small><i class="ace-icon fa fa-caret-right blue"></i>Start Date</small></th>
+                                                                             <th><small><i class="ace-icon fa fa-caret-right blue"></i>Expiry Date</small></th>
+                                                                            <th class="hidden-480"><small><i class="ace-icon fa fa-caret-right blue"></i>Status</small></th>
+                                                                    </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                                    <?php  for($intCntr = 0; $intCntr < sizeof($arrSubscriptionInfo); $intCntr++) {
+                                                                        $PlanName = $arrSubscriptionInfo[$intCntr]["plan_name"];
+                                                                        $SubStartDate = $arrSubscriptionInfo[$intCntr]["subscription_start_date_gmt"];
+                                                                        $SubEndDate = $arrSubscriptionInfo[$intCntr]["subscription_end_date_gmt"];
+                                                                        $DiffDays = $arrSubscriptionInfo[$intCntr]["diff_days"];
+                                                                         if ($DiffDays <= 0) 
+                                                                         {
+                                                                            $strColor = "red";
+                                                                         }
+                                                                         else if ($DiffDays <= 30) 
+                                                                         {
+                                                                            $strColor = "blue";
+                                                                         }
+                                                                         else
+                                                                         {
+                                                                             $strColor = "green";
+                                                                         }
+                                                                         $SubStatus = $arrSubscriptionInfo[$intCntr]["subscription_status"];
+                                                                         switch($SubStatus)
+                                                                        {
+                                                                           case 0: $SubStatus = "<span class=\"label label-sm label-warning\">Requestd</span>";
+                                                                              break;
+                                                                           case 1: $SubStatus = "<span class=\"label label-sm label-info\">Trial</span>";
+                                                                              break;
+                                                                           case 2: $SubStatus = "<span class=\"label label-sm label-success\">Subscribed</span>";
+                                                                              break;
+                                                                           case 3: $SubStatus = "<span class=\"label label-sm label-danger\">Expired</span>";
+                                                                              break;
+                                                                           default: break;
+                                                                        }
+                                                                    ?>
+                                                                    <tr>
+                                                                            <td><small class="<?php echo $strColor; ?>"><?php echo $PlanName; ?></small></td>
+                                                                            <td><small class="<?php echo $strColor; ?>"><?php echo $SubStartDate; ?></small></td>
+                                                                            <td><small class="<?php echo $strColor; ?>"><?php echo $SubEndDate; ?></small></td>
+                                                                            <td class="hidden-480"><small><?php echo $SubStatus; ?></small></td>
+                                                                    </tr>
+                                                                    <?php } ?>
+                                                            </tbody>
+                                                    </table>
+                                                    <p><i><a href="<?php echo $CLIENT_SITE_ROOT."reports/subscription.php"?>">Click to see more...</a></i></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                 </div>
 
@@ -388,9 +500,26 @@ $strTotalLicense = $arrLicenseCount[0]['TotalLicense'];
 
         <script type="text/javascript" src="<?php echo CLIENT_JS_PATH; ?>highcharts.js"></script>
         <script type="text/javascript" src="<?php echo CLIENT_JS_PATH; ?>exporting.js"></script>
+               
 
         <script type="text/javascript">
             jQuery(function ($) {
+                $('.easy-pie-chart.percentage').each(function(){
+                        var $box = $(this).closest('.infobox');
+                        var barColor = $(this).data('color') || (!$box.hasClass('infobox-dark') ? $box.css('color') : 'rgba(255,255,255,0.95)');
+                        var trackColor = barColor == 'rgba(255,255,255,0.95)' ? 'rgba(255,255,255,0.25)' : '#E2E2E2';
+                        var size = parseInt($(this).data('size')) || 50;
+                        $(this).easyPieChart({
+                                barColor: barColor,
+                                trackColor: trackColor,
+                                scaleColor: false,
+                                lineCap: 'butt',
+                                lineWidth: parseInt(size/10),
+                                animate: /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase()) ? false : 1000,
+                                size: size
+                        });
+                })
+                                
                 //flot chart resize plugin, somehow manipulates default browser resize event to optimize it!
                 //but sometimes it brings up errors with normal resize event handlers
                 $.resize.throttleWindow = false;
@@ -427,6 +556,7 @@ $strTotalLicense = $arrLicenseCount[0]['TotalLicense'];
                         }
                     })
                 }
+                
                 drawPieChart(placeholder, data);
 
                 /**
@@ -454,51 +584,49 @@ $strTotalLicense = $arrLicenseCount[0]['TotalLicense'];
                         previousPoint = null;
                     }
                 });
-                
-                
-                
-    $('#container').highcharts({
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'Monthly Average Meeting'
-        },
-//        subtitle: {
-//            text: 'Source: WorldClimate.com'
-//        },
-        xAxis: {
-            //categories: ['2015-07-09','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov', 'Dec'],
-            categories: [<?php echo $arrDateArr; ?>],
-            crosshair: true
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: 'Duration (minute)'
-            }
-        },
-        tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.0f}</b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            }
-        },
-        series: [{
-            name: 'Minute',
-            //data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
-            data: [<?php echo $arrMinuteArr; ?>],
-            color: "#68BC31"
-        }]
-    });
+                                
+                $('#container').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'Monthly Average Meeting'
+                    },
+            //        subtitle: {
+            //            text: 'Source: WorldClimate.com'
+            //        },
+                    xAxis: {
+                        //categories: ['2015-07-09','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov', 'Dec'],
+                        categories: [<?php echo $arrDateArr; ?>],
+                        crosshair: true
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'Duration (minute)'
+                        }
+                    },
+                    tooltip: {
+                        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                            '<td style="padding:0"><b>{point.y:.0f}</b></td></tr>',
+                        footerFormat: '</table>',
+                        shared: true,
+                        useHTML: true
+                    },
+                    plotOptions: {
+                        column: {
+                            pointPadding: 0.2,
+                            borderWidth: 0
+                        }
+                    },
+                    series: [{
+                        name: 'Minute',
+                        //data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+                        data: [<?php echo $arrMinuteArr; ?>],
+                        color: "#68BC31"
+                    }]
+                });
 
                 
                 
