@@ -26,6 +26,7 @@ define("CLIENT_FOOTER_INCLUDES_PATH",INCLUDES_PATH."footer.php");
 /*********************Configuration Parameter Start ******************/
 $CLIENT_CONST_SITETITLE = "Welcome to LetsMeet Client";
 define("CLIENT_SESSION_NAME","ckClientLetsMeetSession");
+define("CLIENT_PROFILE_URL",$CLIENT_SITE_ROOT."profile/");
 define("CLIENT_LOGOUT_URL",$CLIENT_SITE_ROOT."includes/logout.php");
 /*********************Configuration Parameter Start ******************/
 

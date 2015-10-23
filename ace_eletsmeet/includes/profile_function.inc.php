@@ -115,20 +115,18 @@ Modified on   :
 ------------------------------------------------------------------------------ */
 function profile_form_table_map()
 {
+    //formname
+    $arrForms = array("frmbasic"=>array(),"frmcontact"=>array(),"frmaddress"=>array(),"frmSocial"=>array(),"frmCompany"=>array(),"frmBilling"=>array(),"frmpassword"=>array());
 
-	//formname
-
-	$arrForms = array("frmbasic"=>array(),"frmcontact"=>array(),"frmaddress"=>array(),"frmSocial"=>array(),"frmCompany"=>array(),"frmBilling"=>array(),"frmpassword"=>array());
-
-	//formelementname 
-	$arrForms["frmbasic"] = array("displayname"=>"nick_name","firstname"=>"first_name","lastname"=>"last_name");
-	$arrForms["frmcontact"] =  array("phone1"=>"phone_number","mobile"=>"mobile_number","SecondryEmail"=>"secondry_email");
-	$arrForms["frmaddress"] = array("landmark"=>"landmark","city"=>"city","address"=>"address","country"=>"country_name" );
-	$arrForms["frmSocial"] = array("facebook"=>"facebook","twitter"=>"twitter","googleplus"=>"googleplus","linkedin"=>"linkedin");
-	$arrForms["frmCompany"] = array( "companyname"=>"company_name","natureofbusiness"=>"nature_business","companyURL"=>"company_uri","briefDescription"=>"brief_desc_company","indutrytype"=>"industry_type");
-	$arrForms["frmBilling"] = array();
-	$arrForms["frmpassword"] = array("newpwd"=>"password");
-	return $arrForms;
+    //formelementname 
+    $arrForms["frmbasic"] = array("displayname"=>"nick_name","firstname"=>"first_name","lastname"=>"last_name");
+    $arrForms["frmcontact"] =  array("phone1"=>"phone_number","mobile"=>"mobile_number","SecondryEmail"=>"secondry_email");
+    $arrForms["frmaddress"] = array("landmark"=>"landmark","city"=>"city","address"=>"address","country"=>"country_name" );
+    $arrForms["frmSocial"] = array("facebook"=>"facebook","twitter"=>"twitter","googleplus"=>"googleplus","linkedin"=>"linkedin");
+    $arrForms["frmCompany"] = array( "companyname"=>"company_name","natureofbusiness"=>"nature_business","companyURL"=>"company_uri","briefDescription"=>"brief_desc_company","indutrytype"=>"industry_type");
+    $arrForms["frmBilling"] = array();
+    $arrForms["frmpassword"] = array("newpwd"=>"password");
+    return $arrForms;
 }
 
 /* -----------------------------------------------------------------------------

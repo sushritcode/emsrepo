@@ -5,28 +5,29 @@ require_once(CLIENT_CLASSES_PATH . 'client_error.inc.php');
 //require_once(CLASSES_PATH.'error.inc.php');
 require_once(DBS_PATH . 'DataHelper.php');
 require_once(DBS_PATH . 'objDataHelper.php');
-require_once(CLIENT_INCLUDES_PATH . 'client_authfunc.inc.php');
+//require_once(CLIENT_INCLUDES_PATH . 'client_authfunc.inc.php');
 $CLIENT_CONST_MODULE = 'error';
 $CLIENT_CONST_PAGEID = 'Error Home';
-require_once(CLIENT_INCLUDES_PATH . 'client_authorize.inc.php');
+//require_once(CLIENT_INCLUDES_PATH . 'client_authorize.inc.php');
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <!-- HEAD CONTENT AREA -->
-        <?php include (CLIENT_INCLUDES_PATH . 'head.php'); ?>
+        <?php include (CLIENT_HEAD_INCLUDES_PATH); ?>
         <!-- HEAD CONTENT AREA -->
 
         <!-- CSS n JS CONTENT AREA -->
-        <?php include (INCLUDES_PATH . 'css_include.php'); ?>    
+        <?php include (CLIENT_CSS_INCLUDES_PATH); ?>    
         <!-- CSS n JS CONTENT AREA -->
     </head>
+    
     <body class="no-skin">
 
-        <!-- TOP NAVIGATION BAR START -->
+       <!-- TOP NAVIGATION BAR START -->
         <div id="navbar" class="navbar navbar-default">
-            <?php include (CLIENT_INCLUDES_PATH . 'top_navigation.php'); ?>    
+            <?php include (CLIENT_TOP_NAVIGATION_INCLUDES_PATH); ?>    
         </div>
         <!-- TOP NAVIGATION BAR END -->
 
@@ -86,9 +87,9 @@ require_once(CLIENT_INCLUDES_PATH . 'client_authorize.inc.php');
             </div>
             <!--  MAIN CONTENT END -->
 
-            <!-- FOOTER START -->
+           <!-- FOOTER START -->
             <div class="footer">
-                <?php include (INCLUDES_PATH . 'footer.php'); ?>  
+                <?php include (CLIENT_FOOTER_INCLUDES_PATH); ?>   
             </div>
             <!-- FOOTER END -->
 
@@ -98,11 +99,6 @@ require_once(CLIENT_INCLUDES_PATH . 'client_authorize.inc.php');
 
         </div>
         <!-- MAIN CONTAINER END -->
-
-        <!-- JAVA SCRIPT -->
-        <?php //include (INCLUDES_PATH . 'static_js_includes.php'); ?>  
-        <?php //include (INCLUDES_PATH . 'other_js_includes.php'); ?>  
-        <!-- JAVA SCRIPT -->
 
     </body>
 </html>

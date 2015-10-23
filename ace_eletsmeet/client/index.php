@@ -32,22 +32,30 @@ if (isset($_POST['lgn_submit'])) {
         $errEmailClass = '';
         $errPwdClass = '';
 
-        try {
+        try 
+        {
             $arrAuthUserResult = isAuthenticClient($signin_email, md5($signin_password), $objDataHelper);
-        } catch (Exception $a) {
+        } 
+        catch (Exception $a) 
+        {
             throw new Exception("login.php : isAuthenticUser_API : Error in Authenticing User" . $a->getMessage(), 613);
         }
-
-        if (is_array($arrAuthUserResult) && sizeof($arrAuthUserResult) > 0) {
+    
+        if (is_array($arrAuthUserResult) && sizeof($arrAuthUserResult) > 0) 
+        {
             $db_client_id = $arrAuthUserResult[0]['client_id'];
             $db_partner_id = $arrAuthUserResult[0]['partner_id'];
+            $db_client_username = $arrAuthUserResult[0]['client_username'];
+            $db_client_name = $arrAuthUserResult[0]['client_name'];
             $db_client_email_address = $arrAuthUserResult[0]['client_email_address'];
             $strRandomID = md5(microtime());
-            setClientSession($strRandomID, $db_client_email_address);
-            $arrUpdLastLoginDtls = updClientLastLoginDtls($db_client_id, $db_client_email_address, $strRandomID, GM_DATE, $Login_IP_Address, $objDataHelper);
+            setClientSession($strRandomID, $db_client_username, $db_client_email_address);
+            $arrUpdLastLoginDtls = updClientLastLoginDtls($db_client_id, $strRandomID, GM_DATE, $Login_IP_Address, $objDataHelper);
             $strReferer = "dashboard/";
             header("Location:" . $CLIENT_SITE_ROOT . $strReferer);
-        } else {
+        } 
+        else 
+        {
             $strAction = $SITE_ROOT;
             $strErrorMsg = "Invalid information. Please try again.";
             $errEmailClass = 'has-error';

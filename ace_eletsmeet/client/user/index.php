@@ -8,13 +8,11 @@ require_once(CLIENT_INCLUDES_PATH . 'client_authfunc.inc.php');
 $CLIENT_CONST_MODULE = 'cl_user';
 $CLIENT_CONST_PAGEID = 'User Home';
 require_once(CLIENT_INCLUDES_PATH . 'client_authorize.inc.php');
-require_once(CLIENT_INCLUDES_PATH . 'client_db_function.inc.php');
+//require_once(CLIENT_INCLUDES_PATH . 'client_db_function.inc.php');
+require_once(CLIENT_INCLUDES_PATH . 'client_reports_function.inc.php');
 
 try
-{
-    //echo $strSetPartner_ID;
-    //echo $strSetClient_ID;
-    
+{    
     try
     {
         $arrUserList = getUserListByPartnernClient($strSetPartner_ID, $strSetClient_ID, $objDataHelper);
@@ -225,7 +223,7 @@ catch (Exception $e)
                                                                 <button href="#user_status" data-toggle="modal" class="btn btn-sm btn-danger" onclick="updUserStatus('<?php echo $strCL_User_Id; ?>', '3', '<?php echo $strCL_UserName; ?>')" alt="Delete" title="Delete"><i class="ace-icon fa fa-remove"></i></button>
                                                                 <?php } ?>
 
-                                                                <button href="#user_subscription" data-toggle="modal" class="btn btn-sm btn-info" onclick="addUserSubscription('<?php echo $strCL_User_Id; ?>', '3', '<?php echo urldecode($strCL_UserName); ?>')" alt="Delete" title="Delete"><i class="ace-icon fa fa-key"></i></button>
+<!--                                                                <button href="#user_subscription" data-toggle="modal" class="btn btn-sm btn-info" onclick="addUserSubscription('<?php echo $strCL_User_Id; ?>', '3', '<?php echo urldecode($strCL_UserName); ?>')" alt="Delete" title="Delete"><i class="ace-icon fa fa-key"></i></button>-->
                                                             </div>
                                                         </td>
                                                     </tr>

@@ -3,8 +3,8 @@
 /* -----------------------------------------------------------------------------
   Function Name : isAuthenticClient
   Purpose       : To Authenticate Admin User
-  Parameters    : email_address, password, Datahelper
-  Returns       : array (with admin_id, email_address, password)
+  Parameters    : client_username, password, Datahelper
+  Returns       : array (with client_id, partner_id, client_username, client_password, client_name, client_email_address, client_logo_url,client_last_login_dtm, client_login_enabled)
   Calls         : datahelper.fetchRecords
   Called By     :
   Author            : Mitesh Shah
@@ -13,28 +13,25 @@
   Modified on   :
 -------------------------------------------------------------------------------- */
 
-function isAuthenticClient($email_address, $password, $dataHelper) {
+function isAuthenticClient($client_username, $password, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("client_authfunc.inc.php : isAuthenticClient : DataHelper Object did not instantiate", 104);
     }
 
-    if (strlen(trim($email_address)) <= 0)
+    if (strlen(trim($client_username)) <= 0)
     {
-        throw new Exception("client_authfunc.inc.php: isAuthenticClient : Missing Parameter email_address.", 141);
+        throw new Exception("client_authfunc.inc.php: isAuthenticClient : Missing Parameter.", 141);
     }
 
     if (strlen(trim($password)) <= 0)
     {
-        throw new Exception("client_authfunc.inc.php: isAuthenticClient : Missing Parameter password.", 142);
+        throw new Exception("client_authfunc.inc.php: isAuthenticClient : Missing Parameter .", 142);
     }
 
     try
     {
-        $strSqlStatement = "SELECT client_id, partner_id, client_name, client_logo_url, "
-                . "client_email_address, client_lastlogin_dtm, status "
-                . "FROM client_details "
-                . "WHERE client_email_address='" . trim($email_address) . "' AND client_password='" . trim($password) . "' AND  status = '1';";
+        $strSqlStatement = "SELECT cld.client_id, partner_id, client_username, client_password, client_name, client_email_address, client_logo_url,client_last_login_dtm, client_login_enabled FROM client_login_details AS cld, client_details AS cd WHERE cld.client_id = cd.client_id AND client_username='" . trim($client_username) . "' AND client_password='" . trim($password) . "' AND  client_login_enabled = '1';";
         $arrAuthResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrAuthResult;
     }
@@ -57,21 +54,26 @@ function isAuthenticClient($email_address, $password, $dataHelper) {
   Modified on   :
 -------------------------------------------------------------------------------- */
 
-function setClientSession($id, $email_address) {
+function setClientSession($id, $client_username, $email_address) {
     global $objErr;
     if (strlen(trim($id)) <= 0)
     {
-        throw new Exception("client_authfunc.inc.php: setClientSession : Missing Parameter admin_id.", 151);
+        throw new Exception("client_authfunc.inc.php: setClientSession : Missing Parameter.", 151);
     }
 
+     if (strlen(trim($client_username)) <= 0)
+    {
+        throw new Exception("client_authfunc.inc.php: setClientSession : Missing Parameter.", 152);
+    }
+    
     if (strlen(trim($email_address)) <= 0)
     {
-        throw new Exception("client_authfunc.inc.php: setClientSession : Missing Parameter email_address.", 152);
+        throw new Exception("client_authfunc.inc.php: setClientSession : Missing Parameter.", 152);
     }
 
     try
     {
-        $strCookieValue = $id . chr(5) . $email_address;
+        $strCookieValue = $id . chr(5) . $client_username . chr(5) . $email_address;
         session_start();
         $_SESSION[CLIENT_SESSION_NAME] = $strCookieValue;
     }
@@ -143,7 +145,7 @@ function unsetClientSession() {
   Modified By   :
   Modified on   :
 -------------------------------------------------------------------------------- */
-function updClientLastLoginDtls($client_id, $email_address, $random_id, $datetime, $ipaddress, $dataHelper) {
+function updClientLastLoginDtls($client_id, $random_id, $datetime, $ipaddress, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("client_authfunc.inc.php : updClientLastLoginDtls : DataHelper Object did not instantiate", 104);
@@ -151,7 +153,7 @@ function updClientLastLoginDtls($client_id, $email_address, $random_id, $datetim
 
     try
     {
-        $strSqlStatement = "UPDATE client_details SET client_lastlogin_dtm = '".trim($datetime)."', client_login_id = '".trim($random_id)."', client_login_ip_address = '".trim($ipaddress)."' WHERE client_email_address = '" . trim($email_address) . "' AND client_id ='".trim($client_id)."';";
+        $strSqlStatement = "UPDATE client_login_details SET client_last_login_dtm = '".trim($datetime)."', client_login_random_id = '".trim($random_id)."', client_login_ip_address = '".trim($ipaddress)."' WHERE client_id ='".trim($client_id)."';";
         $arrAuthResult = $dataHelper->putRecords("QR", $strSqlStatement);
         return $arrAuthResult;
     }
@@ -162,10 +164,10 @@ function updClientLastLoginDtls($client_id, $email_address, $random_id, $datetim
 }
 
 /* -----------------------------------------------------------------------------
-  Function Name : getClientDetailsByID
-  Purpose       : To update admin last logged in datetime
+  Function Name : getClientDetailsByClientUsername
+  Purpose       : 
   Parameters    :
-  Returns       : email_address
+  Returns       : 
   Calls         : datahelper.fetchRecords
   Called By     :
   Author        : Mitesh Shah
@@ -174,25 +176,26 @@ function updClientLastLoginDtls($client_id, $email_address, $random_id, $datetim
   Modified on   :
 -------------------------------------------------------------------------------- */
 
-function getClientDetailsByID($email_address, $dataHelper) {
+function getClientDetailsByClientUsername($client_username, $dataHelper) {
     if (!is_object($dataHelper))
     {
-        throw new Exception("client_authfunc.inc.php : getClientDetailsByID : DataHelper Object did not instantiate", 104);
+        throw new Exception("client_authfunc.inc.php : getClientDetailsByClientUsername : DataHelper Object did not instantiate", 104);
     }
 
-    if (strlen(trim($email_address)) <= 0)
+    if (strlen(trim($client_username)) <= 0)
     {
-        throw new Exception("client_authfunc.inc.php: getClientDetailsByID : Missing Parameter email_address.", 141);
+        throw new Exception("client_authfunc.inc.php: getClientDetailsByClientUsername : Missing Parameter .", 141);
     }
 
     try
     {
-        $strSqlStatement = "SELECT client_id, partner_id, client_name, client_logo_flag, client_logo_url, client_email_address, client_lastlogin_dtm, client_creation_dtm, auth_mode, auth_api_url, import_contact_url, rt_server_name, rt_server_salt, rt_server_api_url, logout_url, status FROM client_details WHERE client_email_address = '".trim($email_address)."';";
+        $strSqlStatement = "SELECT cld.client_id, partner_id, client_username, client_name, client_email_address, client_logo_flag, client_logo_url, client_last_login_dtm, client_login_ip_address, client_login_random_id, client_login_enabled, client_creation_dtm, client_secret_key, auth_mode, auth_api_url, import_contact_url, rt_server_name, rt_server_salt, rt_server_api_url, logout_url FROM client_login_details AS cld, client_details AS cd WHERE cld.client_id = cd.client_id AND cld.client_username = '".trim($client_username)."' AND cld.client_login_enabled = '1' ;";
+        //$strSqlStatement = "SELECT client_id, partner_id, client_name, client_logo_flag, client_logo_url, client_email_address, client_last_login_dtm, client_creation_dtm, auth_mode, auth_api_url, import_contact_url, rt_server_name, rt_server_salt, rt_server_api_url, logout_url, status FROM client_details WHERE client_email_address = '".trim($email_address)."';";
         $arrAuthResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrAuthResult;
     }
     catch (Exception $e)
     {
-        throw new Exception("client_authfunc.inc.php : getClientDetailsByID : Could not fetch records : " . $e->getMessage(), 144);
+        throw new Exception("client_authfunc.inc.php : getClientDetailsByClientUsername : Could not fetch records : " . $e->getMessage(), 144);
     }
 }

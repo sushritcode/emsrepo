@@ -8,7 +8,9 @@ require_once(CLIENT_INCLUDES_PATH . 'client_authfunc.inc.php');
 $CLIENT_CONST_MODULE = 'cl_reports';
 $CLIENT_CONST_PAGEID = 'Meeting Report_1';
 require_once(CLIENT_INCLUDES_PATH . 'client_authorize.inc.php');
-require_once(CLIENT_INCLUDES_PATH . 'client_db_function.inc.php');
+//require_once(CLIENT_INCLUDES_PATH . 'client_db_function.inc.php');
+require_once(CLIENT_INCLUDES_PATH . 'client_reports_function.inc.php');
+
 
 try
 {   
@@ -36,7 +38,6 @@ catch (Exception $e)
 {
     $ErrorHandler->RaiseError($_SERVER["PHP_SELF"], $e->getCode(), $e->getMessage(), true);
 }
-
 ?>
 
 <!DOCTYPE html>

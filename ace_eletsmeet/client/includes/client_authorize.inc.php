@@ -35,11 +35,12 @@ try
     }
     
     
-    
     if (is_array($arrClientCookieDtls) && sizeof($arrClientCookieDtls) > 0)
     {
-        $strCK_ID = $arrClientCookieDtls[0];
-        $strCk_email_address = $arrClientCookieDtls[1];
+        
+        $strCK_Client_Id = $arrClientCookieDtls[0];
+        $strCK_Username = $arrClientCookieDtls[1];
+        $strCk_Email_Address = $arrClientCookieDtls[2];
 
         if (!isset($_SESSION[CLIENT_SESSION_NAME]))
         {
@@ -50,19 +51,21 @@ try
         {
             try
             {
-                $arrClientDetls = getClientDetailsByID($strCk_email_address, $objDataHelper);
+                $arrClientDetls = getClientDetailsByClientUsername($strCK_Username, $objDataHelper);
             }
             catch (Exception $a)
             {
-                throw new Exception("adm_authorize.inc.php : Error in getAdminUserDetailsByID" . $a->getMessage(), 161);
+                throw new Exception("client_authorize.inc.php : Error in getClientDetailsByClientUsername " . $a->getMessage(), 161);
             }
 
             if (!empty($arrClientDetls))
             {
                 $strSetClient_ID = trim($arrClientDetls[0]['client_id']);
                 $strSetPartner_ID = trim($arrClientDetls[0]['partner_id']);
-                $strSetClient_Logo = trim($arrClientDetls[0]['client_logo_url']);
+                $strSetClient_Username = trim($arrClientDetls[0]['client_username']);
                 $strSetClient_Name = trim($arrClientDetls[0]['client_name']);
+                $strSetEmail_Address = trim($arrClientDetls[0]['client_email_address']);
+                $strSetClient_Logo = trim($arrClientDetls[0]['client_logo_url']);
                 $strSetClient_Logo_Flag = trim($arrClientDetls[0]['client_logo_flag']);
             }
             else

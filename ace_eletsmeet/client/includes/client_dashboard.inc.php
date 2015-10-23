@@ -6,7 +6,8 @@ function getLicenseCountByID($client_id, $dataHelper) {
     }
     try
     {
-        $strSqlStatement = "SELECT SUM(no_of_license) AS TotalLicense FROM client_license_details WHERE operation_type = '0' AND client_id ='" . trim($client_id) . "';";
+        $strSqlStatement = "SELECT SUM(no_of_license) AS TotalLicense FROM client_license_details AS ld, client_login_details AS cld, client_details AS cd  "
+                . "WHERE ld.client_id = cld.client_id AND cld.client_id = cd.client_id AND client_login_enabled = '1' AND operation_type = '0' AND ld.client_id ='" . trim($client_id) . "';";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrResult;
     }
@@ -23,7 +24,8 @@ function getContactCountByID($client_id, $dataHelper) {
     }
     try
     {
-        $strSqlStatement = "SELECT COUNT(*) as TotalContacts FROM client_contact_details WHERE client_id ='" . trim($client_id) . "' AND client_contact_status = '1';";
+        $strSqlStatement = "SELECT COUNT(*) as TotalContacts FROM client_contact_details AS ccd, client_login_details AS cld, client_details AS cd "
+                . "WHERE  ccd.client_id = cld.client_id AND cld.client_id = cd.client_id AND client_login_enabled = '1' AND ccd.client_id ='" . trim($client_id) . "' AND client_contact_status = '1';";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrResult;
     }
@@ -40,9 +42,9 @@ function getMeetingCountByID($client_id, $dataHelper) {
     }
     try
     {
-        $strSqlStatement = "SELECT COUNT(*) AS TotalMeeting FROM schedule_details sd,  user_login_details uld "
+        $strSqlStatement = "SELECT COUNT(*) AS TotalMeeting FROM schedule_details sd,  user_login_details uld, client_login_details AS cld, client_details AS cd "
 ."WHERE schedule_id IN (SELECT schedule_id FROM invitation_details)  "
-."AND sd.user_id = uld.user_id AND uld. client_id= '" . trim($client_id) . "' ;";
+."AND uld.client_id = cld.client_id AND cld.client_id = cd.client_id AND client_login_enabled = '1' AND sd.user_id = uld.user_id AND uld. client_id= '" . trim($client_id) . "' ;";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrResult;
     }
@@ -61,9 +63,9 @@ function getMeetingDurationByID($client_id, $dataHelper) {
     try
     {
         $strSqlStatement = "SELECT SUM(IFNULL(TIMESTAMPDIFF(MINUTE,sd.meeting_start_time, sd.meeting_end_time),0)) AS 'TotalMinutes' "
-. "FROM  user_login_details AS uld, schedule_details AS sd  "
+. "FROM  user_login_details AS uld, schedule_details AS sd, client_login_details AS cld, client_details AS cd  "
 . "WHERE schedule_id IN (SELECT schedule_id FROM invitation_details) "
-."AND sd.user_id = uld.user_id AND uld. client_id= '" . trim($client_id) . "' ;";
+."AND uld.client_id = cld.client_id AND cld.client_id = cd.client_id AND client_login_enabled = '1' AND sd.user_id = uld.user_id AND uld. client_id= '" . trim($client_id) . "' ;";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrResult;
     }
@@ -81,11 +83,12 @@ function getMeetingOverviewByID($client_id, $dataHelper) {
     try
     {
         $strSqlStatement = "SELECT CASE schedule_status WHEN '2' THEN 'Completed' WHEN '3' THEN 'Canceled' WHEN '4' THEN 'Overdue' END AS 'label', COUNT(schedule_status) AS 'data', CASE schedule_status WHEN '2' THEN 'orange2' WHEN '3' THEN 'grey' WHEN '4' THEN 'green' END AS 'color'  "
-."FROM schedule_details AS sd, user_login_details AS uld "
+."FROM schedule_details AS sd, user_login_details AS uld, client_login_details AS cld, client_details AS cd "
 ."WHERE  schedule_id IN (SELECT schedule_id FROM invitation_details) "
 ."AND sd.schedule_status IN ('2','3','4') "
 ."AND uld.user_id = sd.user_id  "
 ."AND uld. client_id= '" . trim($client_id) . "' "
+."AND uld.client_id = cld.client_id AND cld.client_id = cd.client_id AND client_login_enabled = '1' "
 ."GROUP BY schedule_status ORDER BY schedule_status; ";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrResult;
@@ -104,11 +107,12 @@ function getClientSubscriptionInfo($partner_id, $client_id, $dataHelper) {
 
     try
     {
-        $strSqlQuery = "SELECT pd.partner_name, cd.client_name, cd.client_id, cd.status, csm.plan_name, csm.subscription_start_date_gmt, "
+        $strSqlQuery = "SELECT pd.partner_name, cld.client_name, cld.client_id, csm.plan_name, csm.subscription_start_date_gmt, "
 . "csm.subscription_end_date_gmt, DATEDIFF(csm.subscription_end_date_gmt, DATE_FORMAT(NOW(), '%Y-%m-%d')) AS diff_days, csm.subscription_status  "
-. "FROM partner_details AS pd, client_details AS cd, client_subscription_master AS csm "
-. "WHERE pd.partner_id = cd.partner_id AND cd.client_id = csm.client_id "
-. "AND cd.client_id = '" . trim($client_id) . "' "
+. "FROM partner_details AS pd, client_subscription_master AS csm, client_login_details AS cld, client_details AS cd "
+. "WHERE pd.partner_id = cld.partner_id AND cld.client_id = csm.client_id "
+."AND cld.client_id = cd.client_id AND client_login_enabled = '1' "      
+. "AND cld.client_id = '" . trim($client_id) . "' "
 . "AND pd.partner_id = '" . trim($partner_id) . "' "
 . "ORDER BY csm.subscription_status, csm.subscription_end_date_gmt DESC  LIMIT 0,3;";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlQuery);

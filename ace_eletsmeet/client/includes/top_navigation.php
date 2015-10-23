@@ -30,11 +30,11 @@
 
     <div class="navbar-buttons navbar-header pull-right" role="navigation">
         <ul class="nav ace-nav">
-            <?php if (strlen(trim($strCk_email_address)) > 0) { ?>
+            <?php if (strlen(trim($strCK_Username)) > 0) { ?>
             <li class="light-blue">
                 <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                    <img class="nav-user-photo" src="<?php echo AVATARS_PATH; ?>avatar2.png" alt="<?php echo $strCk_email_address; ?>'s Photo" title="<?php echo $strCk_email_address; ?>'s Photo" />
-                    <span class="user-info"><small>Welcome,</small><?php echo $strCk_email_address; ?></span>
+                    <img class="nav-user-photo" src="<?php echo AVATARS_PATH; ?>avatar2.png" alt="<?php echo $strCK_Username; ?>'s Photo" title="<?php echo $strCK_Username; ?>'s Photo" />
+                    <span class="user-info"><small>Welcome,</small><?php echo $strCK_Username; ?></span>
                     <i class="ace-icon fa fa-caret-down"></i>
                 </a>
                 <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
@@ -42,7 +42,7 @@
                         <a href="#"><i class="ace-icon fa fa-cog"></i>Settings</a>
                     </li>-->
                     <li>
-                        <a href="<?php echo PROFILE_URL; ?>"><i class="ace-icon fa fa-user"></i>Profile</a>
+                        <a href="<?php echo CLIENT_PROFILE_URL; ?>"><i class="ace-icon fa fa-user"></i>Profile</a>
                     </li>
                     <li class="divider"></li>
                     <li>
