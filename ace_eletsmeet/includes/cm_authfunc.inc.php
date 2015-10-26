@@ -198,10 +198,10 @@ function getUserLoginDetailsByUserName($user_name, $dataHelper) {
 
     try
     {
-        $strSqlStatement = "SELECT ud.user_id, user_name, cd.client_id, cd.partner_id, email_address, role, login_enabled, created_on, created_by, user_last_login_dtm, user_login_ip_address, cd.client_name, cd.client_logo_flag, cd.client_logo_url "
-                . "FROM user_details AS ud, user_login_details AS lu, client_details AS cd "
-                . "WHERE lu.user_name ='" . trim($user_name) . "' "
-                . "ANd lu.user_id = ud.user_id AND cd.client_id = lu.client_id AND lu.login_enabled = '1'; ";
+        $strSqlStatement = "SELECT ud.user_id, user_name, cld.client_id, cld.partner_id, email_address, role, login_enabled, created_on, created_by, user_last_login_dtm, user_login_ip_address, cld.client_name, cld.client_logo_flag, cld.client_logo_url "
+                . "FROM user_details AS ud, user_login_details AS lu, client_login_details AS cld, client_details AS cd "
+                . "WHERE lu.user_name ='" . trim($user_name) . "' AND cld.client_id = cd.client_id AND  client_login_enabled = '1'"
+                . "ANd lu.user_id = ud.user_id AND cld.client_id = lu.client_id AND lu.login_enabled = '1'; ";
         $arrAuthResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrAuthResult;
     }

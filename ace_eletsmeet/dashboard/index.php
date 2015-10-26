@@ -245,7 +245,7 @@ $arrMinuteArr = substr($arrMinuteArr, 0, -1);
                                             <!--                                                <div class="stat stat-success">8%</div>-->
                                         </div>
                                         
-                                        <div class="infobox infobox-orange">
+                                        <div class="infobox infobox-blue3">
                                             <div class="infobox-icon">
                                                 <i class="ace-icon fa fa- fa-user"></i>
                                             </div>
