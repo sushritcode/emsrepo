@@ -302,9 +302,9 @@
                     <i class="ace-icon fa fa-caret-down"></i>
                 </a>
                 <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-                    <li>
+<!--                    <li>
                         <a href="#"><i class="ace-icon fa fa-cog"></i>Settings</a>
-                    </li>
+                    </li>-->
                     <li>
                         <a href="<?php echo PROFILE_URL; ?>"><i class="ace-icon fa fa-user"></i>Profile</a>
                     </li>
