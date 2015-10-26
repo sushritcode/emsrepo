@@ -108,11 +108,11 @@ if ($CLIENT_CONST_MODULE == "cl_reports") {
                     <b class="arrow"></b>
 
                     <ul class="submenu">
-                        <?php if ($CLIENT_CONST_PAGEID == "Meeting Report_1") { ?>
+                        <?php if ( ($CLIENT_CONST_PAGEID=="Meeting Report") || ($CLIENT_CONST_PAGEID=="Meeting List") ){ ?>
                             <li class="active">
                                 <a href="<?php echo $CLIENT_SITE_ROOT; ?>reports/">
                                      <i class="menu-icon fa fa-caret-right"></i>
-                                        Meeting Reports
+                                        Meeting Report
                                 </a>
                                 <b class="arrow"></b>
                             </li>
@@ -120,17 +120,17 @@ if ($CLIENT_CONST_MODULE == "cl_reports") {
                             <li class="">
                                 <a href="<?php echo $CLIENT_SITE_ROOT; ?>reports/">
                                     <i class="menu-icon fa fa-caret-right"></i>
-                                        Meeting Reports
+                                        Meeting Report
                                 </a>
                                 <b class="arrow"></b>
                             </li>
                         <?php } ?>
                         
-                        <?php if ($CLIENT_CONST_PAGEID == "Meeting Report_2") { ?>
+                        <?php if ($CLIENT_CONST_PAGEID == "Subscription Report") { ?>
                             <li class="active">
                                 <a href="<?php echo $CLIENT_SITE_ROOT; ?>reports/subscription.php">
                                      <i class="menu-icon fa fa-caret-right"></i>
-                                        Subscription Reports
+                                        Subscription Report
                                 </a>
                                 <b class="arrow"></b>
                             </li>
@@ -138,7 +138,7 @@ if ($CLIENT_CONST_MODULE == "cl_reports") {
                             <li class="">
                                 <a href="<?php echo $CLIENT_SITE_ROOT; ?>reports/subscription.php">
                                     <i class="menu-icon fa fa-caret-right"></i>
-                                        Subscription Reports
+                                        Subscription Report
                                 </a>
                                 <b class="arrow"></b>
                             </li>

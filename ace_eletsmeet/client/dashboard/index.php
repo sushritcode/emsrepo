@@ -8,7 +8,7 @@ require_once(CLIENT_INCLUDES_PATH . 'client_authfunc.inc.php');
 $CLIENT_CONST_MODULE = 'cl_dashboard';
 $CLIENT_CONST_PAGEID = 'Client Dashboard';
 require_once(CLIENT_INCLUDES_PATH . 'client_authorize.inc.php');
-require_once(CLIENT_INCLUDES_PATH . 'client_dashboard.inc.php');
+require_once(CLIENT_INCLUDES_PATH . 'client_dashboard_function.inc.php');
 
 try
 {
@@ -19,6 +19,16 @@ catch (Exception $e)
     throw new Exception("index.php : getLicenseCountByID Failed : " . $e->getMessage(), 1125);
 }
 $strTotalLicense = $arrLicenseCount[0]['TotalLicense'];
+
+try
+{
+    $arrTotalConsumedLicense = getTotalConsumedLicenseByClientId($strSetClient_ID, $objDataHelper);
+}
+catch (Exception $a)
+{
+    throw new Exception("adduser.php : getTotalConsumedLicenseByClientId Failed." . $a->getMessage(), 541);
+}
+$strTotalConsumedLicense = $arrTotalConsumedLicense[0]['ConsumedLicense'];
 
 try
 {
@@ -66,42 +76,52 @@ catch (Exception $e)
 }
 catch (Exception $a)
 {
-    throw new Exception("index.php : getNumberOfLicenseList : Error in populating List." . $a->getMessage(), 541);
+    throw new Exception("index.php : getClientSubscriptionInfo : Error in populating List." . $a->getMessage(), 541);
 }
 
-//try
-//{
-//    $arrInviteMeetingCount = getTotalInviteMeetingCountByID($strCk_user_email_address, $objDataHelper);
-//}
-//catch (Exception $e)
-//{
-//    throw new Exception("index.php : getTotalHostMeetingCountByID Failed : " . $e->getMessage(), 1125);
-//}
-//
-//$strTotalMeetingInviteCount = $arrInviteMeetingCount[0]['TotalMeetingInvite'];
-//
-//
-//try
-//{
-//    $arrDistinctInviteeCount = getTotalDistinctInviteeCountByID($strCK_user_id, $objDataHelper);
-//}
-//catch (Exception $e)
-//{
-//    throw new Exception("index.php : getTotalDistinctInviteeCountByID Failed : " . $e->getMessage(), 1125);
-//}
-//$strTotalDistinctInviteeCount = $arrDistinctInviteeCount[0]['DistinctInvitee'];
-//
-//try
-//{
-//    $arrProfileCompletePercent = getProfileCompletePercentByID($strCK_user_id, $objDataHelper);
-//}
-//catch (Exception $e)
-//{
-//    throw new Exception("index.php : getProfileCompletePercentByID Failed : " . $e->getMessage(), 1125);
-//}
-//$strTotalProfileCompletePercent = $arrProfileCompletePercent[0]['ProfilePercentage'];
-//
-//
+try
+{
+    $arrProfileCompletePercent = getProfileCompletePercent($strSetClient_ID, $objDataHelper);
+}
+catch (Exception $e)
+{
+    throw new Exception("index.php : getProfileCompletePercent Failed : " . $e->getMessage(), 1125);
+}
+$strProfileCompletePercent = $arrProfileCompletePercent[0]['ProfilePercentage'];
+
+
+$start_date = "05/2015" ;
+$end_date = "11/2015" ;
+        
+try
+{
+    $arrMonthWiseMeetingGraph = getMonthWiseMeetingGraph($strSetClient_ID, $start_date, $end_date, $objDataHelper);
+}
+catch (Exception $e)
+{
+    throw new Exception("index.php : getMinuteBaseMeetingGraphByID Failed : " . $e->getMessage(), 1125);
+}
+
+//TotalMinute //DateOfMeeting
+
+for ($i = 0; $i < sizeof($arrMonthWiseMeetingGraph); $i++)
+{
+    //$arrMonthArr .= $arrMonthWiseMeetingGraph[$i]['MeetingMonth'].",";
+    $arrMonthArr .= "'".$arrMonthWiseMeetingGraph[$i]['MeetingMonth']."',";
+}
+$arrMonthArr = substr($arrMonthArr, 0, -1);
+
+//print_r($arrMonthArr);
+        
+for ($i = 0; $i < sizeof($arrMonthWiseMeetingGraph); $i++)
+{
+    $arrTotalMeetingArr .= $arrMonthWiseMeetingGraph[$i]['TotalMeetings'].",";
+}
+$arrTotalMeetingArr = substr($arrTotalMeetingArr, 0, -1);
+
+//print_r($arrTotalMeetingArr);
+
+
 //$noOfInvitees = 9;
 //
 //try
@@ -112,42 +132,8 @@ catch (Exception $a)
 //{
 //    throw new Exception("index.php : getFrequentInvitees Failed : " . $e->getMessage(), 1125);
 //}
-//
-//try
-//{
-//    $arrMeetingOverview = getMeetingOverviewByID($strCk_user_email_address, $objDataHelper);
-//}
-//catch (Exception $e)
-//{
-//    throw new Exception("index.php : getTotalHostMeetingCountByID Failed : " . $e->getMessage(), 1125);
-//}
-//
-//try
-//{
-//    $arrMinuteBaseMeetingGraph = getMinuteBaseMeetingGraphByID($strCK_user_id, $objDataHelper);
-//}
-//catch (Exception $e)
-//{
-//    throw new Exception("index.php : getMinuteBaseMeetingGraphByID Failed : " . $e->getMessage(), 1125);
-//}
-//
-////TotalMinute //DateOfMeeting
-//
-//for ($i = 0; $i < sizeof($arrMinuteBaseMeetingGraph); $i++)
-//{
-//    $arrDateArr .= "'".$arrMinuteBaseMeetingGraph[$i]['DateOfMeeting']."',";
-//}
-//$arrDateArr = substr($arrDateArr, 0, -1);
-//
-////print_r($arrDateArr);
-//        
-//for ($i = 0; $i < sizeof($arrMinuteBaseMeetingGraph); $i++)
-//{
-//    $arrMinuteArr .= $arrMinuteBaseMeetingGraph[$i]['TotalMinute'].",";
-//}
-//$arrMinuteArr = substr($arrMinuteArr, 0, -1);
 
- //print_r($arrMinuteArr);
+
  
 ?>
 
@@ -189,10 +175,16 @@ catch (Exception $a)
             <!-- MAIN CONTENT START -->
             <div class="main-content">
                 <div class="main-content-inner">
-
+                    
                     <!-- BREADCRUMBS N SEARCH BAR START -->
                     <div class="breadcrumbs" id="breadcrumbs">
                         <?php include (CLIENT_BREADCRUMBS_INCLUDES_PATH); ?>
+                    </div>
+
+                    <div class="page-header">
+                        <h1>
+                            <?php echo $strSetClient_Name; ?>
+                        </h1>
                     </div>
                     <!-- BREADCRUMBS N SEARCH BAR END -->                    
 
@@ -203,6 +195,7 @@ catch (Exception $a)
                         <!--IF NEEDED then WE ADD -->
                         <!-- SETTING CONTAINER END -->
 
+                        
                         <!-- PAGE HEADER -->
                         <div class="page-header">
                             <h1>
@@ -216,7 +209,7 @@ catch (Exception $a)
                                 <!-- PAGE CONTENT START -->
                                 <div class="row">
 
-                                    <div class="col-sm-4 infobox-container">
+                                    <div class="col-sm-6 infobox-container">
                                         
                                         <div class="infobox infobox-green">
                                             <div class="infobox-icon">
@@ -230,6 +223,18 @@ catch (Exception $a)
                                         </div>
                                         
                                         <div class="infobox infobox-red">
+                                            <div class="infobox-icon">
+                                                <i class="ace-icon fa fa-pencil-square-o "></i>
+                                            </div>
+                                            <div class="infobox-data">
+                                                <span class="infobox-data-number"><?php echo $strTotalConsumedLicense; ?></span>
+                                                <div class="infobox-content">Consumed License</div>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        
+                                        <div class="infobox infobox-blue">
                                             <div class="infobox-icon">
                                                 <i class="ace-icon fa fa-phone"></i>
                                             </div>
@@ -259,26 +264,25 @@ catch (Exception $a)
                                             </div>
                                         </div>
 
- <!--                                 <div class="infobox infobox-orange">
+                                        <div class="infobox infobox-orange">
                                             <div class="infobox-icon">
                                                 <i class="ace-icon fa fa- fa-user"></i>
                                             </div>
                                             <div class="infobox-data">
-                                                <span class="infobox-data-number"><?php echo $strTotalProfileCompletePercent; ?> &percnt;</span>
+                                                <span class="infobox-data-number"><?php echo $strProfileCompletePercent; ?> &percnt;</span>
                                                 <div class="infobox-content small">Profile  Complete</div>
                                             </div>
-                                               <div class="stat stat-success">8%</div>
-                                        </div>-->
+                                        </div>
                                         
                                     </div>
 
                                     <div class="vspace-12-sm"></div>
 
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-6">
                                         <div class="widget-box">
                                             <div class="widget-header widget-header-flat widget-header-small">
                                                 <h5 class="widget-title">
-                                                    <i class="ace-icon fa fa-asterisk"></i>
+                                                    <i class="ace-icon fa fa-users"></i>
                                                     Meeting Statistics
                                                 </h5>
                                             </div>
@@ -319,9 +323,13 @@ catch (Exception $a)
                                         </div>
                                     </div>
                                     
-                                     <div class="vspace-12-sm"></div>
-                                     
-                                     <div class="col-sm-4">
+                                </div>
+
+                                <div class="hr hr32 hr-dotted"></div>
+                                
+                                <div class="row">
+                                    
+                                     <div class="col-sm-6">
                                         <div class="widget-box">
                                             <div class="widget-header widget-header-flat widget-header-small">
                                                 <h5 class="widget-title">
@@ -330,8 +338,7 @@ catch (Exception $a)
                                                 </h5>
                                             </div>
                                             <div class="widget-body">
-                                                <div class="widget-main">
-                                                    
+                                                <div class="widget-main" style="min-height: 265px; margin: 0 auto;">
                                                     <table class="table table-bordered table-striped">
                                                             <thead class="thin-border-bottom">
                                                                     <tr>
@@ -388,12 +395,25 @@ catch (Exception $a)
                                             </div>
                                         </div>
                                     </div>
-
-                                </div>
-
-                                <div class="hr hr32 hr-dotted"></div>
-                                
-                                <div class="row">
+                                    
+                                    <div class="vspace-12-sm"></div>
+                                    
+                                    <div class="col-sm-6">
+                                        <div class="widget-box">
+                                            <div class="widget-header widget-header-flat widget-header-small">
+                                                <h5 class="widget-title">
+                                                    <i class="ace-icon fa fa-signal"></i>
+                                                    Meeting Statistics
+                                                </h5>
+                                            </div>
+                                            <div class="widget-body">
+                                                <div class="widget-main">
+<!--                                                  <div id="month-wise-graph" style="min-width: 310px; height: 400px; margin: 0 auto"></div>       -->
+                                                    <div id="container" style="min-width: 310px; height: 273px; margin: 0 auto;"></div>       
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     
 <!--                                    <div class="col-sm-6">
                                             <div id="recent-box" class="widget-box transparent">
@@ -451,22 +471,6 @@ catch (Exception $a)
                                             </div>
                                     </div>-->
                                     
-<!--                                    <div class="col-sm-6">
-                                        <div class="widget-box">
-                                            <div class="widget-header widget-header-flat widget-header-small">
-                                                <h5 class="widget-title">
-                                                    <i class="ace-icon fa fa-signal"></i>
-                                                    Meeting Statistics
-                                                </h5>
-                                            </div>
-                                            <div class="widget-body">
-                                                <div class="widget-main">
-                                                  <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>               
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>-->
-                                    
                                 </div>
 
                                 <!-- PAGE CONTENT END -->
@@ -497,28 +501,68 @@ catch (Exception $a)
         <?php include (CLIENT_JS_INCLUDES_PATH . 'static_js_includes.php'); ?>  
         <?php include (CLIENT_JS_INCLUDES_PATH . 'other_js_includes.php'); ?>  
         <!-- JAVA SCRIPT -->
-
+       
         <script type="text/javascript" src="<?php echo CLIENT_JS_PATH; ?>highcharts.js"></script>
         <script type="text/javascript" src="<?php echo CLIENT_JS_PATH; ?>exporting.js"></script>
                
 
         <script type="text/javascript">
             jQuery(function ($) {
-                $('.easy-pie-chart.percentage').each(function(){
-                        var $box = $(this).closest('.infobox');
-                        var barColor = $(this).data('color') || (!$box.hasClass('infobox-dark') ? $box.css('color') : 'rgba(255,255,255,0.95)');
-                        var trackColor = barColor == 'rgba(255,255,255,0.95)' ? 'rgba(255,255,255,0.25)' : '#E2E2E2';
-                        var size = parseInt($(this).data('size')) || 50;
-                        $(this).easyPieChart({
-                                barColor: barColor,
-                                trackColor: trackColor,
-                                scaleColor: false,
-                                lineCap: 'butt',
-                                lineWidth: parseInt(size/10),
-                                animate: /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase()) ? false : 1000,
-                                size: size
-                        });
-                })
+                $('#container').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'Monthly Average Meeting'
+                    },
+            //        subtitle: {
+            //            text: 'Source: WorldClimate.com'
+            //        },
+                    xAxis: {
+                        categories: [<?php echo $arrMonthArr; ?>],
+                        crosshair: true
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'Total (Meetings)'
+                        }
+                    },
+                    tooltip: {
+                        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                            '<td style="padding:0"><b>{point.y:.0f}</b></td></tr>',
+                        footerFormat: '</table>',
+                        shared: true,
+                        useHTML: true
+                    },
+                    plotOptions: {
+                        column: {
+                            pointPadding: 0.2,
+                            borderWidth: 0
+                        }
+                    },
+                    series: [{
+                        name: 'Month',
+                        data: [<?php echo $arrTotalMeetingArr; ?>],
+                        color: "#2091cf"
+                    }]
+                });
+//                $('.easy-pie-chart.percentage').each(function(){
+//                        var $box = $(this).closest('.infobox');
+//                        var barColor = $(this).data('color') || (!$box.hasClass('infobox-dark') ? $box.css('color') : 'rgba(255,255,255,0.95)');
+//                        var trackColor = barColor == 'rgba(255,255,255,0.95)' ? 'rgba(255,255,255,0.25)' : '#E2E2E2';
+//                        var size = parseInt($(this).data('size')) || 50;
+//                        $(this).easyPieChart({
+//                                barColor: barColor,
+//                                trackColor: trackColor,
+//                                scaleColor: false,
+//                                lineCap: 'butt',
+//                                lineWidth: parseInt(size/10),
+//                                animate: /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase()) ? false : 1000,
+//                                size: size
+//                        });
+//                })
                                 
                 //flot chart resize plugin, somehow manipulates default browser resize event to optimize it!
                 //but sometimes it brings up errors with normal resize event handlers
@@ -566,7 +610,6 @@ catch (Exception $a)
                 placeholder.data('chart', data);
                 placeholder.data('draw', drawPieChart);
 
-
                 //pie chart tooltip example
                 var $tooltip = $("<div class='tooltip top in'><div class='tooltip-inner'></div></div>").hide().appendTo('body');
                 var previousPoint = null;
@@ -584,53 +627,7 @@ catch (Exception $a)
                         previousPoint = null;
                     }
                 });
-                                
-                $('#container').highcharts({
-                    chart: {
-                        type: 'column'
-                    },
-                    title: {
-                        text: 'Monthly Average Meeting'
-                    },
-            //        subtitle: {
-            //            text: 'Source: WorldClimate.com'
-            //        },
-                    xAxis: {
-                        //categories: ['2015-07-09','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov', 'Dec'],
-                        categories: [<?php echo $arrDateArr; ?>],
-                        crosshair: true
-                    },
-                    yAxis: {
-                        min: 0,
-                        title: {
-                            text: 'Duration (minute)'
-                        }
-                    },
-                    tooltip: {
-                        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                            '<td style="padding:0"><b>{point.y:.0f}</b></td></tr>',
-                        footerFormat: '</table>',
-                        shared: true,
-                        useHTML: true
-                    },
-                    plotOptions: {
-                        column: {
-                            pointPadding: 0.2,
-                            borderWidth: 0
-                        }
-                    },
-                    series: [{
-                        name: 'Minute',
-                        //data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
-                        data: [<?php echo $arrMinuteArr; ?>],
-                        color: "#68BC31"
-                    }]
-                });
-
-                
-                
-            })
+            });
         </script>
 
     </body>

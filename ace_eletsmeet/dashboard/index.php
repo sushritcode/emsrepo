@@ -530,7 +530,7 @@ $arrMinuteArr = substr($arrMinuteArr, 0, -1);
 
                 
                 
-            })
+            });
         </script>
 
     </body>

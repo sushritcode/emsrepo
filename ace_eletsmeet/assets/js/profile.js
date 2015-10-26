@@ -15,9 +15,9 @@ function sendData(frmName,type)
 		{
 
 			if(xmlhttp.responseText == 1 )
-				showAlert(1,"You updated your profile");
+				showAlert(1,"Your profile has been updated.");
 			else
-				showAlert(0,"Please try agPlease try again , there was some error.");
+				showAlert(0,"Please try again , there was some error.");
 			document.getElementById("ajax_loader").style.display = "none";
 		} 
 	};

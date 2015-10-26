@@ -17,6 +17,25 @@ function getLicenseCountByID($client_id, $dataHelper) {
     }
 }
 
+function getTotalConsumedLicenseByClientId($client_id, $dataHelper) {
+    if (!is_object($dataHelper))
+    {
+        throw new Exception("client_db_function.inc.php : getTotalConsumedLicenseByClientId : DataHelper Object did not instantiate", 104);
+    }
+
+    try
+    {
+        $strSqlQuery = "SELECT COUNT(*) AS ConsumedLicense FROM user_login_details AS uld, user_details AS ud, client_login_details AS cld, client_details AS cd WHERE uld.user_id = ud.user_id AND login_enabled !='3'  AND cld.client_id = cd.client_id AND client_login_enabled = '1' AND uld.client_id = '" . trim($client_id) . "';";
+        $arrResult = $dataHelper->fetchRecords("QR", $strSqlQuery);
+        return $arrResult;
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("client_db_function.inc.php : Error in getting Plan details." . $e->getMessage(), 734);
+    }
+} 
+    
+    
 function getContactCountByID($client_id, $dataHelper) {
     if (!is_object($dataHelper))
     {
@@ -114,7 +133,7 @@ function getClientSubscriptionInfo($partner_id, $client_id, $dataHelper) {
 ."AND cld.client_id = cd.client_id AND client_login_enabled = '1' "      
 . "AND cld.client_id = '" . trim($client_id) . "' "
 . "AND pd.partner_id = '" . trim($partner_id) . "' "
-. "ORDER BY csm.subscription_status, csm.subscription_end_date_gmt DESC  LIMIT 0,3;";
+. "ORDER BY csm.subscription_status, csm.subscription_end_date_gmt DESC  LIMIT 0,5;";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlQuery);
         return $arrResult;
     }
@@ -123,6 +142,78 @@ function getClientSubscriptionInfo($partner_id, $client_id, $dataHelper) {
         throw new Exception("report_function.inc.php : Error in getClientSubscriptionInfo." . $e->getMessage(), 734);
     }
 }
+
+function getMonthWiseMeetingGraph($client_id, $start_date, $end_date, $dataHelper) {
+    if (!is_object($dataHelper))
+    {
+        throw new Exception("dashboard.inc.php : getMonthWiseMeetingGraph : DataHelper Object did not instantiate", 104);
+    }
+    try
+    {
+        $strSqlStatement = "SELECT DATE_FORMAT(meeting_timestamp_gmt, '%M') AS MeetingMonth,  COUNT(schedule_id) AS TotalMeetings, MONTH(meeting_timestamp_gmt) AS MonthNo "
+."FROM schedule_details AS sd, user_login_details AS uld, client_login_details AS cld "
+."WHERE schedule_status = '2'  " 
+."AND uld.user_id = sd.user_id  "
+."AND uld.client_id = cld.client_id "
+."AND cld.client_id = '" . trim($client_id) . "' "
+."AND DATE_FORMAT(meeting_timestamp_gmt, '%m/%Y') BETWEEN '" . trim($start_date) . "' AND '" . trim($end_date) . "' "
+."GROUP BY MONTH(meeting_timestamp_gmt) ORDER BY MonthNo";"
+
+//SELECT DATE_FORMAT(meeting_timestamp_gmt, '%b') AS MeetingMonth,  COUNT(schedule_id) AS TotalMeetings, MONTH(meeting_timestamp_gmt) AS MonthNo
+//FROM schedule_details 
+//WHERE schedule_status = '2' 
+//AND DATE_FORMAT(meeting_timestamp_gmt, '%m/%Y') BETWEEN '05/2015' AND '11/2015' 
+//GROUP BY MONTH(meeting_timestamp_gmt) ORDER BY MonthNo";
+                
+        $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
+        return $arrResult;
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("dashboard.inc.php : getMonthWiseMeetingGraph : Could not fetch records : " . $e->getMessage(), 144);
+    }
+}
+
+function getProfileCompletePercent($client_id, $dataHelper) {
+    if (!is_object($dataHelper))
+    {
+        throw new Exception("dashboard.inc.php : getProfileCompletePercent : DataHelper Object did not instantiate", 104);
+    }
+    try
+    {
+        $strSqlStatement = "SELECT client_id, FLOOR((
+CASE WHEN nick_name IS NULL OR nick_name = '' THEN 0  ELSE 1 END +
+CASE WHEN first_name IS NULL OR first_name = '' THEN 0 ELSE 1 END +
+CASE WHEN last_name IS NULL OR last_name = '' THEN 0  ELSE 1 END +
+CASE WHEN secondry_email IS NULL OR secondry_email = '' THEN 0  ELSE 1 END +
+CASE WHEN landmark IS NULL OR landmark = '' THEN 0  ELSE 1 END +
+CASE WHEN city IS NULL OR city = '' THEN 0  ELSE 1 END +
+CASE WHEN address IS NULL OR address = '' THEN 0  ELSE 1 END +
+CASE WHEN country_name IS NULL OR country_name = '' THEN 0  ELSE 1 END +
+CASE WHEN timezones IS NULL OR timezones = '' THEN 0  ELSE 1 END +
+CASE WHEN gmt IS NULL OR gmt = '' THEN 0  ELSE 1 END +
+CASE WHEN phone_number IS NULL OR phone_number = '' THEN 0  ELSE 1 END +
+CASE WHEN idd_code IS NULL OR idd_code = '' THEN 0  ELSE 1 END +
+CASE WHEN mobile_number IS NULL OR mobile_number = '' THEN 0  ELSE 1 END +
+CASE WHEN industry_type IS NULL OR industry_type = '' THEN 0  ELSE 1 END +
+CASE WHEN company_name IS NULL OR company_name = '' THEN 0  ELSE 1 END +
+CASE WHEN nature_business IS NULL OR nature_business = '' THEN 0  ELSE 1 END +
+CASE WHEN company_uri IS NULL OR company_uri = '' THEN 0  ELSE 1 END +
+CASE WHEN brief_desc_company IS NULL OR brief_desc_company = '' THEN 0  ELSE 1 END +
+CASE WHEN facebook IS NULL OR facebook = '' THEN 0  ELSE 1 END +
+CASE WHEN twitter IS NULL OR twitter = '' THEN 0  ELSE 1 END +
+CASE WHEN googleplus IS NULL OR googleplus = '' THEN 0  ELSE 1 END +
+CASE WHEN linkedin IS NULL OR linkedin = '' THEN 0  ELSE 1 END 
+) * 100 / 22) AS 'ProfilePercentage' FROM client_details WHERE client_id = '".trim($client_id)."';";
+        $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
+        return $arrResult;
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("dashboard.inc.php : getProfileCompletePercent : Could not fetch records : " . $e->getMessage(), 144);
+    }
+}
+
 
 //function getTotalInviteMeetingCountByID($email_address, $dataHelper) {
 //    if (!is_object($dataHelper))
@@ -158,45 +249,7 @@ function getClientSubscriptionInfo($partner_id, $client_id, $dataHelper) {
 //    }
 //}
 //
-//function getProfileCompletePercentByID($client_id, $dataHelper) {
-//    if (!is_object($dataHelper))
-//    {
-//        throw new Exception("dashboard.inc.php : getProfileCompletePercentByID : DataHelper Object did not instantiate", 104);
-//    }
-//    try
-//    {
-//        $strSqlStatement = "SELECT user_id, FLOOR((
-//CASE WHEN nick_name IS NULL OR nick_name = '' THEN 0  ELSE 1 END +
-//CASE WHEN first_name IS NULL OR first_name = '' THEN 0 ELSE 1 END +
-//CASE WHEN last_name IS NULL OR last_name = '' THEN 0  ELSE 1 END +
-//CASE WHEN secondry_email IS NULL OR secondry_email = '' THEN 0  ELSE 1 END +
-//CASE WHEN landmark IS NULL OR landmark = '' THEN 0  ELSE 1 END +
-//CASE WHEN city IS NULL OR city = '' THEN 0  ELSE 1 END +
-//CASE WHEN address IS NULL OR address = '' THEN 0  ELSE 1 END +
-//CASE WHEN country_name IS NULL OR country_name = '' THEN 0  ELSE 1 END +
-//CASE WHEN timezones IS NULL OR timezones = '' THEN 0  ELSE 1 END +
-//CASE WHEN gmt IS NULL OR gmt = '' THEN 0  ELSE 1 END +
-//CASE WHEN phone_number IS NULL OR phone_number = '' THEN 0  ELSE 1 END +
-//CASE WHEN idd_code IS NULL OR idd_code = '' THEN 0  ELSE 1 END +
-//CASE WHEN mobile_number IS NULL OR mobile_number = '' THEN 0  ELSE 1 END +
-//CASE WHEN industry_type IS NULL OR industry_type = '' THEN 0  ELSE 1 END +
-//CASE WHEN company_name IS NULL OR company_name = '' THEN 0  ELSE 1 END +
-//CASE WHEN nature_business IS NULL OR nature_business = '' THEN 0  ELSE 1 END +
-//CASE WHEN company_uri IS NULL OR company_uri = '' THEN 0  ELSE 1 END +
-//CASE WHEN brief_desc_company IS NULL OR brief_desc_company = '' THEN 0  ELSE 1 END +
-//CASE WHEN facebook IS NULL OR facebook = '' THEN 0  ELSE 1 END +
-//CASE WHEN twitter IS NULL OR twitter = '' THEN 0  ELSE 1 END +
-//CASE WHEN googleplus IS NULL OR googleplus = '' THEN 0  ELSE 1 END +
-//CASE WHEN linkedin IS NULL OR linkedin = '' THEN 0  ELSE 1 END 
-//) * 100 / 22) AS 'ProfilePercentage' FROM user_details WHERE user_id = '".trim($client_id)."';";
-//        $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
-//        return $arrResult;
-//    }
-//    catch (Exception $e)
-//    {
-//        throw new Exception("dashboard.inc.php : getProfileCompletePercentByID : Could not fetch records : " . $e->getMessage(), 144);
-//    }
-//}
+
 //
 //function getFrequentInvitees($client_id, $noOfInvitees, $dataHelper) {
 //    
@@ -230,25 +283,6 @@ function getClientSubscriptionInfo($partner_id, $client_id, $dataHelper) {
 //    catch (Exception $e)
 //    {
 //        throw new Exception("dashboard.inc.php : getFrequentInvitees : Could not fetch records : " . $e->getMessage(), 144);
-//    }
-//}
-//
-
-
-//function getMinuteBaseMeetingGraphByID($client_id, $dataHelper) {
-//    if (!is_object($dataHelper))
-//    {
-//        throw new Exception("dashboard.inc.php : getMinuteBaseMeetingGraphByID : DataHelper Object did not instantiate", 104);
-//    }
-//    try
-//    {
-//        $strSqlStatement = "SELECT COUNT(sd.schedule_id) AS 'SchedueCount', SUM(IFNULL(TIMESTAMPDIFF( MINUTE , meeting_start_time, meeting_end_time),0)) AS 'TotalMinute',  DATE_FORMAT( meeting_start_time,'%d-%m-%Y' ) AS 'DateOfMeeting' FROM schedule_details AS sd WHERE user_id = '".trim($client_id)."' AND schedule_status = '2' GROUP BY DateOfMeeting  ORDER BY DateOfMeeting;";
-//        $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
-//        return $arrResult;
-//    }
-//    catch (Exception $e)
-//    {
-//        throw new Exception("dashboard.inc.php : getMinuteBaseMeetingGraphByID : Could not fetch records : " . $e->getMessage(), 144);
 //    }
 //}
 //

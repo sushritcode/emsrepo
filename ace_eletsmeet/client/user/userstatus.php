@@ -8,6 +8,7 @@ require_once(CLIENT_INCLUDES_PATH . 'client_authfunc.inc.php');
 $CLIENT_CONST_MODULE = 'cl_user';
 $CLIENT_CONST_PAGEID = 'User Status';
 require_once(CLIENT_INCLUDES_PATH . 'client_authorize.inc.php');
+require_once(CLIENT_INCLUDES_PATH . 'client_reports_function.inc.php');
 require_once(CLIENT_INCLUDES_PATH . 'client_db_function.inc.php');
 
 $strUserId = $_REQUEST["userId"];

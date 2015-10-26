@@ -6,7 +6,7 @@ require_once(CLIENT_DBS_PATH . 'DataHelper.php');
 require_once(CLIENT_DBS_PATH . 'objDataHelper.php');
 require_once(CLIENT_INCLUDES_PATH . 'client_authfunc.inc.php');
 $CLIENT_CONST_MODULE = 'cl_reports';
-$CLIENT_CONST_PAGEID = 'Meeting Report_1';
+$CLIENT_CONST_PAGEID = 'Meeting List';
 require_once(CLIENT_INCLUDES_PATH . 'client_authorize.inc.php');
 //require_once(CLIENT_INCLUDES_PATH . 'client_db_function.inc.php');
 require_once(CLIENT_INCLUDES_PATH . 'client_reports_function.inc.php');
@@ -102,7 +102,7 @@ catch (Exception $e)
                         <!-- PAGE HEADER -->
                         <div class="page-header">
                             <h1>
-                                Meeting<small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp; meeting&#39;s</small>
+                                Meeting<small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp; list &amp; information</small>
                             </h1>
                         </div>
                         <!-- PAGE HEADER -->
@@ -203,7 +203,7 @@ catch (Exception $e)
                                                                 <span class="lbl"></span>
                                                             </label>
                                                         </td>
-                                                        <td><?php echo $SchCreationTime." ".$SchID; ?></td>
+                                                        <td><?php echo $SchCreationTime; ?></td>
                                                         <td><?php echo $MeetingTimeLocal; ?></td>
                                                         <td><?php echo $MeetingTitle; ?></td>
 <!--                                                        <td><?php //echo $MeetingTimezone." ". $MeetingGMT; ?></td>-->

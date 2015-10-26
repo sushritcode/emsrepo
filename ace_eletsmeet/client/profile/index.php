@@ -12,7 +12,7 @@ require_once(CLIENT_INCLUDES_PATH . 'client_db_function.inc.php');
 require_once(CLIENT_INCLUDES_PATH . 'profile_function.inc.php');
 
 //data population start	
-$form_table_map =client_profile_form_table_map();
+$form_table_map = client_profile_form_table_map();
 
 try
 {
@@ -28,20 +28,23 @@ $clientdetails = $arrClientdetails[0];
 
 $arrIndustryType = getAllIndustryType($objDataHelper);
 $optionIndustryType = "";
-for ($cnt = 0; $cnt < count($arrIndustryType); $cnt++) {
+for ($cnt = 0; $cnt < count($arrIndustryType); $cnt++)
+{
     $selected = ($clientdetails[$form_table_map['frmCompany']['indutrytype']] == $arrIndustryType[$cnt]['industry_id']) ? "selected" : "";
     $optionIndustryType.="<option value='" . $arrIndustryType[$cnt]['industry_id'] . "' " . $selected . ">" . $arrIndustryType[$cnt]['industry_name'] . "</option>";
 }
 
 $arrTimezonesType = getTimezoneList($objDataHelper);
 $optionTimezonesType = "";
-for ($cnt = 0; $cnt < count($arrTimezonesType); $cnt++) {
+for ($cnt = 0; $cnt < count($arrTimezonesType); $cnt++)
+{
     $optionTimezonesType.="<option value='" . $arrTimezonesType[$cnt]['ct_id'] . "'>" . $arrTimezonesType[$cnt]['timezones'] . " - " . $arrTimezonesType[$cnt]['country_name'] . "</option>";
 }
 
 $arrDistinctCountry = getCountryDetails($objDataHelper);
 $optionCountry = "";
-for ($cnt = 0; $cnt < count($arrDistinctCountry); $cnt++) {
+for ($cnt = 0; $cnt < count($arrDistinctCountry); $cnt++)
+{
     $selected = ($clientdetails[$form_table_map['frmaddress']['country']] == $arrDistinctCountry[$cnt]['country_name']) ? "selected" : "";
     $optionCountry.="<option value='" . $arrDistinctCountry[$cnt]['country_name'] . "' " . $selected . ">" . $arrDistinctCountry[$cnt]['country_name'] . " - " . $arrDistinctCountry[$cnt]['country_code'] . "</option>";
 }
@@ -52,11 +55,11 @@ for ($cnt = 0; $cnt < count($arrDistinctCountry); $cnt++) {
 <html lang="en">
     <head>
         <!-- HEAD CONTENT AREA -->
-            <?php include (CLIENT_HEAD_INCLUDES_PATH); ?>
+        <?php include (CLIENT_HEAD_INCLUDES_PATH); ?>
         <!-- HEAD CONTENT AREA -->
 
         <!-- CSS n JS CONTENT AREA -->
-            <?php include (CLIENT_CSS_INCLUDES_PATH); ?>    
+<?php include (CLIENT_CSS_INCLUDES_PATH); ?>    
         <!-- CSS n JS CONTENT AREA -->
     </head>
 
@@ -64,7 +67,7 @@ for ($cnt = 0; $cnt < count($arrDistinctCountry); $cnt++) {
 
         <!-- TOP NAVIGATION BAR START -->
         <div id="navbar" class="navbar navbar-default">
-            <?php include (CLIENT_TOP_NAVIGATION_INCLUDES_PATH); ?>    
+<?php include (CLIENT_TOP_NAVIGATION_INCLUDES_PATH); ?>    
         </div>
         <!-- TOP NAVIGATION BAR END -->
 
@@ -105,10 +108,10 @@ for ($cnt = 0; $cnt < count($arrDistinctCountry); $cnt++) {
                         <div id='ajax_loader' style="width: 100%; height: 100%; position: absolute; left: 0px; top: 0px; background: transparent none repeat scroll 0% 0%; z-index: 20000;display:none;">
                             <img src="<?php echo IMG_PATH ?>loading.gif" style="position: relative; top: 50%; left: 50%;"></img>
                         </div>
-                        
+
                         <div class="page-header">
                             <h1>
-                                User<small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp; user&#39;s &amp; license&#39;s</small>
+                                Profile<small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp; edit&#39;s &amp; info&#39;s</small>
                             </h1>
                         </div>
                         <!-- PAGE HEADER -->
@@ -119,15 +122,15 @@ for ($cnt = 0; $cnt < count($arrDistinctCountry); $cnt++) {
                                 <div class="row" id="alert" style="display:none;">
                                     <div class="col-sm-12">
                                         <div id="succ" class="col-sm-12 alert alert-block alert-success" style="display:none;">
-                                                <span id="successmsg"></span>
+                                            <span id="successmsg"></span>
                                         </div>
                                         <div id="err" class="alert alert-danger" style="display:none;">
-                                                <span id="errormsg"></span>
+                                            <span id="errormsg"></span>
                                         </div>
                                     </div>
                                 </div>
 
-<!--                                <div class="space-20"></div>-->
+                                <!--                                <div class="space-20"></div>-->
 
                                 <div class="row">
                                     <div class="col-sm-12">
@@ -230,17 +233,10 @@ for ($cnt = 0; $cnt < count($arrDistinctCountry); $cnt++) {
                                                                 <div class="space-20"></div>
                                                                 <input type="submit" class="btn btn-info" value="Save Basic Details" onClick="javascript:return sendData('frmbasic', 'reset');">
                                                             </form>
-
-
-
-
-
-
-
-
                                                         </div>
                                                     </div>												
                                                 </div>
+                                                
                                                 <div class="tab-pane fade" id="contact">
                                                     <div class="space-20"></div>
                                                     <form class="form-horizontal" role="form" name="frmcontact" id = "frmcontact">
@@ -307,7 +303,7 @@ for ($cnt = 0; $cnt < count($arrDistinctCountry); $cnt++) {
                                                             <div class="col-sm-9">
                                                                 <select class="col-sm-5" id="form-field-select-1" for="address" name="country" id="country" validate="yes" msg="Please select the country">
                                                                     <option value="">Select Country</option>
-<?php echo $optionCountry; ?>
+                                                                        <?php echo $optionCountry; ?>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -365,7 +361,7 @@ for ($cnt = 0; $cnt < count($arrDistinctCountry); $cnt++) {
                                                             <div class="col-sm-9">
                                                                 <select class="col-sm-5" id="form-field-select-1" for="Company" name="indutrytype" id="indutrytype" validate="yes" msg="Please select the industry type">
                                                                     <option value="">Industry Type</option>
-<?php echo $optionIndustryType; ?>
+                                                                    <?php echo $optionIndustryType; ?>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -407,10 +403,6 @@ for ($cnt = 0; $cnt < count($arrDistinctCountry); $cnt++) {
                                                         <div class="space-20"></div>
                                                         <input type="submit" class="btn btn-info" value="Save Company Details" onClick="javascript:return sendData('frmCompany', 'reset');">
                                                     </form>
-
-
-
-
                                                 </div>
 
                                                 <div class="tab-pane fade" id="Billing">
@@ -443,7 +435,7 @@ for ($cnt = 0; $cnt < count($arrDistinctCountry); $cnt++) {
                                                             <div class="col-sm-9">
                                                                 <select class="col-sm-5" id="timezone" name="timezone">
                                                                     <option value="">Select TimeZone</option>
-<?php echo $optionTimezonesType; ?>
+                                                                    <?php echo $optionTimezonesType; ?>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -582,7 +574,7 @@ for ($cnt = 0; $cnt < count($arrDistinctCountry); $cnt++) {
             </div>
             <!--  MAIN CONTENT END -->
 
-           <!-- FOOTER START -->
+            <!-- FOOTER START -->
             <div class="footer">
                 <?php include (CLIENT_FOOTER_INCLUDES_PATH); ?>  
             </div>

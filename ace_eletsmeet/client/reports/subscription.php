@@ -6,7 +6,7 @@ require_once(CLIENT_DBS_PATH . 'DataHelper.php');
 require_once(CLIENT_DBS_PATH . 'objDataHelper.php');
 require_once(CLIENT_INCLUDES_PATH . 'client_authfunc.inc.php');
 $CLIENT_CONST_MODULE = 'cl_reports';
-$CLIENT_CONST_PAGEID = 'Meeting Report_2';
+$CLIENT_CONST_PAGEID = 'Subscription Report';
 require_once(CLIENT_INCLUDES_PATH . 'client_authorize.inc.php');
 //require_once(CLIENT_INCLUDES_PATH . 'client_db_function.inc.php');
 require_once(CLIENT_INCLUDES_PATH . 'client_reports_function.inc.php');
@@ -19,7 +19,7 @@ try
     }
     catch (Exception $a)
     {
-        throw new Exception("index.php : getNumberOfLicenseList : Error in populating List." . $a->getMessage(), 541);
+        throw new Exception("index.php : getClientSubscriptionInfo : Error in populating List." . $a->getMessage(), 541);
     }
    
 //    echo "<pre>";
@@ -88,7 +88,7 @@ catch (Exception $e)
                         <!-- PAGE HEADER -->
                         <div class="page-header">
                             <h1>
-                                Meeting<small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp; meeting&#39;s &amp; Duration&#39;s</small>
+                                Subscription<small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp; plan &amp; expiry</small>
                             </h1>
                         </div>
                         <!-- PAGE HEADER -->
@@ -103,14 +103,10 @@ catch (Exception $e)
                                 
                                     <div class="clearfix">
                                         <div class="pull-right tableTools-container"></div> 
-                                        <div>
-                                            <h5 class="header smaller lighter blue">Total No. Of Meetings : <span class="pink"><strong><?php echo $TotalMeeting; ?></strong></span>&nbsp;&amp;&nbsp;Total Duration : <span class="purple"><strong><?php echo $TotalDuration; ?></strong> Minutes</span></h5>
-                                        </div>
                                     </div>
                                     
-                                    
                                     <div class="table-header">
-                                        Meeting List 
+                                        Subscription List 
                                     </div>
                                     
                                     <div>
@@ -165,6 +161,9 @@ catch (Exception $e)
                                                                break;
                                                             default: break;
                                                          }
+                                                         $SubId = $arrSubscriptionInfo[$intCntr]["client_subscription_id"];
+                                                         $SubOrdeId = $arrSubscriptionInfo[$intCntr]["order_id"];
+                                                         $SubPlanId = $arrSubscriptionInfo[$intCntr]["plan_id"];
                                                     ?>
                                                     <tr>
                                                         <td class="center">
@@ -178,7 +177,11 @@ catch (Exception $e)
                                                         <td><?php echo $SubEndDate; ?></td>
                                                         <td><?php echo $DiffDays; ?></td>
                                                         <td><?php echo $SubStatus; ?></td>
-                                                        <td>&nbsp;</td>
+                                                        <td>
+                                                            <div class="hidden-sm hidden-xs btn-group">
+                                                                <button href="#sub-detls" data-toggle="modal" class="btn btn-sm btn-inverse" onclick="subscriptionDetails('<?php echo $SubOrdeId; ?>','<?php echo $SubPlanId;?>')" alt="Details" title="Details"><i class="ace-icon fa fa-info bigger-110"></i></button>
+                                                            </div>
+                                                        </td>
                                                     </tr>
                                                     <?php } ?>
                                                     
@@ -188,6 +191,25 @@ catch (Exception $e)
                                         </div>
                                     </div>
 
+                                    <!--  pop up-->
+                                    <div id="sub-detls" class="modal fade" tabindex="-1">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header no-padding">
+                                                    <div class="table-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                            <span class="white">&times;</span>
+                                                        </button>
+                                                        &nbsp;
+                                                    </div>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div id="SubDetails"></div>
+                                                </div>
+                                            </div>  
+                                        </div>
+                                    </div> 
+                                    
                                 <!-- PAGE CONTENT END -->
                             </div>
                         </div> 
@@ -230,6 +252,17 @@ catch (Exception $e)
                  document.getElementById('mError').style.display="none";
             };
             
+            function subscriptionDetails(ordId,plId) {
+            $.ajax({
+                type: "GET",
+                url: CLIENT_SITE_ROOT+"reports/subscriptiondetails.php",
+                cache: false,
+                data: "OrdId="+ordId+"&PlId="+plId+"&Num="+Math.random(),
+                loading: $(".loading").html(""),
+                success: function(html) {
+                    $("#SubDetails").html(html);
+                }
+            }); }
                 
             jQuery(function ($) {
                 //initiate dataTables plugin

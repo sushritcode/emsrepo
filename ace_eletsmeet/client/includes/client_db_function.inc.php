@@ -1,9 +1,9 @@
 <?php
-function dateFormat($gmTime, $localTime, $timezone)
-{
+
+function dateFormat($gmTime, $localTime, $timezone) {
     $date = date_create($localTime, timezone_open("GMT"));
     $date_format = date_format(date_timezone_set($date, timezone_open($timezone)), 'P');
-    $meeting_date = date("D, F jS Y, h:i A", strtotime($localTime)) . "  (" . $timezone . ", GMT ".$date_format.")  (" . date("D, F jS Y, h:i A", strtotime($gmTime)) . " GMT)";
+    $meeting_date = date("D, F jS Y, h:i A", strtotime($localTime)) . "  (" . $timezone . ", GMT " . $date_format . ")  (" . date("D, F jS Y, h:i A", strtotime($gmTime)) . " GMT)";
     return $meeting_date;
 }
 
@@ -51,8 +51,8 @@ function getCountryDetails($dataHelper) {
   Modified By   :
   Modified on   :
   ------------------------------------------------------------------------------ */
-function getCountryNamebyIdd($idd_code, $dataHelper)
-{
+
+function getCountryNamebyIdd($idd_code, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("client_db_function.inc.php : GetCountryNamebyIdd : DataHelper Object did not instantiate", 104);
@@ -116,7 +116,7 @@ function getClientDetailsByClientId($client_id, $dataHelper) {
     }
     try
     {
-        $strSqlStatement = " SELECT cld.client_id, partner_id, client_username, client_password, client_name, client_email_address, client_logo_flag, client_logo_url, client_last_login_dtm, client_login_ip_address, client_login_random_id, client_login_enabled, client_creation_dtm, client_secret_key, auth_mode, auth_api_url, import_contact_url, rt_server_name, rt_server_salt, rt_server_api_url, logout_url, nick_name, first_name, last_name, secondry_email, landmark, city, address, country_name, timezones, gmt, phone_number, idd_code, mobile_number, industry_type, company_name, nature_business, company_uri, brief_desc_company, facebook, twitter, googleplus, linkedin FROM client_login_details AS cld, client_details cd WHERE cld.client_id = cd.client_id AND client_login_enabled = '1' AND cd.client_id = '" . trim($client_id)."'";
+        $strSqlStatement = " SELECT cld.client_id, partner_id, client_username, client_password, client_name, client_email_address, client_logo_flag, client_logo_url, client_last_login_dtm, client_login_ip_address, client_login_random_id, client_login_enabled, client_creation_dtm, client_secret_key, auth_mode, auth_api_url, import_contact_url, rt_server_name, rt_server_salt, rt_server_api_url, logout_url, nick_name, first_name, last_name, secondry_email, landmark, city, address, country_name, timezones, gmt, phone_number, idd_code, mobile_number, industry_type, company_name, nature_business, company_uri, brief_desc_company, facebook, twitter, googleplus, linkedin FROM client_login_details AS cld, client_details cd WHERE cld.client_id = cd.client_id AND client_login_enabled = '1' AND cd.client_id = '" . trim($client_id) . "'";
         //$strSqlStatement = "SELECT cld.client_id, partner_id, client_username, client_name, client_email_address, client_password, client_creation_dtm, client_logo_flag, client_logo_url, client_last_login_dtm, client_login_ip_address, client_login_id, client_login_enabled, nick_name, first_name, last_name, secondry_email, landmark, city, address, country_name, timezones, gmt, phone_number, idd_code, mobile_number, industry_type, company_name, nature_business, company_uri, brief_desc_company, facebook, twitter, googleplus, linkedin FROM client_login_details cld, client_details cd WHERE cld.client_id = cd.client_id AND cld.client_login_enabled = '1' AND cd.client_id = '" . trim($client_id)."'";
         $arrAuthResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrAuthResult;
@@ -389,22 +389,22 @@ function updateUserStatus($user_id, $user_name, $new_status, $old_status, $dataH
 //    {
 //        throw new Exception("client_db_function.inc.php : updUserStatus : Could not update status : " . $e->getMessage(), 144);
 //    }
-    
-         try
-        {
-            $dataHelper->setParam("'" . $user_id . "'", "I");
-            $dataHelper->setParam("'" . $user_name . "'", "I");
-            $dataHelper->setParam("'" . $new_status . "'", "I");
-            $dataHelper->setParam("'" . $old_status . "'", "I");
-            $dataHelper->setParam("STATUS", "O");
-            $arrUpdResult = $dataHelper->putRecords("SP", 'UpdateUserStatus');
-            $dataHelper->clearParams();
-            return $arrUpdResult;
-        }
-        catch (Exception $e)
-        {
-            throw new Exception("client_db_function.inc.php : isUserEmailExists : Failed : " . $e->getMessage(), 145);
-        }
+
+    try
+    {
+        $dataHelper->setParam("'" . $user_id . "'", "I");
+        $dataHelper->setParam("'" . $user_name . "'", "I");
+        $dataHelper->setParam("'" . $new_status . "'", "I");
+        $dataHelper->setParam("'" . $old_status . "'", "I");
+        $dataHelper->setParam("STATUS", "O");
+        $arrUpdResult = $dataHelper->putRecords("SP", 'UpdateUserStatus');
+        $dataHelper->clearParams();
+        return $arrUpdResult;
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("client_db_function.inc.php : isUserEmailExists : Failed : " . $e->getMessage(), 145);
+    }
 }
 
 /* -----------------------------------------------------------------------------
@@ -700,10 +700,6 @@ function timezoneConverter($sType, $timestamp, $timezone) {
     return $t1 . SEPARATOR . $t2;
 }
 
-
-
-
-
 function getUnUsedPlanByClientId($client_id, $dataHelper) {
     if (!is_object($dataHelper))
     {
@@ -906,8 +902,7 @@ function getLicenseDetailsByClient($client_id, $dataHelper) {
     }
 }
 
-function resetClientPassword($email_address, $new_password, $dataHelper)
-{
+function resetClientPassword($email_address, $new_password, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("client_db_function.inc.php : resetClientPassword : DataHelper Object did not instantiate", 104);
@@ -925,18 +920,17 @@ function resetClientPassword($email_address, $new_password, $dataHelper)
 
     try
     {
-        $strSqlStatement = "UPDATE client_details SET client_password = '".trim($new_password)."' WHERE client_email_address='".trim($email_address)."' AND status = '1'";
+        $strSqlStatement = "UPDATE client_details SET client_password = '" . trim($new_password) . "' WHERE client_email_address='" . trim($email_address) . "' AND status = '1'";
         $arrAuthResult = $dataHelper->putRecords("QR", $strSqlStatement);
         return $arrAuthResult;
     }
     catch (Exception $e)
     {
-        throw new Exception("client_db_function.inc.php : resetClientPassword : Could not fetch records : ".$e->getMessage(), 144);
+        throw new Exception("client_db_function.inc.php : resetClientPassword : Could not fetch records : " . $e->getMessage(), 144);
     }
 }
 
-function insClientLicenseDetails($client_id, $no_of_license, $operation_type, $license_datetime, $dataHelper)
-{
+function insClientLicenseDetails($client_id, $no_of_license, $operation_type, $license_datetime, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("client_db_function.inc.php : insClientLicenseDetails : DataHelper Object did not instantiate", 104);
@@ -956,7 +950,7 @@ function insClientLicenseDetails($client_id, $no_of_license, $operation_type, $l
     {
         throw new Exception("client_db_function.inc.php : insClientLicenseDetails : Missing Parameter gmt_start_date.", 141);
     }
-    
+
     try
     {
         $dataHelper->setParam("'" . $client_id . "'", "I");
@@ -987,34 +981,33 @@ function insClientLicenseDetails($client_id, $no_of_license, $operation_type, $l
   Modified on   :
   ------------------------------------------------------------------------------ */
 
-function getContactListbyType($owner_id, $contact_type, $dataHelper)
-{
+function getContactListbyType($owner_id, $contact_type, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("client_db_function.inc.php : getContactListbyType : DataHelper Object did not instantiate", 104);
     }
-    
+
     if (strlen(trim($owner_id)) <= 0)
     {
         throw new Exception("client_db_function.inc.php : getContactListbyType : Missing Parameter owner_id.", 143);
     }
-    
+
     if (strlen(trim($contact_type)) <= 0)
     {
         throw new Exception("client_db_function.inc.php : getContactListbyType : Missing Parameter contact_type.", 143);
     }
-    
+
     try
     {
-      $dataHelper->setParam("'".$owner_id."'","I");
-      $dataHelper->setParam("'".$contact_type."'","I");
-      $arrContactList = $dataHelper->fetchRecords("SP",'GetContactList');
-      $dataHelper->clearParams();
-      return $arrContactList;
+        $dataHelper->setParam("'" . $owner_id . "'", "I");
+        $dataHelper->setParam("'" . $contact_type . "'", "I");
+        $arrContactList = $dataHelper->fetchRecords("SP", 'GetContactList');
+        $dataHelper->clearParams();
+        return $arrContactList;
     }
-    catch(Exception $e)
+    catch (Exception $e)
     {
-      throw new Exception("client_db_function.inc.php : getContactList : Failed : ".$e->getMessage(),145);
+        throw new Exception("client_db_function.inc.php : getContactList : Failed : " . $e->getMessage(), 145);
     }
 }
 
@@ -1031,27 +1024,26 @@ function getContactListbyType($owner_id, $contact_type, $dataHelper)
   Modified on   :
   ------------------------------------------------------------------------------ */
 
-function getContactGroupList($owner_id, $dataHelper)
-{
-    if(!is_object($dataHelper))
+function getContactGroupList($owner_id, $dataHelper) {
+    if (!is_object($dataHelper))
     {
-	throw new Exception("client_db_function.inc.php : ContactGroupList : DataHelper Object did not instantiate",104);
+        throw new Exception("client_db_function.inc.php : ContactGroupList : DataHelper Object did not instantiate", 104);
     }
-    
+
     if (strlen(trim($owner_id)) <= 0)
     {
         throw new Exception("client_db_function.inc.php : ContactGroupList : Missing Parameter owner_id.", 143);
     }
-    
+
     try
     {
-       $strSqlQuery = "SELECT DISTINCT contact_group_name FROM client_contact_details WHERE client_id = '". trim($owner_id)."';";
-       $arrResult = $dataHelper->fetchRecords("QR",$strSqlQuery);
-       return $arrResult;
+        $strSqlQuery = "SELECT DISTINCT contact_group_name FROM client_contact_details WHERE client_id = '" . trim($owner_id) . "';";
+        $arrResult = $dataHelper->fetchRecords("QR", $strSqlQuery);
+        return $arrResult;
     }
-    catch(Exception $e)
+    catch (Exception $e)
     {
-       throw new Exception("client_db_function.inc.php : Error in ContactGroupList.".$e->getMessage(),734);
+        throw new Exception("client_db_function.inc.php : Error in ContactGroupList." . $e->getMessage(), 734);
     }
 }
 
@@ -1068,32 +1060,31 @@ function getContactGroupList($owner_id, $dataHelper)
   Modified on   :
   ------------------------------------------------------------------------------ */
 
-function isContactEmailExists($email_address, $client_id, $dataHelper)
-{
+function isContactEmailExists($email_address, $client_id, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("client_db_function.inc.php : isContactEmailExists : DataHelper Object did not instantiate", 104);
     }
-    
+
     if (strlen(trim($email_address)) <= 0)
     {
         throw new Exception("client_db_function.inc.php : isContactEmailExists : Missing Parameter email_address.", 141);
     }
-       
+
     if (strlen(trim($client_id)) <= 0)
     {
         throw new Exception("client_db_function.inc.php : isContactEmailExists : Missing Parameter client_id.", 143);
     }
-    
+
     try
     {
-       $strSqlQuery = "SELECT COUNT(contact_email_address) AS EmailCount FROM client_contact_details WHERE contact_email_address = '".trim($email_address)."' AND client_id = '". trim($client_id)."';";
-       $arrResult = $dataHelper->fetchRecords("QR",$strSqlQuery);
-       return $arrResult[0]['EmailCount'];
+        $strSqlQuery = "SELECT COUNT(contact_email_address) AS EmailCount FROM client_contact_details WHERE contact_email_address = '" . trim($email_address) . "' AND client_id = '" . trim($client_id) . "';";
+        $arrResult = $dataHelper->fetchRecords("QR", $strSqlQuery);
+        return $arrResult[0]['EmailCount'];
     }
-    catch(Exception $e)
+    catch (Exception $e)
     {
-      throw new Exception(" client_db_function.inc.php : isContactEmailExists : Failed : ".$e->getMessage(),145);
+        throw new Exception(" client_db_function.inc.php : isContactEmailExists : Failed : " . $e->getMessage(), 145);
     }
 }
 
@@ -1110,32 +1101,31 @@ function isContactEmailExists($email_address, $client_id, $dataHelper)
   Modified on   :
   ------------------------------------------------------------------------------ */
 
-function isContactGroupExists($group_name, $client_id, $dataHelper)
-{
+function isContactGroupExists($group_name, $client_id, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("client_db_function.inc.php : isContactGroupExists : DataHelper Object did not instantiate", 104);
     }
-    
+
     if (strlen(trim($group_name)) <= 0)
     {
         throw new Exception("client_db_function.inc.php : isContactGroupExists : Missing Parameter group_name.", 141);
     }
-    
+
     if (strlen(trim($client_id)) <= 0)
     {
         throw new Exception("client_db_function.inc.php : isContactGroupExists : Missing Parameter client_id.", 143);
     }
-    
+
     try
     {
-       $strSqlQuery = "SELECT COUNT(contact_group_name) AS GroupCount FROM client_contact_details WHERE contact_group_name = '".trim($group_name)."' AND client_id = '". trim($client_id)."';";
-       $arrResult = $dataHelper->fetchRecords("QR",$strSqlQuery);
-       return $arrResult[0]['GroupCount'];
+        $strSqlQuery = "SELECT COUNT(contact_group_name) AS GroupCount FROM client_contact_details WHERE contact_group_name = '" . trim($group_name) . "' AND client_id = '" . trim($client_id) . "';";
+        $arrResult = $dataHelper->fetchRecords("QR", $strSqlQuery);
+        return $arrResult[0]['GroupCount'];
     }
-    catch(Exception $e)
+    catch (Exception $e)
     {
-      throw new Exception(" client_db_function.inc.php : isContactGroupExists : Failed : ".$e->getMessage(),145);
+        throw new Exception(" client_db_function.inc.php : isContactGroupExists : Failed : " . $e->getMessage(), 145);
     }
 }
 
@@ -1152,59 +1142,58 @@ function isContactGroupExists($group_name, $client_id, $dataHelper)
   Modified on   :
   ------------------------------------------------------------------------------ */
 
-function insContactDetails($nick_name, $first_name, $last_name, $email_address, $idd_code, $mobile, $group_name, $contact_type, $owner_id, $dataHelper)
-{
+function insContactDetails($nick_name, $first_name, $last_name, $email_address, $idd_code, $mobile, $group_name, $contact_type, $owner_id, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("client_db_function.inc.php : insContactDetails : DataHelper Object did not instantiate", 104);
     }
-    
+
     if (strlen(trim($nick_name)) <= 0)
     {
         throw new Exception("client_db_function.inc.php : insContactDetails : Missing Parameter nick_name.", 142);
     }
-    
+
     if (strlen(trim($email_address)) <= 0)
     {
         throw new Exception("client_db_function.inc.php : insContactDetails : Missing Parameter email_address.", 141);
-    }  
-    
+    }
+
     if (strlen(trim($group_name)) <= 0)
     {
         throw new Exception("client_db_function.inc.php : insContactDetails : Missing Parameter group_name.", 143);
     }
-    
+
     if (strlen(trim($contact_type)) <= 0)
     {
         throw new Exception("client_db_function.inc.php : insContactDetails : Missing Parameter contact_type.", 143);
     }
-    
+
     if (strlen(trim($owner_id)) <= 0)
     {
         throw new Exception("client_db_function.inc.php : insContactDetails : Missing Parameter owner_id.", 143);
     }
-    
+
     try
     {
-      $dataHelper->setParam("'".$nick_name."'","I");
-      $dataHelper->setParam("'".$first_name."'","I");
-      $dataHelper->setParam("'".$last_name."'","I");
-      $dataHelper->setParam("'".$email_address."'","I");
-      $dataHelper->setParam("'".$idd_code."'","I");
-      $dataHelper->setParam("'".$mobile."'","I");
-      $dataHelper->setParam("'".$group_name."'","I");
-      $dataHelper->setParam("'".$contact_type."'","I");
-      $dataHelper->setParam("'".$owner_id."'","I");
-      $dataHelper->setParam("STATUS","O");
-      $dataHelper->setParam("MESSAGE","O");
-      $arrAddDetails = $dataHelper->putRecords("SP",'InsertContactDetails');
-      $dataHelper->clearParams();
-      return $arrAddDetails;
+        $dataHelper->setParam("'" . $nick_name . "'", "I");
+        $dataHelper->setParam("'" . $first_name . "'", "I");
+        $dataHelper->setParam("'" . $last_name . "'", "I");
+        $dataHelper->setParam("'" . $email_address . "'", "I");
+        $dataHelper->setParam("'" . $idd_code . "'", "I");
+        $dataHelper->setParam("'" . $mobile . "'", "I");
+        $dataHelper->setParam("'" . $group_name . "'", "I");
+        $dataHelper->setParam("'" . $contact_type . "'", "I");
+        $dataHelper->setParam("'" . $owner_id . "'", "I");
+        $dataHelper->setParam("STATUS", "O");
+        $dataHelper->setParam("MESSAGE", "O");
+        $arrAddDetails = $dataHelper->putRecords("SP", 'InsertContactDetails');
+        $dataHelper->clearParams();
+        return $arrAddDetails;
     }
-    catch(Exception $e)
+    catch (Exception $e)
     {
-      throw new Exception(" client_db_function.inc.php : insContactDetails : Failed : ".$e->getMessage(),145);
-    }     
+        throw new Exception(" client_db_function.inc.php : insContactDetails : Failed : " . $e->getMessage(), 145);
+    }
 }
 
 /* -----------------------------------------------------------------------------
@@ -1220,27 +1209,26 @@ function insContactDetails($nick_name, $first_name, $last_name, $email_address, 
   Modified on   :
   ------------------------------------------------------------------------------ */
 
-function getContactDetails($contact_id, $dataHelper)
-{
-    if(!is_object($dataHelper))
+function getContactDetails($contact_id, $dataHelper) {
+    if (!is_object($dataHelper))
     {
-	throw new Exception("contact_function.inc.php : getContactDetails : DataHelper Object did not instantiate",104);
+        throw new Exception("contact_function.inc.php : getContactDetails : DataHelper Object did not instantiate", 104);
     }
- 
+
     if (strlen(trim($contact_id)) <= 0)
     {
         throw new Exception("contact_function.inc.php : getContactDetails : Missing Parameter contact_id.", 143);
     }
-    
+
     try
     {
-       $strSqlQuery = "SELECT * FROM client_contact_details WHERE client_contact_id = '". trim($contact_id)."';";
-       $arrResult = $dataHelper->fetchRecords("QR",$strSqlQuery);
-       return $arrResult;
+        $strSqlQuery = "SELECT * FROM client_contact_details WHERE client_contact_id = '" . trim($contact_id) . "';";
+        $arrResult = $dataHelper->fetchRecords("QR", $strSqlQuery);
+        return $arrResult;
     }
-    catch(Exception $e)
+    catch (Exception $e)
     {
-       throw new Exception("contact_function.inc.php : Error in getContactDetails.".$e->getMessage(),734);
+        throw new Exception("contact_function.inc.php : Error in getContactDetails." . $e->getMessage(), 734);
     }
 }
 
@@ -1257,64 +1245,63 @@ function getContactDetails($contact_id, $dataHelper)
   Modified on   :
   ------------------------------------------------------------------------------ */
 
-function updContactDetails($contact_id, $nick_name, $first_name, $last_name, $email_address, $idd_code, $mobile, $group_name, $contact_type, $owner_id, $dataHelper)
-{
+function updContactDetails($contact_id, $nick_name, $first_name, $last_name, $email_address, $idd_code, $mobile, $group_name, $contact_type, $owner_id, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("contact_function.inc.php : updContactDetails : DataHelper Object did not instantiate", 104);
     }
-    
+
     if (strlen(trim($contact_id)) <= 0)
     {
         throw new Exception("contact_function.inc.php : updContactDetails : Missing Parameter contact_id.", 142);
     }
-    
+
     if (strlen(trim($nick_name)) <= 0)
     {
         throw new Exception("contact_function.inc.php : updContactDetails : Missing Parameter nick_name.", 142);
     }
-    
+
     if (strlen(trim($email_address)) <= 0)
     {
         throw new Exception("contact_function.inc.php : updContactDetails : Missing Parameter email_address.", 141);
     }
-    
+
     if (strlen(trim($group_name)) <= 0)
     {
         throw new Exception("contact_function.inc.php : updContactDetails : Missing Parameter group_name.", 143);
     }
-    
+
     if (strlen(trim($contact_type)) <= 0)
     {
         throw new Exception("contact_function.inc.php : updContactDetails : Missing Parameter contact_type.", 143);
     }
-    
+
     if (strlen(trim($owner_id)) <= 0)
     {
         throw new Exception("contact_function.inc.php : updContactDetails : Missing Parameter owner_id.", 143);
     }
-    
+
     try
     {
-      $dataHelper->setParam("'".$contact_id."'","I");
-      $dataHelper->setParam("'".$nick_name."'","I");
-      $dataHelper->setParam("'".$first_name."'","I");
-      $dataHelper->setParam("'".$last_name."'","I");
-      $dataHelper->setParam("'".$email_address."'","I");
-      $dataHelper->setParam("'".$idd_code."'","I");
-      $dataHelper->setParam("'".$mobile."'","I");
-      $dataHelper->setParam("'".$group_name."'","I");
-      $dataHelper->setParam("'".$contact_type."'","I");
-      $dataHelper->setParam("'".$owner_id."'","I");
-      $dataHelper->setParam("STATUS","O");
-      $dataHelper->setParam("MESSAGE","O");
-      $arrUpdateDetails = $dataHelper->putRecords("SP",'UpdateContactDetails');
-      $dataHelper->clearParams();
-      return $arrUpdateDetails;
+        $dataHelper->setParam("'" . $contact_id . "'", "I");
+        $dataHelper->setParam("'" . $nick_name . "'", "I");
+        $dataHelper->setParam("'" . $first_name . "'", "I");
+        $dataHelper->setParam("'" . $last_name . "'", "I");
+        $dataHelper->setParam("'" . $email_address . "'", "I");
+        $dataHelper->setParam("'" . $idd_code . "'", "I");
+        $dataHelper->setParam("'" . $mobile . "'", "I");
+        $dataHelper->setParam("'" . $group_name . "'", "I");
+        $dataHelper->setParam("'" . $contact_type . "'", "I");
+        $dataHelper->setParam("'" . $owner_id . "'", "I");
+        $dataHelper->setParam("STATUS", "O");
+        $dataHelper->setParam("MESSAGE", "O");
+        $arrUpdateDetails = $dataHelper->putRecords("SP", 'UpdateContactDetails');
+        $dataHelper->clearParams();
+        return $arrUpdateDetails;
     }
-    catch(Exception $e)
+    catch (Exception $e)
     {
-      throw new Exception(" contact_function.inc.php : updContactDetails : Failed : ".$e->getMessage(),145);
+        throw new Exception(" contact_function.inc.php : updContactDetails : Failed : " . $e->getMessage(), 145);
     }
 }
 
@@ -1331,42 +1318,41 @@ function updContactDetails($contact_id, $nick_name, $first_name, $last_name, $em
   Modified on   :
   ------------------------------------------------------------------------------ */
 
-function delContactDetails($contact_id, $owner_id, $contact_type, $dataHelper)
-{
+function delContactDetails($contact_id, $owner_id, $contact_type, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("contact_function.inc.php : delContactDetails : DataHelper Object did not instantiate", 104);
     }
-    
+
     if (strlen(trim($contact_id)) <= 0)
     {
         throw new Exception("contact_function.inc.php : delContactDetails : Missing Parameter contact_id.", 143);
     }
-    
+
     if (strlen(trim($owner_id)) <= 0)
     {
         throw new Exception("contact_function.inc.php : delContactDetails : Missing Parameter owner_id.", 143);
     }
-    
+
     if (strlen(trim($contact_type)) <= 0)
     {
         throw new Exception("contact_function.inc.php : delContactDetails : Missing Parameter contact_type.", 143);
     }
-    
+
     try
     {
-      $dataHelper->setParam("'".$contact_id."'","I");
-      $dataHelper->setParam("'".$owner_id."'","I");
-      $dataHelper->setParam("'".$contact_type."'","I");
-      $dataHelper->setParam("STATUS","O");
-      $dataHelper->setParam("MESSAGE","O");
-      $arrDeleteCnt = $dataHelper->putRecords("SP",'DeleteContactDetails');
-      $dataHelper->clearParams();
-      return $arrDeleteCnt;
+        $dataHelper->setParam("'" . $contact_id . "'", "I");
+        $dataHelper->setParam("'" . $owner_id . "'", "I");
+        $dataHelper->setParam("'" . $contact_type . "'", "I");
+        $dataHelper->setParam("STATUS", "O");
+        $dataHelper->setParam("MESSAGE", "O");
+        $arrDeleteCnt = $dataHelper->putRecords("SP", 'DeleteContactDetails');
+        $dataHelper->clearParams();
+        return $arrDeleteCnt;
     }
-    catch(Exception $e)
+    catch (Exception $e)
     {
-       throw new Exception("contact_function.inc.php : delContactDetails : Failed : ".$e->getMessage(),145);
+        throw new Exception("contact_function.inc.php : delContactDetails : Failed : " . $e->getMessage(), 145);
     }
 }
 
@@ -1374,7 +1360,7 @@ function delContactDetails($contact_id, $owner_id, $contact_type, $dataHelper)
   Function Name : insUserLoginDetails
   Purpose       : To insert user details into user_login_details and user_details table.
   Parameters    : user_id, user_name, client_id, partner_id, password, email_address, role, login_enabled, created_on, nick_name, first_name, last_name, country_name, timezones, gmt, idd_code, mobile_number, status, Datahelper
-  Returns       : 
+  Returns       :
   Calls         : datahelper.putRecords
   Called By     : adduser.php(User)
   Author        : Mitesh Shah
@@ -1390,7 +1376,7 @@ function insUserLoginDetails($user_id, $user_name, $client_id, $partner_id, $pas
     }
     try
     {
-        $strSqlStatement="INSERT INTO user_login_details(user_id, user_name, client_id, partner_id, password, email_address, role, login_enabled, created_on, created_by) VALUES('" . $user_id . "','" . $user_name . "', '" . $client_id . "', '" . $partner_id . "', '" . $password . "', '" . $email_address . "', '" . $role . "', '" . $login_enabled . "', '" . $created_on . "', '" . $created_by . "')";
+        $strSqlStatement = "INSERT INTO user_login_details(user_id, user_name, client_id, partner_id, password, email_address, role, login_enabled, created_on, created_by) VALUES('" . $user_id . "','" . $user_name . "', '" . $client_id . "', '" . $partner_id . "', '" . $password . "', '" . $email_address . "', '" . $role . "', '" . $login_enabled . "', '" . $created_on . "', '" . $created_by . "')";
         $arrInsUserLoginDetails = $dataHelper->putRecords("QR", $strSqlStatement);
         $dataHelper->clearParams();
         return $arrInsUserLoginDetails;
@@ -1401,12 +1387,11 @@ function insUserLoginDetails($user_id, $user_name, $client_id, $partner_id, $pas
     }
 }
 
-
 /* -----------------------------------------------------------------------------
   Function Name : insUserDetails
   Purpose       : To insert user details into user_login_details and user_details table.
   Parameters    : user_id, nick_name, country_name, timezones, gmt, idd_code, mobile_number, status, Datahelper
-  Returns       : 
+  Returns       :
   Calls         : datahelper.putRecords
   Called By     : adduser.php(User)
   Author        : Mitesh Shah
@@ -1422,7 +1407,7 @@ function insUserDetails($user_id, $nick, $countryname, $timezone, $gmt, $iddcode
     }
     try
     {
-        $strSqlStatement="INSERT INTO user_details(user_id, nick_name, country_name, timezones, gmt, idd_code, mobile_number) VALUES ('" . $user_id . "', '" . $nick . "', '" . $countryname . "', '" . $timezone . "', '" . $gmt . "', '" . $iddcode . "', '" . $mobile . "');";
+        $strSqlStatement = "INSERT INTO user_details(user_id, nick_name, country_name, timezones, gmt, idd_code, mobile_number) VALUES ('" . $user_id . "', '" . $nick . "', '" . $countryname . "', '" . $timezone . "', '" . $gmt . "', '" . $iddcode . "', '" . $mobile . "');";
         $arrInsUserDetails = $dataHelper->putRecords("QR", $strSqlStatement);
         $dataHelper->clearParams();
         return $arrInsUserDetails;
@@ -1433,49 +1418,40 @@ function insUserDetails($user_id, $nick, $countryname, $timezone, $gmt, $iddcode
     }
 }
 
-
-
-
 /* -----------------------------------------------------------------------------
   Function Name : getUpdateQueryString
   Purpose       : to generate the update query string
   Parameters    :  array Form values
   Returns       :
-  Calls         : 
+  Calls         :
   Called By     :
-  Author        : Sushrit 
+  Author        : Sushrit
   Created  on   : July 29 , 2015
   Modified By   :
   Modified on   :
   ------------------------------------------------------------------------------ */
-function getUpdateQueryString($formValues , $formTableMap)
-{
-	if(isset($formValues['formname']))
-	{
-		if($formValues['formname'] != "") 
-		{
-			$updateString = "";
 
-			foreach($formValues as $key => $value)
-			{	
-				if($key != "formname")
-				{
-					
+function getUpdateQueryString($formValues, $formTableMap) {
+    if (isset($formValues['formname']))
+    {
+        if ($formValues['formname'] != "")
+        {
+            $updateString = "";
 
-					if(isset($formTableMap[$formValues['formname']][$key]) && $value !="")
-					{
-
-					
-						$columnName = $formTableMap[$formValues['formname']][$key];
-						$columnValue = ($columnName == "client_password")?md5(trim($value)):trim($value);
-						$updateString .= ($updateString!="")?" , ":"";
-						$updateString .= $columnName." = \"".$columnValue."\"";
-					}
-				}
-			}
-			return $updateString;
-		}
-	}
+            foreach ($formValues as $key => $value)
+            {
+                if ($key != "formname")
+                {
+                    if (isset($formTableMap[$formValues['formname']][$key]) && $value != "")
+                    {
+                        $columnName = $formTableMap[$formValues['formname']][$key];
+                        $columnValue = ($columnName == "client_password") ? md5(trim($value)) : trim($value);
+                        $updateString .= ($updateString != "") ? " , " : "";
+                        $updateString .= $columnName . " = \"" . $columnValue . "\"";
+                    }
+                }
+            }
+            return $updateString;
+        }
+    }
 }
-
-

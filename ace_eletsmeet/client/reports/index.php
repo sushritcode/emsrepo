@@ -6,7 +6,7 @@ require_once(CLIENT_DBS_PATH . 'DataHelper.php');
 require_once(CLIENT_DBS_PATH . 'objDataHelper.php');
 require_once(CLIENT_INCLUDES_PATH . 'client_authfunc.inc.php');
 $CLIENT_CONST_MODULE = 'cl_reports';
-$CLIENT_CONST_PAGEID = 'Meeting Report_1';
+$CLIENT_CONST_PAGEID = 'Meeting Report';
 require_once(CLIENT_INCLUDES_PATH . 'client_authorize.inc.php');
 //require_once(CLIENT_INCLUDES_PATH . 'client_db_function.inc.php');
 require_once(CLIENT_INCLUDES_PATH . 'client_reports_function.inc.php');
@@ -95,7 +95,7 @@ catch (Exception $e)
                         <!-- PAGE HEADER -->
                         <div class="page-header">
                             <h1>
-                                Meeting<small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp; meeting&#39;s &amp; Duration&#39;s</small>
+                                Meeting<small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp; meeting&#39;s &amp; duration&#39;s</small>
                             </h1>
                         </div>
                         <!-- PAGE HEADER -->

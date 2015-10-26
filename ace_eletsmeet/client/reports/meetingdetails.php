@@ -8,7 +8,7 @@ require_once(CLIENT_INCLUDES_PATH . 'client_authfunc.inc.php');
 $CLIENT_CONST_MODULE = 'cl_reports';
 $CLIENT_CONST_PAGEID = 'Meeting Report_1';
 require_once(CLIENT_INCLUDES_PATH . 'client_authorize.inc.php');
-//require_once(CLIENT_INCLUDES_PATH . 'client_db_function.inc.php');
+require_once(CLIENT_INCLUDES_PATH . 'client_db_function.inc.php');
 require_once(CLIENT_INCLUDES_PATH . 'client_reports_function.inc.php');
 
 $strScheduleId = trim($_REQUEST['SchId']);
@@ -43,7 +43,7 @@ $User_Email = trim($arrSchDtls[0]['email_address']);
 $User_NickName = trim($arrSchDtls[0]['nick_name']);
 //$Meeting_Start_Time= trim($arrSchDtls[0]['meeting_start_time']);
 $Meeting_Start_Time = date("D, F jS Y, h:i A", strtotime(trim($arrSchDtls[0]['meeting_start_time'])));
-$Meeting_End_Time = trim($arrSchDtls[0]['meeting_end_time']);
+$Meeting_End_Time = date("D, F jS Y, h:i A", strtotime(trim($arrSchDtls[0]['meeting_end_time']))); 
 
 try
 {
@@ -55,7 +55,7 @@ catch (Exception $a)
 }
 //echo "<pre>";
 //print_r($arrInviteesList);
-//echo "<pre>";
+//echo "<pre>"; exit;
 ?>
 <div class="well">
     <h4 class="smaller"><?php echo $Meeting_Title; ?></h4>
@@ -86,7 +86,7 @@ catch (Exception $a)
     <div class="space"></div>
     
     <div>
-        <h5 class="lighter smaller">Meeting End Time : <label class="blue"><?php echo sizeof($arrInviteesList); ?></label></h5>
+        <h5 class="lighter smaller">Meeting End Time : <label class="blue"><?php echo $Meeting_End_Time; ?></label></h5>
     </div>
     <div class="space"></div>
     
