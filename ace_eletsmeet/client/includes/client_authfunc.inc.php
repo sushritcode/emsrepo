@@ -54,9 +54,10 @@ function isAuthenticClient($client_username, $password, $dataHelper) {
   Modified on   :
 -------------------------------------------------------------------------------- */
 
-function setClientSession($id, $client_username, $email_address) {
+//function setClientSession($id, $client_username, $email_address) {
+function setClientSession($arrSessionVal) {
     global $objErr;
-    if (strlen(trim($id)) <= 0)
+    /*if (strlen(trim($id)) <= 0)
     {
         throw new Exception("client_authfunc.inc.php: setClientSession : Missing Parameter.", 151);
     }
@@ -69,11 +70,14 @@ function setClientSession($id, $client_username, $email_address) {
     if (strlen(trim($email_address)) <= 0)
     {
         throw new Exception("client_authfunc.inc.php: setClientSession : Missing Parameter.", 152);
-    }
+    }*/
 
     try
     {
-        $strCookieValue = $id . chr(5) . $client_username . chr(5) . $email_address;
+        //$strCookieValue = $id . chr(5) . $client_username . chr(5) . $email_address;
+	$strCookieValue = "";
+	for($i=0;$i<count($arrSessionVal);$i++)
+		$strCookieValue.=($strCookieValue =="")?$arrSessionVal[$i]:chr(5).$arrSessionVal[$i];
         session_start();
         $_SESSION[CLIENT_SESSION_NAME] = $strCookieValue;
     }

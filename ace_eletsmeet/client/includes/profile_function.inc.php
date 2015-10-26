@@ -131,7 +131,7 @@ function addPasswordRequestDtls($user_id, $email_address, $time_stamp, $dataHelp
   Modified on   :
   ------------------------------------------------------------------------------ */
 
-function profile_form_table_map() {
+function client_profile_form_table_map() {
 
     //formname
 
@@ -168,15 +168,17 @@ function updateUserProfile($paramString, $objDataHelper, $strCK_user_id, $type) 
         switch ($type)
         {
             case "reset":
-                $tableName = "user_details";
-                $criteria = " Where user_id ='" . $strCK_user_id . "'";
-                $sqlQuery = "UPDATE " . $tableName . " SET " . $paramString . " " . $criteria;
+                $tableName = "client_details";
+		$strSession = $_SESSION[CLIENT_SESSION_NAME];
+		$arrSession = explode(chr(5) , $strSession);
+                $criteria = " Where client_id ='" . $arrSession[3] . "'";
+		$sqlQuery = "UPDATE " . $tableName . " SET " . $paramString . " " . $criteria;
                 $result = $objDataHelper->putRecords("QR", $sqlQuery);
                 return true;
                 break;
             case "resetpwd":
-                $tableName = "user_login_details";
-                $criteria = " Where user_id ='" . $strCK_user_id . "' and password ='" . md5(trim($_REQUEST["currentpwd"])) . "'";
+                $tableName = "client_login_details";
+                $criteria = " Where client_id ='" . $strCK_user_id . "' and client_password='" . md5(trim($_REQUEST["currentpwd"])) . "'";
                 $sqlQuery = "UPDATE " . $tableName . " SET " . $paramString . " " . $criteria;
                 $result = $objDataHelper->putRecords("QR", $sqlQuery);
                 if ($objDataHelper->affectedRows == 0)

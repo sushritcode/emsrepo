@@ -1432,3 +1432,50 @@ function insUserDetails($user_id, $nick, $countryname, $timezone, $gmt, $iddcode
         throw new Exception(" client_db_function.inc.php : insUserDetails : Failed : " . $e->getMessage(), 145);
     }
 }
+
+
+
+
+/* -----------------------------------------------------------------------------
+  Function Name : getUpdateQueryString
+  Purpose       : to generate the update query string
+  Parameters    :  array Form values
+  Returns       :
+  Calls         : 
+  Called By     :
+  Author        : Sushrit 
+  Created  on   : July 29 , 2015
+  Modified By   :
+  Modified on   :
+  ------------------------------------------------------------------------------ */
+function getUpdateQueryString($formValues , $formTableMap)
+{
+	if(isset($formValues['formname']))
+	{
+		if($formValues['formname'] != "") 
+		{
+			$updateString = "";
+
+			foreach($formValues as $key => $value)
+			{	
+				if($key != "formname")
+				{
+					
+
+					if(isset($formTableMap[$formValues['formname']][$key]) && $value !="")
+					{
+
+					
+						$columnName = $formTableMap[$formValues['formname']][$key];
+						$columnValue = ($columnName == "client_password")?md5(trim($value)):trim($value);
+						$updateString .= ($updateString!="")?" , ":"";
+						$updateString .= $columnName." = \"".$columnValue."\"";
+					}
+				}
+			}
+			return $updateString;
+		}
+	}
+}
+
+

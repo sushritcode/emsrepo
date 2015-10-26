@@ -49,7 +49,10 @@ if (isset($_POST['lgn_submit'])) {
             $db_client_name = $arrAuthUserResult[0]['client_name'];
             $db_client_email_address = $arrAuthUserResult[0]['client_email_address'];
             $strRandomID = md5(microtime());
-            setClientSession($strRandomID, $db_client_username, $db_client_email_address);
+	    $arrSessionVal = Array($strRandomID , $db_client_username , $db_client_email_address , $db_client_id);
+            //setClientSession($strRandomID, $db_client_username, $db_client_email_address);
+            setClientSession($arrSessionVal);
+
             $arrUpdLastLoginDtls = updClientLastLoginDtls($db_client_id, $strRandomID, GM_DATE, $Login_IP_Address, $objDataHelper);
             $strReferer = "dashboard/";
             header("Location:" . $CLIENT_SITE_ROOT . $strReferer);

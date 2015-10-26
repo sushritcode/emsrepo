@@ -12,7 +12,7 @@ require_once(CLIENT_INCLUDES_PATH . 'client_db_function.inc.php');
 require_once(CLIENT_INCLUDES_PATH . 'profile_function.inc.php');
 
 //data population start	
-$form_table_map = profile_form_table_map();
+$form_table_map =client_profile_form_table_map();
 
 try
 {
@@ -22,9 +22,9 @@ catch (Exception $a)
 {
     throw new Exception("adm_authorize.inc.php : Error in getAdminUserDetailsByID" . $a->getMessage(), 161);
 }
-print($clientdetails); exit;
 
-$clientdetails = $clientdetails[0];
+
+$clientdetails = $arrClientdetails[0];
 
 $arrIndustryType = getAllIndustryType($objDataHelper);
 $optionIndustryType = "";
@@ -71,7 +71,7 @@ for ($cnt = 0; $cnt < count($arrDistinctCountry); $cnt++) {
         <!-- MAIN CONTAINER START -->
         <div class="main-container" id="main-container">
             <script type="text/javascript">
-                var BASEURL = "<?php echo $SITE_ROOT; ?>";
+                var BASEURL = "<?php echo $CLIENT_SITE_ROOT; ?>";
                 try {
                     ace.settings.check('main-container', 'fixed')
                 } catch (e) {
@@ -194,7 +194,7 @@ for ($cnt = 0; $cnt < count($arrDistinctCountry); $cnt++) {
                                                                 <div class="form-group">
                                                                     <label for="form-field-1" class="col-sm-2 control-label no-padding-right"> Email Id / Login Id </label>
                                                                     <div class="col-sm-9" style="padding:6px 20px;">
-                                                                        <b><?php echo $strCk_email_address; ?></b>
+                                                                        <b><?php print $clientdetails['client_email_address']; ?></b>
                                                                     </div>
                                                                 </div>
 
