@@ -459,15 +459,16 @@ function getSubDtlsByClientIdnPlanId($client_id, $plan_id, $sub_id, $order_id, $
 
     try
     {
-        $strSqlQuery = "SELECT client_subscription_id, client_id, subscription_date, subscription_start_date_gmt, "
-                . "subscription_end_date_gmt, subscription_start_date_local, subscription_end_date_local, "
-                . "subscription_status, order_id, plan_id, plan_name, plan_desc, plan_for, plan_type, number_of_sessions, "
-                . "number_of_mins_per_sessions, plan_period, number_of_invitee, meeting_recording, disk_space, "
-                . "is_free, plan_cost_inr, plan_cost_oth, concurrent_sessions, talk_time_mins, plan_keyword, "
-                . "autorenew_flag, consumed_number_of_sessions, consumed_talk_time_mins "
-                . "FROM client_subscription_master "
-                . "WHERE client_id =  '" . trim($client_id) . "'  "
-                . "AND plan_id= '" . trim($plan_id) . "' AND client_subscription_id= '" . trim($sub_id) . "' AND order_id= '" . trim($order_id) . "'";
+        $strSqlQuery = "SELECT client_subscription_id, csm.client_id, subscription_date, subscription_start_date_gmt, "
+. "subscription_end_date_gmt, subscription_start_date_local, subscription_end_date_local, "
+. "subscription_status, order_id, plan_id, plan_name, plan_desc, plan_for, plan_type, number_of_sessions, "
+. "number_of_mins_per_sessions, plan_period, number_of_invitee, meeting_recording, disk_space, "
+. "is_free, plan_cost_inr, plan_cost_oth, concurrent_sessions, talk_time_mins, plan_keyword, "
+. "autorenew_flag, consumed_number_of_sessions, consumed_talk_time_mins "
+. "FROM client_subscription_master AS csm, client_login_details AS cld, client_details AS cd "
+. "WHERE csm.client_id =  '" . trim($client_id) . "'  "
+. "AND csm.client_id = cld.client_id AND cld.client_id = cd.client_id AND cld.client_login_enabled = '1' "
+. "AND plan_id= '" . trim($plan_id) . "' AND client_subscription_id= '" . trim($sub_id) . "' AND order_id= '" . trim($order_id) . "'";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlQuery);
         return $arrResult;
     }
@@ -495,7 +496,7 @@ function insUserSubscriptionDetails($user_id, $gmt_datetime, $gmt_start_date, $g
     {
         throw new Exception("client_db_function.inc.php : insUserSubscriptionDetails : DataHelper Object did not instantiate", 104);
     }
-
+   
     if (strlen(trim($user_id)) <= 0)
     {
         throw new Exception("client_db_function.inc.php : insUserSubscriptionDetails : Missing Parameter user_id.", 143);
@@ -656,7 +657,6 @@ function insUserSubscriptionDetails($user_id, $gmt_datetime, $gmt_start_date, $g
         $dataHelper->setParam("'" . $consumed_number_of_sessions . "'", "I");
         $dataHelper->setParam("'" . $consumed_talk_time_mins . "'", "I");
 
-
         $dataHelper->setParam("STATUS", "O");
         $dataHelper->setParam("OUTPUT", "O");
         $arrInsertSubscriptionDetails = $dataHelper->putRecords("SP", 'InsertSubscriptionMaster');
@@ -708,7 +708,7 @@ function getUnUsedPlanByClientId($client_id, $dataHelper) {
 
     try
     {
-        echo $strSqlQuery = "SELECT * FROM client_subscription_master WHERE client_id='" . trim($client_id) . "' AND order_id NOT IN (SELECT order_id FROM subscription_master);";
+        $strSqlQuery = "SELECT * FROM client_subscription_master WHERE client_id='" . trim($client_id) . "' AND subscription_status NOT IN ('0', '3') AND order_id NOT IN (SELECT order_id FROM subscription_master);";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlQuery);
         return $arrResult;
     }
@@ -726,7 +726,7 @@ function getSubscriptionDetailsByUserId($user_id, $dataHelper) {
 
     try
     {
-        $strSqlQuery = "SELECT user_id, plan_name, subscription_start_date_local, subscription_end_date_local FROM subscription_master WHERE user_id='" . trim($user_id) . "' ORDER BY subscription_end_date_local DESC;";
+        $strSqlQuery = "SELECT user_id, plan_name, subscription_start_date_local, subscription_end_date_local, subscription_status FROM subscription_master WHERE user_id='" . trim($user_id) . "' ORDER BY subscription_end_date_local DESC;";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlQuery);
         return $arrResult;
     }

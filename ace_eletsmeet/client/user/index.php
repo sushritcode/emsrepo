@@ -222,8 +222,9 @@ catch (Exception $e)
                                                                  <?php if ($strCL_User_Status != '3')  { ?>
                                                                 <button href="#user_status" data-toggle="modal" class="btn btn-sm btn-danger" onclick="updUserStatus('<?php echo $strCL_User_Id; ?>', '3', '<?php echo $strCL_UserName; ?>')" alt="Delete" title="Delete"><i class="ace-icon fa fa-remove"></i></button>
                                                                 <?php } ?>
-
-<!--                                                                <button href="#user_subscription" data-toggle="modal" class="btn btn-sm btn-info" onclick="addUserSubscription('<?php echo $strCL_User_Id; ?>', '3', '<?php echo urldecode($strCL_UserName); ?>')" alt="Delete" title="Delete"><i class="ace-icon fa fa-key"></i></button>-->
+                                                                <?php if ($strCL_User_Status != '3')  { ?>        
+                                                                <button href="#user_subscription" data-toggle="modal" class="btn btn-sm btn-info" onclick="addUserSubscription('<?php echo $strCL_User_Id; ?>', '<?php echo urldecode($strCL_UserName); ?>')" alt="Subscription Info" title="Subscription Info"><i class="ace-icon fa fa-key"></i></button>
+                                                                <?php } ?>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -531,12 +532,12 @@ catch (Exception $e)
                 }
             }); }
             
-            function addUserSubscription(userId,iStat,uName) {
+            function addUserSubscription(userId,uName) {
             $.ajax({
                 type: "GET",
                 url: CLIENT_SITE_ROOT+"user/addsubscription.php",
                 cache: false,
-                data: "userId="+userId+"&iStat="+iStat+"&uName="+uName+"&Num="+Math.random(),
+                data: "userId="+userId+"&uName="+uName+"&Num="+Math.random(),
                 loading: $(".loading").html(""),
                 success: function(html) {
                     $("#addUserSub").html(html);

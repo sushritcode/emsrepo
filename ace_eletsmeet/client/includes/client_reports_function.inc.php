@@ -206,6 +206,7 @@ function getMeetingListByUserId($user_id, $dataHelper) {
   ------------------------------------------------------------------------------ */
 
 function getUserDetailsByUserId($user_id, $dataHelper) {
+    
     if (!is_object($dataHelper))
     {
         throw new Exception("client_db_function.inc.php : getUserDetailsByUserId : DataHelper Object did not instantiate", 104);
@@ -237,7 +238,7 @@ function isScheduleValid($schedule_id, $email_address, $pass_code, $dataHelper) 
             throw new Exception("schedule_function.inc.php : isScheduleInviteeValid : DataHelper Object did not instantiate", 104);
         }
                 $strSqlStatement = "SELECT sd.schedule_id, sd.user_id, sd.schedule_status, sd.schedule_creation_time, sd.meeting_timestamp_gmt, sd.meeting_timestamp_local, sd.meeting_title, sd.meeting_agenda, sd.meeting_timezone, sd.meeting_gmt, sd.meeting_start_time, sd.meeting_end_time, sd.voice_bridge, sd.web_voice, sd.max_participants, sd.record_flag, sd.subscription_id, uld.email_address, ud.nick_name, sm.subscription_id, sm.number_of_invitee, sm.order_id "
-                . "FROM schedule_details sd, user_login_details uld, user_details ud, subscription_master sm "
+                . "FROM schedule_details AS sd, user_login_details AS uld, user_details AS ud, subscription_master AS sm "
                 . "WHERE sd.user_id = uld.user_id  AND uld.user_id = ud.user_id "
                 . "AND sd.subscription_id = sm.subscription_id "
                 . "AND sd.schedule_id='" . trim($schedule_id) . "' "
@@ -277,7 +278,7 @@ function getClientSubscriptionInfo($partner_id, $client_id, $dataHelper) {
 
     try
     {
-        $strSqlQuery = "SELECT pd.partner_name, cld.client_name, cld.client_id, csm.client_subscription_id, csm.order_id, csm.plan_id, csm.plan_name, csm.subscription_start_date_gmt, "
+       $strSqlQuery = "SELECT pd.partner_name, cld.client_name, cld.client_id, csm.client_subscription_id, csm.order_id, csm.plan_id, csm.plan_name, csm.subscription_start_date_gmt, "
 . "csm.subscription_end_date_gmt, DATEDIFF(csm.subscription_end_date_gmt, DATE_FORMAT(NOW(), '%Y-%m-%d')) AS diff_days, csm.subscription_status  "
 . "FROM partner_details AS pd, client_subscription_master AS csm, client_login_details AS cld, client_details AS cd "
 . "WHERE pd.partner_id = cld.partner_id AND cld.client_id = csm.client_id "
@@ -330,5 +331,31 @@ function getPlanDetailsByPlanId($plan_id, $dataHelper)
     catch (Exception $e)
     {
         throw new Exception("subscribe_function.inc.php : Error in getting Plan details." . $e->getMessage(), 734);
+    }
+}
+
+function getClientUserSubscriptionDetails($client_id, $dataHelper) {
+    if (!is_object($dataHelper))
+    {
+        throw new Exception("client_db_function.inc.php : getSubscriptionDetailsByUserId : DataHelper Object did not instantiate", 104);
+    }
+
+    try
+    {
+        $strSqlQuery = "SELECT sm.user_id, plan_name, subscription_start_date_local, subscription_end_date_local, subscription_status 
+FROM subscription_master AS sm, client_login_details AS cld, client_details AS cd, user_login_details AS uld, user_details AS ud
+WHERE sm.user_id = uld.user_id  
+AND uld.user_id = ud.user_id 
+AND uld.client_id = cld.client_id 
+AND cld.client_id = cd.client_id 
+AND client_login_enabled = '1' 
+AND cld.client_id='" . trim($client_id) . " 
+ORDER BY subscription_end_date_local DESC;";
+        $arrResult = $dataHelper->fetchRecords("QR", $strSqlQuery);
+        return $arrResult;
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("client_db_function.inc.php : Error in getting Plan details." . $e->getMessage(), 734);
     }
 }

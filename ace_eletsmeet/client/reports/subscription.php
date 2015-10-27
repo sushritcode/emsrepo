@@ -125,6 +125,7 @@ catch (Exception $e)
                                                         <th> Start Date</th>
                                                         <th> End Date </th>
                                                         <th> No. of Days Left</th>
+                                                        <th> Assign (Yes / No)</th>
                                                         <th> Status</th>
                                                         <th></th>
                                                     </tr>
@@ -148,9 +149,9 @@ catch (Exception $e)
                                                              $strColor = "style=\"background-color: #edf3ea; color: #7b9e6c;\"";
                                                          }
                                                          
-                                                         $SubStatus = $arrSubscriptionInfo[$intCntr]["subscription_status"];
-                                                         switch($SubStatus)
-                                                         {
+                                                        $SubStatus = $arrSubscriptionInfo[$intCntr]["subscription_status"];
+                                                        switch($SubStatus)
+                                                        {
                                                             case 0: $SubStatus = "<span class=\"label label-sm label-warning\">Requestd</span>";
                                                                break;
                                                             case 1: $SubStatus = "<span class=\"label label-sm label-info\">Trial</span>";
@@ -160,10 +161,28 @@ catch (Exception $e)
                                                             case 3: $SubStatus = "<span class=\"label label-sm label-danger\">Expired</span>";
                                                                break;
                                                             default: break;
+                                                        }
+                                                        $SubId = $arrSubscriptionInfo[$intCntr]["client_subscription_id"];
+                                                        $SubOrdeId = $arrSubscriptionInfo[$intCntr]["order_id"];
+                                                        $SubPlanId = $arrSubscriptionInfo[$intCntr]["plan_id"];
+                                                        
+                                                        try
+                                                        {
+                                                            $arrSubAssignDtls = getSubscriptionAssignInfo($SubOrdeId, $objDataHelper);
+                                                        }
+                                                        catch (Exception $e)
+                                                        {
+                                                            throw new Exception("index.php : getScheduleDetailsById Failed : " . $e->getMessage(), 1126);
+                                                        }
+                                                        
+                                                         if (is_array($arrSubAssignDtls) && sizeof($arrSubAssignDtls) > 0) 
+                                                         {
+                                                             $SubAssignStatus ="<span class=\"green\">Yes</span>";
                                                          }
-                                                         $SubId = $arrSubscriptionInfo[$intCntr]["client_subscription_id"];
-                                                         $SubOrdeId = $arrSubscriptionInfo[$intCntr]["order_id"];
-                                                         $SubPlanId = $arrSubscriptionInfo[$intCntr]["plan_id"];
+                                                         else
+                                                         {
+                                                             $SubAssignStatus ="<span class=\"blue\">No</span>";
+                                                         }
                                                     ?>
                                                     <tr>
                                                         <td class="center">
@@ -176,6 +195,7 @@ catch (Exception $e)
                                                         <td><?php echo $SubStartDate; ?></td>
                                                         <td><?php echo $SubEndDate; ?></td>
                                                         <td><?php echo $DiffDays; ?></td>
+                                                         <td><?php echo $SubAssignStatus; ?></td>
                                                         <td><?php echo $SubStatus; ?></td>
                                                         <td>
                                                             <div class="hidden-sm hidden-xs btn-group">
@@ -273,7 +293,7 @@ catch (Exception $e)
                             bAutoWidth: false,
                             "aoColumns": [
                                 {"bSortable": false},
-                                null, null, null,null,null,
+                                null, null, null,null,null,null,
                                 {"bSortable": false}
                             ],
                             "aaSorting": [],
@@ -366,7 +386,7 @@ catch (Exception $e)
                 //ColVis extension
                 var colvis = new $.fn.dataTable.ColVis(oTable1, {
                     "buttonText": "<i class='fa fa-search'></i>",
-                    "aiExclude": [0,6],
+                    "aiExclude": [0,7],
                     "bShowAll": true,
                     "bRestore": true,
                     "sAlign": "right",
