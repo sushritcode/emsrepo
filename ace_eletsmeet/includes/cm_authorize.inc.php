@@ -27,18 +27,18 @@ try
         header("Location: ".$SITE_ROOT);
         exit;
     }
-//    
-//    if (sizeof($arrUserSessionDetails) <= 0 && $CONST_MODULE == "profile")
-//    {
-//        header("Location: ".$SITE_ROOT);
-//        exit;
-//    }
-//    
-//    if (sizeof($arrUserSessionDetails) <= 0 && $CONST_MODULE == "contact")
-//    {
-//	header("Location: ".$SITE_ROOT);
-//	exit;
-//    }
+    
+    if (sizeof($arrUserSessionDetails) <= 0 && $CONST_MODULE == "profile")
+    {
+        header("Location: ".$SITE_ROOT);
+        exit;
+    }
+    
+    if (sizeof($arrUserSessionDetails) <= 0 && $CONST_MODULE == "contact")
+    {
+	header("Location: ".$SITE_ROOT);
+	exit;
+    }
 
 
     if (is_array($arrUserSessionDetails) && sizeof($arrUserSessionDetails) > 0)
