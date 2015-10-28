@@ -121,7 +121,7 @@ $optionCountry ="";
                                     <div class="clearfix">
                                         <div class="pull-right tableTools-container"></div>
                                         <div class="">
-						<button class="ColVis_Button ColVis_MasterButton btn btn-white btn-info btn-bold" onclick="document.getElementById('type').value='add';document.getElementById('association').value= 'usr0000006';" alt="Add New Contact" title="Add New Contact" data-toggle="modal" role="button" href="#modal-table">
+						<button class="ColVis_Button ColVis_MasterButton btn btn-white btn-info btn-bold" onclick=" document.getElementById('frmcontact').reset(); document.getElementById('type').value='add';document.getElementById('association').value= 'usr0000006';" alt="Add New Contact" title="Add New Contact" data-toggle="modal" role="button" href="#modal-table">
 							<i class="ace-icon fa fa-user bigger-130"></i>
 							<sup>
 								<b style="font-size:12px;">+</b>
@@ -185,7 +185,7 @@ $optionCountry ="";
 		       </td>
 		       <td>
 			  <div class="hidden-sm hidden-xs btn-group">
-			     <a onclick="document.getElementById('type').value='update';fetchcontactdetails('<?php echo $strCK_user_id?>','<?php echo $contacts[$i]['personal_contact_id'];?>','getcontact');" alt="Edit <?php echo $contacts[$i]['contact_nick_name']?>'s details" title="Update  <?php echo $contacts[$i]['contact_nick_name']?>'s details" data-toggle="modal" class="green" role="button" href="#modal-table">
+			     <a onclick=" document.getElementById('frmcontact').reset();document.getElementById('type').value='update';fetchcontactdetails('<?php echo $strCK_user_id?>','<?php echo $contacts[$i]['personal_contact_id'];?>','getcontact');" alt="Edit <?php echo $contacts[$i]['contact_nick_name']?>'s details" title="Update  <?php echo $contacts[$i]['contact_nick_name']?>'s details" data-toggle="modal" class="green" role="button" href="#modal-table">
 
 				     <i class="ace-icon fa fa-pencil bigger-130"></i>
 			      </a>
