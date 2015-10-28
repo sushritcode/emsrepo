@@ -18,14 +18,14 @@ if(isset($_REQUEST["action"]))
 			$returnVal = disablecontact($_REQUEST['contactid'], $strCK_user_id , $objDataHelper);
 			?>
 				<script type="text/javascript">window.location.href = "<?php echo $SITE_ROOT."contacts/";?>";</script>
-				<?php
+				<?
 				exit;
 			break;
 		case "enable":
 			$returnVal = enablecontact($_REQUEST['contactid'], $strCK_user_id , $objDataHelper);
 			?>
 				<script type="text/javascript">window.location.href = "<?php echo $SITE_ROOT."contacts/";?>";</script>
-				<?php
+				<?
 				exit;
 			break;
 		case "add":

@@ -4,7 +4,7 @@ require_once(CLASSES_PATH.'error.inc.php');
 require_once(DBS_PATH.'DataHelper.php');
 require_once(DBS_PATH.'objDataHelper.php');
 require_once(INCLUDES_PATH.'cm_authfunc.inc.php');
-$CONST_MODULE = 'contact';
+$CONST_MODULE = 'Contacts';
 $CONST_PAGEID = 'My Contacts';
 require_once(INCLUDES_PATH.'cm_authorize.inc.php');
 require_once(INCLUDES_PATH.'common_function.inc.php');
@@ -77,7 +77,7 @@ $optionCountry ="";
                     
                     <!-- BREADCRUMBS N SEARCH BAR START -->
                     <div class="breadcrumbs" id="breadcrumbs">
-                                                <?php include (INCLUDES_PATH.'breadcrumbs_navigation.php'); ?>   
+                        
                     </div>
                     <!-- BREADCRUMBS N SEARCH BAR END -->                    
                    
@@ -109,11 +109,8 @@ $optionCountry ="";
 					</div>
 				</div>
 				<div class="space-20"></div>
-<!--                            <h1>
-                                <?php echo $CONST_MODULE?><small><i class="ace-icon fa fa-angle-double-right"></i><?php echo $CONST_PAGEID;?></small>
-                            </h1>-->
                             <h1>
-                                Contacts<small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp;My Contacts</small>
+                                <?php echo $CONST_MODULE?><small><i class="ace-icon fa fa-angle-double-right"></i><?php echo $CONST_PAGEID;?></small>
                             </h1>
                         </div>
                         <!-- PAGE HEADER -->
@@ -212,8 +209,7 @@ $optionCountry ="";
 	   </div>
 	</div>
 
-                               
-                                
+
 	<div tabindex="-1" class="modal fade" id="modal-table" style="display: none;" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -226,110 +222,132 @@ $optionCountry ="";
 					</div>
 				</div>
 
-				<div class="modal-body">
+				<div class="modal-body no-padding">
 					<!-- Modal data start -->
-<!--						<div class="tab-content">
-							<div class="tab-pane fade in active" id="basic">-->
-<!--								<div class="row">-->
-									<div class="well">
-
-<!--                                                                                <div id="success-msg" class="alert alert-success errorDisplay1">hello</div>-->
+						<div class="tab-content">
+							<div class="tab-pane fade in active" id="basic">
+								<div class="row">
+									<div class="">
+										<div class="space-10"></div>
 											<input type="hidden" name="type" id="type">
 											<form class="form-horizontal" role="form" name="frmcontact" id="frmcontact">
 												<input type="hidden" name="association"  id="association">
 												<input type="hidden" name="contactid"  id="contactid">
 												<div class="form-group">
-													<label for="form-field-1" class="col-sm-4 control-label no-padding-right"> Nick Name :</label>
-													<div class="col-sm-8">
-														<input type="text" class="col-sm-10" placeholder="Nick Name" id="contactnickname" name="contactnickname" required for="basic" value="" >
+													<label for="form-field-1" class="col-sm-3 control-label no-padding-right"> 
+														Nick Name :
+													</label>
+													<div class="col-sm-9" style="padding:6px 20px;">
+														<b>
+															<input type="text" class="col-sm-9" placeholder="Nick Name" id="contactnickname" name="contactnickname" required for="basic" value="" validate="yes" msg="Please the nick name" >
+														</b>
 													</div>
 												 </div>
 												<div class="space-4"></div>
 												<div class="form-group">
-													<label for="form-field-1" class="col-sm-4 control-label no-padding-right"> First Name :</label>
-													<div class="col-sm-8">
-															<input type="text" class="col-sm-10" placeholder="First Name" id="contactfirstname" name="contactfirstname" required for="basic" value="" >
+													<label for="form-field-1" class="col-sm-3 control-label no-padding-right"> 
+														First Name :
+													</label>
+													<div class="col-sm-9" style="padding:6px 20px;">
+														<b>
+															<input type="text" class="col-sm-9" placeholder="First Name" id="contactfirstname" name="contactfirstname" required for="basic" value="" validate="yes" msg="Please enter the first name">
+														</b>
 													</div>
 												 </div>
 												<div class="space-4"></div>
 												<div class="form-group">
-													<label for="form-field-1" class="col-sm-4 control-label no-padding-right"> 
+													<label for="form-field-1" class="col-sm-3 control-label no-padding-right"> 
 														Last Name :
 													</label>
-													<div class="col-sm-8">
-															<input type="text" class="col-sm-10" placeholder="Last Name" id="contactlastname" name="contactlastname" required for="basic" value="" >
+													<div class="col-sm-9" style="padding:6px 20px;">
+														<b>
+															<input type="text" class="col-sm-9" placeholder="Last Name" id="contactlastname" name="contactlastname" required for="basic" value="" validate="yes" msg="Please enter the last name" >
+														</b>
 													</div>
 												 </div>
 												<div class="space-4"></div>
 
 
 												<div class="form-group">
-													<label for="form-field-1" class="col-sm-4 control-label no-padding-right"> 
+													<label for="form-field-1" class="col-sm-3 control-label no-padding-right"> 
 														Email Address :
 													</label>
-													<div class="col-sm-8">
-														
-															<input type="text" class="col-sm-10" placeholder="Email Address" id="contactemailaddress" name="contactemailaddress" required for="basic" value="" >
-														
+													<div class="col-sm-9" style="padding:6px 20px;">
+														<b>
+															<input type="text" class="col-sm-9" placeholder="Email Address" id="contactemailaddress" name="contactemailaddress" required for="basic" value="" validate="yes" msg="Please enter the email address">
+														</b>
 													</div>
 												 </div>
 												<div class="space-4"></div>
 												<div class="form-group">
-													<label for="form-field-1" class="col-sm-4 control-label no-padding-right"> 
+													<label for="form-field-1" class="col-sm-3 control-label no-padding-right"> 
 														Phone No. :
 													</label>
-													<div class="col-sm-8">
-														
-															<input type="text" class="col-sm-10" placeholder="Phone No." id="contactphoneno" name="contactphoneno" required for="basic" value="" >
-														
+													<div class="col-sm-9" style="padding:6px 20px;">
+														<b>
+															<input type="text" class="col-sm-9" placeholder="Phone No." id="contactphoneno" name="contactphoneno" required for="basic" value="" validate="yes" msg="Please enter the contact phoone number">
+														</b>
 													</div>
 												 </div>
 												<div class="space-4"></div>
 												<div class="form-group">
-													<label for="form-field-1" class="col-sm-4 control-label no-padding-right"> 
+													<label for="form-field-1" class="col-sm-3 control-label no-padding-right"> 
 														Group :
 													</label>
-													<div class="col-sm-8">
-														
-                                                                                                                                                                                                                                                    <select class="col-sm-10" id="contactgroup" name="contactgroup">
-                                                                                                                                                                                                                                                    <?php echo $groupOptions;?>
-                                                                                                                                                                                                                                                    </select>
-                                                                                                                                                                                                                                                        
-														
-                                                                                                                                                                                                                                                    <div style="float:left;padding:10px;">Or</div>
-                                                                                                                                                                                                                                                    <div style="float:left;">
-                                                                                                                                                                                                                                                            <input type="text" class="col-sm-10"  value="" for="basic" name="newcontactgroupname" id="newcontactgroupname" placeholder="New Group Name">
-                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                    <div style="clear:both;"></div>
+													<div class="col-sm-9" style="padding:6px 20px;">
+														<b>
+																<select class="col-sm-5" id="contactgroup" name="contactgroup">
+																<?php echo $groupOptions;?>
+																</select>
+														</b>
+														<div style="float:left;padding:10px;">
+<b>OR</b>
+														</div>
+  														<div style="float:left;">
+															<input type="text" value="" for="basic" name="newcontactgroupname" id="newcontactgroupname" placeholder="New Group Name">
+   														</div>
+  														<div style="clear:both;"></div>
 													</div>
 												 </div>
 												 <div class="space-4"></div>
-                                                                                                 
-                                                                                                                                                                                                                        
 												<div class="form-group">
-													<label for="form-field-1" class="col-sm-4 control-label no-padding-right">  Country :</label>
-													<div class="col-sm-8">
-														 <select class="col-sm-9" for="address" name="contact_phone_idd" id="contact_phone_idd" class="form-control">
+													<label for="form-field-1" class="col-sm-3 control-label no-padding-right"> Select Country </label>
+													<div class="col-sm-9" style="padding:6px 20px;">
+														 <select class="col-sm-9" for="address" name="contact_phone_idd" id="contact_phone_idd" class="form-control" validate="yes" msg="Please enter the country name">
 														    <option value="">Select Country</option>
 														    <?php echo $optionCountry;?>
 														</select>
 													</div>
 												</div>
-                                                                                                 <div class="form-actions center">
-                                                                                                
-                                                                                                <input type="submit" onclick="javascript:return sendData('frmcontact',document.getElementById('type').value);" value="Save Contact" class="btn btn-sm btn-yellow" name="submitcontact">
-                                                                                            </div>
-												
-                                                                                                </form>
+												<div class="space-10"></div>
+												<div class="form-group">
+													<label for="form-field-1" class="col-sm-3 control-label no-padding-right"> 
+													</label>
+													<div class="col-sm-9" style="padding:6px 20px;">
+														<b>
+															<input type="submit" onclick="javascript:return sendData('frmcontact',document.getElementById('type').value);" value="Save Contact" class="btn btn-info " name="submitcontact">
+														</b>
+													</div>
+
+											</form>
+										</div>
 									</div>
-<!--								</div>-->
-<!--							</div>
-						</div>-->
+								</div>
+							</div>
+						</div>
 					<!-- Modal data end -->
 				</div>
 
-			</div>
-		</div>
+				<div class="modal-footer no-margin-top">
+					<!--button data-dismiss="modal" class="btn btn-sm btn-danger pull-left">
+						<i class="ace-icon fa fa-times"></i>
+						Close
+					</button-->
+
+					
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
 	</div>
 
                                 
