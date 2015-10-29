@@ -28,6 +28,7 @@ Class DataHelper
 	var $hostname;
 	var $databasename;
 	var $port;
+                  var $affectedRows = 0;
 	
 	/**
 	* Function Name			: constructor for the Class 
