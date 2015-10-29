@@ -6,7 +6,7 @@ require_once(DBS_PATH . 'DataHelper.php');
 require_once(DBS_PATH . 'objDataHelper.php');
 require_once(CLIENT_INCLUDES_PATH . 'client_authfunc.inc.php');
 $CLIENT_CONST_MODULE = 'cl_user';
-$CLIENT_CONST_PAGEID = 'User Status';
+$CLIENT_CONST_PAGEID = 'User Details';
 require_once(CLIENT_INCLUDES_PATH . 'client_authorize.inc.php');
 //require_once(CLIENT_INCLUDES_PATH . 'client_db_function.inc.php');
 require_once(CLIENT_INCLUDES_PATH . 'client_reports_function.inc.php');

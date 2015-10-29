@@ -160,6 +160,8 @@ catch (Exception $e)
                                                                break;
                                                             case 3: $SubStatus = "<span class=\"label label-sm label-danger\">Expired</span>";
                                                                break;
+                                                            case 4: $SubStatus = "<span class=\"label label-sm label-grey\">Revoke</span>";
+                                                               break;
                                                             default: break;
                                                         }
                                                         $SubId = $arrSubscriptionInfo[$intCntr]["client_subscription_id"];
@@ -168,7 +170,7 @@ catch (Exception $e)
                                                         
                                                         try
                                                         {
-                                                            $arrSubAssignDtls = getSubscriptionAssignInfo($SubOrdeId, $objDataHelper);
+                                                            $arrSubAssignDtls = getClientSubAssignInfoById($SubOrdeId, $objDataHelper);
                                                         }
                                                         catch (Exception $e)
                                                         {
@@ -178,10 +180,12 @@ catch (Exception $e)
                                                          if (is_array($arrSubAssignDtls) && sizeof($arrSubAssignDtls) > 0) 
                                                          {
                                                              $SubAssignStatus ="<span class=\"green\">Yes</span>";
+                                                             $SubAssignFlag =1;
                                                          }
                                                          else
                                                          {
                                                              $SubAssignStatus ="<span class=\"blue\">No</span>";
+                                                             $SubAssignFlag =0;
                                                          }
                                                     ?>
                                                     <tr>
@@ -199,8 +203,12 @@ catch (Exception $e)
                                                         <td><?php echo $SubStatus; ?></td>
                                                         <td>
                                                             <div class="hidden-sm hidden-xs btn-group">
+                                                            <?php if ($SubAssignFlag == 1)  { ?>        
                                                                 <button href="#sub-detls" data-toggle="modal" class="btn btn-sm btn-inverse" onclick="subscriptionDetails('<?php echo $SubOrdeId; ?>','<?php echo $SubPlanId;?>')" alt="Details" title="Details"><i class="ace-icon fa fa-info bigger-110"></i></button>
-                                                            </div>
+                                                            <?php } else {?>
+                                                            <button class="btn btn-sm btn-inverse disabled" alt="Details" title="Details"><i class="ace-icon fa fa-info bigger-110"></i></button>
+                                                            <?php } ?>
+                                                             </div>
                                                         </td>
                                                     </tr>
                                                     <?php } ?>

@@ -11,6 +11,12 @@ if ($CLIENT_CONST_MODULE == "cl_user") {
     $strUserActiveClass = "";
 }
 
+if ($CLIENT_CONST_MODULE == "cl_subscription") {
+    $strSubscriptionActiveClass = "active";
+} else {
+    $strSubscriptionActiveClass = "";
+}
+
 
 if ($CLIENT_CONST_MODULE == "cl_reports") {
     $strReportActiveClass = "active open";
@@ -83,6 +89,14 @@ if ($CLIENT_CONST_MODULE == "cl_reports") {
                     <a href="<?php echo $CLIENT_SITE_ROOT; ?>user/">
                         <i class="menu-icon fa fa-users"></i>
                         <span class="menu-text"> User </span>
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                
+                <li class="<?php echo $strSubscriptionActiveClass; ?>">
+                    <a href="<?php echo $CLIENT_SITE_ROOT; ?>subscription/">
+                        <i class="menu-icon fa fa-file-text"></i>
+                        <span class="menu-text"> Subscription </span>
                     </a>
                     <b class="arrow"></b>
                 </li>

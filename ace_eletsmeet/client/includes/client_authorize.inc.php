@@ -22,6 +22,12 @@ try
         exit;
     }
     
+    if (sizeof($arrClientCookieDtls) <= 0 && $CLIENT_CONST_MODULE == "cl_subscription")
+    {
+        header("Location: " . $CLIENT_SITE_ROOT);
+        exit;
+    }
+    
      if (sizeof($arrClientCookieDtls) <= 0 && $CLIENT_CONST_MODULE == "cl_profile")
     {
         header("Location: " . $CLIENT_SITE_ROOT);

@@ -41,6 +41,10 @@ catch (Exception $e)
 }
 
 $strTotalMeetingDuration = $arrMeetingDuration[0]['TotalDuration'];
+if (strlen($strTotalMeetingDuration) <= 0) 
+{
+    $strTotalMeetingDuration = 0;
+}
 
 try
 {

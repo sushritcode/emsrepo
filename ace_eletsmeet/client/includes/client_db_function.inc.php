@@ -708,7 +708,7 @@ function getUnUsedPlanByClientId($client_id, $dataHelper) {
 
     try
     {
-        $strSqlQuery = "SELECT * FROM client_subscription_master WHERE client_id='" . trim($client_id) . "' AND subscription_status NOT IN ('0', '3') AND order_id NOT IN (SELECT order_id FROM subscription_master);";
+        $strSqlQuery = "SELECT * FROM client_subscription_master WHERE client_id='" . trim($client_id) . "' AND subscription_status NOT IN ('0', '3') AND order_id NOT IN (SELECT order_id FROM subscription_master WHERE subscription_status NOT IN ('4'));";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlQuery);
         return $arrResult;
     }
@@ -1454,4 +1454,76 @@ function getUpdateQueryString($formValues, $formTableMap) {
             return $updateString;
         }
     }
+}
+
+/* -----------------------------------------------------------------------------
+  Function Name : revokeUserSubscription
+  Purpose       : To Revoke Plan from User Update the subscription_master with staus and subscription date
+  Parameters    : subscription_id, order_id, user_id, subscription_status, Datahelper
+  Returns       :
+  Calls         : datahelper.putRecords
+  Called By     : 
+  Author        : Mitesh Shah
+  Created  on   : 28-October-2015
+  Modified By   :
+  Modified on   :
+  ------------------------------------------------------------------------------ */
+function revokeUserSubscription($subscription_enddate, $subscription_status, $change_datetime, $subscriptionid, $user_id, $orderid, $planid, $dataHelper) {
+    if (!is_object($dataHelper))
+    {
+        throw new Exception("client_db_function.inc.php : revokeUserSubscription : DataHelper Object did not instantiate", 104);
+    }    
+        try
+        {
+            $dataHelper->setParam("'" . $subscription_enddate . "'", "I");
+            $dataHelper->setParam("'" . $subscription_status . "'", "I");
+            $dataHelper->setParam("'" . $change_datetime . "'", "I");
+            $dataHelper->setParam("'" . $subscriptionid . "'", "I");
+            $dataHelper->setParam("'" . $user_id . "'", "I");
+            $dataHelper->setParam("'" . $orderid . "'", "I");
+            $dataHelper->setParam("'" . $planid . "'", "I");
+            $dataHelper->setParam("STATUS", "O");
+            $arrUpdResult = $dataHelper->putRecords("SP", 'RevokeUserSubscription');
+            $dataHelper->clearParams();
+            return $arrUpdResult;
+        }
+        catch (Exception $e)
+        {
+            throw new Exception("client_db_function.inc.php : revokeUserSubscription : Failed : " . $e->getMessage(), 145);
+        }
+}
+
+/* -----------------------------------------------------------------------------
+  Function Name : revokeClientSubscription
+  Purpose       : To Revoke Plan from Client Update the client_subscription_master with staus
+  Parameters    : subscription_id, order_id, client_id, subscription_status, Datahelper
+  Returns       :
+  Calls         : datahelper.putRecords
+  Called By     : 
+  Author        : Mitesh Shah
+  Created  on   : 28-October-2015
+  Modified By   :
+  Modified on   :
+  ------------------------------------------------------------------------------ */
+function revokeClientSubscription($subscription_status, $change_datetime, $client_id, $orderid, $planid, $dataHelper) {
+    if (!is_object($dataHelper))
+    {
+        throw new Exception("client_db_function.inc.php : revokeClientSubscription : DataHelper Object did not instantiate", 104);
+    }    
+        try
+        {
+            $dataHelper->setParam("'" . $subscription_status . "'", "I");
+            $dataHelper->setParam("'" . $change_datetime . "'", "I");
+            $dataHelper->setParam("'" . $client_id . "'", "I");
+            $dataHelper->setParam("'" . $orderid . "'", "I");
+            $dataHelper->setParam("'" . $planid . "'", "I");
+            $dataHelper->setParam("STATUS", "O");
+            $arrUpdResult = $dataHelper->putRecords("SP", 'RevokeClientSubscription');
+            $dataHelper->clearParams();
+            return $arrUpdResult;
+        }
+        catch (Exception $e)
+        {
+            throw new Exception("client_db_function.inc.php : revokeClientSubscription : Failed : " . $e->getMessage(), 145);
+        }
 }

@@ -295,15 +295,15 @@ function getClientSubscriptionInfo($partner_id, $client_id, $dataHelper) {
     }
 }
 
-function getSubscriptionAssignInfo($order_id, $dataHelper) {
+function getClientSubAssignInfoById($order_id, $dataHelper) {
     if (!is_object($dataHelper))
     {
-        throw new Exception("report_function.inc.php : getClientSubscriptionInfo : DataHelper Object did not instantiate", 104);
+        throw new Exception("report_function.inc.php : getClientSubAssignInfoById : DataHelper Object did not instantiate", 104);
     }
 
     try
     {
-        $strSqlQuery = "SELECT sm.subscription_id, sm.user_id, sm.subscription_date, sm.subscription_start_date_gmt, sm.subscription_end_date_gmt, sm.subscription_start_date_local, sm.subscription_end_date_local,  sm.subscription_status,  sm.plan_name, uld.user_name "
+        $strSqlQuery = "SELECT sm.subscription_id, sm.user_id, sm.subscription_date, sm.subscription_start_date_gmt, sm.subscription_end_date_gmt, sm.subscription_start_date_local, sm.subscription_end_date_local,  sm.subscription_status, sm.order_id, sm.plan_id, sm.plan_name, uld.user_name "
 ."FROM subscription_master AS sm, user_login_details AS uld "
 ."WHERE order_id = '".trim($order_id)."' AND sm.user_id = uld.user_id;";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlQuery);
@@ -311,7 +311,7 @@ function getSubscriptionAssignInfo($order_id, $dataHelper) {
     }
     catch (Exception $e)
     {
-        throw new Exception("report_function.inc.php : Error in getClientSubscriptionInfo." . $e->getMessage(), 734);
+        throw new Exception("report_function.inc.php : Error in getClientSubAssignInfoById." . $e->getMessage(), 734);
     }
 }
 

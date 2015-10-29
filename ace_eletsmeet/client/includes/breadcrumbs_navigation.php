@@ -23,8 +23,11 @@
     <?php if ($CLIENT_CONST_MODULE == "cl_user"){ ?>
         <li class="active">User</li>
     <?php }  ?>
-    
-  
+        
+    <?php if ($CLIENT_CONST_MODULE == "cl_subscription"){ ?>
+        <li class="active">Subscription</li>
+    <?php }  ?>        
+      
     <?php if ($CLIENT_CONST_MODULE == "cl_reports"){ ?>
         <li class="">Reports</li>
         <?php if ( ($CLIENT_CONST_PAGEID=="Meeting Report") || ($CLIENT_CONST_PAGEID=="Meeting List") ){ ?>

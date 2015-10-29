@@ -16,7 +16,7 @@ $strSubPlanId = trim($_REQUEST['PlId']);
 
 try
 {
-    $arrSubAssignDtls = getSubscriptionAssignInfo($strSubOrderId, $objDataHelper);
+    $arrSubAssignDtls = getClientSubAssignInfoById($strSubOrderId, $objDataHelper);
 }
 catch (Exception $e)
 {
@@ -57,8 +57,11 @@ $Plan_Name = trim($arrPlanDetails[0]['plan_name']);
                 {
                     switch ($arrSubAssignDtls[$intCntr]['subscription_status'])
                     {
+                       case "0" :
+                            $strSubStatus = "<span class=\"label label-sm label-warning\">Requestd</span>";
+                            break;
                         case "1" :
-                            $strSubStatus = "<span class=\"label label-sm label-warning\">Trial</span>";
+                            $strSubStatus = "<span class=\"label label-sm label-info\">Trial</span>";
                             break;
                         case "2" :
                             $strSubStatus = "<span class=\"label label-sm label-success\">Subscribe</span>";
@@ -66,8 +69,10 @@ $Plan_Name = trim($arrPlanDetails[0]['plan_name']);
                         case "3" :
                             $strSubStatus = "<span class=\"label label-sm label-danger\">Expired</span>";
                             break;
-                        default:
-                            $strSubStatus = "<span class=\"label label-sm label-grey\">Requested</span>";
+                         case "4" :
+                            $strSubStatus = "<span class=\"label label-sm label-grey\">Revoke</span>";
+                            break;
+                        default: break;
                     }
                     ?>
                     <tr>
