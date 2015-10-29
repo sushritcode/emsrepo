@@ -1,12 +1,6 @@
 <?php 
-	//display image start
-		$arrDisplayImg = getUserImage($strCK_user_id , $objDataHelper );
-                $displayImage = "<img class=\"nav-user-photo\" src=\"".AVATARS_PATH."avatar2.png\" alt=\"".$strCk_user_nick_name."'s Photo\" title=\"".$strCk_user_nick_name."'s Photo\" />";
-		if(count($arrDisplayImg) > 0 )
-			$displayImage = "<img class=\"nav-user-photo\"  src=\"data:image/jpeg;base64,". base64_encode($arrDisplayImg[0]['image']) ."\" alt=\"".$strCk_user_nick_name."'s Photo\" title=\"".$strCk_user_nick_name."'s Photo\"  />";
-	// display image stop 
-	
 ?>
+
 <script type="text/javascript">
     try 
     {
@@ -45,7 +39,7 @@
     <!-- #section:basics/navbar.dropdown -->
     <div class="navbar-buttons navbar-header pull-right" role="navigation">
         <ul class="nav ace-nav">
-            <li class="grey">
+<!--            <li class="grey">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                     <i class="ace-icon fa fa-tasks"></i>
                     <span class="badge badge-grey">4</span>
@@ -298,18 +292,19 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li>-->
+
             <!-- #section:basics/navbar.user_menu -->
             <li class="light-blue">
                 <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-		    <?php echo $displayImage;?>
+                    <img class="nav-user-photo" src="<?php echo AVATARS_PATH; ?>avatar2.png" alt="<?php echo $strCk_user_nick_name; ?>'s Photo" title="<?php echo $strCk_user_nick_name; ?>'s Photo" />
                     <span class="user-info"><small>Welcome,</small><?php echo $strCk_user_nick_name; ?></span>
                     <i class="ace-icon fa fa-caret-down"></i>
                 </a>
                 <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-                    <li>
+<!--                    <li>
                         <a href="#"><i class="ace-icon fa fa-cog"></i>Settings</a>
-                    </li>
+                    </li>-->
                     <li>
                         <a href="<?php echo PROFILE_URL; ?>"><i class="ace-icon fa fa-user"></i>Profile</a>
                     </li>
