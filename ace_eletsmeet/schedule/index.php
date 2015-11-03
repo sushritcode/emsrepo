@@ -188,30 +188,7 @@ else
 
         <!-- CSS n JS CONTENT AREA -->
         <?php include (INCLUDES_PATH . 'css_include.php'); ?>
-        <!-- CSS n JS CONTENT AREA -->
-<!--        <style>
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 10000;
-}
-
-.loading_modal{
-    border-radius: 5px;
-    left: 50%;
-    line-height: 200px;
-    margin-left: -150px;
-    position: fixed;
-    text-align: center;
-    top: 25%;
-    z-index: 10001;
-}
-        </style>-->
-        
+        <!-- CSS n JS CONTENT AREA -->        
     </head>
 
     <body class="no-skin">
@@ -551,8 +528,20 @@ else
 
                                     </div>
                                 <?php }else{ ?>
+                                    
+                                    <?php
+                                    if ($expPlanDtm != "")
+                                    {
+                                        $errorMsg = "Your subscribed plan has expired. Please contact support to subscribe.";
+                                    }
+                                    else
+                                    {
+                                        $errorMsg = "You are not subscribed to any plan. Please contact support to subscribe.";
+                                    }?>
+                                    
                                     <div class="alert alert-block alert-danger">
-                                        <strong >Sorry</strong>, Your subscribed plan has expired. Please contact support to subscribe.
+<!--                                        <strong >Sorry</strong>, Your subscribed plan has expired. Please contact support to subscribe.-->
+                                        <?php echo $errorMsg; ?>
                                     </div>
                                 <?php } ?>
 

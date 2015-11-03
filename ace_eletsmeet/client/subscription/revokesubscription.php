@@ -72,7 +72,7 @@ $Plan_Name = trim($arrPlanDetails[0]['plan_name']);
                 //update CSM
                  try
                 {
-                   $arrClientSubStatus = revokeClientSubscription($ClientSubStatus, $GMTDatetime, $strSetClient_ID, $SubOrderId, $SubPlanId, $objDataHelper);
+                   $arrClientSubStatus = updateClientSubscription($ClientSubStatus, $GMTDatetime, $strSetClient_ID, $SubOrderId, $SubPlanId, $objDataHelper);
                 }
                 catch(Exception $e)
                 {

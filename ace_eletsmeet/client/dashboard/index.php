@@ -132,9 +132,6 @@ $arrTotalMeetingArr = substr($arrTotalMeetingArr, 0, -1);
 //{
 //    throw new Exception("index.php : getFrequentInvitees Failed : " . $e->getMessage(), 1125);
 //}
-
-
- 
 ?>
 
 <!DOCTYPE html>

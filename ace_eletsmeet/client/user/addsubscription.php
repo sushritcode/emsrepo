@@ -26,6 +26,7 @@ catch (Exception $a)
 
 $db_userid = $arrUserDetails[0]['user_id'];
 $db_usename = $arrUserDetails[0]['user_name'];
+$db_user_timezone = $arrUserDetails[0]['timezones'];
     
 try
 {
@@ -72,12 +73,12 @@ if ((isset($_POST['userId'])) && (isset($_POST['txPassword'])) && (isset($_POST[
         }
         else
         {
-            $db_usertimezone = $arrUserDetails[0]['timezones'];
-            $gmt_datetime = GM_DATE;
-            $Type = "N";
-            $dateTime = timezoneConverter($Type, $gmt_datetime, $db_usertimezone);
-            $dtm = explode(SEPARATOR, $dateTime);
-            $local_datetime = $dtm[1];
+//            $db_usertimezone = $arrUserDetails[0]['timezones'];
+//            $gmt_datetime = GM_DATE;
+//            $Type = "N";
+//            $dateTime = timezoneConverter($Type, $gmt_datetime, $db_usertimezone);
+//            $dtm = explode(SEPARATOR, $dateTime);
+//            $local_datetime = $dtm[1];
             
             try
             {
@@ -115,10 +116,25 @@ if ((isset($_POST['userId'])) && (isset($_POST['txPassword'])) && (isset($_POST[
             $db_autorenewflag = $arrSubPlanDetails[0]['autorenew_flag'];    
             $db_consumednumberofsessions = $arrSubPlanDetails[0]['consumed_number_of_sessions'];    
             $db_consumedtalktimemins = $arrSubPlanDetails[0]['consumed_talk_time_mins'];    
-                
+               
+            if ($db_subscriptionstatus == 4)
+            {
+                $db_subscriptionstatus = 2;
+            }
+            else
+            {
+                $db_subscriptionstatus = $db_subscriptionstatus;
+            }
+            $gmt_datetime = GM_DATE;
+            $gmt_start_date = date("Y-m-d", strtotime(GM_DATE));
+            $Type = "N";
+            $dateTime = timezoneConverter($Type, $gmt_datetime, $db_user_timezone);
+            $dtm = explode(SEPARATOR, $dateTime);
+            $local_start_date = date("Y-m-d", strtotime($dtm[1]));
+            
             try
             {
-                $arrSubscDetails = insUserSubscriptionDetails($db_userid, $gmt_datetime, $db_subscriptionstartdategmt, $db_subscriptionenddategmt, $db_subscriptionstartdatelocal, $db_subscriptionend_date_local, $db_subscriptionstatus, $db_orderid, $db_planid, $db_planname, $db_plandesc, $db_planfor, $db_plantype, $db_numberofsessions, $db_numberofminspersessions, $db_planperiod, $db_numberofinvitee, $db_meetingrecording, $db_diskspace, $db_isfree, $db_plancostinr, $db_plancostoth, $db_concurrentsessions, $db_talktimemins, $db_autorenewflag, $db_consumednumberofsessions, $db_consumedtalktimemins,  $objDataHelper);
+                $arrSubscDetails = insUserSubscriptionDetails($db_userid, $gmt_datetime, $gmt_start_date, $db_subscriptionenddategmt, $local_start_date, $db_subscriptionend_date_local, $db_subscriptionstatus, $db_orderid, $db_planid, $db_planname, $db_plandesc, $db_planfor, $db_plantype, $db_numberofsessions, $db_numberofminspersessions, $db_planperiod, $db_numberofinvitee, $db_meetingrecording, $db_diskspace, $db_isfree, $db_plancostinr, $db_plancostoth, $db_concurrentsessions, $db_talktimemins, $db_autorenewflag, $db_consumednumberofsessions, $db_consumedtalktimemins,  $objDataHelper);
             }
             catch (Exception $a)
             {
@@ -128,6 +144,16 @@ if ((isset($_POST['userId'])) && (isset($_POST['txPassword'])) && (isset($_POST[
             $subsc_id = $arrSubscDetails[0]['@OUTPUT'];
             if ($subscStatus == 1)
             {
+                $ClientSubStatus= "2";
+                //update CSM
+                 try
+                {
+                   $arrClientSubStatus = updateClientSubscription($ClientSubStatus, $gmt_datetime, $strSetClient_ID, $db_orderid, $db_planid, $objDataHelper);
+                }
+                catch(Exception $e)
+                {
+                   throw new Exception("index.php : updInvitationStatus Failed : ".$e->getMessage() , 1126);
+                }
                   $stat = "1";
                   $msg = "Plan <b>"."$db_planname"."</b> successfully assigned to <b>"."$db_usename"."</b>.";
             }

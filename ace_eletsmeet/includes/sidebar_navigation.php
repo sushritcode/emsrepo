@@ -8,7 +8,7 @@ else
     $strDashBoardActiveClass= "";
 }
 
-if ($CONST_MODULE=="contact")
+if ($CONST_MODULE=="contacts")
 {
         $strContactsActiveClass= "active open";
 }
@@ -27,17 +27,7 @@ else
 }
 ?>
 
-<div class="">
-    <div class="main-container" id="main-container">
-        <script type="text/javascript">
-            try {
-                ace.settings.check('main-container', 'fixed')
-            } catch (e) {
-            }
-        </script>
 
-        <!-- #section:basics/sidebar -->
-        <div id="sidebar" class="sidebar                  responsive">
             <script type="text/javascript">
                 try {
                     ace.settings.check('sidebar', 'fixed')
@@ -222,6 +212,3 @@ else
                 } catch (e) {
                 }
             </script>
-        </div>
-    </div>
-</div>

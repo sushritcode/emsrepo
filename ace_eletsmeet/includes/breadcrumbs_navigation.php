@@ -32,17 +32,17 @@
         <?php } ?>
     <?php } ?>
     
-    <?php if ($CONST_MODULE == "contact"){ ?>
-        <li class="">Contact</li>
+    <?php if ($CONST_MODULE == "contacts"){ ?>
+        <li class="">Contacts</li>
         <?php if($CONST_PAGEID=="My Contacts") { ?>
-            <li class="active">My Contacts</li>
+            <li class="active"> My Contacts</li>
         <?php } ?>
         <?php if($CONST_PAGEID=="Contacts Import") { ?>
-            <li class="active">Import Addresses (csv)</li>
+            <li class="active"> Import Addresses (csv)</li>
         <?php } ?>
     <?php } ?>
             
-            <?php if ($CONST_MODULE == "join"){ ?>
+    <?php if ($CONST_MODULE == "join"){ ?>
         <li class="active">Join Meeting</li>
     <?php }  ?>
     

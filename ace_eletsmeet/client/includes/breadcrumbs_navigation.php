@@ -24,6 +24,13 @@
         <li class="active">User</li>
     <?php }  ?>
         
+    <?php if ($CLIENT_CONST_MODULE == "cl_contacts"){ ?>
+        <li class="active">Contacts</li>
+        <?php if  ($CLIENT_CONST_PAGEID=="My Contacts") { ?>
+            <li class="active"> My Contacts</li>
+        <?php } ?>
+    <?php }  ?>
+        
     <?php if ($CLIENT_CONST_MODULE == "cl_subscription"){ ?>
         <li class="active">Subscription</li>
     <?php }  ?>        

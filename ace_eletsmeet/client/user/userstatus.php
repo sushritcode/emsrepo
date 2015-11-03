@@ -58,51 +58,118 @@ switch($strUserStatus)
         
         if((is_array($arrUserDetls)) && (sizeof($arrUserDetls)) > 0)
         {      
-            $strDBUserId = trim($arrUserDetls[0]['user_id']);
-            $strDBOldUserStatus = trim($arrUserDetls[0]['login_enabled']);
-            $strDBUserName = trim($arrUserDetls[0]['user_name']);
-             
-            try
-            {
-               $arrUserStatus = updateUserStatus($strDBUserId, $strDBUserName, $strNewUserStatus, $strDBOldUserStatus, $objDataHelper);
-            }
-            catch(Exception $e)
-            {
-               throw new Exception("index.php : updInvitationStatus Failed : ".$e->getMessage() , 1126);
-            }
-            
-            $strUpdStatus = trim($arrUserStatus[0]['@STATUS']);
-            
-            if ($strUpdStatus == 1)
-            {
+                $strDBUserId = trim($arrUserDetls[0]['user_id']);
+                $strDBOldUserStatus = trim($arrUserDetls[0]['login_enabled']);
+                $strDBUserName = trim($arrUserDetls[0]['user_name']);
+
+                 $gmt_datetime = GM_DATE;
+
                 if ($strNewUserStatus == 3)
                 {
-                    $strLicense = 1;
-                    $OperationType = 4;
-                    $gmt_datetime = GM_DATE;
-                    try
-                    {
-                        $insClientLicense = insClientLicenseDetails($strSetClient_ID, $strLicense, $OperationType, $gmt_datetime, $objDataHelper);
-                    }
-                    catch (Exception $a)
-                    {
-                        throw new Exception("addsubscription.php : insOrderMaster : Error in adding order master." . $a->getMessage(), 613);
-                    }
-                    $inslicensestatus = $insClientLicense[0]['@STATUS'];                    
+                         try
+                        {
+                            $expPlan = isUserPlanActive($strDBUserId, $gmt_datetime, $objDataHelper);
+                        }
+                        catch (Exception $e)
+                        {
+                            throw new Exception("index.php : isPlanExpired Failed : " . $e->getMessage(), 1125);
+                        }
+                         $expPlanDtm = strtotime(trim($expPlan[0]["expGMT"]));
+                         
+                         if ($expPlanDtm != "")
+                        {
+                                  $stat = "0";
+                                  $msg = "You can not delete User <strong>&QUOT;"."$strDBUserName"."&QUOT;</strong> <br/>Please revoke the assigned plan first !";
+                        }
+                        else
+                        {
+                            try
+                            {
+                               $arrUserStatus = updateUserStatus($strDBUserId, $strDBUserName, $strNewUserStatus, $strDBOldUserStatus, $objDataHelper);
+                            }
+                            catch(Exception $e)
+                            {
+                               throw new Exception("index.php : updInvitationStatus Failed : ".$e->getMessage() , 1126);
+                            }
+
+                            $strUpdStatus = trim($arrUserStatus[0]['@STATUS']);
+
+                            if ($strUpdStatus == 1)
+                            {
+                                //if ($strNewUserStatus == 3)
+                                //{
+                                    $strLicense = 1;
+                                    $OperationType = 4;
+                                    $gmt_datetime = GM_DATE;
+                                    try
+                                    {
+                                        $insClientLicense = insClientLicenseDetails($strSetClient_ID, $strLicense, $OperationType, $gmt_datetime, $objDataHelper);
+                                    }
+                                    catch (Exception $a)
+                                    {
+                                        throw new Exception("addsubscription.php : insOrderMaster : Error in adding order master." . $a->getMessage(), 613);
+                                    }
+                                    $inslicensestatus = $insClientLicense[0]['@STATUS'];                    
+                                //}
+                                $stat = "1";
+                                $msg = "User <strong>&QUOT;"."$strDBUserName"."&QUOT;</strong> "."$MsgNewUserStatus"." successfully.";
+                            }
+                             else if ($strUpdStatus == 2)
+                            {
+                                $stat = "0";
+                                $msg = "Nothing is updated.";
+                            }
+                            else
+                            {
+                                $stat = "0";
+                                $msg = 'Error in while updating.';
+                            }
+                        }
                 }
-                $stat = "1";
-                $msg = "User <strong>&QUOT;"."$strDBUserName"."&QUOT;</strong> "."$MsgNewUserStatus"." successfully.";
-            }
-             else if ($strUpdStatus == 2)
-            {
-                $stat = "0";
-                $msg = "Nothing is updated.";
-            }
-            else
-            {
-                $stat = "0";
-                $msg = 'Error in while updating.';
-            }
+                else
+                {
+                        try
+                       {
+                          $arrUserStatus = updateUserStatus($strDBUserId, $strDBUserName, $strNewUserStatus, $strDBOldUserStatus, $objDataHelper);
+                       }
+                       catch(Exception $e)
+                       {
+                          throw new Exception("index.php : updInvitationStatus Failed : ".$e->getMessage() , 1126);
+                       }
+
+                       $strUpdStatus = trim($arrUserStatus[0]['@STATUS']);
+
+                       if ($strUpdStatus == 1)
+                       {
+//                           if ($strNewUserStatus == 3)
+//                           {
+//                               $strLicense = 1;
+//                               $OperationType = 4;
+//                               $gmt_datetime = GM_DATE;
+//                               try
+//                               {
+//                                   $insClientLicense = insClientLicenseDetails($strSetClient_ID, $strLicense, $OperationType, $gmt_datetime, $objDataHelper);
+//                               }
+//                               catch (Exception $a)
+//                               {
+//                                   throw new Exception("addsubscription.php : insOrderMaster : Error in adding order master." . $a->getMessage(), 613);
+//                               }
+//                               $inslicensestatus = $insClientLicense[0]['@STATUS'];                    
+//                           }
+                           $stat = "1";
+                           $msg = "User <strong>&QUOT;"."$strDBUserName"."&QUOT;</strong> "."$MsgNewUserStatus"." successfully.";
+                       }
+                        else if ($strUpdStatus == 2)
+                       {
+                           $stat = "0";
+                           $msg = "Nothing is updated.";
+                       }
+                       else
+                       {
+                           $stat = "0";
+                           $msg = 'Error in while updating.';
+                       }
+                }
         }
         else
        {
@@ -120,10 +187,10 @@ switch($strUserStatus)
 
     <div class="space-10"></div>
     <div id="success-msg" class="alert alert-success errorDisplay"></div> 
-
-    <div class="bootbox-body" id="update-user">
-        <div id="error-msg" class="alert alert-danger errorDisplay"></div>
-        <div class="space-4"></div>
+    <div id="error-msg" class="alert alert-danger errorDisplay"></div>
+    <div class="space-4"></div>
+        
+    <div class="bootbox-body" id="update-user">    
         <p> Are you sure, you want to <strong>&QUOT;<?php echo $MsgUserStatus; ?>&QUOT;</strong> the user <strong>&QUOT;<?php echo $strUserName; ?>&QUOT;</strong> ?</p>
     </div>
 </div>
@@ -163,6 +230,8 @@ switch($strUserStatus)
                 {
                     $("#error-msg").html(html[1]);
                     $("#error-msg").css({"display":"block"});
+                    $("#update-user").addClass("errorDisplay");
+                    $("#update-user-btn").addClass("errorDisplay");
                     return false;
                 }
             });
