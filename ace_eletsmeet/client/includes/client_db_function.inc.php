@@ -792,7 +792,7 @@ function isClientEmailIdExists($email_address, $dataHelper) {
 
     try
     {
-        $strSqlStatement = "SELECT client_id, client_email_address FROM client_details WHERE client_email_address='" . trim($email_address) . "' AND status = '1'";
+        $strSqlStatement = "SELECT client_id, client_email_address FROM client_login_details WHERE client_email_address='" . trim($email_address) . "' AND client_login_enabled = '1'";
         $arrAuthResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrAuthResult;
     }

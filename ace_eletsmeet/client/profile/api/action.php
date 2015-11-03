@@ -8,10 +8,10 @@ require_once(CLIENT_DBS_PATH . 'objDataHelper.php');
 require_once(CLIENT_INCLUDES_PATH . 'client_authfunc.inc.php');
 $CLIENT_CONST_MODULE = 'cl_profile';
 $CLIENT_CONST_PAGEID = 'Client Profile';
-require_once(CLIENT_INCLUDES_PATH . 'client_authorize.inc.php');
+//require_once(CLIENT_INCLUDES_PATH . 'client_authorize.inc.php');
 require_once(CLIENT_INCLUDES_PATH . 'client_db_function.inc.php');
 require_once(CLIENT_INCLUDES_PATH . 'profile_function.inc.php');
-//require_once(INCLUDES_PATH . 'mail_common_function.inc.php');
+require_once(INCLUDES_PATH . 'mail_common_function.inc.php');
 
 ////$strSessionVal = $_SESSION[CLIENT_SESSION_NAME];
 //$arrSessions = explode(chr(5), $strSessionVal);
@@ -23,12 +23,14 @@ if (isset($_REQUEST["action"]))
     switch ($_REQUEST["action"])
     {
         case "reset":
+	    require_once(CLIENT_INCLUDES_PATH . 'client_authorize.inc.php');
             $formMaps = client_profile_form_table_map();
             $updateparams = getUpdateQueryString($_REQUEST, $formMaps);
             $result = updateClientProfile($updateparams, $objDataHelper, $strSetClient_ID, $_REQUEST["action"]);
             echo $result;
             break;
         case "resetpwd":
+	    require_once(CLIENT_INCLUDES_PATH . 'client_authorize.inc.php');
             $formMaps = client_profile_form_table_map();
             $updateparams = getUpdateQueryString($_REQUEST, $formMaps);
             $result = updateClientProfile($updateparams, $objDataHelper, $strSetClient_ID, $_REQUEST["action"]);

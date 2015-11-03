@@ -384,12 +384,12 @@ function forgotPwd($objDataHelper)
 	} 
 	catch (Exception $a) 
 	{
-		return "0";exit;
+		return "04";exit;
 	}
 	if (is_array($arrIsValidEmailResult) && sizeof($arrIsValidEmailResult) > 0) 
 	{
-		$userId = $arrIsValidEmailResult[0]['user_id'];
-		$email_address = $arrIsValidEmailResult[0]['email_address'];
+		$userId = $arrIsValidEmailResult[0]['client_id'];
+		$email_address = $arrIsValidEmailResult[0]['client_email_address'];
 		$currentTime = GM_DATE;
 		$strTimeStamp = strtotime($currentTime);
 		$Token = md5($email_address . ":" . $strTimeStamp . ":" . REG_SECRET_KEY);
@@ -405,7 +405,7 @@ function forgotPwd($objDataHelper)
 				} 
 				catch (Exception $e) 
 				{
-					return "0";exit;
+					return "03";exit;
 					throw new Exception("index.php : deleteRequestPwd : Error in deleting" . $a->getMessage(), 61333333);
 				}
 			}
@@ -415,28 +415,28 @@ function forgotPwd($objDataHelper)
 			} 
 			catch (Exception $e) 
 			{
-				return "0";exit;
+				return "02";exit;
 				throw new Exception("index.php : addPwdRequestDtm : Error in adding pwdDetails" . $a->getMessage(), 61333333);
 			}
 		} catch (Exception $e) 
 		{
-			return "0";exit;
+			return "01";exit;
 			throw new Exception("index.php : getRequestPwdDetails : Error in getting details" . $a->getMessage(), 61333333);
 		}
 
 		try
-		{	
+		{
 			resetPasswordMail($email_address, $ResetPwdData, CONST_NOREPLY_EID);
 		}
 		catch (Exception $e)
 		{
-			return "0";exit;
+			return "05";exit;
 			throw new Exception("index.php : resetPasswordMail : Error in password reset".$a->getMessage(), 61333333);
 		}
 	} 
 	else 
 	{
-		return "0";exit;
+		return "6";exit;// invalid Email Adress / User Id
 	}
 	return "1";
 }
