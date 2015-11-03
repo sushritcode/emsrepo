@@ -9,7 +9,6 @@ $CLIENT_CONST_MODULE = 'cl_home';
 $CLIENT_CONST_PAGEID = 'Home';
 require_once(CLIENT_INCLUDES_PATH . 'client_authorize.inc.php');
 require_once(CLIENT_INCLUDES_PATH . 'client_db_function.inc.php');
-require_once(CLIENT_INCLUDES_PATH . 'mail_common_function.inc.php');
 
 $Login_IP_Address = $_SERVER['REMOTE_ADDR'];
 
