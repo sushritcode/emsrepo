@@ -4,7 +4,7 @@ require_once(CLASSES_PATH.'error.inc.php');
 require_once(DBS_PATH.'DataHelper.php');
 require_once(DBS_PATH.'objDataHelper.php');
 require_once(INCLUDES_PATH.'cm_authfunc.inc.php');
-$CONST_MODULE = 'Import';
+$CONST_MODULE = 'contacts';
 $CONST_PAGEID = 'Contacts Import';
 require_once(INCLUDES_PATH.'cm_authorize.inc.php');
 require_once(INCLUDES_PATH.'common_function.inc.php');
@@ -268,7 +268,16 @@ for($i=0;$i<count($arrGroups);$i++)
 			    <img src="<?php echo IMG_PATH ?>loading.gif" style="position: relative; top: 30%; left: 50%;"></img>
 			</div>
                         <div class="page-header">
-			  	<div class="row" id="alert" style="display:none;">
+                            <h1>
+                                Dashboard<small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp;<?php echo $CONST_PAGEID?></small>
+                            </h1>
+                        </div>
+                        <!-- PAGE HEADER -->
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <!-- PAGE CONTENT START -->
+                                <div class="row" id="alert" style="display:none;">
 					<div class="col-sm-12">
 						<div id="succ" class="col-sm-12 alert alert-block alert-success" style="display:none;">
 							<div class="ace-icon fa fa-bullhorn fa fa-check" style="font-weight: bold;">
@@ -282,16 +291,7 @@ for($i=0;$i<count($arrGroups);$i++)
 						</div>
 					</div>
 				</div>
-				<div class="space-20"></div>
-                            <h1>
-                                Dashboard<small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp;<?php echo $CONST_PAGEID?></small>
-                            </h1>
-                        </div>
-                        <!-- PAGE HEADER -->
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <!-- PAGE CONTENT START -->
+				
 					<div id="ajaxcontainer">
 
 			    <div id="header"><div id="header_left"></div>

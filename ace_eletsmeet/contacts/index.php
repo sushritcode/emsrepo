@@ -4,7 +4,7 @@ require_once(CLASSES_PATH.'error.inc.php');
 require_once(DBS_PATH.'DataHelper.php');
 require_once(DBS_PATH.'objDataHelper.php');
 require_once(INCLUDES_PATH.'cm_authfunc.inc.php');
-$CONST_MODULE = 'Contacts';
+$CONST_MODULE = 'contacts';
 $CONST_PAGEID = 'My Contacts';
 require_once(INCLUDES_PATH.'cm_authorize.inc.php');
 require_once(INCLUDES_PATH.'common_function.inc.php');
@@ -77,7 +77,7 @@ $optionCountry ="";
                     
                     <!-- BREADCRUMBS N SEARCH BAR START -->
                     <div class="breadcrumbs" id="breadcrumbs">
-                        
+                        <?php include (INCLUDES_PATH . 'breadcrumbs_navigation.php'); ?>
                     </div>
                     <!-- BREADCRUMBS N SEARCH BAR END -->                    
                    
@@ -89,12 +89,20 @@ $optionCountry ="";
                          <!-- SETTING CONTAINER END -->
                         
                         <!-- PAGE HEADER -->
-			<div id='ajax_loader' style="width: 100%; height: 100%; position: fixed; left: 0px; top: 0px; background: transparent none repeat scroll 0% 0%; z-index: 20000;display:none;">
+                        <div class="page-header">
+                            <h1>
+                                Contacts <small><i class="ace-icon fa fa-angle-double-right"></i>&nbsp; my contacts</small>
+                            </h1>
+                        </div>
+                        <!-- PAGE HEADER -->
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <!-- PAGE CONTENT START -->
+                                <div id='ajax_loader' style="width: 100%; height: 100%; position: fixed; left: 0px; top: 0px; background: transparent none repeat scroll 0% 0%; z-index: 20000;display:none;">
 			    <img src="<?php echo IMG_PATH ?>loading.gif" style="position: relative; top: 30%; left: 50%;"></img>
 			</div>
-
-                        <div class="page-header">
-				<div class="row" id="alert" style="display:none;">
+                                <div class="row" id="alert" style="display:none;">
 					<div class="col-sm-12">
 						<div id="succ" class="col-sm-12 alert alert-block alert-success" style="display:none;">
 							<div class="ace-icon fa fa-bullhorn fa fa-check" style="font-weight: bold;">
@@ -108,16 +116,7 @@ $optionCountry ="";
 						</div>
 					</div>
 				</div>
-				<div class="space-20"></div>
-                            <h1>
-                                <?php echo $CONST_MODULE?><small><i class="ace-icon fa fa-angle-double-right"></i><?php echo $CONST_PAGEID;?></small>
-                            </h1>
-                        </div>
-                        <!-- PAGE HEADER -->
-
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <!-- PAGE CONTENT START -->
+                                
                                     <div class="clearfix">
                                         <div class="pull-right tableTools-container"></div>
                                         <div class="">
