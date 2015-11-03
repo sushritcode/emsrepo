@@ -78,7 +78,7 @@ function getCountryNamebyIdd($idd_code, $dataHelper) {
 function getAllIndustryType($dataHelper) {
     if (!is_object($dataHelper))
     {
-        throw new Exception("common_function.inc.php : isUserEmailAddressExists : DataHelper Object did not instantiate", 104);
+        throw new Exception("common_function.inc.php : getAllIndustryType : DataHelper Object did not instantiate", 104);
     }
     try
     {
@@ -802,87 +802,6 @@ function isClientEmailIdExists($email_address, $dataHelper) {
     }
 }
 
-function getRequestPwdDetails($client_id, $email_address, $dataHelper) {
-    if (!is_object($dataHelper))
-    {
-        throw new Exception("client_db_function.inc.php : getRequestPwdDetails : DataHelper Object did not instantiate", 104);
-    }
-
-    if (strlen(trim($email_address)) <= 0)
-    {
-        throw new Exception("client_db_function.inc.php: getRequestPwdDetails : Missing Parameter email_address.", 141);
-    }
-
-    try
-    {
-        $strSqlStatement = "SELECT email_address, request_datetime FROM password_request_details "
-                . "WHERE email_address='" . trim($email_address) . "' "
-                . "AND requested_by ='" . trim($client_id) . "' AND request_id = (SELECT MAX(request_id) FROM password_request_details) GROUP BY email_address";
-        $arrPwdResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
-        return $arrPwdResult;
-    }
-    catch (Exception $e)
-    {
-        throw new Exception("client_db_function.inc.php : getRequestPwdDetails : Could not fetch records : " . $e->getMessage(), 144);
-    }
-}
-
-function addPwdRequestDtm($client_id, $email_address, $time_stamp, $dataHelper) {
-    if (!is_object($dataHelper))
-    {
-        throw new Exception("client_db_function.inc.php : addPwdRequestDtm : DataHelper Object did not instantiate", 104);
-    }
-
-    if (strlen(trim($client_id)) <= 0)
-    {
-        throw new Exception("client_db_function.inc.php: addPwdRequestDtm : Missing Parameter user_id.", 141);
-    }
-
-    if (strlen(trim($email_address)) <= 0)
-    {
-        throw new Exception("client_db_function.inc.php: addPwdRequestDtm : Missing Parameter email_address.", 141);
-    }
-
-    if (strlen(trim($time_stamp)) <= 0)
-    {
-        throw new Exception("client_db_function.inc.php: addPwdRequestDtm : Missing Parameter time_stamp.", 141);
-    }
-
-    try
-    {
-        $strSqlStatement = "INSERT INTO password_request_details(requested_by, email_address, request_datetime) VALUES('" . trim($client_id) . "', '" . trim($email_address) . "', '" . trim($time_stamp) . "')";
-        $arrPutRecord = $dataHelper->putRecords("QR", $strSqlStatement);
-        return $arrPutRecord;
-    }
-    catch (Exception $e)
-    {
-        throw new Exception("client_db_function.inc.php : addPwdRequestDtm : Could not fetch records : " . $e->getMessage(), 144);
-    }
-}
-
-function deleteRequestPwd($client_id, $email_address, $dataHelper) {
-    if (!is_object($dataHelper))
-    {
-        throw new Exception("client_db_function.inc.php : deleteRequestPwd : DataHelper Object did not instantiate", 104);
-    }
-
-    if (strlen(trim($email_address)) <= 0)
-    {
-        throw new Exception("client_db_function.inc.php: deleteRequestPwd : Missing Parameter email_address.", 141);
-    }
-
-    try
-    {
-        $strSqlStatement = "DELETE FROM password_request_details WHERE email_address='" . trim($email_address) . "' AND requested_by = '" . trim($client_id) . "'";
-        $arrPwdResult = $dataHelper->putRecords("QR", $strSqlStatement);
-        return $arrPwdResult;
-    }
-    catch (Exception $e)
-    {
-        throw new Exception("client_db_function.inc.php : deleteRequestPwd : Could not fetch records : " . $e->getMessage(), 144);
-    }
-}
-
 function getLicenseDetailsByClient($client_id, $dataHelper) {
 
     if (!is_object($dataHelper))
@@ -1544,3 +1463,4 @@ function isUserPlanActive($user_id, $datetime, $dataHelper) {
         throw new Exception("schedule_function.inc.php : isPlanExpired Failed : " . $e->getMessage(), 1105);
     }
 }
+

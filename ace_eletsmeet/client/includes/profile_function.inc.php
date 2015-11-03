@@ -246,87 +246,6 @@ function updateUserImage($user_id , $fileContents , $objDataHelper)
 	}
 }
 
-
-/* -----------------------------------------------------------------------------
-   Function Name : forgotPwd
-Purpose       : To update the users password from loagin box
-Parameters    : 
-Returns       :
-Calls         : 
-Called By     :
-Author        : Sushrit
-Created  on   : 09-Sept-2015
-Modified By   :
-Modified on   :
------------------------------------------------------------------------------- */
-
-function forgotPwd($objDataHelper)
-{
-
-	$forgot_email = trim($_REQUEST['forgot_email']);
-	try 
-	{
-		$arrIsValidEmailResult = isUserEmailAddressExists($forgot_email, $objDataHelper);
-	} 
-	catch (Exception $a) 
-	{
-		return "0";exit;
-	}
-	if (is_array($arrIsValidEmailResult) && sizeof($arrIsValidEmailResult) > 0) 
-	{
-		$userId = $arrIsValidEmailResult[0]['user_id'];
-		$email_address = $arrIsValidEmailResult[0]['email_address'];
-		$currentTime = GM_DATE;
-		$strTimeStamp = strtotime($currentTime);
-		$Token = md5($email_address . ":" . $strTimeStamp . ":" . REG_SECRET_KEY);
-		$ResetPwdData = "em=" . $email_address . "&ms=" . $strTimeStamp . "&cd=" . $Token;
-		try 
-		{
-			$arrPasswordRequestDtls = getPasswordRequestDtls($email_address, $objDataHelper);
-			if (is_array($arrPasswordRequestDtls) && sizeof($arrPasswordRequestDtls) > 0) 
-			{
-				try 
-				{
-					deletePasswordRequestDtls($email_address, $objDataHelper);
-				} 
-				catch (Exception $e) 
-				{
-					return "0";exit;
-					throw new Exception("index.php : deleteRequestPwd : Error in deleting" . $a->getMessage(), 61333333);
-				}
-			}
-			try 
-			{
-				$insertPwd = addPasswordRequestDtls($userId, $email_address, $currentTime, $objDataHelper);
-			} 
-			catch (Exception $e) 
-			{
-				return "0";exit;
-				throw new Exception("index.php : addPwdRequestDtm : Error in adding pwdDetails" . $a->getMessage(), 61333333);
-			}
-		} catch (Exception $e) 
-		{
-			return "0";exit;
-			throw new Exception("index.php : getRequestPwdDetails : Error in getting details" . $a->getMessage(), 61333333);
-		}
-
-		try
-		{	
-			resetPasswordMail($email_address, $ResetPwdData, CONST_NOREPLY_EID);
-		}
-		catch (Exception $e)
-		{
-			return "0";exit;
-			throw new Exception("index.php : resetPasswordMail : Error in password reset".$a->getMessage(), 61333333);
-		}
-	} 
-	else 
-	{
-		return "0";exit;
-	}
-	return "1";
-}
-
 /* -----------------------------------------------------------------------------
   Function Name : getRequestPwdDetails
   Purpose       : To get password details from password_request_details table.
@@ -440,4 +359,84 @@ function deleteRequestPwd($email_address, $dataHelper)
     {
         throw new Exception("cm_authfunc.inc.php : deleteRequestPwd : Could not fetch records : ".$e->getMessage(), 144);
     }
+}
+
+/* -----------------------------------------------------------------------------
+   Function Name : forgotPwd
+Purpose       : To update the users password from loagin box
+Parameters    : 
+Returns       :
+Calls         : 
+Called By     :
+Author        : Sushrit
+Created  on   : 09-Sept-2015
+Modified By   :
+Modified on   :
+------------------------------------------------------------------------------ */
+
+function forgotPwd($objDataHelper)
+{
+
+	$forgot_email = trim($_REQUEST['forgot_email']);
+	try 
+	{
+		$arrIsValidEmailResult = isClientEmailIdExists($forgot_email, $objDataHelper);
+	} 
+	catch (Exception $a) 
+	{
+		return "0";exit;
+	}
+	if (is_array($arrIsValidEmailResult) && sizeof($arrIsValidEmailResult) > 0) 
+	{
+		$userId = $arrIsValidEmailResult[0]['user_id'];
+		$email_address = $arrIsValidEmailResult[0]['email_address'];
+		$currentTime = GM_DATE;
+		$strTimeStamp = strtotime($currentTime);
+		$Token = md5($email_address . ":" . $strTimeStamp . ":" . REG_SECRET_KEY);
+		$ResetPwdData = "em=" . $email_address . "&ms=" . $strTimeStamp . "&cd=" . $Token;
+		try 
+		{
+			$arrPasswordRequestDtls = getPasswordRequestDtls($email_address, $objDataHelper);
+			if (is_array($arrPasswordRequestDtls) && sizeof($arrPasswordRequestDtls) > 0) 
+			{
+				try 
+				{
+					deletePasswordRequestDtls($email_address, $objDataHelper);
+				} 
+				catch (Exception $e) 
+				{
+					return "0";exit;
+					throw new Exception("index.php : deleteRequestPwd : Error in deleting" . $a->getMessage(), 61333333);
+				}
+			}
+			try 
+			{
+				$insertPwd = addPasswordRequestDtls($userId, $email_address, $currentTime, $objDataHelper);
+			} 
+			catch (Exception $e) 
+			{
+				return "0";exit;
+				throw new Exception("index.php : addPwdRequestDtm : Error in adding pwdDetails" . $a->getMessage(), 61333333);
+			}
+		} catch (Exception $e) 
+		{
+			return "0";exit;
+			throw new Exception("index.php : getRequestPwdDetails : Error in getting details" . $a->getMessage(), 61333333);
+		}
+
+		try
+		{	
+			resetPasswordMail($email_address, $ResetPwdData, CONST_NOREPLY_EID);
+		}
+		catch (Exception $e)
+		{
+			return "0";exit;
+			throw new Exception("index.php : resetPasswordMail : Error in password reset".$a->getMessage(), 61333333);
+		}
+	} 
+	else 
+	{
+		return "0";exit;
+	}
+	return "1";
 }
