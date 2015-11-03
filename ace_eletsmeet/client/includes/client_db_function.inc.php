@@ -1505,7 +1505,7 @@ function revokeUserSubscription($subscription_enddate, $subscription_status, $ch
   Modified By   :
   Modified on   :
   ------------------------------------------------------------------------------ */
-function revokeClientSubscription($subscription_status, $change_datetime, $client_id, $orderid, $planid, $dataHelper) {
+function updateClientSubscription($subscription_status, $change_datetime, $client_id, $orderid, $planid, $dataHelper) {
     if (!is_object($dataHelper))
     {
         throw new Exception("client_db_function.inc.php : revokeClientSubscription : DataHelper Object did not instantiate", 104);
@@ -1518,7 +1518,7 @@ function revokeClientSubscription($subscription_status, $change_datetime, $clien
             $dataHelper->setParam("'" . $orderid . "'", "I");
             $dataHelper->setParam("'" . $planid . "'", "I");
             $dataHelper->setParam("STATUS", "O");
-            $arrUpdResult = $dataHelper->putRecords("SP", 'RevokeClientSubscription');
+            $arrUpdResult = $dataHelper->putRecords("SP", 'UpdateClientSubscription');
             $dataHelper->clearParams();
             return $arrUpdResult;
         }
@@ -1526,4 +1526,21 @@ function revokeClientSubscription($subscription_status, $change_datetime, $clien
         {
             throw new Exception("client_db_function.inc.php : revokeClientSubscription : Failed : " . $e->getMessage(), 145);
         }
+}
+
+function isUserPlanActive($user_id, $datetime, $dataHelper) {
+    if (!is_object($dataHelper))
+    {
+        throw new Exception("schedule_function.inc.php : isPlanExpired : DataHelper Object did not instantiate", 104);
+    }
+    try
+    {
+        $sqlStatement = "SELECT MAX( subscription_end_date_gmt ) AS expGMT FROM subscription_master WHERE user_id =  '" . trim($user_id) . "' AND ((plan_type =  'S' AND consumed_number_of_sessions = number_of_sessions) OR (plan_type =  'T' AND consumed_talk_time_mins = talk_time_mins) OR (plan_type =  'U' AND subscription_end_date_gmt >=  '" . trim($datetime) . "') OR subscription_end_date_gmt >=  '" . trim($datetime) . "')";
+        $arrResult = $dataHelper->fetchRecords("QR", $sqlStatement);
+        return $arrResult;
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("schedule_function.inc.php : isPlanExpired Failed : " . $e->getMessage(), 1105);
+    }
 }
