@@ -21,17 +21,23 @@ try
 
     $strEmail = $ret_ar["em"];
     $strTimeStamp = $ret_ar["ms"];
-    $strToken = $ret_ar["cd"];
+    $strType = substr($ret_ar["cd"],strlen($ret_ar["cd"])-1,1);
+    $strToken = substr($ret_ar["cd"],0,strlen($ret_ar["cd"])-1);
+    $insert_id = $ret_ar['in'];
+//    $strToken = $ret_ar["cd"];
     $currentTime = time();
     $validTime = strtotime('+1 day', $strTimeStamp);
     if ($currentTime <= $validTime)
     {
-        $arrRequestPwdDetails = getRequestPwdDetails($strEmail, $objDataHelper);
+        $arrRequestPwdDetails = getPasswordRequestDtlsById($strEmail, $insert_id, $objDataHelper);
 
         if ($arrRequestPwdDetails)
         {
             $emailId = $arrRequestPwdDetails[0]['email_address'];
             $strRequestDateTime = $arrRequestPwdDetails[0]['request_datetime'];
+	    $reqType = $arrRequestPwdDetails[0]['type'];
+	    $strRequestedBy = $arrRequestPwdDetails[0]['requested_by'];
+	    $strType = $arrRequestPwdDetails[0]['type'];
             $strTimeStamp = strtotime($strRequestDateTime);
             $newToken = md5($strEmail . ":" . $strTimeStamp . ":" . REG_SECRET_KEY);
             //echo $emailId." ".$timeStamp." ".$newToken." ".$strToken; exit;
@@ -61,12 +67,11 @@ try
                     {
                         try
                         {
-                            $arrUpdPwdResult = resetUserPassword($strEmail, MD5($new_password), $objDataHelper);
+                            $arrUpdPwdResult = resetUserPassword($strEmail, MD5($new_password), $reqType , $strRequestedBy, $objDataHelper);
                             if ($arrUpdPwdResult)
                             {
                                 $success = 'Password changed successfully. Click here to <a href="' . $SITE_ROOT . '">SIGN IN.</a>';
-                                $deleteReqPwd = deleteRequestPwd($strEmail, $objDataHelper);
-                            }
+                                $deleteReqPwd = deletePasswordRequestDtls($strEmail, $strRequestedBy, $objDataHelper);                            }
                         }
                         catch (Exception $a)
                         {

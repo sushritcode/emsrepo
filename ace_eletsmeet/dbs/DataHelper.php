@@ -29,6 +29,7 @@ Class DataHelper
 	var $databasename;
 	var $port;
                   var $affectedRows = 0;
+		  var $last_insert_id = -1;
 	
 	/**
 	* Function Name			: constructor for the Class 
@@ -214,7 +215,9 @@ Class DataHelper
 			{
 				//Start for Sql Query  Processing 
 				$qryResult = $this->objmysqli->query($sqlstatement);
-                                                                        $this->affectedRows = mysqli_affected_rows($this->objmysqli);
+                                $this->affectedRows = mysqli_affected_rows($this->objmysqli);
+				$this->last_insert_id =  mysqli_insert_id ($this->objmysqli);
+				
 				if($qryResult == FALSE)
 				{
 					throw new Exception("Insert/Update failed ".$this->objmysqli->error,108);

@@ -1,5 +1,39 @@
 <?php
 
+
+/* -----------------------------------------------------------------------------
+   Function Name : getPasswordRequestDetailsById
+   Purpose       : To get password request details from password_request_details table.
+   Parameters    : email_address, Datahelper
+   Returns       : array (with email_address, request_datetime)
+   Calls         : datahelper.fetchRecords
+   Called By     :
+   Author        : Mitesh Shah
+   Created  on   : 19-July-2015
+   Modified By   :
+   Modified on   :
+   ------------------------------------------------------------------------------ */
+
+function getPasswordRequestDtlsById($email_address, $id, $dataHelper) {
+	if (!is_object($dataHelper)) {
+		throw new Exception("profile_function.inc.php : getPasswordRequestDetails : DataHelper Object did not instantiate", 104);
+	}
+
+	if (strlen(trim($email_address)) <= 0) {
+		throw new Exception("profile_function.inc.php: getPasswordRequestDetails : Missing Parameter email_address.", 141);
+	}
+
+	try {
+		$strSqlStatement = "SELECT * FROM password_request_details WHERE email_address='" . trim($email_address) . "' AND request_id = '".trim($id)."'";
+		$arrPwdResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
+		return $arrPwdResult;
+	} catch (Exception $e) {
+		throw new Exception("cm_authfunc.inc.php : getPasswordRequestDetails : Could not fetch records : " . $e->getMessage(), 144);
+	}
+}
+
+
+
 /* -----------------------------------------------------------------------------
    Function Name : getPasswordRequestDetails
    Purpose       : To get password request details from password_request_details table.
@@ -13,7 +47,7 @@
    Modified on   :
    ------------------------------------------------------------------------------ */
 
-function getPasswordRequestDtls($email_address, $dataHelper) {
+function getPasswordRequestDtls($email_address, $strRequestedBy, $dataHelper) {
 	if (!is_object($dataHelper)) {
 		throw new Exception("profile_function.inc.php : getPasswordRequestDetails : DataHelper Object did not instantiate", 104);
 	}
@@ -23,7 +57,7 @@ function getPasswordRequestDtls($email_address, $dataHelper) {
 	}
 
 	try {
-		$strSqlStatement = "SELECT email_address, request_datetime FROM password_request_details WHERE email_address='" . trim($email_address) . "' AND request_id = (SELECT MAX(request_id) FROM password_request_details) GROUP BY email_address";
+		$strSqlStatement = "SELECT * FROM password_request_details WHERE email_address='" . trim($email_address) . "' AND requested_by ='".trim($strRequestedBy)."'  AND request_id = (SELECT MAX(request_id) FROM password_request_details) GROUP BY email_address";
 		$arrPwdResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
 		return $arrPwdResult;
 	} catch (Exception $e) {
@@ -44,7 +78,7 @@ Modified By   :
 Modified on   :
 ------------------------------------------------------------------------------ */
 
-function deletePasswordRequestDtls($email_address, $dataHelper) {
+function deletePasswordRequestDtls($email_address, $strRequestedBy, $dataHelper) {
 	if (!is_object($dataHelper)) {
 		throw new Exception("profile_function.inc.php : deletePasswordRequest : DataHelper Object did not instantiate", 104);
 	}
@@ -54,7 +88,7 @@ function deletePasswordRequestDtls($email_address, $dataHelper) {
 	}
 
 	try {
-		$strSqlStatement = "DELETE FROM password_request_details WHERE email_address='" . trim($email_address) . "'";
+		$strSqlStatement = "DELETE FROM password_request_details WHERE email_address='" . trim($email_address) . "' AND requested_by = '".trim($strRequestedBy)."'";
 		$arrPwdResult = $dataHelper->putRecords("QR", $strSqlStatement);
 		return $arrPwdResult;
 	} catch (Exception $e) {
@@ -93,7 +127,7 @@ function addPasswordRequestDtls($user_id, $email_address, $time_stamp, $dataHelp
 	}
 
 	try {
-		$strSqlStatement = "INSERT INTO password_request_details(requested_by, email_address, request_datetime) VALUES('" . $user_id . "', '" . $email_address . "', '" . $time_stamp . "')";
+		$strSqlStatement = "INSERT INTO password_request_details(requested_by, email_address, request_datetime, type) VALUES('" . $user_id . "', '" . $email_address . "', '" . $time_stamp . "','u')";
 		$arrPutRecord = $dataHelper->putRecords("QR", $strSqlStatement);
 		return $arrPutRecord;
 	} catch (Exception $e) {
@@ -261,15 +295,15 @@ function forgotPwd($objDataHelper)
 		$currentTime = GM_DATE;
 		$strTimeStamp = strtotime($currentTime);
 		$Token = md5($email_address . ":" . $strTimeStamp . ":" . REG_SECRET_KEY);
-		$ResetPwdData = "em=" . $email_address . "&ms=" . $strTimeStamp . "&cd=" . $Token;
+		$ResetPwdData = "em=" . $email_address . "&ms=" . $strTimeStamp . "&cd=" . $Token.'u';
 		try 
 		{
-			$arrPasswordRequestDtls = getPasswordRequestDtls($email_address, $objDataHelper);
+			$arrPasswordRequestDtls = getPasswordRequestDtls($email_address, $userId, $objDataHelper);
 			if (is_array($arrPasswordRequestDtls) && sizeof($arrPasswordRequestDtls) > 0) 
 			{
 				try 
 				{
-					deletePasswordRequestDtls($email_address, $objDataHelper);
+					deletePasswordRequestDtls($email_address, $userId, $objDataHelper);
 				} 
 				catch (Exception $e) 
 				{
@@ -293,7 +327,8 @@ function forgotPwd($objDataHelper)
 		}
 
 		try
-		{	
+		{
+			$ResetPwdData.="&in=".$objDataHelper->last_insert_id;
 			resetPasswordMail($email_address, $ResetPwdData, CONST_NOREPLY_EID);
 		}
 		catch (Exception $e)
@@ -309,42 +344,6 @@ function forgotPwd($objDataHelper)
 	return "1";
 }
 
-/* -----------------------------------------------------------------------------
-  Function Name : getRequestPwdDetails
-  Purpose       : To get password details from password_request_details table.
-  Parameters    : email_address, Datahelper
-  Returns       : array (with email_address, request_datetime)
-  Calls         : datahelper.fetchRecords
-  Called By     :
-  Author        : Priti Mahajan
-  Created  on   : 20-July-2012
-  Modified By   :
-  Modified on   :
-  ------------------------------------------------------------------------------ */
-
-function getRequestPwdDetails($email_address, $dataHelper)
-{
-    if (!is_object($dataHelper))
-    {
-        throw new Exception("profile_authfunc.inc.php : getRequestPwdDetails : DataHelper Object did not instantiate", 104);
-    }
-
-    if (strlen(trim($email_address)) <= 0)
-    {
-        throw new Exception("profile_authfunc.inc.php: getRequestPwdDetails : Missing Parameter email_address.", 141);
-    }
-
-    try
-    {
-        $strSqlStatement = "SELECT email_address, request_datetime FROM password_request_details WHERE email_address='".trim($email_address)."' AND request_id = (SELECT MAX(request_id) FROM password_request_details) GROUP BY email_address";
-        $arrPwdResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
-        return $arrPwdResult;
-    }
-    catch (Exception $e)
-    {
-        throw new Exception("cm_authfunc.inc.php : getRequestPwdDetails : Could not fetch records : ".$e->getMessage(), 144);
-    }
-}
 
 /* -----------------------------------------------------------------------------
   Function Name : resetUserPassword
@@ -359,68 +358,36 @@ function getRequestPwdDetails($email_address, $dataHelper)
   Modified on   :
   ------------------------------------------------------------------------------ */
 
-function resetUserPassword($email_address, $new_password, $dataHelper)
+function resetUserPassword($email_address, $new_password ,$type , $requested_by, $dataHelper)
 {
     if (!is_object($dataHelper))
     {
-        throw new Exception("profile_authfunc.inc.php : resetUserPassword : DataHelper Object did not instantiate", 104);
+	    throw new Exception("profile_authfunc.inc.php : resetUserPassword : DataHelper Object did not instantiate", 104);
     }
 
     if (strlen(trim($email_address)) <= 0)
     {
-        throw new Exception("profile_authfunc.inc.php: resetUserPassword : Missing Parameter email_address.", 141);
+	    throw new Exception("profile_authfunc.inc.php: resetUserPassword : Missing Parameter email_address.", 141);
     }
 
     if (strlen(trim($new_password)) <= 0)
     {
-        throw new Exception("profile_authfunc.inc.php: resetUserPassword : Missing Parameter $new_password.", 141);
+	    throw new Exception("profile_authfunc.inc.php: resetUserPassword : Missing Parameter $new_password.", 141);
     }
 
     try
     {
-        $strSqlStatement = "UPDATE user_login_details SET password = '".trim($new_password)."' WHERE user_name='".trim($email_address)."' AND login_enabled = '1'";
-        $arrAuthResult = $dataHelper->putRecords("QR", $strSqlStatement);
-        return $arrAuthResult;
+	    if($type == 'u')
+		    $strSqlStatement = "UPDATE user_login_details SET password = '".trim($new_password)."' WHERE user_name='".trim($email_address)."' AND login_enabled = '1'";
+	    else if($type == 'c')
+		    $strSqlStatement = "UPDATE client_login_details SET client_password = '".trim($new_password)."' WHERE client_username='".trim($email_address)."' AND client_login_enabled = '1'";
+
+	    $arrAuthResult = $dataHelper->putRecords("QR", $strSqlStatement);
+	    return $arrAuthResult;
     }
     catch (Exception $e)
     {
         throw new Exception("cm_authfunc.inc.php : isEmailIdExists : Could not fetch records : ".$e->getMessage(), 144);
-    }
-}
-/* -----------------------------------------------------------------------------
-  Function Name : deleteRequestPwd
-  Purpose       : To delete password details from password_request_details table after password is changed .
-  Parameters    : email_address, Datahelper
-  Returns       :
-  Calls         : datahelper.putRecords
-  Called By     :
-  Author        : Priti Mahajan
-  Created  on   : 20-July-2012
-  Modified By   :
-  Modified on   :
-  ------------------------------------------------------------------------------ */
-
-function deleteRequestPwd($email_address, $dataHelper)
-{
-    if (!is_object($dataHelper))
-    {
-        throw new Exception("profile_authfunc.inc.php : deleteRequestPwd : DataHelper Object did not instantiate", 104);
-    }
-
-    if (strlen(trim($email_address)) <= 0)
-    {
-        throw new Exception("profile_authfunc.inc.php: deleteRequestPwd : Missing Parameter email_address.", 141);
-    }
-
-    try
-    {
-        $strSqlStatement = "DELETE FROM password_request_details WHERE email_address='".trim($email_address)."'";
-        $arrPwdResult = $dataHelper->putRecords("QR", $strSqlStatement);
-        return $arrPwdResult;
-    }
-    catch (Exception $e)
-    {
-        throw new Exception("cm_authfunc.inc.php : deleteRequestPwd : Could not fetch records : ".$e->getMessage(), 144);
     }
 }
 
