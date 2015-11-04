@@ -55,9 +55,9 @@ function forgotPwd(frmName,type)
                 {
 
                         if(xmlhttp.responseText == 1 ) 
-                                showAlert(1,"Please Check your email and follow the steps!!!");
+                                showAlert(1,"Please Check your email and follow the steps.");
                         else if(xmlhttp.responseText == 6 ) 
-                                showAlert(0,"Invalid login, Please try again  !!!");
+                                showAlert(0,"Invalid login, Please try again.");
                         else
 
                                 showAlert(0,"Please try again , there was some error.");
