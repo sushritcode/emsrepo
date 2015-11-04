@@ -9,7 +9,7 @@ $CONST_PAGEID = 'Login Page';
 require_once(INCLUDES_PATH.'cm_authorize.inc.php');
 require_once(INCLUDES_PATH.'common_function.inc.php');
 require_once(INCLUDES_PATH.'profile_function.inc.php');
-require_once(INCLUDES_PATH.'mail_common_function.inc.php');
+//require_once(INCLUDES_PATH.'mail_common_function.inc.php');
 
 $Login_IP_Address = $_SERVER['REMOTE_ADDR'];
 
@@ -49,7 +49,7 @@ if (isset($_POST['lgn_submit'])) {
             header("Location:" . $SITE_ROOT . $strReferer);
         } else {
             $strAction = $SITE_ROOT;
-            $strErrorMsg = "Invalid information. Please try again.";
+            $strErrorMsg = "Invalid login. Please try again.";
             $errEmailClass = 'has-error';
             $errPwdClass = 'has-error';
         }

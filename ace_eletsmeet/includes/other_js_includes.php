@@ -43,8 +43,6 @@
 <script type="text/javascript">
     jQuery(function ($) {
 
-
-
         $('#recent-box [data-rel="tooltip"]').tooltip({placement: tooltip_placement});
         function tooltip_placement(context, source) {
             var $source = $(source);
