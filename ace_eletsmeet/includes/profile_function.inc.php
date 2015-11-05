@@ -329,7 +329,7 @@ function forgotPwd($objDataHelper)
 		try
 		{
 			$ResetPwdData.="&in=".$objDataHelper->last_insert_id;
-			resetPasswordMail($email_address, $ResetPwdData, CONST_NOREPLY_EID);
+			resetPasswordMail($email_address, $ResetPwdData, CONST_NOREPLY_EID,'u');
 		}
 		catch (Exception $e)
 		{
