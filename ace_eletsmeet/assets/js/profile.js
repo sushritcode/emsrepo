@@ -16,6 +16,8 @@ function sendData(frmName,type)
 
 			if(xmlhttp.responseText == 1 )
 				showAlert(1,"Your profile has been updated.");
+			else if(xmlhttp.responseText == 101 )
+				showAlert(0,"Current Password Wrong, Try Again.");
 			else
 				showAlert(0,"Please try again , there was some error.");
 			document.getElementById("ajax_loader").style.display = "none";

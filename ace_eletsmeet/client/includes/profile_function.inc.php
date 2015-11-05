@@ -322,7 +322,7 @@ function updateClientProfile($paramString, $objDataHelper, $client_id, $type) {
                 $sqlQuery = "UPDATE " . $tableName . " SET " . $paramString . " " . $criteria;
                 $result = $objDataHelper->putRecords("QR", $sqlQuery);
                 if ($objDataHelper->affectedRows == 0)
-                    return 0;
+                    return "101";
                 else
                     return 1;
                 break;
