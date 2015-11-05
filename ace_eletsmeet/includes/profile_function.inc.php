@@ -377,10 +377,7 @@ function resetUserPassword($email_address, $new_password ,$type , $requested_by,
 
     try
     {
-	    if($type == 'u')
-		    $strSqlStatement = "UPDATE user_login_details SET password = '".trim($new_password)."' WHERE user_name='".trim($email_address)."' AND login_enabled = '1'";
-	    else if($type == 'c')
-		    $strSqlStatement = "UPDATE client_login_details SET client_password = '".trim($new_password)."' WHERE client_username='".trim($email_address)."' AND client_login_enabled = '1'";
+	    $strSqlStatement = "UPDATE user_login_details SET password = '".trim($new_password)."' WHERE user_name='".trim($email_address)."' AND login_enabled = '1'";
 
 	    $arrAuthResult = $dataHelper->putRecords("QR", $strSqlStatement);
 	    return $arrAuthResult;
