@@ -156,7 +156,7 @@ function forgotPwd($objDataHelper)
 	} 
 	catch (Exception $a) 
 	{
-		return "0";exit;
+		return "01";exit;
 	}
 	if (is_array($arrIsValidEmailResult) && sizeof($arrIsValidEmailResult) > 0) 
 	{
@@ -168,7 +168,7 @@ function forgotPwd($objDataHelper)
 		$ResetPwdData = "em=" . $email_address . "&ms=" . $strTimeStamp . "&cd=" . $Token.'c';
 		try 
 		{
-			$arrPasswordRequestDtls = getPasswordRequestDtls($email_address, $userId, $objDataHelper);
+			$arrPasswordRequestDtls = getPasswordRequestDtls($email_address, $clientId, $objDataHelper);
 			if (is_array($arrPasswordRequestDtls) && sizeof($arrPasswordRequestDtls) > 0) 
 			{
 				try 
@@ -177,7 +177,7 @@ function forgotPwd($objDataHelper)
 				} 
 				catch (Exception $e) 
 				{
-					return "0";exit;
+					return "02";exit;
 					throw new Exception("index.php : deleteRequestPwd : Error in deleting" . $a->getMessage(), 61333333);
 				}
 			}
@@ -187,12 +187,12 @@ function forgotPwd($objDataHelper)
 			} 
 			catch (Exception $e) 
 			{
-				return "0";exit;
+				return "03";exit;
 				throw new Exception("index.php : addPwdRequestDtm : Error in adding pwdDetails" . $a->getMessage(), 61333333);
 			}
 		} catch (Exception $e) 
 		{
-			return "0";exit;
+			return "04";exit;
 			throw new Exception("index.php : getRequestPwdDetails : Error in getting details" . $a->getMessage(), 61333333);
 		}
 
@@ -203,13 +203,13 @@ function forgotPwd($objDataHelper)
 		}
 		catch (Exception $e)
 		{
-			return "0";exit;
+			return "05";exit;
 			throw new Exception("index.php : resetPasswordMail : Error in password reset".$a->getMessage(), 61333333);
 		}
 	} 
 	else 
 	{
-		return "0";exit;
+		return "06";exit;
 	}
 	return "1";
 }
@@ -228,7 +228,7 @@ function forgotPwd($objDataHelper)
   Modified on   :
   ------------------------------------------------------------------------------ */
 
-function resetUserPassword($email_address, $new_password ,$type , $requested_by, $dataHelper)
+function resetClientPassword($email_address, $new_password ,$type , $requested_by, $dataHelper)
 {
     if (!is_object($dataHelper))
     {

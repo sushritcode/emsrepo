@@ -1,9 +1,10 @@
 <?php
-require_once('../includes/global.inc.php');
+require_once('../../includes/global.inc.php');
+require_once('../includes/config.inc.php');
 require_once(CLASSES_PATH . 'error.inc.php');
 require_once(DBS_PATH . 'DataHelper.php');
 require_once(DBS_PATH . 'objDataHelper.php');
-require_once(INCLUDES_PATH . 'profile_function.inc.php');
+require_once(CLIENT_INCLUDES_PATH . 'profile_function.inc.php');
 $CONST_MODULE = 'auth';
 $CONST_PAGEID = 'Reset Password';
 
@@ -67,7 +68,7 @@ try
                     {
                         try
                         {
-                            $arrUpdPwdResult = resetUserPassword($strEmail, MD5($new_password), $reqType , $strRequestedBy, $objDataHelper);
+                            $arrUpdPwdResult = resetClientPassword($strEmail, MD5($new_password), $reqType , $strRequestedBy, $objDataHelper);
                             if ($arrUpdPwdResult)
                             {
                                 $success = 'Password changed successfully. Click here to <a href="' . $SITE_ROOT . '">SIGN IN.</a>';
