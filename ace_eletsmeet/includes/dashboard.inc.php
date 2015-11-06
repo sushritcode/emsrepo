@@ -205,3 +205,24 @@ function getMinuteBaseMeetingGraphByID($user_id, $dataHelper) {
     }
 }
 
+function getTotalMeetingCurrentMonth($user_id, $dataHelper) {
+    if (!is_object($dataHelper))
+    {   
+        throw new Exception("dashboard.inc.php : getTotalMeetingCurrentMonth : DataHelper Object did not instantiate", 104);
+    }   
+    try 
+    {   
+        $strSqlStatement = "SELECT schedule_id, meeting_title, schedule_status, DATE_FORMAT( meeting_timestamp_gmt, '%Y-%m-%d' ) AS 'meeting_date', DATE_FORMAT( meeting_timestamp_gmt, '%H:%m' ) AS 'meeting_time' FROM schedule_details sd, user_login_details uld, user_details ud WHERE MONTH( sd.meeting_timestamp_gmt ) = MONTH( now( ) ) AND YEAR( sd.meeting_timestamp_gmt ) = YEAR( now( ) ) AND uld.user_id = ud.user_id  AND uld.user_id = sd.user_id AND uld.login_enabled = '1' Order By meeting_date;";	
+
+        $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
+        return $arrResult;
+    }   
+    catch (Exception $e) 
+    {   
+        throw new Exception("dashboard.inc.php : getTotalMeetingCurrentMonth : Could not fetch records : " . $e->getMessage(), 144);
+    }   
+}
+
+
+
+
