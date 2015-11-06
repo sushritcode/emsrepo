@@ -101,7 +101,7 @@ function getMeetingOverviewByID($client_id, $dataHelper) {
     }
     try
     {
-        $strSqlStatement = "SELECT CASE schedule_status WHEN '2' THEN 'Completed' WHEN '3' THEN 'Canceled' WHEN '4' THEN 'Overdue' END AS 'label', COUNT(schedule_status) AS 'data', CASE schedule_status WHEN '2' THEN 'orange2' WHEN '3' THEN 'grey' WHEN '4' THEN 'green' END AS 'color'  "
+        echo $strSqlStatement = "SELECT CASE schedule_status WHEN '2' THEN 'Completed' WHEN '3' THEN 'Canceled' WHEN '4' THEN 'Overdue' END AS 'label', COUNT(schedule_status) AS 'data', CASE schedule_status WHEN '2' THEN 'orange2' WHEN '3' THEN 'grey' WHEN '4' THEN 'green' END AS 'color'  "
 ."FROM schedule_details AS sd, user_login_details AS uld, client_login_details AS cld, client_details AS cd "
 ."WHERE  schedule_id IN (SELECT schedule_id FROM invitation_details) "
 ."AND sd.schedule_status IN ('2','3','4') "

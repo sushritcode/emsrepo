@@ -46,6 +46,9 @@ try
     }
     $strConsumedLicense = $arrTotalConsumedLicense[0]['ConsumedLicense'];
     
+    $strTotalVacantLicense = $strTotalLicense - $strConsumedLicense;
+
+    
 }
 catch (Exception $e)
 {
@@ -120,7 +123,7 @@ catch (Exception $e)
                                 
                                     <div class="alert alert-danger errorDisplay" id="mError"></div>
                               
-                                    <h5 class="header smaller lighter blue">Total No. Of License : <span class="green"><strong><?php echo $strTotalLicense; ?></strong></span>&nbsp;&nbsp;<span>Total No. Of Consumed License : <span class="red"><strong><?php echo $strConsumedLicense; ?></strong></span></h5>
+                                    <h5 class="header smaller lighter blue">Total No. Of License : <span class="green"><strong><?php echo $strTotalLicense; ?></strong></span>&nbsp;&nbsp;Total No. Of Allocated License : <span class="red"><strong><?php echo $strConsumedLicense; ?></strong></span>&nbsp;&nbsp;Total No. Of Vacant License : <span class="orange2"><strong><?php echo $strTotalVacantLicense; ?></strong></span></h5>
                                 
                                     <div class="clearfix">
                                         <div class="pull-right tableTools-container"></div>

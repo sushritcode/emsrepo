@@ -30,6 +30,8 @@ catch (Exception $a)
 }
 $strTotalConsumedLicense = $arrTotalConsumedLicense[0]['ConsumedLicense'];
 
+$strTotalVacantLicense = $strTotalLicense - $strTotalConsumedLicense;
+        
 try
 {
     $arrContactCount = getContactCountByID($strSetClient_ID, $objDataHelper);
@@ -214,7 +216,7 @@ $arrTotalMeetingArr = substr($arrTotalMeetingArr, 0, -1);
                                             </div>
                                             <div class="infobox-data">
                                                 <span class="infobox-data-number"><?php echo $strTotalLicense; ?></span>
-                                                <div class="infobox-content">Total No. of License</div>
+                                                <div class="infobox-content">Total License</div>
                                             </div>
                                             <!--   <div class="stat stat-success">8%</div>-->
                                         </div>
@@ -225,9 +227,20 @@ $arrTotalMeetingArr = substr($arrTotalMeetingArr, 0, -1);
                                             </div>
                                             <div class="infobox-data">
                                                 <span class="infobox-data-number"><?php echo $strTotalConsumedLicense; ?></span>
-                                                <div class="infobox-content">Consumed License</div>
+                                                <div class="infobox-content">Allocated License</div>
                                             </div>
                                         </div>
+                                        
+                                        <div class="infobox infobox-orange2">
+                                            <div class="infobox-icon">
+                                                <i class="ace-icon fa fa-pencil-square-o "></i>
+                                            </div>
+                                            <div class="infobox-data">
+                                                <span class="infobox-data-number"><?php echo $strTotalVacantLicense; ?></span>
+                                                <div class="infobox-content">Vacant License</div>
+                                            </div>
+                                        </div>
+                                        
                                         
                                         
                                         
