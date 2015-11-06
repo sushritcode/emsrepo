@@ -20,7 +20,7 @@ function getUserDetailsByID($user_id, $dataHelper) {
     }
     try
     {
-        $strSqlStatement = "SELECT lu.user_id, lu.user_name , lu.client_id, lu.partner_id, lu.email_address, ud.nick_name, ud.first_name, ud.last_name, ud.country_name, ud.timezones, ud.gmt, ud.phone_number, ud.idd_code, ud.mobile_number FROM user_details AS ud, user_login_details AS lu, client_details AS cd WHERE lu.user_id ='" . trim($user_id) . "' AND lu.user_id = ud.user_id AND cd.client_id = lu.client_id AND lu.login_enabled = '1'; ";
+        $strSqlStatement = "SELECT uld.user_id, uld.user_name , uld.client_id, uld.partner_id, uld.email_address, ud.nick_name, ud.first_name, ud.last_name, ud.country_name, ud.timezones, ud.gmt, ud.phone_number, ud.idd_code, ud.mobile_number FROM user_details AS ud, user_login_details AS uld, client_login_details AS cld, client_details AS cd WHERE uld.user_id ='" . trim($user_id) . "' AND uld.user_id = ud.user_id AND cld.client_id = cd.client_id AND cld.client_id = uld.client_id AND client_login_enabled ='1' AND uld.login_enabled = '1'; ";
 
         //$strSqlStatement = "SELECT lu.user_id, lu.user_name , nick_name , first_name , last_name , country_name , timezones , gmt , phone_number , idd_code , mobile_number "
         //     . "FROM user_details AS ud, user_login_details AS lu, client_details AS cd "
@@ -139,14 +139,7 @@ function isAuthenticateScheduleUser($user_id, $client_id, $dataHelper) {
         {
             throw new Exception("api_function.inc.php : isAuthenticateScheduleUser : DataHelper Object did not instantiate", 104);
         }
-
-                $strSqlStatement = "SELECT user_login_details.user_id, user_login_details.login_enabled as user_status, client_details.client_id, client_details.status as client_status " .
-                "FROM user_login_details, client_details " .
-                "WHERE user_login_details.login_enabled= '1' " .
-                "AND client_details.client_id = user_login_details.client_id " .
-                "AND client_details.status= '1' " .
-                "AND user_login_details.user_id = '" . trim($user_id) . "' " .
-                "AND client_details.client_id = '" . trim($client_id) . "'";
+        $strSqlStatement = "SELECT uld.user_id, uld.login_enabled AS user_status, cld.client_id, cld.client_login_enabled AS client_status FROM user_login_details AS uld, user_details AS ud, client_login_details AS cld, client_details AS cd WHERE uld.login_enabled= '1' AND uld.user_id = ud.user_id AND cld.client_id = cd.client_id AND cld.client_id = uld.client_id AND cld.client_login_enabled ='1' AND uld.user_id = '" . trim($user_id) . "' AND cld.client_id = '".trim($client_id)."'; ";
         $arrAuthSchResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         $dataHelper->clearParams();
         return $arrAuthSchResult;
