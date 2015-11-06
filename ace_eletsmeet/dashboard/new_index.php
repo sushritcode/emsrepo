@@ -125,6 +125,11 @@ for ($i = 0; $i < sizeof($arrMinuteBaseMeetingGraph); $i++)
 $arrMinuteArr = substr($arrMinuteArr, 0, -1);
 
  //print_r($arrMinuteArr);
+
+//611 Total meeting in the month start//
+	$arrMeetingCurrentMonth = getTotalMeetingCurrentMonth($strCK_user_id , $objDataHelper);
+//611 Total meeting in the month end//
+
  
 ?>
 
@@ -197,7 +202,7 @@ $arrMinuteArr = substr($arrMinuteArr, 0, -1);
                                     <div class="row" >
                                             <div class="col-xs-6" style="border: 1px solid black;">
                                                     <div>
-                                                            <span>.col-xs-6</span>
+                                                            <!--span>.col-xs-6  611</span-->
                                                     </div>
                                             </div>
 
@@ -289,36 +294,12 @@ $arrMinuteArr = substr($arrMinuteArr, 0, -1);
                                                                                                     </thead>
                                                                                                     <tbody>
                                                                                                         <tr>
-                                                                                                            <td class="fc-event-container" colspan="4">
-                                                                                                                <a class="fc-day-grid-event fc-event fc-start fc-end label-success fc-draggable fc-resizable">
-                                                                                                                    <div class="fc-content"> 
-                                                                                                                        <span class="fc-title">Long Event</span>
-                                                                                                                    </div>
-                                                                                                                    <div class="fc-resizer"></div>
-                                                                                                                </a>
-                                                                                                            </td>
-                                                                                                            <td rowspan="2"></td>
-                                                                                                            <td rowspan="2"></td>
-                                                                                                            <td rowspan="2"></td>
-                                                                                                        </tr>
-                                                                                                        <tr>
-                                                                                                            <td class="fc-event-container">
-                                                                                                                <a class="fc-day-grid-event fc-event fc-start fc-end label-important fc-draggable">
-                                                                                                                    <div class="fc-content">
-                                                                                                                        <span class="fc-time">12a</span>
-                                                                                                                        <span class="fc-title">All Day Event</span>
-                                                                                                                    </div>
-                                                                                                                </a>
-                                                                                                            </td>
+                                                                                                            <td ></td>
                                                                                                             <td></td>
-                                                                                                            <td class="fc-event-container">
-                                                                                                                <a class="fc-day-grid-event fc-event fc-start fc-end label-info fc-draggable">
-                                                                                                                    <div class="fc-content">
-                                                                                                                        <span class="fc-time">4p</span>
-                                                                                                                        <span class="fc-title">Some Event</span>
-                                                                                                                    </div>
-                                                                                                                </a>
-                                                                                                            </td>
+                                                                                                            <td></td>
+                                                                                                            <td></td>
+                                                                                                            <td></td>
+                                                                                                            <td></td>
                                                                                                             <td></td>
                                                                                                         </tr>
                                                                                                     </tbody>
@@ -894,7 +875,70 @@ $arrMinuteArr = substr($arrMinuteArr, 0, -1);
                 
                 
             });
+
+
+
         </script>
 
     </body>
+        <script type="text/javascript">
+function __createEle(tag, cls, id, name)
+{
+        var ele; 
+        ele = document.createElement(tag);
+        if(cls != "")
+                ele.className = cls; 
+        if(id != "")
+                ele.id = id;
+        if(name != "")
+                ele.name = name;
+        return ele; 
+};
+function calenderEvent()
+{
+
+	 var eventData = <?php echo json_encode($arrMeetingCurrentMonth);?>;
+	var eventData = [{"schedule_id":"563c6bc200f3d","meeting_title":"demo","schedule_status":"0","meeting_date":"2015-11-09","meeting_time":"07:11"},{"schedule_id":"563c70f445146","meeting_title":"calendar demo","schedule_status":"0","meeting_date":"2015-11-10","meeting_time":"07:11"},{"schedule_id":"561caf2b3225a","meeting_title":"Chat history testing","schedule_status":"0","meeting_date":"2015-11-13","meeting_time":"07:11"}]  ;
+	for(var a=0;a < eventData.length;a++)
+	{
+
+		var ele  = document.getElementsByClassName("fc-bg");
+		for(var i=0;i<ele.length;i++)
+		{
+			var  tdCnt = 0,trEle = ele[i].childNodes[1].tBodies[0].childNodes[1];
+
+			for(var j=0;j< trEle.childNodes.length ;j++)
+			{
+				if(trEle.childNodes[j].tagName == "TD")
+				{
+					tdCnt= tdCnt + 1;
+					if(trEle.childNodes[j].attributes["data-date"].value == eventData[a].meeting_date)
+					{
+						var tblTags = ele[i].parentNode.childNodes[3].childNodes[1];
+						var t = createTag(tblTags.tBodies[0].rows[0].cells[tdCnt-1] , eventData[a]);
+
+
+					}
+				}
+			}
+
+		}
+	} 
+}
+function createTag(ele,obj)
+{
+	ele.setAttribute("class", "fc-event-container");
+	var eleA = __createEle("a");
+	eleA.setAttribute("class","fc-day-grid-event fc-event fc-start fc-end label-info");
+	eleA.innerHTML = "<div class='fc-content'><span class='fc-time'>"+obj.meeting_time+" </span><span class='fc-title'>"+obj.meeting_title+"</span></div>";
+	ele.appendChild(eleA);
+	return true;
+}
+	window.onload = function()
+	{
+		calenderEvent();
+	};
+	
+
+	</script>
 </html>
