@@ -62,7 +62,11 @@ try
     {
         throw new Exception("createSchedule.php : validatePlan Failed : ".$e->getMessage(), 1131);
     }
-
+    
+//    echo "<pre/>";
+//    print_r($planDetails);
+//    echo "<pre/>";
+    
     $subscriptionId = $planDetails[0]["subscription_id"];
     $maxSubscriptionDt = $planDetails[0]["subscription_end_date_gmt"];
     $planType = $planDetails[0]["plan_type"];
@@ -87,7 +91,10 @@ try
     {
         throw new Exception("createSchedule.php : currentSession Failed : ".$e->getMessage(), 1131);
     }
-
+//    echo "<pre/>";
+//    print_r($currentSession);
+//    echo "<pre/>";
+    
     if (is_array($currentSession) && sizeof($currentSession) > 0)
     {
         $sessionCount = sizeof($currentSession);
@@ -222,7 +229,7 @@ try
             {
                 throw new Exception("createSchedule.php : getScheduleId Failed : ".$e->getMessage(), 1138);
             }
-
+           
             if (strlen($schID) > 0)
             {
                 try
@@ -234,6 +241,7 @@ try
                 {
                     throw new Exception("Error in getLMInstanceByClientId.".$a->getMessage(), 312);
                 }
+        
                 $LMInstanceURL = $meetingInstanceDtls[0]["rt_server_name"];
                 
                 if (strlen($LMInstanceURL) > 0)
