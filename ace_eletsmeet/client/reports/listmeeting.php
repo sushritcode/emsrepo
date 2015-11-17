@@ -10,10 +10,9 @@ $CLIENT_CONST_PAGEID = 'Meeting List';
 require_once(CLIENT_INCLUDES_PATH . 'client_authorize.inc.php');
 require_once(CLIENT_INCLUDES_PATH . 'client_reports_function.inc.php');
 
-
 try
-{     
-     try
+{
+    try
     {
         $arrDateRange = getMinMaxScheduleDateByClient_Id($strSetClient_ID, $objDataHelper);
     }
@@ -25,7 +24,7 @@ try
     $strMax_Date = $arrDateRange[0]['MaximumDate'];
     
 //    echo $from_date = date_format ($strMin_Date, "d-m-Y");
-//        echo $to_date = date_format ( $strMax_Date, "d-m-Y");
+//    echo $to_date = date_format ($strMax_Date, "d-m-Y");
         
     //echo $from_date = trim($_POST['txStartDate']);        
     //echo $to_date = trim($_POST['txEndDate']);
@@ -72,7 +71,6 @@ catch (Exception $e)
 {
     $ErrorHandler->RaiseError($_SERVER["PHP_SELF"], $e->getCode(), $e->getMessage(), true);
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -174,6 +172,7 @@ catch (Exception $e)
                                                                     <span class="lbl"></span>
                                                             </label>
                                                         </th>
+                                                        <th> Username </th>
                                                         <th> Creation Time </th>
                                                         <th> Meeting Date </th>
                                                         <th> Title </th>
@@ -187,6 +186,8 @@ catch (Exception $e)
                                                 <tbody>
                                                     <?php  for($intCntr = 0; $intCntr < sizeof($arrAllMeetingList); $intCntr++) {
                                                         $SchID = $arrAllMeetingList[$intCntr]["schedule_id"];
+                                                        $SchUserID = $arrAllMeetingList[$intCntr]["user_id"];
+                                                        $SchUserName = $arrAllMeetingList[$intCntr]["user_name"];  
                                                         $SchStatus = $arrAllMeetingList[$intCntr]["schedule_status"];
                                                         $SchCreationTime = $arrAllMeetingList[$intCntr]["schedule_creation_time"];
                                                         $MeetingTimeGMT = $arrAllMeetingList[$intCntr]["meeting_timestamp_gmt"];
@@ -242,6 +243,7 @@ catch (Exception $e)
                                                                 <span class="lbl"></span>
                                                             </label>
                                                         </td>
+                                                        <td><?php echo $SchUserName; ?></td>
                                                         <td><?php echo $SchCreationTime; ?></td>
                                                         <td><?php echo $MeetingTimeLocal; ?></td>
                                                         <td><?php echo $MeetingTitle; ?></td>
@@ -339,6 +341,8 @@ catch (Exception $e)
                         "format": "YYYY-MM-DD",
                         "startDate": "<?php echo $from_date; ?>",
                         "endDate": "<?php echo $to_date; ?>",
+                        "applyClass" : "btn-sm btn-success",
+                        "cancelClass" : "btn-sm btn-default",
                         locale: {
                             cancelLabel: 'Reset'
                         }
@@ -346,28 +350,23 @@ catch (Exception $e)
 
                     $('#report-date-range').on('apply.daterangepicker', function(ev, picker) {
                         $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-                         //alert(picker.startDate.format('DD/MM/YYYY'));
-                         //alert(picker.endDate.format('DD/MM/YYYY'));
-                            var clStartDate   = picker.startDate.format('YYYY-MM-DD');
-                            var clEndDate   = picker.endDate.format('YYYY-MM-DD');
-                            //$("#d1").value= clStartDate;
-                            //$("#d2").value = clEndDate;
-                            document.frmMeetingReport.d1.value = clStartDate;
-                            document.frmMeetingReport.d2.value = clEndDate;
-                            
-                            $("#frmMeetingReport").submit();
-                            
-                           // $.post("listmeeting.php", {txStartDate: clStartDate, txEndDate: clEndDate}, function (data)
-                            //{                        
-                               // var response=data;
-                                //$("#response").html(data);    
-                            //});
-                           // return false;
+                        var clStartDate   = picker.startDate.format('YYYY-MM-DD');
+                        var clEndDate   = picker.endDate.format('YYYY-MM-DD');
+                        document.frmMeetingReport.d1.value = clStartDate;
+                        document.frmMeetingReport.d2.value = clEndDate;
+                        $("#frmMeetingReport").submit();
+
+                       // $.post("listmeeting.php", {txStartDate: clStartDate, txEndDate: clEndDate}, function (data)
+                        //{                        
+                           // var response=data;
+                            //$("#response").html(data);    
+                        //});
+                       // return false;
                     });
 
                     $('#report-date-range').on('cancel.daterangepicker', function(ev, picker) {
-                        $(this).val('');
-                        $(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
+                        //$(this).val('');
+                        //$(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
                         document.frmMeetingReport.d1.value = <?php  echo $strMin_Date; ?>;
                         document.frmMeetingReport.d2.value = <?php  echo $strMax_Date; ?>;
                         $("#frmMeetingReport").submit();
@@ -400,7 +399,7 @@ catch (Exception $e)
                             bAutoWidth: false,
                             "aoColumns": [
                                 {"bSortable": false},
-                                null, null, null,null, null, null,null, 
+                                null,null,null,null,null,null,null,null, 
                                 {"bSortable": false}
                             ],
                             "aaSorting": [],
@@ -492,7 +491,7 @@ catch (Exception $e)
                 //ColVis extension
                 var colvis = new $.fn.dataTable.ColVis(oTable1, {
                     "buttonText": "<i class='fa fa-search'></i>",
-                    "aiExclude": [0,8],
+                    "aiExclude": [0,9],
                     "bShowAll": true,
                     "bRestore": true,
                     "sAlign": "right",

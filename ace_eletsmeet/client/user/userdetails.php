@@ -93,21 +93,14 @@ if ((is_array($arrUserDetls)) && (sizeof($arrUserDetls)) > 0) {
                     <span><?php echo $strDBUserName; ?></span>
                 </div>
             </div>
-            
-            <div class="profile-info-row">
-                <div class="profile-info-name"> Email :</div>
-                <div class="profile-info-value">
-                    <span><?php echo $strDBUserEmail; ?></span>
-                </div>
-            </div>
-            
+
             <div class="profile-info-row">
                 <div class="profile-info-name"> Nickname :</div>
                 <div class="profile-info-value">
                     <span><?php echo $strDBUserNickName; ?></span>
                 </div>
             </div>
-            
+
             <div class="profile-info-row">
                 <div class="profile-info-name"> First Name :</div>
                 <div class="profile-info-value">
@@ -119,6 +112,13 @@ if ((is_array($arrUserDetls)) && (sizeof($arrUserDetls)) > 0) {
                 <div class="profile-info-name"> Last Name :</div>
                 <div class="profile-info-value">
                     <span><?php echo $strDBUserLastName; ?></span>
+                </div>
+            </div>
+            
+            <div class="profile-info-row">
+                <div class="profile-info-name"> Email :</div>
+                <div class="profile-info-value">
+                    <span><?php echo $strDBUserEmail; ?></span>
                 </div>
             </div>
             

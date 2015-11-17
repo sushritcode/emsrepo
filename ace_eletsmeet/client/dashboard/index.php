@@ -222,24 +222,11 @@ $arrWeekTotalMeetingArr = substr($arrWeekTotalMeetingArr, 0, -1);
                                     <div class="row">
                                         
                                         <div class="col-xs-6 col-sm-9">
-                                                <div>
-                                                        <h1>
-                                                            <?php echo $strSetClient_Name; ?>
-                                                        </h1>
-                                                </div>
+                                            <h1><?php echo $strSetClient_Name; ?></h1>
                                         </div>
 
-                                        <div class="col-xs-6 col-sm-3">
+                                        <div class="col-xs-6 col-sm-3 hidden-480">
                                              <div class="pull-right no-padding-left">
-<!--                                                 <div class="infobox infobox-green">
-                                                        <div class="infobox-icon">
-                                                            <i class="ace-icon fa fa- fa-user"></i>
-                                                        </div>
-                                                        <div class="infobox-data">
-                                                            <span class="infobox-data-number"><?php echo $strProfileCompletePercent; ?> &percnt;</span>
-                                                            <div class="infobox-content small">Profile  Complete</div>
-                                                        </div>
-                                                 </div>-->
                                                 <div class="infobox infobox-blue2">
                                                         <div class="infobox-progress">
                                                                 <div data-size="39" data-percent="<?php echo $strProfileCompletePercent; ?>" class="easy-pie-chart percentage" style="height: 39px; width: 39px; line-height: 38px;">
@@ -442,7 +429,7 @@ $arrWeekTotalMeetingArr = substr($arrWeekTotalMeetingArr, 0, -1);
                                             <div class="widget-body">
                                                 <div class="widget-main">
                                                     <div class="center">
-                                                        
+
                                                         <div class="infobox infobox-red infobox-dark" style="width: 195px;">
                                                             <div class="infobox-icon">
                                                                 <i class="ace-icon fa fa-users small"></i>
@@ -452,7 +439,7 @@ $arrWeekTotalMeetingArr = substr($arrWeekTotalMeetingArr, 0, -1);
                                                                 <div class="infobox-content small">Total No. of Meetings</div>
                                                             </div>
                                                         </div>
-                                                        
+
                                                          <?php  for($intCntr = 0; $intCntr < sizeof($arrMeetingOverview); $intCntr++) {  
                                                              $strLabel = $arrMeetingOverview[$intCntr]['label'];
                                                              $strData  = $arrMeetingOverview[$intCntr]['data'];
@@ -461,7 +448,7 @@ $arrWeekTotalMeetingArr = substr($arrWeekTotalMeetingArr, 0, -1);
                                                          ?>
                                                         <div class="infobox infobox-<?php echo $strColor;?> infobox-dark" style="width: 195px;">
                                                                 <div class="infobox-icon">
-<!--                                                                        <i class="ace-icon fa fa-check-circle"></i>-->
+    <!--                                                                        <i class="ace-icon fa fa-check-circle"></i>-->
                                                                         <?php
                                                                             if ($strSchStatus == 0)
                                                                             { 
@@ -495,7 +482,7 @@ $arrWeekTotalMeetingArr = substr($arrWeekTotalMeetingArr, 0, -1);
                                                                 </div>
                                                         </div>
                                                         <?php } ?>
-                                                        
+
                                                          <div class="infobox infobox-dark" style="width: 195px; background-color: yellowgreen;">
                                                             <div class="infobox-icon">
                                                                 <i class="ace-icon fa fa-comments-o"></i>
@@ -505,16 +492,18 @@ $arrWeekTotalMeetingArr = substr($arrWeekTotalMeetingArr, 0, -1);
                                                                 <div class="infobox-content small">Total Meeting Minutes</div>
                                                             </div>
                                                         </div>
-                                                     </div>  
-                                                        <div class="hr hr-dotted"></div>
-                                                        
-                                                        <div id="container" style="min-width: 310px; height: 273px; margin: 0 auto;"></div>       
-                                                       
-                                                        <div class="hr hr-dotted"></div>
-                                                        
-                                                        <div id="week_container" style="min-width: 310px; height: 273px; margin: 0 auto;"></div>       
-                                                        
+                                                    </div>
+                                                    
                                                     <div class="hr hr-dotted"></div>
+
+                                                    <div class="hidden-480" id="container" style="min-width: 310px; height: 273px; margin: 0 auto;"></div>       
+
+                                                    <div class="hr hr-dotted hidden-480"></div>
+
+                                                    <div class="hidden-480" id="week_container" style="min-width: 310px; height: 273px; margin: 0 auto;"></div>       
+
+                                                    <div class="hr hr-dotted hidden-480"></div>
+
                                                     <p><i><a href="<?php echo $CLIENT_SITE_ROOT."reports/listmeeting.php"?>">Click to see more...</a></i></p>
                                                 </div>
                                             </div>

@@ -157,6 +157,7 @@ catch (Exception $e)
                                                                     <span class="lbl"></span>
                                                             </label>
                                                         </th>
+                                                        <th> Username </th>
                                                         <th> Nick Name </th>
                                                         <th> Name </th>
                                                         <th> Email Address </th>
@@ -207,6 +208,7 @@ catch (Exception $e)
                                                                 <span class="lbl"></span>
                                                             </label>
                                                         </td>
+                                                        <td><?php echo $strCL_UserName; ?></td>
                                                         <td><?php echo $strCL_User_NickName; ?></td>
                                                         <td><?php echo $strCL_User_FnLName; ?></td>
                                                         <td><?php echo $strCL_User_Email; ?></td>
@@ -355,7 +357,7 @@ catch (Exception $e)
                             bAutoWidth: false,
                             "aoColumns": [
                                 {"bSortable": false},
-                                null, null, null, null,null,
+                                null, null, null, null,null,null,
                                 {"bSortable": false}
                             ],
                             "aaSorting": [],
@@ -448,7 +450,7 @@ catch (Exception $e)
                 //ColVis extension
                 var colvis = new $.fn.dataTable.ColVis(oTable1, {
                     "buttonText": "<i class='fa fa-search'></i>",
-                    "aiExclude": [0,6],
+                    "aiExclude": [0,7],
                     "bShowAll": true,
                     "bRestore": true,
                     "sAlign": "right",
