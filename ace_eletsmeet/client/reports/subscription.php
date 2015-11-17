@@ -204,9 +204,9 @@ catch (Exception $e)
                                                         <td>
                                                             <div class="hidden-sm hidden-xs btn-group">
                                                             <?php if ($SubAssignFlag == 1)  { ?>        
-                                                                <button href="#sub-detls" data-toggle="modal" class="btn btn-sm btn-inverse" onclick="subscriptionDetails('<?php echo $SubOrdeId; ?>','<?php echo $SubPlanId;?>')" alt="Details" title="Details"><i class="ace-icon fa fa-info bigger-110"></i></button>
+                                                                <button href="#sub-detls" data-toggle="modal" class="btn btn-sm" onclick="subscriptionDetails('<?php echo $SubOrdeId; ?>','<?php echo $SubPlanId;?>')" alt="Details" title="Details"><i class="ace-icon fa fa-info bigger-110"></i></button>
                                                             <?php } else {?>
-                                                            <button class="btn btn-sm btn-inverse disabled" alt="Details" title="Details"><i class="ace-icon fa fa-info bigger-110"></i></button>
+                                                            <button class="btn btn-sm disabled" alt="Details" title="Details"><i class="ace-icon fa fa-info bigger-110"></i></button>
                                                             <?php } ?>
                                                              </div>
                                                         </td>

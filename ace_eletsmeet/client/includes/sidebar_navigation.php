@@ -56,20 +56,24 @@ else
 <div class="sidebar-shortcuts" id="sidebar-shortcuts">
     <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
         <button class="btn btn-success">
-            <i class="ace-icon fa fa-signal"></i>
+<!--            <i class="ace-icon fa fa-signal"></i>-->
+            <span><strong>Le</strong></span>
         </button>
 
         <button class="btn btn-info">
-            <i class="ace-icon fa fa-pencil"></i>
+<!--            <i class="ace-icon fa fa-pencil"></i>-->
+            <span><strong>ts</strong></span>
         </button>
 
 
         <button class="btn btn-warning">
-            <i class="ace-icon fa fa-users"></i>
+<!--            <i class="ace-icon fa fa-users"></i>-->
+            <span><strong>Me</strong></span>
         </button>
 
         <button class="btn btn-danger">
-            <i class="ace-icon fa fa-cogs"></i>
+<!--            <i class="ace-icon fa fa-cogs"></i>-->
+            <span><strong>et</strong></span>
         </button>
 
 

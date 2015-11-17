@@ -213,7 +213,7 @@ catch (Exception $e)
                                                         <td><?php echo $MeetingStatus; ?></td>
                                                         <td>
                                                             <div class="hidden-sm hidden-xs btn-group">
-                                                                <button href="#sch-detls" data-toggle="modal" class="btn btn-sm btn-inverse" onclick="meetingDetails('<?php echo $SchID; ?>','<?php echo $strDBUserEmail; ?>', '<?php echo $schPassCode; ?>')" alt="Details" title="Details"><i class="ace-icon fa fa-info bigger-110"></i></button>
+                                                                <button href="#sch-detls" data-toggle="modal" class="btn btn-sm" onclick="meetingDetails('<?php echo $SchID; ?>','<?php echo $strDBUserEmail; ?>', '<?php echo $schPassCode; ?>')" alt="Details" title="Details"><i class="ace-icon fa fa-info bigger-110"></i></button>
                                                             </div>
                                                         </td>
                                                     </tr>

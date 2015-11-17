@@ -204,12 +204,12 @@ catch (Exception $e)
                                                         <td>
                                                             <div class="hidden-sm hidden-xs btn-group">
                                                             <?php if ($SubAssignFlag == 1)  { ?>        
-                                                                <button href="#plan_detls" data-toggle="modal" class="btn btn-sm btn-inverse" onclick="subscriptionDetails('<?php echo $SubOrdeId; ?>','<?php echo $SubPlanId;?>')" alt="Details" title="Details"><i class="ace-icon fa fa-info"></i></button>
+                                                                <button href="#plan_detls" data-toggle="modal" class="btn btn-sm" onclick="subscriptionDetails('<?php echo $SubOrdeId; ?>','<?php echo $SubPlanId;?>')" alt="Details" title="Details"><i class="ace-icon fa fa-info"></i></button>
                                                                  <?php if ( ($SubStatus == '1') || ($SubStatus == '2') )  { ?>        
                                                                     <button href="#revoke_plan" data-toggle="modal" class="btn btn-sm btn-warning" onclick="revokeSubscription('<?php echo $SubOrdeId; ?>','<?php echo $SubPlanId;?>')" alt="Revoke Subscription" title="Revoke Subscription"><i class="ace-icon fa fa-undo"></i></button>
                                                                  <?php } ?>
                                                             <?php } else {?>
-                                                                <button class="btn btn-sm btn-inverse disabled" alt="Details" title="Details"><i class="ace-icon fa fa-info"></i></button>
+                                                                <button class="btn btn-sm disabled" alt="Details" title="Details"><i class="ace-icon fa fa-info"></i></button>
                                                             <?php } ?>
                                                              </div>
                                                         </td>

@@ -34,13 +34,23 @@ $strTotalVacantLicense = $strTotalLicense - $strTotalConsumedLicense;
         
 try
 {
-    $arrContactCount = getContactCountByID($strSetClient_ID, $objDataHelper);
+    $arrClientContactCount = getClientContactCountByID($strSetClient_ID, $objDataHelper);
 }
 catch (Exception $e)
 {
     throw new Exception("index.php : getContactCountByID Failed : " . $e->getMessage(), 1125);
 }
-$strTotalContacts = $arrContactCount[0]['TotalContacts'];
+$strTotalClientContacts = $arrClientContactCount[0]['TotalClientContacts'];
+
+try
+{
+    $arrUserContactCount = getUserContactCountByID($strSetClient_ID, $objDataHelper);
+}
+catch (Exception $e)
+{
+    throw new Exception("index.php : getContactCountByID Failed : " . $e->getMessage(), 1125);
+}
+$strTotalUserContacts = $arrUserContactCount[0]['TotalUserContacts'];
 
 try
 {
@@ -232,7 +242,7 @@ $arrWeekTotalMeetingArr = substr($arrWeekTotalMeetingArr, 0, -1);
                                                  </div>-->
                                                 <div class="infobox infobox-blue2">
                                                         <div class="infobox-progress">
-                                                                <div data-size="39" data-percent="61" class="easy-pie-chart percentage" style="height: 39px; width: 39px; line-height: 38px;">
+                                                                <div data-size="39" data-percent="<?php echo $strProfileCompletePercent; ?>" class="easy-pie-chart percentage" style="height: 39px; width: 39px; line-height: 38px;">
                                                                         <span class="percent"><?php echo $strProfileCompletePercent; ?></span>%
                                                                         <canvas height="39" width="39"></canvas>
                                                                 </div>
@@ -382,29 +392,36 @@ $arrWeekTotalMeetingArr = substr($arrWeekTotalMeetingArr, 0, -1);
                                             </div>
                                             <div class="widget-body">
                                                 <div class="widget-main">
-                                                    <div class="center">
-
-                                                        <div class="infobox infobox-blue">
-                                                            <div class="infobox-icon">
-                                                                <i class="ace-icon fa fa-phone"></i>
-                                                            </div>
-                                                            <div class="infobox-data">
-                                                                <span class="infobox-data-number"><?php echo $strTotalContacts; ?></span>
-                                                                <div class="infobox-content">Total No. of Contacts</div>
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            
+                                                            <h5 class="header smaller lighter blue"><?php echo $strSetClient_Name; ?></h5>
+                                                            <div class="infobox infobox-blue">
+                                                                <div class="infobox-icon">
+                                                                    <i class="ace-icon fa fa-phone"></i>
+                                                                </div>
+                                                                <div class="infobox-data">
+                                                                    <span class="infobox-data-number"><?php echo $strTotalClientContacts; ?></span>
+                                                                    <div class="infobox-content">Total No. of Contacts</div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        
-                                                        <div class="infobox infobox-orange">
-                                                            <div class="infobox-icon">
-                                                                <i class="ace-icon fa fa-phone"></i>
-                                                            </div>
-                                                            <div class="infobox-data">
-                                                                <span class="infobox-data-number"><?php echo $strTotalContacts; ?></span>
-                                                                <div class="infobox-content">Total No. of Contacts</div>
+                                                        <div class="col-sm-6">
+                                                            <h5 class="header smaller lighter orange2">Guest</h5>
+                                                            <div class="infobox infobox-orange">
+                                                                <div class="infobox-icon">
+                                                                    <i class="ace-icon fa fa-phone"></i>
+                                                                </div>
+                                                                <div class="infobox-data">
+                                                                    <span class="infobox-data-number"><?php echo $strTotalUserContacts; ?></span>
+                                                                    <div class="infobox-content">Total No. of Contacts</div>
+                                                                </div>
                                                             </div>
                                                         </div>
 
                                                     </div>
+                                                    <div class="hr hr-dotted"></div>
+                                                    <p><i><a href="<?php echo $CLIENT_SITE_ROOT."contacts/"?>">Click to see more...</a></i></p>
                                                 </div>
                                              </div>
                                         </div>
@@ -498,7 +515,7 @@ $arrWeekTotalMeetingArr = substr($arrWeekTotalMeetingArr, 0, -1);
                                                         <div id="week_container" style="min-width: 310px; height: 273px; margin: 0 auto;"></div>       
                                                         
                                                     <div class="hr hr-dotted"></div>
-                                                    <p><i><a href="<?php echo $CLIENT_SITE_ROOT."reports/"?>">Click to see more...</a></i></p>
+                                                    <p><i><a href="<?php echo $CLIENT_SITE_ROOT."reports/listmeeting.php"?>">Click to see more...</a></i></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -545,20 +562,20 @@ $arrWeekTotalMeetingArr = substr($arrWeekTotalMeetingArr, 0, -1);
             jQuery(function ($) {
                 
                 $('.easy-pie-chart.percentage').each(function(){
-					var $box = $(this).closest('.infobox');
-					var barColor = $(this).data('color') || (!$box.hasClass('infobox-dark') ? $box.css('color') : 'rgba(255,255,255,0.95)');
-					var trackColor = barColor == 'rgba(255,255,255,0.95)' ? 'rgba(255,255,255,0.25)' : '#E2E2E2';
-					var size = parseInt($(this).data('size')) || 50;
-					$(this).easyPieChart({
-						barColor: barColor,
-						trackColor: trackColor,
-						scaleColor: false,
-						lineCap: 'butt',
-						lineWidth: parseInt(size/10),
-						animate: /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase()) ? false : 1000,
-						size: size
-					});
-				})
+                        var $box = $(this).closest('.infobox');
+                        var barColor = $(this).data('color') || (!$box.hasClass('infobox-dark') ? $box.css('color') : 'rgba(255,255,255,0.95)');
+                        var trackColor = barColor == 'rgba(255,255,255,0.95)' ? 'rgba(255,255,255,0.25)' : '#E2E2E2';
+                        var size = parseInt($(this).data('size')) || 50;
+                        $(this).easyPieChart({
+                                barColor: barColor,
+                                trackColor: trackColor,
+                                scaleColor: false,
+                                lineCap: 'butt',
+                                lineWidth: parseInt(size/10),
+                                animate: /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase()) ? false : 1000,
+                                size: size
+                        });
+                })
                 
                 $('#container').highcharts({
                     chart: {
