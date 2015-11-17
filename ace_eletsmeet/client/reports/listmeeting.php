@@ -149,8 +149,8 @@ catch (Exception $e)
                                                                     </span>
                                                                 <form id="frmMeetingReport" name="frmMeetingReport" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" class="form-horizontal" role="form">
                                                                     <input  type="hidden"  name="q"  value="user" />
-                                                                    <input  type="hidden"  name="d1"  id="d1" />
-                                                                    <input  type="hidden"  name="d2"   id="d2"/>
+                                                                    <input  type="hidden"  name="d1"  id="d1" value="<?php echo $strMin_Date;?>" />
+                                                                    <input  type="hidden"  name="d2"   id="d2" value="<?php echo $strMax_Date;?>" />
                                                                     <input class="form-control" type="text" name="date-range-picker" id="report-date-range" value="<?php echo $from_date; ?> - <?php echo $to_date; ?>"/>
                                                                  </form>
                                                             </div>
@@ -367,8 +367,8 @@ catch (Exception $e)
                     $('#report-date-range').on('cancel.daterangepicker', function(ev, picker) {
                         //$(this).val('');
                         //$(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
-                        document.frmMeetingReport.d1.value = <?php  echo $strMin_Date; ?>;
-                        document.frmMeetingReport.d2.value = <?php  echo $strMax_Date; ?>;
+                        document.frmMeetingReport.d1.value = "<?php  echo $strMin_Date; ?>";
+                        document.frmMeetingReport.d2.value = "<?php  echo $strMax_Date; ?>";
                         $("#frmMeetingReport").submit();
                     });
 
