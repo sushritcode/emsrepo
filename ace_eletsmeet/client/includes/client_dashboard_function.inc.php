@@ -43,7 +43,7 @@ function getContactCountByID($client_id, $dataHelper) {
     }
     try
     {
-        echo $strSqlStatement = "SELECT COUNT(*) as TotalContacts FROM client_contact_details AS ccd, client_login_details AS cld, client_details AS cd "
+        $strSqlStatement = "SELECT COUNT(*) as TotalContacts FROM client_contact_details AS ccd, client_login_details AS cld, client_details AS cd "
 . "WHERE  ccd.client_id = cld.client_id AND cld.client_id = cd.client_id AND client_login_enabled = '1' AND ccd.client_id ='" . trim($client_id) . "' AND client_contact_status = '1';";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrResult;
