@@ -277,7 +277,7 @@ function getClientSubscriptionInfo($partner_id, $client_id, $dataHelper) {
 
     try
     {
-        echo $strSqlQuery = "SELECT pd.partner_name, cld.client_name, cld.client_id, csm.client_subscription_id, csm.order_id, csm.plan_id, csm.plan_name, csm.subscription_start_date_gmt, "
+        $strSqlQuery = "SELECT pd.partner_name, cld.client_name, cld.client_id, csm.client_subscription_id, csm.order_id, csm.plan_id, csm.plan_name, csm.subscription_start_date_gmt, "
                 . "csm.subscription_end_date_gmt, DATEDIFF(csm.subscription_end_date_gmt, DATE_FORMAT(NOW(), '%Y-%m-%d')) AS diff_days, csm.subscription_status  "
                 . "FROM partner_details AS pd, client_subscription_master AS csm, client_login_details AS cld, client_details AS cd "
                 . "WHERE pd.partner_id = cld.partner_id AND cld.client_id = csm.client_id "

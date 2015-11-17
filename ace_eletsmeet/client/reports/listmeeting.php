@@ -214,7 +214,7 @@ catch (Exception $e)
                                                         {
                                                            case 0: $MeetingStatus = "<span class=\"label label-sm label-warning\">Scheduled</span>";
                                                               break;
-                                                           case 1: $MeetingStatus = "<span class=\"label label-sm label-warning\">Started</span>";
+                                                           case 1: $MeetingStatus = "<span class=\"label label-sm label\">In Progress</span>";
                                                               break;
                                                            case 2: $MeetingStatus = "<span class=\"label label-sm label-success\">Completed</span>";
                                                               break;
