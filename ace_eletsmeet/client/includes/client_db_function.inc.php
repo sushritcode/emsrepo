@@ -821,33 +821,6 @@ function getLicenseDetailsByClient($client_id, $dataHelper) {
     }
 }
 
-function resetClientPassword($email_address, $new_password, $dataHelper) {
-    if (!is_object($dataHelper))
-    {
-        throw new Exception("client_db_function.inc.php : resetClientPassword : DataHelper Object did not instantiate", 104);
-    }
-
-    if (strlen(trim($email_address)) <= 0)
-    {
-        throw new Exception("client_db_function.inc.php: resetClientPassword : Missing Parameter email_address.", 141);
-    }
-
-    if (strlen(trim($new_password)) <= 0)
-    {
-        throw new Exception("client_db_function.inc.php: resetClientPassword : Missing Parameter $new_password.", 141);
-    }
-
-    try
-    {
-        $strSqlStatement = "UPDATE client_details SET client_password = '" . trim($new_password) . "' WHERE client_email_address='" . trim($email_address) . "' AND status = '1'";
-        $arrAuthResult = $dataHelper->putRecords("QR", $strSqlStatement);
-        return $arrAuthResult;
-    }
-    catch (Exception $e)
-    {
-        throw new Exception("client_db_function.inc.php : resetClientPassword : Could not fetch records : " . $e->getMessage(), 144);
-    }
-}
 
 function insClientLicenseDetails($client_id, $no_of_license, $operation_type, $license_datetime, $dataHelper) {
     if (!is_object($dataHelper))
