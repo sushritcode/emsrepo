@@ -129,16 +129,15 @@ $arrMinuteArr = substr($arrMinuteArr, 0, -1);
 $arrMeetingCurrentMonth = getTotalMeetingCurrentMonth($strCK_user_id, $objDataHelper);
 //611 Total meeting in the month end//
 //print_r($arrMeetingCurrentMonth);
-$eventsJson = str_replace('"start":"','"start":',json_encode($arrMeetingCurrentMonth));
-$eventsJson = str_replace('","className"',',"className"',$eventsJson);
-
+$eventsJson = str_replace('"start":"', '"start":', json_encode($arrMeetingCurrentMonth));
+$eventsJson = str_replace('","className"', ',"className"', $eventsJson);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <!-- HEAD CONTENT AREA -->
-            <?php include (INCLUDES_PATH . 'head.php'); ?>
+        <?php include (INCLUDES_PATH . 'head.php'); ?>
         <!-- HEAD CONTENT AREA -->
 
         <!-- CSS n JS CONTENT AREA -->
@@ -198,362 +197,41 @@ $eventsJson = str_replace('","className"',',"className"',$eventsJson);
                             <div class="col-xs-12">
                                 <!-- PAGE CONTENT START -->
 
-                                <div class="center">
+                                
                                     <div class="row" >
                                         <div class="col-xs-6">
                                             <div>
                                                 <span>mitesh</span>
                                                 <div class="space"></div>
-                                                    <div id="calendar"></div>
-						    <div id="sch-detls" class="modal fade" tabindex="-1">
-                                        		<div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header no-padding">
-                                                    <div class="table-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                                            <span class="white">&times;</span>
-                                                        </button>
-                                                        &nbsp;
+                                                <div id="calendar"></div>
+                                                
+                                                <div id="sch-detls" class="modal fade" tabindex="-1">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header no-padding">
+                                                                <div class="table-header">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                                        <span class="white">&times;</span>
+                                                                    </button>
+                                                                    &nbsp;
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div id="SubDetails"></div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <div id="SubDetails"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                             </div>
                                         </div>
 
-                                        <!--div class="col-xs-6" style="border: 1px solid red;">
+                                        <div class="col-xs-6" style="border: 1px solid red;">
                                             <div>
                                                 <span>sushrit</span>
                                             </div>
-
-                                            <div id="calendar" class="fc fc-ltr fc-unthemed">
-                                                <div class="fc-toolbar">
-                                                    <div class="fc-left">
-                                                        <div class="fc-button-group">
-                                                            <button class="fc-prev-button fc-button fc-state-default fc-corner-left" type="button">
-                                                                <span class="fc-icon fc-icon-left-single-arrow"></span>
-                                                            </button>
-                                                            <button class="fc-next-button fc-button fc-state-default fc-corner-right" type="button">
-                                                                <span class="fc-icon fc-icon-right-single-arrow"></span>
-                                                            </button>
-                                                        </div>
-                                                        <button class="fc-today-button fc-button fc-state-default fc-corner-left fc-corner-right fc-state-disabled" type="button" disabled="disabled">today</button>
-                                                    </div>
-                                                    <div class="fc-right">
-                                                        <div class="fc-button-group">
-                                                            <button class="fc-month-button fc-button fc-state-default fc-corner-left fc-state-active" type="button">month</button>
-                                                            <button class="fc-agendaWeek-button fc-button fc-state-default" type="button">week</button>
-                                                            <button class="fc-agendaDay-button fc-button fc-state-default fc-corner-right" type="button">day</button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="fc-center"><h2>November 2015</h2></div>
-                                                    <div class="fc-clear"></div>
-                                                </div>
-                                                <div class="fc-view-container" style="">
-                                                    <div class="fc-view fc-month-view fc-basic-view" style="">
-                                                        <table>
-                                                            <thead>
-                                                                <tr>
-                                                                    <td class="fc-widget-header">
-                                                                        <div class="fc-row fc-widget-header">
-                                                                            <table>
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th class="fc-day-header fc-widget-header fc-sun">Sun</th>
-                                                                                        <th class="fc-day-header fc-widget-header fc-mon">Mon</th>
-                                                                                        <th class="fc-day-header fc-widget-header fc-tue">Tue</th>
-                                                                                        <th class="fc-day-header fc-widget-header fc-wed">Wed</th>
-                                                                                        <th class="fc-day-header fc-widget-header fc-thu">Thu</th>
-                                                                                        <th class="fc-day-header fc-widget-header fc-fri">Fri</th>
-                                                                                        <th class="fc-day-header fc-widget-header fc-sat">Sat</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                            </table>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td class="fc-widget-content">
-                                                                        <div class="fc-day-grid-container" style="">
-                                                                            <div class="fc-day-grid">
-                                                                                <div class="fc-row fc-week fc-widget-content" style="height: 116px;">
-                                                                                    <div class="fc-bg">
-                                                                                        <table>
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td data-date="2015-11-01" class="fc-day fc-widget-content fc-sun fc-past"></td>
-                                                                                                    <td data-date="2015-11-02" class="fc-day fc-widget-content fc-mon fc-past"></td>
-                                                                                                    <td data-date="2015-11-03" class="fc-day fc-widget-content fc-tue fc-past"></td>
-                                                                                                    <td data-date="2015-11-04" class="fc-day fc-widget-content fc-wed fc-past"></td>
-                                                                                                    <td data-date="2015-11-05" class="fc-day fc-widget-content fc-thu fc-past"></td>
-                                                                                                    <td data-date="2015-11-06" class="fc-day fc-widget-content fc-fri fc-today fc-state-highlight"></td>
-                                                                                                    <td data-date="2015-11-07" class="fc-day fc-widget-content fc-sat fc-future"></td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </div>
-                                                                                    <div class="fc-content-skeleton">
-                                                                                        <table>
-                                                                                            <thead>
-                                                                                                <tr>
-                                                                                                    <td data-date="2015-11-01" class="fc-day-number fc-sun fc-past">1</td>
-                                                                                                    <td data-date="2015-11-02" class="fc-day-number fc-mon fc-past">2</td>
-                                                                                                    <td data-date="2015-11-03" class="fc-day-number fc-tue fc-past">3</td>
-                                                                                                    <td data-date="2015-11-04" class="fc-day-number fc-wed fc-past">4</td>
-                                                                                                    <td data-date="2015-11-05" class="fc-day-number fc-thu fc-past">5</td>
-                                                                                                    <td data-date="2015-11-06" class="fc-day-number fc-fri fc-today fc-state-highlight">6</td>
-                                                                                                    <td data-date="2015-11-07" class="fc-day-number fc-sat fc-future">7</td>
-                                                                                                </tr>
-                                                                                            </thead>
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td ></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="fc-row fc-week fc-widget-content" style="height: 116px;">
-                                                                                    <div class="fc-bg">
-                                                                                        <table>
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td data-date="2015-11-08" class="fc-day fc-widget-content fc-sun fc-future"></td>
-                                                                                                    <td data-date="2015-11-09" class="fc-day fc-widget-content fc-mon fc-future"></td>
-                                                                                                    <td data-date="2015-11-10" class="fc-day fc-widget-content fc-tue fc-future"></td>
-                                                                                                    <td data-date="2015-11-11" class="fc-day fc-widget-content fc-wed fc-future"></td>
-                                                                                                    <td data-date="2015-11-12" class="fc-day fc-widget-content fc-thu fc-future"></td>
-                                                                                                    <td data-date="2015-11-13" class="fc-day fc-widget-content fc-fri fc-future"></td>
-                                                                                                    <td data-date="2015-11-14" class="fc-day fc-widget-content fc-sat fc-future"></td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </div>
-                                                                                    <div class="fc-content-skeleton">
-                                                                                        <table>
-                                                                                            <thead>
-                                                                                                <tr>
-                                                                                                    <td data-date="2015-11-08" class="fc-day-number fc-sun fc-future">8</td>
-                                                                                                    <td data-date="2015-11-09" class="fc-day-number fc-mon fc-future">9</td>
-                                                                                                    <td data-date="2015-11-10" class="fc-day-number fc-tue fc-future">10</td>
-                                                                                                    <td data-date="2015-11-11" class="fc-day-number fc-wed fc-future">11</td>
-                                                                                                    <td data-date="2015-11-12" class="fc-day-number fc-thu fc-future">12</td>
-                                                                                                    <td data-date="2015-11-13" class="fc-day-number fc-fri fc-future">13</td>
-                                                                                                    <td data-date="2015-11-14" class="fc-day-number fc-sat fc-future">14</td>
-                                                                                                </tr>
-                                                                                            </thead>
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="fc-row fc-week fc-widget-content" style="height: 116px;">
-                                                                                    <div class="fc-bg">
-                                                                                        <table>
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td data-date="2015-11-15" class="fc-day fc-widget-content fc-sun fc-future"></td>
-                                                                                                    <td data-date="2015-11-16" class="fc-day fc-widget-content fc-mon fc-future"></td>
-                                                                                                    <td data-date="2015-11-17" class="fc-day fc-widget-content fc-tue fc-future"></td>
-                                                                                                    <td data-date="2015-11-18" class="fc-day fc-widget-content fc-wed fc-future"></td>
-                                                                                                    <td data-date="2015-11-19" class="fc-day fc-widget-content fc-thu fc-future"></td>
-                                                                                                    <td data-date="2015-11-20" class="fc-day fc-widget-content fc-fri fc-future"></td>
-                                                                                                    <td data-date="2015-11-21" class="fc-day fc-widget-content fc-sat fc-future"></td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </div>
-                                                                                    <div class="fc-content-skeleton">
-                                                                                        <table>
-                                                                                            <thead>
-                                                                                                <tr>
-                                                                                                    <td data-date="2015-11-15" class="fc-day-number fc-sun fc-future">15</td>
-                                                                                                    <td data-date="2015-11-16" class="fc-day-number fc-mon fc-future">16</td>
-                                                                                                    <td data-date="2015-11-17" class="fc-day-number fc-tue fc-future">17</td>
-                                                                                                    <td data-date="2015-11-18" class="fc-day-number fc-wed fc-future">18</td>
-                                                                                                    <td data-date="2015-11-19" class="fc-day-number fc-thu fc-future">19</td>
-                                                                                                    <td data-date="2015-11-20" class="fc-day-number fc-fri fc-future">20</td>
-                                                                                                    <td data-date="2015-11-21" class="fc-day-number fc-sat fc-future">21</td>
-                                                                                                </tr>
-                                                                                            </thead>
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="fc-row fc-week fc-widget-content" style="height: 116px;">
-                                                                                    <div class="fc-bg">
-                                                                                        <table>
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td data-date="2015-11-22" class="fc-day fc-widget-content fc-sun fc-future"></td>
-                                                                                                    <td data-date="2015-11-23" class="fc-day fc-widget-content fc-mon fc-future"></td>
-                                                                                                    <td data-date="2015-11-24" class="fc-day fc-widget-content fc-tue fc-future"></td>
-                                                                                                    <td data-date="2015-11-25" class="fc-day fc-widget-content fc-wed fc-future"></td>
-                                                                                                    <td data-date="2015-11-26" class="fc-day fc-widget-content fc-thu fc-future"></td>
-                                                                                                    <td data-date="2015-11-27" class="fc-day fc-widget-content fc-fri fc-future"></td>
-                                                                                                    <td data-date="2015-11-28" class="fc-day fc-widget-content fc-sat fc-future"></td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </div>
-                                                                                    <div class="fc-content-skeleton">
-                                                                                        <table>
-                                                                                            <thead>
-                                                                                                <tr>
-                                                                                                    <td data-date="2015-11-22" class="fc-day-number fc-sun fc-future">22</td>
-                                                                                                    <td data-date="2015-11-23" class="fc-day-number fc-mon fc-future">23</td>
-                                                                                                    <td data-date="2015-11-24" class="fc-day-number fc-tue fc-future">24</td>
-                                                                                                    <td data-date="2015-11-25" class="fc-day-number fc-wed fc-future">25</td>
-                                                                                                    <td data-date="2015-11-26" class="fc-day-number fc-thu fc-future">26</td>
-                                                                                                    <td data-date="2015-11-27" class="fc-day-number fc-fri fc-future">27</td>
-                                                                                                    <td data-date="2015-11-28" class="fc-day-number fc-sat fc-future">28</td>
-                                                                                                </tr>
-                                                                                            </thead>
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="fc-row fc-week fc-widget-content" style="height: 116px;">
-                                                                                    <div class="fc-bg">
-                                                                                        <table>
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td data-date="2015-11-29" class="fc-day fc-widget-content fc-sun fc-future"></td>
-                                                                                                    <td data-date="2015-11-30" class="fc-day fc-widget-content fc-mon fc-future"></td>
-                                                                                                    <td data-date="2015-12-01" class="fc-day fc-widget-content fc-tue fc-other-month fc-future"></td>
-                                                                                                    <td data-date="2015-12-02" class="fc-day fc-widget-content fc-wed fc-other-month fc-future"></td>
-                                                                                                    <td data-date="2015-12-03" class="fc-day fc-widget-content fc-thu fc-other-month fc-future"></td>
-                                                                                                    <td data-date="2015-12-04" class="fc-day fc-widget-content fc-fri fc-other-month fc-future"></td>
-                                                                                                    <td data-date="2015-12-05" class="fc-day fc-widget-content fc-sat fc-other-month fc-future"></td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </div>
-                                                                                    <div class="fc-content-skeleton">
-                                                                                        <table>
-                                                                                            <thead>
-                                                                                                <tr>
-                                                                                                    <td data-date="2015-11-29" class="fc-day-number fc-sun fc-future">29</td>
-                                                                                                    <td data-date="2015-11-30" class="fc-day-number fc-mon fc-future">30</td>
-                                                                                                    <td data-date="2015-12-01" class="fc-day-number fc-tue fc-other-month fc-future">1</td>
-                                                                                                    <td data-date="2015-12-02" class="fc-day-number fc-wed fc-other-month fc-future">2</td>
-                                                                                                    <td data-date="2015-12-03" class="fc-day-number fc-thu fc-other-month fc-future">3</td>
-                                                                                                    <td data-date="2015-12-04" class="fc-day-number fc-fri fc-other-month fc-future">4</td>
-                                                                                                    <td data-date="2015-12-05" class="fc-day-number fc-sat fc-other-month fc-future">5</td>
-                                                                                                </tr>
-                                                                                            </thead>
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="fc-row fc-week fc-widget-content" style="height: 119px;">
-                                                                                    <div class="fc-bg">
-                                                                                        <table>
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td data-date="2015-12-06" class="fc-day fc-widget-content fc-sun fc-other-month fc-future"></td>
-                                                                                                    <td data-date="2015-12-07" class="fc-day fc-widget-content fc-mon fc-other-month fc-future"></td>
-                                                                                                    <td data-date="2015-12-08" class="fc-day fc-widget-content fc-tue fc-other-month fc-future"></td>
-                                                                                                    <td data-date="2015-12-09" class="fc-day fc-widget-content fc-wed fc-other-month fc-future"></td>
-                                                                                                    <td data-date="2015-12-10" class="fc-day fc-widget-content fc-thu fc-other-month fc-future"></td>
-                                                                                                    <td data-date="2015-12-11" class="fc-day fc-widget-content fc-fri fc-other-month fc-future"></td>
-                                                                                                    <td data-date="2015-12-12" class="fc-day fc-widget-content fc-sat fc-other-month fc-future"></td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </div>
-                                                                                    <div class="fc-content-skeleton">
-                                                                                        <table>
-                                                                                            <thead>
-                                                                                                <tr>
-                                                                                                    <td data-date="2015-12-06" class="fc-day-number fc-sun fc-other-month fc-future">6</td>
-                                                                                                    <td data-date="2015-12-07" class="fc-day-number fc-mon fc-other-month fc-future">7</td>
-                                                                                                    <td data-date="2015-12-08" class="fc-day-number fc-tue fc-other-month fc-future">8</td>
-                                                                                                    <td data-date="2015-12-09" class="fc-day-number fc-wed fc-other-month fc-future">9</td>
-                                                                                                    <td data-date="2015-12-10" class="fc-day-number fc-thu fc-other-month fc-future">10</td>
-                                                                                                    <td data-date="2015-12-11" class="fc-day-number fc-fri fc-other-month fc-future">11</td>
-                                                                                                    <td data-date="2015-12-12" class="fc-day-number fc-sat fc-other-month fc-future">12</td>
-                                                                                                </tr>
-                                                                                            </thead>
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                        </div-->
+                                        </div>
                                     </div>
-                                </div>
+                                
 
                                 <!--                                <div class="row">
                                 
@@ -657,36 +335,36 @@ $eventsJson = str_replace('","className"',',"className"',$eventsJson);
                                                                                         <div class="tab-content padding-8">
                                                                                                 <div class="tab-pane active" id="member-tab">
                                                                                                         <div class="clearfix">
-<?php
-for ($intCntr = 0; $intCntr < sizeof($arrFrequentInvitees); $intCntr++)
-{
+                                <?php
+                                for ($intCntr = 0; $intCntr < sizeof($arrFrequentInvitees); $intCntr++)
+                                {
 
-    $strContactNickName = $arrFrequentInvitees[$intCntr]["contact_nick_name"];
-    $strContactEmailID = $arrFrequentInvitees[$intCntr]["contact_email_address"];
-    ?>
-                                                                                                                    <div class="itemdiv memberdiv">
-                                                                                                                            <div class="user"><img src="<?php echo IMG_PATH; ?>avatar2.png" alt="<?php echo $strContactEmailID; ?>" title="<?php echo $strContactEmailID; ?>"></div>
+                                    $strContactNickName = $arrFrequentInvitees[$intCntr]["contact_nick_name"];
+                                    $strContactEmailID = $arrFrequentInvitees[$intCntr]["contact_email_address"];
+                                    ?>
+                                                                                                                        <div class="itemdiv memberdiv">
+                                                                                                                                <div class="user"><img src="<?php echo IMG_PATH; ?>avatar2.png" alt="<?php echo $strContactEmailID; ?>" title="<?php echo $strContactEmailID; ?>"></div>
+                                                                                                                                <div class="body">
+                                                                                                                                        <div class="name blue"><?php echo $strContactNickName; ?></div>
+                                                                                                                                        <div class="time"><i class="ace-icon fa fa-clock-o"></i> <span class="green">20 min</span></div>
+                                                                                                                                </div>
+                                                                                                                        </div>
+                                        
+                                                                                                                        <div class="itemdiv memberdiv">
+                                                                                                                            <div class="user"><img src="../assets/avatars/avatar2.png" alt="Joe Doe's avatar"></div>
                                                                                                                             <div class="body">
-                                                                                                                                    <div class="name blue"><?php echo $strContactNickName; ?></div>
-                                                                                                                                    <div class="time"><i class="ace-icon fa fa-clock-o"></i> <span class="green">20 min</span></div>
+                                                                                                                                    <div class="name"><a href="#">Joe Doe</a></div>
+                                                                                                                                    <div class="time"><i class="ace-icon fa fa-clock-o"></i> <span class="green">10 min</span></div>						
                                                                                                                             </div>
-                                                                                                                    </div>
-                                    
-                                                                                                                    <div class="itemdiv memberdiv">
-                                                                                                                        <div class="user"><img src="../assets/avatars/avatar2.png" alt="Joe Doe's avatar"></div>
-                                                                                                                        <div class="body">
-                                                                                                                                <div class="name"><a href="#">Joe Doe</a></div>
-                                                                                                                                <div class="time"><i class="ace-icon fa fa-clock-o"></i> <span class="green">10 min</span></div>						
                                                                                                                         </div>
-                                                                                                                    </div>
-                                    
-                                                                                                                    <div class="itemdiv memberdiv">
-                                                                                                                        <div class="user"><img src="../assets/avatars/avatar2.png" alt="Jim Doe's avatar"></div>
-                                                                                                                        <div class="body">
-                                                                                                                                <div class="name"><a href="#">Jim Doe</a></div>
-                                                                                                                                <div class="time"><i class="ace-icon fa fa-clock-o"></i> <span class="green">10 min</span></div>						
+                                        
+                                                                                                                        <div class="itemdiv memberdiv">
+                                                                                                                            <div class="user"><img src="../assets/avatars/avatar2.png" alt="Jim Doe's avatar"></div>
+                                                                                                                            <div class="body">
+                                                                                                                                    <div class="name"><a href="#">Jim Doe</a></div>
+                                                                                                                                    <div class="time"><i class="ace-icon fa fa-clock-o"></i> <span class="green">10 min</span></div>						
+                                                                                                                            </div>
                                                                                                                         </div>
-                                                                                                                    </div>
                                 <?php } ?>
                                                                                                         </div>
                                 
@@ -754,165 +432,166 @@ for ($intCntr = 0; $intCntr < sizeof($arrFrequentInvitees); $intCntr++)
         <script type="text/javascript" src="<?php echo JS_PATH; ?>exporting.js"></script>
         <script type="text/javascript" src="<?php echo JS_PATH; ?>moment.js"></script>
         <script type="text/javascript" src="<?php echo JS_PATH; ?>fullcalendar.js"></script>
-        
+
         <script type="text/javascript">
-	 var SITE_ROOT = "<?php echo $SITE_ROOT; ?>";
+                var SITE_ROOT = "<?php echo $SITE_ROOT; ?>";
 
-        jQuery(function ($) {
+                jQuery(function ($) {
 
-            /* initialize the external events
-             -----------------------------------------------------------------*/
+                    /* initialize the external events
+                     -----------------------------------------------------------------*/
 
-            $('#external-events div.external-event').each(function () {
+                    $('#external-events div.external-event').each(function () {
 
-                // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
-                // it doesn't need to have a start or end
-                var eventObject = {
-                    title: $.trim($(this).text()) // use the element's text as the event title
-                };
+                        // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+                        // it doesn't need to have a start or end
+                        var eventObject = {
+                            title: $.trim($(this).text()) // use the element's text as the event title
+                        };
 
-                // store the Event Object in the DOM element so we can get to it later
-                $(this).data('eventObject', eventObject);
+                        // store the Event Object in the DOM element so we can get to it later
+                        $(this).data('eventObject', eventObject);
 
-                // make the event draggable using jQuery UI
-                $(this).draggable({
-                    zIndex: 999,
-                    revert: true, // will cause the event to go back to its
-                    revertDuration: 0  //  original position after the drag
+                        // make the event draggable using jQuery UI
+                        $(this).draggable({
+                            zIndex: 999,
+                            revert: true, // will cause the event to go back to its
+                            revertDuration: 0  //  original position after the drag
+                        });
+
+                    });
+
+
+
+
+                    /* initialize the calendar
+                     -----------------------------------------------------------------*/
+
+                    var date = new Date();
+                    var d = date.getDate();
+                    var m = date.getMonth();
+                    var y = date.getFullYear();
+                    var calendar = $('#calendar').fullCalendar({
+                        //isRTL: true,
+                        buttonHtml: {
+                            prev: '<i class="ace-icon fa fa-chevron-left"></i>',
+                            next: '<i class="ace-icon fa fa-chevron-right"></i>'
+                        },
+                        header: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            //right: 'month,agendaWeek,agendaDay'
+                            right: 'month'
+                        },
+                        events: <?php echo $eventsJson; ?>
+
+
+                        /*[
+                         {
+                         title: 'All Day Event',
+                         start: new Date(y, m, 7, 18,10),
+                         className: 'label-important'
+                         },
+                         {
+                         title: 'Long Event',
+                         start: moment().subtract(5, 'days').format('YYYY-MM-DD'),
+                         end: moment().subtract(1, 'days').format('YYYY-MM-DD'),
+                         className: 'label-success'
+                         },
+                         {
+                         title: 'Some Event',
+                         start: new Date(y, m, d - 4, 16,10),
+                         allDay: false,
+                         className: 'label-info'
+                         },
+                         {
+                         title: 'Some Event',
+                         //start: new Date(y+1, 1, 16,10),
+                         start: new Date(2016, 0, 15,10,20),
+                         allDay: false,
+                         className: 'label-info'
+                         }
+                         ]*/
+                        ,
+                        editable: true,
+                        droppable: true, // this allows things to be dropped onto the calendar !!!
+                        drop: function (date, allDay) { // this function is called when something is dropped
+
+                            // retrieve the dropped element's stored Event Object
+                            var originalEventObject = $(this).data('eventObject');
+                            var $extraEventClass = $(this).attr('data-class');
+
+
+                            // we need to copy it, so that multiple events don't have a reference to the same object
+                            var copiedEventObject = $.extend({}, originalEventObject);
+
+                            // assign it the date that was reported
+                            copiedEventObject.start = date;
+                            copiedEventObject.allDay = allDay;
+                            if ($extraEventClass)
+                                copiedEventObject['className'] = [$extraEventClass];
+
+                            // render the event on the calendar
+                            // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                            $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+                            // is the "remove after drop" checkbox checked?
+                            if ($('#drop-remove').is(':checked')) {
+                                // if so, remove the element from the "Draggable Events" list
+                                $(this).remove();
+                            }
+
+                        }
+                        ,
+                        selectable: true,
+                        selectHelper: true,
+                        select: function (start, end, allDay) {
+                            bootbox.prompt("New Event Title:", function (title) {
+                                if (title !== null) {
+                                    calendar.fullCalendar('renderEvent',
+                                            {
+                                                title: title,
+                                                start: start,
+                                                end: end,
+                                                allDay: allDay,
+                                                className: 'label-info'
+                                            },
+                                    true // make the event "stick"
+                                            );
+                                }
+                            });
+                            calendar.fullCalendar('unselect');
+                        }
+                        ,
+                        eventClick: function (calEvent, jsEvent, view) {
+                            meetingDetails(calEvent.schedule_id, calEvent.secKey);
+                        }
+
+                    });
+
+
                 });
 
-            });
-
-
-
-
-            /* initialize the calendar
-             -----------------------------------------------------------------*/
-
-            var date = new Date();
-            var d = date.getDate();
-            var m = date.getMonth();
-            var y = date.getFullYear();
-            var calendar = $('#calendar').fullCalendar({
-            //isRTL: true,
-                buttonHtml: {
-                    prev: '<i class="ace-icon fa fa-chevron-left"></i>',
-                    next: '<i class="ace-icon fa fa-chevron-right"></i>'
-                },
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    //right: 'month,agendaWeek,agendaDay'
-                    right: 'month'
-                },
-                events: <?php echo $eventsJson;?>
-	
-
-			 /*[
-                    {
-                        title: 'All Day Event',
-                        start: new Date(y, m, 7, 18,10),
-                        className: 'label-important'
-                    },
-                    {
-                        title: 'Long Event',
-                        start: moment().subtract(5, 'days').format('YYYY-MM-DD'),
-                        end: moment().subtract(1, 'days').format('YYYY-MM-DD'),
-                        className: 'label-success'
-                    },
-                    {
-                        title: 'Some Event',
-                        start: new Date(y, m, d - 4, 16,10),
-                        allDay: false,
-                        className: 'label-info'
-                    },
-                    {
-                        title: 'Some Event',
-                        //start: new Date(y+1, 1, 16,10),
-                        start: new Date(2016, 0, 15,10,20),
-                        allDay: false,
-                        className: 'label-info'
-                    }
-                ]*/
-                ,
-                editable: true,
-                droppable: true, // this allows things to be dropped onto the calendar !!!
-                drop: function (date, allDay) { // this function is called when something is dropped
-
-                    // retrieve the dropped element's stored Event Object
-                    var originalEventObject = $(this).data('eventObject');
-                    var $extraEventClass = $(this).attr('data-class');
-
-
-                    // we need to copy it, so that multiple events don't have a reference to the same object
-                    var copiedEventObject = $.extend({}, originalEventObject);
-
-                    // assign it the date that was reported
-                    copiedEventObject.start = date;
-                    copiedEventObject.allDay = allDay;
-                    if ($extraEventClass)
-                        copiedEventObject['className'] = [$extraEventClass];
-
-                    // render the event on the calendar
-                    // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-                    $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-
-                    // is the "remove after drop" checkbox checked?
-                    if ($('#drop-remove').is(':checked')) {
-                        // if so, remove the element from the "Draggable Events" list
-                        $(this).remove();
-                    }
-
-                }
-                ,
-                selectable: true,
-                selectHelper: true,
-                select: function (start, end, allDay) {
-                    bootbox.prompt("New Event Title:", function (title) {
-                        if (title !== null) {
-                            calendar.fullCalendar('renderEvent',
-                                    {
-                                        title: title,
-                                        start: start,
-                                        end: end,
-                                        allDay: allDay,
-                                        className: 'label-info'
-                                    },
-                            true // make the event "stick"
-                                    );
+                function meetingDetails(schId, schdtl)
+                {
+                    $.ajax({
+                        type: "GET",
+                        url: SITE_ROOT + "meeting/meetingdetails.php",
+                        cache: false,
+                        data: "SchId=" + schId + "&SchDtl=" + schdtl + "&Num=" + Math.random(),
+                        loading: $(".loading").html(""),
+                        success: function (html) {
+                            $("#SubDetails").html(html);
                         }
                     });
-                    calendar.fullCalendar('unselect');
                 }
-                ,
-                eventClick: function (calEvent, jsEvent, view) {
-		 meetingDetails(calEvent.schedule_id , calEvent.secKey);
-                }
+                ;
 
-            });
+        </script>
 
 
-        });
-
-	function meetingDetails(schId,schdtl) 
-	{
-            $.ajax({
-                type: "GET",
-                url: SITE_ROOT+"meeting/meetingdetails.php",
-                cache: false,
-                data: "SchId="+schId+"&SchDtl="+schdtl+"&Num="+Math.random(),
-                loading: $(".loading").html(""),
-                success: function(html) {
-                    $("#SubDetails").html(html);
-                }
-            }); 
-	};
-
-    </script>
-        
-        
         <script type="text/javascript">
-                jQuery(function ($) {
+            jQuery(function ($) {
 //                $('.easy-pie-chart.percentage').each(function () {
 //                    var $box = $(this).closest('.infobox');
 //                    var barColor = $(this).data('color') || (!$box.hasClass('infobox-dark') ? $box.css('color') : 'rgba(255,255,255,0.95)');
@@ -942,118 +621,118 @@ for ($intCntr = 0; $intCntr < sizeof($arrFrequentInvitees); $intCntr++)
 //                });
 
 
-                    //flot chart resize plugin, somehow manipulates default browser resize event to optimize it!
-                    //but sometimes it brings up errors with normal resize event handlers
-                    $.resize.throttleWindow = false;
+                //flot chart resize plugin, somehow manipulates default browser resize event to optimize it!
+                //but sometimes it brings up errors with normal resize event handlers
+                $.resize.throttleWindow = false;
 
-                    var placeholder = $('#piechart-placeholder').css({'width': '90%', 'min-height': '150px'});
-                    var data = <?php echo json_encode($arrMeetingOverview); ?>;
+                var placeholder = $('#piechart-placeholder').css({'width': '90%', 'min-height': '150px'});
+                var data = <?php echo json_encode($arrMeetingOverview); ?>;
 
-                    function drawPieChart(placeholder, data, position) {
-                        $.plot(placeholder, data, {
-                            series: {
-                                pie: {
-                                    show: true,
-                                    tilt: 0.8,
-                                    highlight: {
-                                        opacity: 0.25
-                                    },
-                                    stroke: {
-                                        color: '#fff',
-                                        width: 2
-                                    },
-                                    startAngle: 2
-                                }
-                            },
-                            legend: {
+                function drawPieChart(placeholder, data, position) {
+                    $.plot(placeholder, data, {
+                        series: {
+                            pie: {
                                 show: true,
-                                position: position || "ne",
-                                labelBoxBorderColor: null,
-                                margin: [-30, 15]
+                                tilt: 0.8,
+                                highlight: {
+                                    opacity: 0.25
+                                },
+                                stroke: {
+                                    color: '#fff',
+                                    width: 2
+                                },
+                                startAngle: 2
                             }
-                            ,
-                            grid: {
-                                hoverable: true,
-                                clickable: true
-                            }
-                        })
-                    }
-                    drawPieChart(placeholder, data);
-
-                    /**
-                     we saved the drawing function and the data to redraw with different position later when switching to RTL mode dynamically
-                     so that's not needed actually.
-                     */
-                    placeholder.data('chart', data);
-                    placeholder.data('draw', drawPieChart);
-
-
-                    //pie chart tooltip example
-                    var $tooltip = $("<div class='tooltip top in'><div class='tooltip-inner'></div></div>").hide().appendTo('body');
-                    var previousPoint = null;
-
-                    placeholder.on('plothover', function (event, pos, item) {
-                        if (item) {
-                            if (previousPoint != item.seriesIndex) {
-                                previousPoint = item.seriesIndex;
-                                var tip = item.series['label'] + " : " + item.series['percent'] + '%';
-                                $tooltip.show().children(0).text(tip);
-                            }
-                            $tooltip.css({top: pos.pageY + 10, left: pos.pageX + 10});
-                        } else {
-                            $tooltip.hide();
-                            previousPoint = null;
+                        },
+                        legend: {
+                            show: true,
+                            position: position || "ne",
+                            labelBoxBorderColor: null,
+                            margin: [-30, 15]
                         }
-                    });
+                        ,
+                        grid: {
+                            hoverable: true,
+                            clickable: true
+                        }
+                    })
+                }
+                drawPieChart(placeholder, data);
+
+                /**
+                 we saved the drawing function and the data to redraw with different position later when switching to RTL mode dynamically
+                 so that's not needed actually.
+                 */
+                placeholder.data('chart', data);
+                placeholder.data('draw', drawPieChart);
+
+
+                //pie chart tooltip example
+                var $tooltip = $("<div class='tooltip top in'><div class='tooltip-inner'></div></div>").hide().appendTo('body');
+                var previousPoint = null;
+
+                placeholder.on('plothover', function (event, pos, item) {
+                    if (item) {
+                        if (previousPoint != item.seriesIndex) {
+                            previousPoint = item.seriesIndex;
+                            var tip = item.series['label'] + " : " + item.series['percent'] + '%';
+                            $tooltip.show().children(0).text(tip);
+                        }
+                        $tooltip.css({top: pos.pageY + 10, left: pos.pageX + 10});
+                    } else {
+                        $tooltip.hide();
+                        previousPoint = null;
+                    }
+                });
 
 
 
-                    $('#container').highcharts({
-                        chart: {
-                            type: 'column'
-                        },
-                        title: {
-                            text: 'Monthly Average Meeting'
-                        },
+                $('#container').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'Monthly Average Meeting'
+                    },
 //        subtitle: {
 //            text: 'Source: WorldClimate.com'
 //        },
-                        xAxis: {
-                            //categories: ['2015-07-09','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov', 'Dec'],
-                            categories: [<?php echo $arrDateArr; ?>],
-                            crosshair: true
-                        },
-                        yAxis: {
-                            min: 0,
-                            title: {
-                                text: 'Duration (minute)'
-                            }
-                        },
-                        tooltip: {
-                            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                                    '<td style="padding:0"><b>{point.y:.0f}</b></td></tr>',
-                            footerFormat: '</table>',
-                            shared: true,
-                            useHTML: true
-                        },
-                        plotOptions: {
-                            column: {
-                                pointPadding: 0.2,
-                                borderWidth: 0
-                            }
-                        },
-                        series: [{
-                                name: 'Minute',
-                                //data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
-                                data: [<?php echo $arrMinuteArr; ?>],
-                                color: "#68BC31"
-                            }]
-                    });
-
-
-
+                    xAxis: {
+                        //categories: ['2015-07-09','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov', 'Dec'],
+                        categories: [<?php echo $arrDateArr; ?>],
+                        crosshair: true
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'Duration (minute)'
+                        }
+                    },
+                    tooltip: {
+                        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                                '<td style="padding:0"><b>{point.y:.0f}</b></td></tr>',
+                        footerFormat: '</table>',
+                        shared: true,
+                        useHTML: true
+                    },
+                    plotOptions: {
+                        column: {
+                            pointPadding: 0.2,
+                            borderWidth: 0
+                        }
+                    },
+                    series: [{
+                            name: 'Minute',
+                            //data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+                            data: [<?php echo $arrMinuteArr; ?>],
+                            color: "#68BC31"
+                        }]
                 });
+
+
+
+            });
 
 
 

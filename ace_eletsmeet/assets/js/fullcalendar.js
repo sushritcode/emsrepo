@@ -5949,7 +5949,7 @@ $.extend(DayGrid.prototype, {
 				(htmlEscape(event.title || '') || '&nbsp;') + // we always want one line of height
 			'</span>';
 		
-		return '<a class="' + classes.join(' ') + '"' +
+		return '<a href="#sch-detls" data-toggle="modal" class="' + classes.join(' ') + '"' +
 				(event.url ?
 					' href="' + htmlEscape(event.url) + '"' :
 					''
