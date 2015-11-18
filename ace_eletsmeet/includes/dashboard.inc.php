@@ -212,7 +212,34 @@ function getTotalMeetingCurrentMonth($user_id, $dataHelper) {
     }   
     try 
     {   
-        $strSqlStatement = "SELECT schedule_id, meeting_title, schedule_status, DATE_FORMAT( meeting_timestamp_gmt, '%Y-%m-%d' ) AS 'meeting_date', DATE_FORMAT( meeting_timestamp_gmt, '%H:%m' ) AS 'meeting_time' FROM schedule_details sd, user_login_details uld, user_details ud WHERE MONTH( sd.meeting_timestamp_gmt ) = MONTH( now( ) ) AND YEAR( sd.meeting_timestamp_gmt ) = YEAR( now( ) ) AND uld.user_id = ud.user_id  AND uld.user_id = sd.user_id AND uld.login_enabled = '1' Order By meeting_date;";	
+        //$strSqlStatement = "SELECT schedule_id, meeting_title, schedule_status, DATE_FORMAT( meeting_timestamp_gmt, '%Y-%m-%d' ) AS 'meeting_date', DATE_FORMAT( meeting_timestamp_gmt, '%H:%m' ) AS 'meeting_time' FROM schedule_details sd, user_login_details uld, user_details ud WHERE MONTH( sd.meeting_timestamp_gmt ) = MONTH( now( ) ) AND YEAR( sd.meeting_timestamp_gmt ) = YEAR( now( ) ) AND uld.user_id = ud.user_id  AND uld.user_id = sd.user_id AND uld.login_enabled = '1' Order By meeting_date;";	
+        
+	$strSqlStatement = "SELECT  
+	meeting_title AS 'title', 
+	CONCAT( \"new Date(\", YEAR( meeting_timestamp_gmt ) , \",\", MONTH( meeting_timestamp_gmt ) -1, \",\", DAYOFMONTH( meeting_timestamp_gmt ) , \",\" , HOUR( meeting_timestamp_gmt ), \",\" , MINUTE( meeting_timestamp_gmt )  , \")\" ) AS 'start', 
+	CASE schedule_status  WHEN 
+	'0' THEN 'label-important' WHEN 
+	'1' THEN 'label-important' WHEN 
+	'2' THEN 'label-important' WHEN 
+	'3' THEN 'label-important' WHEN 
+	'4' THEN 'label-important' END as \"className\" , 
+	sd.schedule_id as 'schedule_id' , 
+	MD5(CONCAT(schedule_id,\":\",uld.user_name,\":\",'".SECRET_KEY."')) as 'secKey' 
+	
+	FROM 
+	
+	schedule_details sd, 
+	user_login_details uld, 
+	user_details ud 
+	
+	WHERE  
+		
+	uld.user_id = '".trim($user_id)."' AND 
+	uld.user_id = ud.user_id  AND 
+	uld.user_id = sd.user_id AND 
+	uld.login_enabled = '1';";
+
+        //$strSqlStatement = "SELECT  meeting_title AS 'title', CONCAT( \"new Date(\", YEAR( meeting_timestamp_gmt ) , \",\", MONTH( meeting_timestamp_gmt ) -1, \",\", DAYOFMONTH( meeting_timestamp_gmt ) , \",\" , HOUR( meeting_timestamp_gmt ), \",\" , MINUTE( meeting_timestamp_gmt )  , \")\" ) AS 'start', \"className: 'label-important'\"  FROM schedule_details sd, user_login_details uld, user_details ud WHERE uld.user_id = ud.user_id  AND uld.user_id = sd.user_id AND uld.user_id = '".trim($user_id)."' AND  uld.login_enabled = '1';";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrResult;
     }   
@@ -221,7 +248,3 @@ function getTotalMeetingCurrentMonth($user_id, $dataHelper) {
         throw new Exception("dashboard.inc.php : getTotalMeetingCurrentMonth : Could not fetch records : " . $e->getMessage(), 144);
     }   
 }
-
-
-
-
