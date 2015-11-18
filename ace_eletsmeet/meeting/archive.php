@@ -140,13 +140,13 @@ catch(Exception $e)
                                                         $schStatus = $arrSchMeetingList[$intCntr]["schedule_status"];
                                                         switch($schStatus)
                                                         {
-                                                           case 0: $aStatus = "<span class=\"label label-sm label-warning\">Scheduled</span>";
+                                                           case 0: $aStatus = "<span class=\"label label-sm label-inverse\">Scheduled</span>";
                                                               break;
-                                                           case 1: $aStatus = "<span class=\"label label-sm label-warning\">Started</span>";
+                                                           case 1: $aStatus = "<span class=\"label label-sm label-info\">Started</span>";
                                                               break;
                                                            case 2: $aStatus = "<span class=\"label label-sm label-success\">Completed</span>";
                                                               break;
-                                                           case 3: $aStatus = "<span class=\"label label-sm label-inverse\">Cancelled</span>";
+                                                           case 3: $aStatus = "<span class=\"label label-sm label-danger\">Cancelled</span>";
                                                               break;
                                                            case 4: $aStatus = "<span class=\"label label-sm label-warning\">Overdue</span>";
                                                               break;

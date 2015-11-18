@@ -174,9 +174,9 @@ function getMeetingOverviewByID($email_address, $dataHelper) {
 ."WHEN '4' THEN 'Overdue' "
 ."END AS 'label', COUNT(schedule_status) AS 'data', "
 ."CASE schedule_status "
-."WHEN '2' THEN '#68BC31' "
-."WHEN '3' THEN '#2091CF' "
-."WHEN '4' THEN '#DA5430' "
+."WHEN '2' THEN '#82af6f' "
+."WHEN '3' THEN '#d15b47' "
+."WHEN '4' THEN '#f89406' "
 ."END AS 'color' "
 ."FROM schedule_details AS sd, invitation_details AS id  WHERE sd.schedule_id = id.schedule_id AND sd.schedule_status IN ('2','3','4') AND id.invitee_email_address = '".trim($email_address)."' GROUP BY schedule_status ORDER BY label;";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
@@ -217,11 +217,11 @@ function getTotalMeetingCurrentMonth($user_id, $dataHelper) {
 	meeting_title AS 'title', 
 	CONCAT( \"new Date(\", YEAR( meeting_timestamp_gmt ) , \",\", MONTH( meeting_timestamp_gmt ) -1, \",\", DAYOFMONTH( meeting_timestamp_gmt ) , \",\" , HOUR( meeting_timestamp_gmt ), \",\" , MINUTE( meeting_timestamp_gmt )  , \")\" ) AS 'start', 
 	CASE schedule_status  WHEN 
-	'0' THEN 'label-success' WHEN 
+	'0' THEN 'label-inverse' WHEN 
 	'1' THEN 'label-info' WHEN 
-	'2' THEN 'label-important' WHEN 
-	'3' THEN 'label-warning' WHEN 
-	'4' THEN 'label-info' END as \"className\" , 
+	'2' THEN 'label-success' WHEN 
+	'3' THEN 'label-danger' WHEN 
+	'4' THEN 'label-warning' END as \"className\" , 
 	sd.schedule_id as 'schedule_id' , 
 	MD5(CONCAT(schedule_id,\":\",uld.user_name,\":\",'".SECRET_KEY."')) as 'secKey' 
 	FROM 

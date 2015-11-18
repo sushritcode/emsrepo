@@ -422,7 +422,7 @@ $arrWeekTotalMeetingArr = substr($arrWeekTotalMeetingArr, 0, -1);
                                         <div class="widget-box">
                                             <div class="widget-header widget-header-flat widget-header-small">
                                                 <h5 class="widget-title">
-                                                    <i class="ace-icon fa fa-users"></i>
+                                                    <i class="ace-icon fa fa-bar-chart-o"></i>
                                                     Meeting Statistics
                                                 </h5>
                                             </div>
