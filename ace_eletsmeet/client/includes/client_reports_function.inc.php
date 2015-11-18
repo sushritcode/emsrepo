@@ -369,7 +369,7 @@ function getMinMaxScheduleDateByClient_Id($client_id, $dataHelper) {
 
     try
     {
-        $strSqlQuery = "SELECT DATE_FORMAT(MIN(meeting_timestamp_gmt), '%Y-%m-%d') AS MinimumDate, DATE_FORMAT(MAX(meeting_timestamp_gmt), '%Y-%m-%d') AS MaximumDate "
+       $strSqlQuery = "SELECT DATE_FORMAT(MIN(meeting_timestamp_gmt), '%Y-%m-%d') AS MinimumDate, DATE_FORMAT(MAX(meeting_timestamp_gmt), '%Y-%m-%d') AS MaximumDate, DATE_FORMAT(MAX(NOW()), '%Y-%m-%d') AS CurrentDate "
                 . "FROM schedule_details AS sd, user_login_details AS uld, user_details AS ud,  client_login_details AS cld, client_details AS cd "
                 . "WHERE sd.schedule_id IN (SELECT schedule_id FROM invitation_details) AND sd.user_id = uld.user_id AND uld.user_id = ud.user_id AND uld.client_id = cld.client_id AND cld.client_id = cd.client_id "
                 . "AND cld.client_login_enabled = '1' AND uld.client_id ='" . trim($client_id) . "'; ";

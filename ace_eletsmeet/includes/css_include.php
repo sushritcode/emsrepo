@@ -6,6 +6,8 @@
 <link rel="stylesheet" href="<?php echo CSS_PATH; ?>datepicker.css" />
 <link rel="stylesheet" href="<?php echo CSS_PATH; ?>bootstrap-timepicker.css" />
 
+<link rel="stylesheet" href="<?php echo CSS_PATH; ?>fullcalendar.css" />
+
 
 <!-- page specific plugin styles -->
 

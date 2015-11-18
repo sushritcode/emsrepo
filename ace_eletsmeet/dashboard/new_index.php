@@ -128,26 +128,26 @@ $arrMinuteArr = substr($arrMinuteArr, 0, -1);
 //611 Total meeting in the month start//
 $arrMeetingCurrentMonth = getTotalMeetingCurrentMonth($strCK_user_id, $objDataHelper);
 //611 Total meeting in the month end//
+print_r($arrMeetingCurrentMonth);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <!-- HEAD CONTENT AREA -->
-<?php include (INCLUDES_PATH . 'head.php'); ?>
+            <?php include (INCLUDES_PATH . 'head.php'); ?>
         <!-- HEAD CONTENT AREA -->
 
         <!-- CSS n JS CONTENT AREA -->
-<?php include (INCLUDES_PATH . 'css_include.php'); ?>    
-        <link rel="stylesheet" href="../assets/css/fullcalendar.css" />
-
+        <?php include (INCLUDES_PATH . 'css_include.php'); ?>    
+        <!-- CSS n JS CONTENT AREA -->
     </head>
 
     <body class="no-skin">
 
         <!-- TOP NAVIGATION BAR START -->
         <div id="navbar" class="navbar navbar-default">
-<?php include (INCLUDES_PATH . 'top_navigation.php'); ?>    
+            <?php include (INCLUDES_PATH . 'top_navigation.php'); ?>    
         </div>
         <!-- TOP NAVIGATION BAR END -->
 
@@ -162,7 +162,7 @@ $arrMeetingCurrentMonth = getTotalMeetingCurrentMonth($strCK_user_id, $objDataHe
 
             <!-- SIDE NAVIGATION BAR START -->
             <div id="sidebar" class="sidebar responsive">
-<?php include (INCLUDES_PATH . 'sidebar_navigation.php'); ?>    
+                <?php include (INCLUDES_PATH . 'sidebar_navigation.php'); ?>    
             </div>
             <!-- SIDE NAVIGATION BAR END -->
 
@@ -172,7 +172,7 @@ $arrMeetingCurrentMonth = getTotalMeetingCurrentMonth($strCK_user_id, $objDataHe
 
                     <!-- BREADCRUMBS N SEARCH BAR START -->
                     <div class="breadcrumbs" id="breadcrumbs">
-<?php include (INCLUDES_PATH . 'breadcrumbs_navigation.php'); ?>
+                        <?php include (INCLUDES_PATH . 'breadcrumbs_navigation.php'); ?>
                     </div>
                     <!-- BREADCRUMBS N SEARCH BAR END -->                    
 
@@ -197,7 +197,7 @@ $arrMeetingCurrentMonth = getTotalMeetingCurrentMonth($strCK_user_id, $objDataHe
 
                                 <div class="center">
                                     <div class="row" >
-                                        <div class="col-xs-6" style="border: 1px solid black;">
+                                        <div class="col-xs-6">
                                             <div>
                                                 <span>mitesh</span>
                                                 <div class="space"></div>
@@ -735,7 +735,7 @@ for ($intCntr = 0; $intCntr < sizeof($arrFrequentInvitees); $intCntr++)
         <script type="text/javascript" src="<?php echo JS_PATH; ?>moment.js"></script>
         <script type="text/javascript" src="<?php echo JS_PATH; ?>fullcalendar.js"></script>
         
-            <script type="text/javascript">
+        <script type="text/javascript">
         jQuery(function ($) {
 
             /* initialize the external events
@@ -771,8 +771,10 @@ for ($intCntr = 0; $intCntr < sizeof($arrFrequentInvitees); $intCntr++)
             var d = date.getDate();
             var m = date.getMonth();
             var y = date.getFullYear();
-
-
+alert(date);
+alert(d);
+alert(m);
+alert(y);
             var calendar = $('#calendar').fullCalendar({
             //isRTL: true,
                 buttonHtml: {
@@ -805,7 +807,8 @@ for ($intCntr = 0; $intCntr < sizeof($arrFrequentInvitees); $intCntr++)
                     },
                     {
                         title: 'Some Event',
-                        start: new Date(y+1, m, 1, 16,10),
+                        //start: new Date(y+1, 1, 16,10),
+                        start: new Date(2016, 0, 15,10,20),
                         allDay: false,
                         className: 'label-info'
                     }

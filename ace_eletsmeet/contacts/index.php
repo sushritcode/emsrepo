@@ -175,11 +175,15 @@ $optionCountry ="";
 		       <td><?php echo $contacts[$i]['contact_mobile_number'];?></td>
 		       <td class="hidden-480"><?php echo  $contacts[$i]['contact_group_name'];?></td>
 		       <td><?php echo  $contacts[$i]['updatdt'];?></td>
-		       <td class="hidden-480">
+                                           <td class="hidden-480">
 			  <?php if($contacts[$i]['personal_contact_status'] == '1'){?>
-			  <span class="label label-sm label-success">Registered</span>
+			  <span class="label label-sm label-success">Active</span>
+                                                        <?php } else if($contacts[$i]['personal_contact_status'] == '2'){?>
+			  <span class="label label-sm label-warning">Inactive</span>
+                                                        <?php } else if($contacts[$i]['personal_contact_status'] == '3'){?>
+			  <span class="label label-sm label-danger">Deleted</span>
 			  <?php } else {?>
-			  <span class="label label-sm label-warning">Disabled</span>
+			  <span class="label label-sm label-warning">Error</span>
 			  <?php }?>
 		       </td>
 		       <td>

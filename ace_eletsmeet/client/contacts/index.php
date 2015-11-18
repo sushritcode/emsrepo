@@ -186,8 +186,12 @@ $optionCountry ="";
 		       <td class="hidden-480">
 			  <?php if($contacts[$i]['client_contact_status'] == '1'){?>
 			  <span class="label label-sm label-success">Active</span>
-			  <?php } else {?>
+                                                        <?php } else if($contacts[$i]['client_contact_status'] == '2'){?>
 			  <span class="label label-sm label-warning">Inactive</span>
+                                                        <?php } else if($contacts[$i]['client_contact_status'] == '3'){?>
+			  <span class="label label-sm label-danger">Deleted</span>
+			  <?php } else {?>
+			  <span class="label label-sm label-warning">Error</span>
 			  <?php }?>
 		       </td>
 		       <td>

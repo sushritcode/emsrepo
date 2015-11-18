@@ -26,7 +26,7 @@ define("JS_PATH",$SITE_ROOT."assets/js/");
 define("ROOT_PATH",$WEBAPP_PATH);
 /*********************Includes Configuration files ******************/
 
-define("LOGOUT_URL",$SITE_ROOT."dashboard/logout.php");
+define("LOGOUT_URL",$SITE_ROOT."logout/");
 define("PROFILE_URL",$SITE_ROOT."profile/");
 /*********************Configuration Parameter Start ******************/
 $CONST_SITETITLE = "Welcome to LetsMeet";

@@ -22,12 +22,8 @@ try
     }
     $strMin_Date = $arrDateRange[0]['MinimumDate'];
     $strMax_Date = $arrDateRange[0]['MaximumDate'];
-    
-//    echo $from_date = date_format ($strMin_Date, "d-m-Y");
-//    echo $to_date = date_format ($strMax_Date, "d-m-Y");
-        
-    //echo $from_date = trim($_POST['txStartDate']);        
-    //echo $to_date = trim($_POST['txEndDate']);
+    $strCurr_Date = $arrDateRange[0]['CurrentDate'];   
+
     if($_REQUEST['q'] == "user")
     {
         $from_date = trim($_REQUEST['d1']);        
@@ -40,9 +36,8 @@ try
 //        $from_date = date ( 'Y-m-j' , $newdate );
 
         $from_date = $strMin_Date;
-        $to_date = $strMax_Date;
+        $to_date = $strCurr_Date;
     }
-   
 
     try
     {
@@ -51,21 +46,7 @@ try
     catch (Exception $a)
     {
         throw new Exception("index.php : getNumberOfLicenseList : Error in populating List." . $a->getMessage(), 541);
-    }
-    
-//    try 
-//    {
-//    $arrUserDetls = getUserDetailsByUserId($strUserId, $objDataHelper);
-//    } 
-//    catch (Exception $e) 
-//    {
-//        throw new Exception("index.php : updInvitationStatus Failed : " . $e->getMessage(), 1126);
-//    }
-//    //print_r($arrUserDetls);
-//    $strDBUserId = trim($arrUserDetls[0]['user_id']);
-//    $strDBUserName = trim($arrUserDetls[0]['user_name']);
-//    $strDBUserEmail = trim($arrUserDetls[0]['email_address']);
-    
+    }   
 }
 catch (Exception $e)
 {
@@ -150,7 +131,7 @@ catch (Exception $e)
                                                                 <form id="frmMeetingReport" name="frmMeetingReport" method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" class="form-horizontal" role="form">
                                                                     <input  type="hidden"  name="q"  value="user" />
                                                                     <input  type="hidden"  name="d1"  id="d1" value="<?php echo $strMin_Date;?>" />
-                                                                    <input  type="hidden"  name="d2"   id="d2" value="<?php echo $strMax_Date;?>" />
+                                                                    <input  type="hidden"  name="d2"   id="d2" value="<?php echo $strCurr_Date;?>" />
                                                                     <input class="form-control" type="text" name="date-range-picker" id="report-date-range" value="<?php echo $from_date; ?> - <?php echo $to_date; ?>"/>
                                                                  </form>
                                                             </div>
@@ -365,56 +346,37 @@ catch (Exception $e)
                     });
 
                     $('#report-date-range').on('cancel.daterangepicker', function(ev, picker) {
-                        //$(this).val('');
-                        //$(this).val(picker.startDate.format('DD-MM-YYYY') + ' - ' + picker.endDate.format('DD-MM-YYYY'));
                         document.frmMeetingReport.d1.value = "<?php  echo $strMin_Date; ?>";
-                        document.frmMeetingReport.d2.value = "<?php  echo $strMax_Date; ?>";
+                        document.frmMeetingReport.d2.value = "<?php  echo $strCurr_Date; ?>";
                         $("#frmMeetingReport").submit();
                     });
 
               });
-
-//                $('#report-date-range').daterangepicker({
-//                        autoUpdateInput: false,
-////                        'applyClass' : 'btn-sm btn-success',
-////                        'cancelClass' : 'btn-sm btn-default',
-//                        locale: {
-//                                applyLabel: 'Apply',
-//                                cancelLabel: 'Cancel',
-//                        }
-//                }, 
-//                function(start, end, label) 
-//                {
-//                    console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
-//                });
-                        
-   
-                
                 
                 //initiate dataTables plugin
                 var oTable1 =
-                        $('#dynamic-table')
-                        //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
-                        .dataTable({
-                            bAutoWidth: false,
-                            "aoColumns": [
-                                {"bSortable": false},
-                                null,null,null,null,null,null,null,null, 
-                                {"bSortable": false}
-                            ],
-                            "aaSorting": [],
-                            //,
-                            //"sScrollY": "200px",
-                            //"bPaginate": false,
+                $('#dynamic-table')
+                //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
+                .dataTable({
+                    bAutoWidth: false,
+                    "aoColumns": [
+                        {"bSortable": false},
+                        null,null,null,null,null,null,null,null, 
+                        {"bSortable": false}
+                    ],
+                    "aaSorting": [],
+                    //,
+                    //"sScrollY": "200px",
+                    //"bPaginate": false,
 
-                            //"sScrollX": "100%",
-                            //"sScrollXInner": "120%",
-                            //"bScrollCollapse": true,
-                            //Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
-                            //you may want to wrap the table inside a "div.dataTables_borderWrap" element
+                    //"sScrollX": "100%",
+                    //"sScrollXInner": "120%",
+                    //"bScrollCollapse": true,
+                    //Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
+                    //you may want to wrap the table inside a "div.dataTables_borderWrap" element
 
-                            //"iDisplayLength": 50
-                        });
+                    //"iDisplayLength": 50
+                });
                 //oTable1.fnAdjustColumnSizing();
 
                 //TableTools settings
