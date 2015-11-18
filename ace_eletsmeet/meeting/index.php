@@ -196,7 +196,7 @@ catch(Exception $e)
                                                                     <button class="btn btn-sm btn-danger" onclick="inviteeStatus('<?php echo $schScheduleId; ?>',2)" alt="Decline" title="Decline"><i class="ace-icon fa fa-thumbs-o-down bigger-120"></i></button>
                                                                     <?php } ?>
                                                             </div>
-                                                            <div class="hidden-md hidden-lg">
+<!--                                                            <div class="hidden-md hidden-lg">
                                                                     <div class="inline pos-rel">
                                                                             <button data-position="auto" data-toggle="dropdown" class="btn btn-minier btn-yellow dropdown-toggle" aria-expanded="false">
                                                                                     <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
@@ -245,7 +245,7 @@ catch(Exception $e)
                                                                                     <?php } ?>
                                                                             </ul>
                                                                     </div>
-                                                            </div>
+                                                            </div>-->
                                                         </td>
                                                     </tr>
                                                     <?php } ?>
