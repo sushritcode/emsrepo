@@ -128,7 +128,10 @@ $arrMinuteArr = substr($arrMinuteArr, 0, -1);
 //611 Total meeting in the month start//
 $arrMeetingCurrentMonth = getTotalMeetingCurrentMonth($strCK_user_id, $objDataHelper);
 //611 Total meeting in the month end//
-print_r($arrMeetingCurrentMonth);
+//print_r($arrMeetingCurrentMonth);
+$eventsJson = str_replace('"start":"','"start":',json_encode($arrMeetingCurrentMonth));
+$eventsJson = str_replace('","className"',',"className"',$eventsJson);
+
 ?>
 
 <!DOCTYPE html>
@@ -202,10 +205,27 @@ print_r($arrMeetingCurrentMonth);
                                                 <span>mitesh</span>
                                                 <div class="space"></div>
                                                     <div id="calendar"></div>
+						    <div id="sch-detls" class="modal fade" tabindex="-1">
+                                        		<div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header no-padding">
+                                                    <div class="table-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                            <span class="white">&times;</span>
+                                                        </button>
+                                                        &nbsp;
+                                                    </div>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div id="SubDetails"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                             </div>
                                         </div>
 
-                                        <div class="col-xs-6" style="border: 1px solid red;">
+                                        <!--div class="col-xs-6" style="border: 1px solid red;">
                                             <div>
                                                 <span>sushrit</span>
                                             </div>
@@ -531,7 +551,7 @@ print_r($arrMeetingCurrentMonth);
                                             </div>
 
 
-                                        </div>
+                                        </div-->
                                     </div>
                                 </div>
 
@@ -736,6 +756,8 @@ for ($intCntr = 0; $intCntr < sizeof($arrFrequentInvitees); $intCntr++)
         <script type="text/javascript" src="<?php echo JS_PATH; ?>fullcalendar.js"></script>
         
         <script type="text/javascript">
+	 var SITE_ROOT = "<?php echo $SITE_ROOT; ?>";
+
         jQuery(function ($) {
 
             /* initialize the external events
@@ -771,10 +793,6 @@ for ($intCntr = 0; $intCntr < sizeof($arrFrequentInvitees); $intCntr++)
             var d = date.getDate();
             var m = date.getMonth();
             var y = date.getFullYear();
-alert(date);
-alert(d);
-alert(m);
-alert(y);
             var calendar = $('#calendar').fullCalendar({
             //isRTL: true,
                 buttonHtml: {
@@ -787,7 +805,10 @@ alert(y);
                     //right: 'month,agendaWeek,agendaDay'
                     right: 'month'
                 },
-                events: [
+                events: <?php echo $eventsJson;?>
+	
+
+			 /*[
                     {
                         title: 'All Day Event',
                         start: new Date(y, m, 7, 18,10),
@@ -812,7 +833,7 @@ alert(y);
                         allDay: false,
                         className: 'label-info'
                     }
-                ]
+                ]*/
                 ,
                 editable: true,
                 droppable: true, // this allows things to be dropped onto the calendar !!!
@@ -865,61 +886,28 @@ alert(y);
                 }
                 ,
                 eventClick: function (calEvent, jsEvent, view) {
-                    //display a modal
-                    var modal =
-                            '<div class="modal fade">\
-                                <div class="modal-dialog">\
-                                 <div class="modal-content">\
-                                       <div class="modal-body">\
-                                         <button type="button" class="close" data-dismiss="modal" style="margin-top:-10px;">&times;</button>\
-                                         <form class="no-margin">\
-                                                <label>Change event name &nbsp;</label>\
-                                                <input class="middle" autocomplete="off" type="text" value="' + calEvent.title + '" />\
-                                               <button type="submit" class="btn btn-sm btn-success"><i class="ace-icon fa fa-check"></i> Save</button>\
-                                         </form>\
-                                       </div>\
-                                       <div class="modal-footer">\
-                                              <button type="button" class="btn btn-sm btn-danger" data-action="delete"><i class="ace-icon fa fa-trash-o"></i> Delete Event</button>\
-                                              <button type="button" class="btn btn-sm" data-dismiss="modal"><i class="ace-icon fa fa-times"></i> Cancel</button>\
-                                       </div>\
-                                </div>\
-                               </div>\
-                            </div>';
-
-
-                    var modal = $(modal).appendTo('body');
-                    modal.find('form').on('submit', function (ev) {
-                        ev.preventDefault();
-
-                        calEvent.title = $(this).find("input[type=text]").val();
-                        calendar.fullCalendar('updateEvent', calEvent);
-                        modal.modal("hide");
-                    });
-                    modal.find('button[data-action=delete]').on('click', function () {
-                        calendar.fullCalendar('removeEvents', function (ev) {
-                            return (ev._id == calEvent._id);
-                        })
-                        modal.modal("hide");
-                    });
-
-                    modal.modal('show').on('hidden', function () {
-                        modal.remove();
-                    });
-
-
-                    //console.log(calEvent.id);
-                    //console.log(jsEvent);
-                    //console.log(view);
-
-                    // change the border color just for fun
-                    //$(this).css('border-color', 'red');
-
+		 meetingDetails(calEvent.schedule_id , calEvent.secKey);
                 }
 
             });
 
 
-        })
+        });
+
+	function meetingDetails(schId,schdtl) 
+	{
+            $.ajax({
+                type: "GET",
+                url: SITE_ROOT+"meeting/meetingdetails.php",
+                cache: false,
+                data: "SchId="+schId+"&SchDtl="+schdtl+"&Num="+Math.random(),
+                loading: $(".loading").html(""),
+                success: function(html) {
+                    $("#SubDetails").html(html);
+                }
+            }); 
+	};
+
     </script>
         
         
