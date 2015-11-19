@@ -115,7 +115,7 @@ CASE WHEN facebook IS NULL OR facebook = '' THEN 0  ELSE 1 END +
 CASE WHEN twitter IS NULL OR twitter = '' THEN 0  ELSE 1 END +
 CASE WHEN googleplus IS NULL OR googleplus = '' THEN 0  ELSE 1 END +
 CASE WHEN linkedin IS NULL OR linkedin = '' THEN 0  ELSE 1 END 
-) * 100 / 22) AS 'ProfilePercentage' FROM user_details WHERE user_id = '".trim($user_id)."';";
+) * 100 / 22) AS 'ProfilePercentage' FROM user_details WHERE user_id = '" . trim($user_id) . "';";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrResult;
     }
@@ -126,31 +126,31 @@ CASE WHEN linkedin IS NULL OR linkedin = '' THEN 0  ELSE 1 END
 }
 
 function getFrequentInvitees($user_id, $noOfInvitees, $dataHelper) {
-    
+
     if (!is_object($dataHelper))
     {
         throw new Exception("dashboard.inc.php : getTotalMeetingDurationByID : DataHelper Object did not instantiate", 104);
     }
-    
+
     if (strlen(trim($user_id)) <= 0)
     {
         throw new Exception("dashboard.inc.php: getFrequentInvitees  : Missing Parameter user id.", 141);
     }
-    
+
     if (!is_int($noOfInvitees))
     {
         throw new Exception("dashboard.inc.php: getFrequentInvitees  : noOfInvitees should be a integee.", 141);
     }
-    
+
     if ($noOfInvitees > 0)
     {
         $limit = "Limit 0," . $noOfInvitees;
     }
-    
+
     try
     {
         //$strSqlStatement = "SELECT  DISTINCT (id.invitee_email_address) AS 'noOfOcurance' FROM  schedule_details sd, invitation_details id, personal_contact_details pcd WHERE  sd.user_id = '" . trim($user_id) . "' AND sd.schedule_id = id.schedule_id AND id.invitee_email_address = pcd.contact_email_address AND pcd.user_id = sd.user_id Group By id.invitee_email_address Order By noOfOcurance Desc;";
-        $strSqlStatement = "SELECT DISTINCT contact_nick_name, contact_email_address FROM schedule_details AS sd, invitation_details AS id,  personal_contact_details AS pcd WHERE sd.user_id = '" . trim($user_id) . "' AND sd.schedule_id = id.schedule_id AND id.invitee_email_address = pcd.contact_email_address;";        
+        $strSqlStatement = "SELECT DISTINCT contact_nick_name, contact_email_address FROM schedule_details AS sd, invitation_details AS id,  personal_contact_details AS pcd WHERE sd.user_id = '" . trim($user_id) . "' AND sd.schedule_id = id.schedule_id AND id.invitee_email_address = pcd.contact_email_address;";
         $arrFrequentInvitees = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrFrequentInvitees;
     }
@@ -168,17 +168,17 @@ function getMeetingOverviewByID($email_address, $dataHelper) {
     try
     {
         $strSqlStatement = "SELECT "
-."CASE schedule_status "
-."WHEN '2' THEN 'Completed' "
-."WHEN '3' THEN 'Canceled' "
-."WHEN '4' THEN 'Overdue' "
-."END AS 'label', COUNT(schedule_status) AS 'data', "
-."CASE schedule_status "
-."WHEN '2' THEN '#82af6f' "
-."WHEN '3' THEN '#d15b47' "
-."WHEN '4' THEN '#f89406' "
-."END AS 'color' "
-."FROM schedule_details AS sd, invitation_details AS id  WHERE sd.schedule_id = id.schedule_id AND sd.schedule_status IN ('2','3','4') AND id.invitee_email_address = '".trim($email_address)."' GROUP BY schedule_status ORDER BY label;";
+                . "CASE schedule_status "
+                . "WHEN '2' THEN 'Completed' "
+                . "WHEN '3' THEN 'Canceled' "
+                . "WHEN '4' THEN 'Overdue' "
+                . "END AS 'label', COUNT(schedule_status) AS 'data', "
+                . "CASE schedule_status "
+                . "WHEN '2' THEN '#82af6f' "
+                . "WHEN '3' THEN '#d15b47' "
+                . "WHEN '4' THEN '#f89406' "
+                . "END AS 'color' "
+                . "FROM schedule_details AS sd, invitation_details AS id  WHERE sd.schedule_id = id.schedule_id AND sd.schedule_status IN ('2','3','4') AND id.invitee_email_address = '" . trim($email_address) . "' GROUP BY schedule_status ORDER BY label;";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrResult;
     }
@@ -195,7 +195,7 @@ function getMinuteBaseMeetingGraphByID($user_id, $dataHelper) {
     }
     try
     {
-        $strSqlStatement = "SELECT COUNT(sd.schedule_id) AS 'SchedueCount', SUM(IFNULL(TIMESTAMPDIFF( MINUTE , meeting_start_time, meeting_end_time),0)) AS 'TotalMinute',  DATE_FORMAT( meeting_start_time,'%d-%m-%Y' ) AS 'DateOfMeeting' FROM schedule_details AS sd WHERE user_id = '".trim($user_id)."' AND schedule_status = '2' GROUP BY DateOfMeeting  ORDER BY DateOfMeeting;";
+        $strSqlStatement = "SELECT COUNT(sd.schedule_id) AS 'SchedueCount', SUM(IFNULL(TIMESTAMPDIFF( MINUTE , meeting_start_time, meeting_end_time),0)) AS 'TotalMinute',  DATE_FORMAT( meeting_start_time,'%d-%m-%Y' ) AS 'DateOfMeeting' FROM schedule_details AS sd WHERE user_id = '" . trim($user_id) . "' AND schedule_status = '2' GROUP BY DateOfMeeting  ORDER BY DateOfMeeting;";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrResult;
     }
@@ -207,13 +207,13 @@ function getMinuteBaseMeetingGraphByID($user_id, $dataHelper) {
 
 function getTotalMeetingCurrentMonth($user_id, $dataHelper) {
     if (!is_object($dataHelper))
-    {   
+    {
         throw new Exception("dashboard.inc.php : getTotalMeetingCurrentMonth : DataHelper Object did not instantiate", 104);
-    }   
-    try 
-    {   
-        
-	$strSqlStatement = "SELECT  
+    }
+    try
+    {
+
+        $strSqlStatement = "SELECT  
 	meeting_title AS 'title', 
 	CONCAT( \"new Date(\", YEAR( meeting_timestamp_gmt ) , \",\", MONTH( meeting_timestamp_gmt ) -1, \",\", DAYOFMONTH( meeting_timestamp_gmt ) , \",\" , HOUR( meeting_timestamp_gmt ), \",\" , MINUTE( meeting_timestamp_gmt )  , \")\" ) AS 'start', 
 	CASE schedule_status  WHEN 
@@ -223,22 +223,22 @@ function getTotalMeetingCurrentMonth($user_id, $dataHelper) {
 	'3' THEN 'label-danger' WHEN 
 	'4' THEN 'label-warning' END as \"className\" , 
 	sd.schedule_id as 'schedule_id' , 
-	MD5(CONCAT(schedule_id,\":\",uld.user_name,\":\",'".SECRET_KEY."')) as 'secKey' 
+	MD5(CONCAT(schedule_id,\":\",uld.user_name,\":\",'" . SECRET_KEY . "')) as 'secKey' 
 	FROM 
 	schedule_details sd, 
 	user_login_details uld, 
 	user_details ud 
 	WHERE  
-	uld.user_id = '".trim($user_id)."' AND 
+	uld.user_id = '" . trim($user_id) . "' AND 
 	uld.user_id = ud.user_id  AND 
 	uld.user_id = sd.user_id AND 
 	uld.login_enabled = '1';";
 
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrResult;
-    }   
-    catch (Exception $e) 
-    {   
+    }
+    catch (Exception $e)
+    {
         throw new Exception("dashboard.inc.php : getTotalMeetingCurrentMonth : Could not fetch records : " . $e->getMessage(), 144);
-    }   
+    }
 }

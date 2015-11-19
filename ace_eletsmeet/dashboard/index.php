@@ -17,7 +17,6 @@ catch (Exception $e)
 {
     throw new Exception("index.php : getPersonalContactCountByID Failed : " . $e->getMessage(), 1125);
 }
-
 $strTotalPersonalContacts = $arrPersonalContactCount[0]['TotalContacts'];
 
 try
@@ -28,7 +27,6 @@ catch (Exception $e)
 {
     throw new Exception("index.php : getTotalHostMeetingCountByID Failed : " . $e->getMessage(), 1125);
 }
-
 $strTotalHostMeetingCount = $arrHostMeetingCount[0]['TotalMeetingCreated'];
 
 try
@@ -39,7 +37,6 @@ catch (Exception $e)
 {
     throw new Exception("index.php : getTotalHostMeetingCountByID Failed : " . $e->getMessage(), 1125);
 }
-
 $strTotalMeetingDuration = $arrMeetingDuration[0]['TotalDuration'];
 if (strlen($strTotalMeetingDuration) <= 0)
 {
@@ -54,9 +51,7 @@ catch (Exception $e)
 {
     throw new Exception("index.php : getTotalHostMeetingCountByID Failed : " . $e->getMessage(), 1125);
 }
-
 $strTotalMeetingInviteCount = $arrInviteMeetingCount[0]['TotalMeetingInvite'];
-
 
 try
 {
@@ -77,7 +72,6 @@ catch (Exception $e)
     throw new Exception("index.php : getProfileCompletePercentByID Failed : " . $e->getMessage(), 1125);
 }
 $strTotalProfileCompletePercent = $arrProfileCompletePercent[0]['ProfilePercentage'];
-
 
 $noOfInvitees = 9;
 
@@ -108,7 +102,6 @@ catch (Exception $e)
     throw new Exception("index.php : getMinuteBaseMeetingGraphByID Failed : " . $e->getMessage(), 1125);
 }
 
-//TotalMinute //DateOfMeeting
 
 for ($i = 0; $i < sizeof($arrMinuteBaseMeetingGraph); $i++)
 {
@@ -116,19 +109,13 @@ for ($i = 0; $i < sizeof($arrMinuteBaseMeetingGraph); $i++)
 }
 $arrDateArr = substr($arrDateArr, 0, -1);
 
-//print_r($arrDateArr);
-
 for ($i = 0; $i < sizeof($arrMinuteBaseMeetingGraph); $i++)
 {
     $arrMinuteArr .= $arrMinuteBaseMeetingGraph[$i]['TotalMinute'] . ",";
 }
 $arrMinuteArr = substr($arrMinuteArr, 0, -1);
 
-//print_r($arrMinuteArr);
-//611 Total meeting in the month start//
 $arrMeetingCurrentMonth = getTotalMeetingCurrentMonth($strCK_user_id, $objDataHelper);
-//611 Total meeting in the month end//
-//print_r($arrMeetingCurrentMonth);
 $eventsJson = str_replace('"start":"', '"start":', json_encode($arrMeetingCurrentMonth));
 $eventsJson = str_replace('","className"', ',"className"', $eventsJson);
 ?>
@@ -197,8 +184,8 @@ $eventsJson = str_replace('","className"', ',"className"', $eventsJson);
                             <div class="col-xs-12">
                                 <!-- PAGE CONTENT START -->
 
-
                                 <div class="row" >
+                                    
                                     <div class="col-xs-6">
                                         <p class="small">
                                             <span class="label label-inverse">Scheduled</span>
@@ -229,10 +216,6 @@ $eventsJson = str_replace('","className"', ',"className"', $eventsJson);
                                     </div>
 
                                     <div class="col-xs-6">                                               
-                                        <div class="row">
-
-                                            <!--                                                                    <div class="col-sm-12 ">-->
-
                                             <div class="infobox infobox-green">
                                                 <div class="infobox-icon">
                                                     <i class="ace-icon fa fa-phone"></i>
@@ -242,7 +225,6 @@ $eventsJson = str_replace('","className"', ',"className"', $eventsJson);
                                                     <div class="infobox-content">Total No. of Contacts</div>
                                                 </div>
                                             </div>
-
                                             <div class="infobox infobox-blue">
                                                 <div class="infobox-icon">
                                                     <i class="ace-icon fa fa-users"></i>
@@ -252,7 +234,6 @@ $eventsJson = str_replace('","className"', ',"className"', $eventsJson);
                                                     <div class="infobox-content small">Total Meeting Hosted</div>
                                                 </div>
                                             </div>
-
                                             <div class="infobox infobox-red">
                                                 <div class="infobox-icon">
                                                     <i class="ace-icon fa fa-exchange"></i>
@@ -262,7 +243,6 @@ $eventsJson = str_replace('","className"', ',"className"', $eventsJson);
                                                     <div class="infobox-content">Total Meeting Joined</div>
                                                 </div>
                                             </div>
-
                                             <div class="infobox infobox-pink">
                                                 <div class="infobox-icon">
                                                     <i class="ace-icon fa fa-comments-o"></i>
@@ -272,7 +252,6 @@ $eventsJson = str_replace('","className"', ',"className"', $eventsJson);
                                                     <div class="infobox-content small">Total Meeting Minutes</div>
                                                 </div>
                                             </div>
-
                                             <div class="infobox infobox-orange">
                                                 <div class="infobox-icon">
                                                     <i class="ace-icon fa fa- fa-envelope-o"></i>
@@ -282,7 +261,6 @@ $eventsJson = str_replace('","className"', ',"className"', $eventsJson);
                                                     <div class="infobox-content small">Total Distinct Invitee</div>
                                                 </div>
                                             </div>
-
                                             <div class="infobox infobox-blue3">
                                                 <div class="infobox-icon">
                                                     <i class="ace-icon fa fa- fa-user"></i>
@@ -292,14 +270,11 @@ $eventsJson = str_replace('","className"', ',"className"', $eventsJson);
                                                     <div class="infobox-content small">Profile  Complete</div>
                                                 </div>
                                             </div>
-
                                             <div class="hr hr32 hr-dotted"></div>
-
                                             <div class="widget-box">
                                                 <div class="widget-header widget-header-flat widget-header-small">
-                                                    <h5 class="widget-title">
-                                                        <i class="ace-icon fa  fa-bar-chart-o"></i>
-                                                        Meeting Statistics
+                                                    <h5 class="widget-title lighter">
+                                                        <i class="ace-icon fa fa-bar-chart-o"></i>Meeting Statistics
                                                     </h5>
                                                 </div>
                                                 <div class="widget-body">
@@ -308,23 +283,20 @@ $eventsJson = str_replace('","className"', ',"className"', $eventsJson);
                                                     </div>
                                                 </div>
                                             </div>                                                                        
-                                            <!--                                                                    </div>-->
-
-                                        </div>
                                     </div>
+                                    
                                 </div>
 
                                 <div class="hr hr32 hr-dotted"></div>
 
-
-
                                 <div class="row">
+                                    
                                     <div class="col-sm-6">
                                         <div class="widget-box transparent collapsed">
                                             <div class="widget-header widget-header-flat">
-                                                <h4 class="widget-title lighter">
+                                                <h5 class="widget-title lighter">
                                                     <i class="ace-icon fa fa-users orange"></i>Frequent Contacts
-                                                </h4>
+                                                </h5>
                                                 <div class="widget-toolbar">
                                                     <a data-action="collapse" href="#"><i class="ace-icon fa fa-chevron-down"></i></a>
                                                 </div>
@@ -354,13 +326,12 @@ $eventsJson = str_replace('","className"', ',"className"', $eventsJson);
                                             </div>
                                         </div>
                                     </div>
-
+                                    
                                     <div class="col-sm-6">
                                         <div class="widget-box transparent">
                                             <div class="widget-header widget-header-flat">
-                                                <h5 class="widget-title">
-                                                    <i class="ace-icon fa fa-bar-chart-o red"></i>
-                                                    Meeting Statistics
+                                                <h5 class="widget-title lighter">
+                                                    <i class="ace-icon fa fa-bar-chart-o red"></i>Meeting Statistics
                                                 </h5>
                                             </div>
                                             <div class="widget-body">
@@ -369,53 +340,10 @@ $eventsJson = str_replace('","className"', ',"className"', $eventsJson);
                                                 </div>
                                             </div>
                                         </div>
-<!--                                        <div class="widget-box transparent collapsed">
-                                            <div class="widget-header widget-header-flat">
-                                                <h4 class="widget-title lighter">
-                                                    <i class="ace-icon fa fa-bar-chart-o red"></i>Meeting Statistics 
-                                                </h4>
-                                                <div class="widget-toolbar">
-                                                    <a data-action="collapse" href="#"><i class="ace-icon fa fa-chevron-down"></i></a>
-                                                </div>
-                                            </div>
-
-                                            <div class="widget-body" style="display: none;">
-                                                <div class="widget-main padding-4">       
-                                                    <div id="piechart-placeholder"></div> 
-                                                </div>
-                                            </div>
-                                        </div>-->
                                     </div>
+                                    
                                 </div>
-
-
-
-
-
-<!--                                <div class="row">
-
-                                    <div class="col-sm-6">
-
-                                    </div>
-
-                                                                                                    <div class="col-sm-6">
-                                                                                                        <div class="widget-box">
-                                                                                                              <div class="widget-header widget-header-flat widget-header-small">
-                                                                                                                  <h5 class="widget-title">
-                                                                                                                      <i class="ace-icon fa fa-signal"></i>
-                                                                                                                      Meeting Statistics
-                                                                                                                  </h5>
-                                                                                                              </div>
-                                                                                                              <div class="widget-body">
-                                                                                                                  <div class="widget-main">
-                                                                                                                      <div id="piechart-placeholder"></div>                                                
-                                                                                                                  </div>
-                                                                                                              </div>
-                                                                                                          </div>
-                                                                                                    </div>
-
-                                </div>-->
-
+                                
                                 <!-- PAGE CONTENT END -->
                             </div>
                         </div> 
@@ -454,25 +382,13 @@ $eventsJson = str_replace('","className"', ',"className"', $eventsJson);
                 var SITE_ROOT = "<?php echo $SITE_ROOT; ?>";
 
                 jQuery(function ($) {
-
-                    /* initialize the external events
-                     -----------------------------------------------------------------*/
                     $('#external-events div.external-event').each(function () {
                         var eventObject = {
                             title: $.trim($(this).text()) // use the element's text as the event title
                         };
                         $(this).data('eventObject', eventObject);
-
-                        // make the event draggable using jQuery UI
-                        $(this).draggable({
-                            zIndex: 999,
-                            revert: true, // will cause the event to go back to its
-                            revertDuration: 0  //  original position after the drag
-                        });
                     });
 
-                    /* initialize the calendar
-                     -----------------------------------------------------------------*/
                     var date = new Date();
                     var d = date.getDate();
                     var m = date.getMonth();
@@ -515,40 +431,8 @@ $eventsJson = str_replace('","className"', ',"className"', $eventsJson);
                 ;
         </script>
 
-
         <script type="text/javascript">
             jQuery(function ($) {
-//                $('.easy-pie-chart.percentage').each(function () {
-//                    var $box = $(this).closest('.infobox');
-//                    var barColor = $(this).data('color') || (!$box.hasClass('infobox-dark') ? $box.css('color') : 'rgba(255,255,255,0.95)');
-//                    var trackColor = barColor == 'rgba(255,255,255,0.95)' ? 'rgba(255,255,255,0.25)' : '#E2E2E2';
-//                    var size = parseInt($(this).data('size')) || 50;
-//                    $(this).easyPieChart({
-//                        barColor: barColor,
-//                        trackColor: trackColor,
-//                        scaleColor: false,
-//                        lineCap: 'butt',
-//                        lineWidth: parseInt(size / 10),
-//                        animate: /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase()) ? false : 1000,
-//                        size: size
-//                    });
-//                })
-
-//                $('.sparkline').each(function () {
-//                    var $box = $(this).closest('.infobox');
-//                    var barColor = !$box.hasClass('infobox-dark') ? $box.css('color') : '#FFF';
-//                    $(this).sparkline('html',
-//                            {
-//                                tagValuesAttribute: 'data-values',
-//                                type: 'bar',
-//                                barColor: barColor,
-//                                chartRangeMin: $(this).data('min') || 0
-//                            });
-//                });
-
-
-                //flot chart resize plugin, somehow manipulates default browser resize event to optimize it!
-                //but sometimes it brings up errors with normal resize event handlers
                 $.resize.throttleWindow = false;
 
                 var placeholder = $('#piechart-placeholder').css({'width': '90%', 'min-height': '150px'});
@@ -575,20 +459,15 @@ $eventsJson = str_replace('","className"', ',"className"', $eventsJson);
                             position: position || "ne",
                             labelBoxBorderColor: null,
                             margin: [-30, 15]
-                        }
-                        ,
+                        },
                         grid: {
                             hoverable: true,
                             clickable: true
                         }
                     })
-                }
+                };
                 drawPieChart(placeholder, data);
 
-                /**
-                 we saved the drawing function and the data to redraw with different position later when switching to RTL mode dynamically
-                 so that's not needed actually.
-                 */
                 placeholder.data('chart', data);
                 placeholder.data('draw', drawPieChart);
 
@@ -610,7 +489,6 @@ $eventsJson = str_replace('","className"', ',"className"', $eventsJson);
                         previousPoint = null;
                     }
                 });
-
 
                 $('#container').highcharts({
                     chart: {
@@ -644,8 +522,7 @@ $eventsJson = str_replace('","className"', ',"className"', $eventsJson);
                         }
                     },
                     series: [{
-                            name: 'Minute',
-                            //data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+                            name: 'Date',
                             data: [<?php echo $arrMinuteArr; ?>],
                             color: "#68BC31"
                         }]
