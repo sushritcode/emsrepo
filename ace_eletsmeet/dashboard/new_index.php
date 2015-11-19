@@ -197,253 +197,224 @@ $eventsJson = str_replace('","className"', ',"className"', $eventsJson);
                             <div class="col-xs-12">
                                 <!-- PAGE CONTENT START -->
 
-                                
-                                    <div class="row" >
-                                        <div class="col-xs-6">
-                                                <p class="small">
-                                                    <span class="label label-inverse">Scheduled</span>
-                                                    <span class="label label-info">Started</span>
-                                                    <span class="label label-success">Completed</span>
-                                                    <span class="label label-danger">Cancelled</span>
-                                                    <span class="label label-warning">Overdue</span>
-                                                </p>
-                                                <div class="space"></div>
-                                                <div id="calendar"></div>
-                                                <div id="sch-detls" class="modal fade" tabindex="-1">
-                                                    <div class="modal-dialog modal-lg">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header no-padding">
-                                                                <div class="table-header">
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                                                        <span class="white">&times;</span>
-                                                                    </button>
-                                                                    &nbsp;
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <div id="SubDetails"></div>
-                                                            </div>
+
+                                <div class="row" >
+                                    <div class="col-xs-6">
+                                        <p class="small">
+                                            <span class="label label-inverse">Scheduled</span>
+                                            <span class="label label-info">Started</span>
+                                            <span class="label label-success">Completed</span>
+                                            <span class="label label-danger">Cancelled</span>
+                                            <span class="label label-warning">Overdue</span>
+                                        </p>
+                                        <div class="space"></div>
+                                        <div id="calendar"></div>
+                                        <div id="sch-detls" class="modal fade" tabindex="-1">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header no-padding">
+                                                        <div class="table-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                                <span class="white">&times;</span>
+                                                            </button>
+                                                            &nbsp;
                                                         </div>
                                                     </div>
-                                                </div>
-                                        </div>
-
-                                        <div class="col-xs-6">                                               
-                                                    <div class="row">
-                                
-<!--                                                                    <div class="col-sm-12 ">-->
-                                                                        
-                                                                        <div class="infobox infobox-green">
-                                                                            <div class="infobox-icon">
-                                                                                <i class="ace-icon fa fa-phone"></i>
-                                                                            </div>
-                                                                            <div class="infobox-data">
-                                                                                <span class="infobox-data-number"><?php echo $strTotalPersonalContacts; ?></span>
-                                                                                <div class="infobox-content">Total No. of Contacts</div>
-                                                                            </div>
-                                                                        </div>
-                                
-                                                                        <div class="infobox infobox-blue">
-                                                                            <div class="infobox-icon">
-                                                                                <i class="ace-icon fa fa-users"></i>
-                                                                            </div>
-                                                                            <div class="infobox-data">
-                                                                                <span class="infobox-data-number"><?php echo $strTotalHostMeetingCount; ?></span>
-                                                                                <div class="infobox-content small">Total Meeting Hosted</div>
-                                                                            </div>
-                                                                        </div>
-                                
-                                                                        <div class="infobox infobox-red">
-                                                                            <div class="infobox-icon">
-                                                                                <i class="ace-icon fa fa-exchange"></i>
-                                                                            </div>
-                                                                            <div class="infobox-data">
-                                                                                <span class="infobox-data-number"><?php echo $strTotalMeetingInviteCount; ?></span>
-                                                                                <div class="infobox-content">Total Meeting Joined</div>
-                                                                            </div>
-                                                                        </div>
-                                
-                                                                        <div class="infobox infobox-pink">
-                                                                            <div class="infobox-icon">
-                                                                                <i class="ace-icon fa fa-comments-o"></i>
-                                                                            </div>
-                                                                            <div class="infobox-data">
-                                                                                <span class="infobox-data-number"><?php echo $strTotalMeetingDuration; ?></span>
-                                                                                <div class="infobox-content small">Total Meeting Minutes</div>
-                                                                            </div>
-                                                                        </div>
-                                
-                                                                        <div class="infobox infobox-orange">
-                                                                            <div class="infobox-icon">
-                                                                                <i class="ace-icon fa fa- fa-envelope-o"></i>
-                                                                            </div>
-                                                                            <div class="infobox-data">
-                                                                                <span class="infobox-data-number"><?php echo $strTotalDistinctInviteeCount; ?></span>
-                                                                                <div class="infobox-content small">Total Distinct Invitee</div>
-                                                                            </div>
-                                                                        </div>
-                                                                        
-                                                                        <div class="infobox infobox-blue3">
-                                                                            <div class="infobox-icon">
-                                                                                <i class="ace-icon fa fa- fa-user"></i>
-                                                                            </div>
-                                                                            <div class="infobox-data">
-                                                                                <span class="infobox-data-number"><?php echo $strTotalProfileCompletePercent; ?> &percnt;</span>
-                                                                                <div class="infobox-content small">Profile  Complete</div>
-                                                                            </div>
-                                                                        </div>
-                                                                        
-                                                                        <div class="hr hr32 hr-dotted"></div>
-                                                                                                                                              
-                                                                        <div class="widget-box">
-                                                                            <div class="widget-header widget-header-flat widget-header-small">
-                                                                                <h5 class="widget-title">
-                                                                                    <i class="ace-icon fa  fa-bar-chart-o"></i>
-                                                                                    Meeting Statistics
-                                                                                </h5>
-                                                                            </div>
-                                                                            <div class="widget-body">
-                                                                                <div class="widget-main">
-                                                                                  <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>               
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>                                                                        
-<!--                                                                    </div>-->
-
+                                                    <div class="modal-body">
+                                                        <div id="SubDetails"></div>
                                                     </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                
-                                    <div class="hr hr32 hr-dotted"></div>
 
-                                    
-                                    
-                                    <div class="row">
-									<div class="col-sm-5">
-                                                                                                                                                                    <div class="widget-box transparent collapsed">
-                                                                                                                                                                        <div class="widget-header widget-header-flat">
-                                                                                                                                                                            <h4 class="widget-title lighter">
-                                                                                                                                                                                <i class="ace-icon fa fa-users orange"></i>Frequent Contacts
-                                                                                                                                                                            </h4>
-                                                                                                                                                                            <div class="widget-toolbar">
-                                                                                                                                                                                <a data-action="collapse" href="#"><i class="ace-icon fa fa-chevron-down"></i></a>
-                                                                                                                                                                            </div>
-                                                                                                                                                                        </div>
+                                    <div class="col-xs-6">                                               
+                                        <div class="row">
 
-                                                                                                                                                                        <div class="widget-body" style="display: none;">
-                                                                                                                                                                            <div class="widget-main no-padding">
-                                                                                                                                                                                <div class="clearfix">
-                                                                                                                                                                                    <?php
-                                                                                                                                                                                    for ($intCntr = 0; $intCntr < sizeof($arrFrequentInvitees); $intCntr++)
-                                                                                                                                                                                    {
-                                                                                                                                                                                        $strContactNickName = $arrFrequentInvitees[$intCntr]["contact_nick_name"];
-                                                                                                                                                                                        $strContactEmailID = $arrFrequentInvitees[$intCntr]["contact_email_address"];
-                                                                                                                                                                                        ?>
-                                                                                                                                                                                        <div class="itemdiv memberdiv">
-                                                                                                                                                                                            <div class="user"><img src="<?php echo IMG_PATH; ?>avatar2.png" alt="<?php echo $strContactEmailID; ?>" title="<?php echo $strContactEmailID; ?>"></div>
-                                                                                                                                                                                            <div class="body">
-                                                                                                                                                                                                <div class="name blue"><?php echo $strContactNickName; ?></div>
-                                                                                                                                                                                                <div class="time"><i class="ace-icon fa fa-clock-o"></i> <span class="green">20 min</span></div>
-                                                                                                                                                                                            </div>
-                                                                                                                                                                                        </div>
-                                                                                                                                                                                    <?php } ?>
-                                                                                                                                                                                </div>
-                                                                                                                                                                                <div class="space-4"></div>
-                                                                                                                                                                                <div class="center">
-                                                                                                                                                                                        <i class="ace-icon fa fa-users fa-2x green middle"></i>&nbsp;<a class="btn btn-sm btn-white btn-info" href="<?php echo $SITE_ROOT . 'contacts/' ?>">See all contacts &nbsp;<i class="ace-icon fa fa-arrow-right"></i></a>
-                                                                                                                                                                                </div>
-                                                                                                                                                                                
-                                                                                                                                                                            </div>
-                                                                                                                                                                        </div>
-                                                                                                                                                                    </div>
-									</div>
+                                            <!--                                                                    <div class="col-sm-12 ">-->
 
-									<div class="col-sm-7">
-										<div class="widget-box transparent collapsed">
-											<div class="widget-header widget-header-flat">
-												<h4 class="widget-title lighter">
-                                                                                                                                                                                                                                    <i class="ace-icon fa fa-bar-chart-o red"></i>Meeting Statistics 
-												</h4>
-												<div class="widget-toolbar">
-													<a data-action="collapse" href="#"><i class="ace-icon fa fa-chevron-down"></i></a>
-												</div>
-											</div>
+                                            <div class="infobox infobox-green">
+                                                <div class="infobox-icon">
+                                                    <i class="ace-icon fa fa-phone"></i>
+                                                </div>
+                                                <div class="infobox-data">
+                                                    <span class="infobox-data-number"><?php echo $strTotalPersonalContacts; ?></span>
+                                                    <div class="infobox-content">Total No. of Contacts</div>
+                                                </div>
+                                            </div>
 
-											<div class="widget-body" style="display: none;">
-												<div class="widget-main padding-4">
-													<div id="sales-charts" style="width: 100%; height: 220px; padding: 0px; position: relative;"><canvas class="flot-base" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 745px; height: 220px;" width="745" height="220"></canvas><div class="flot-text" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; font-size: smaller; color: rgb(84, 84, 84);"><div class="flot-x-axis flot-x1-axis xAxis x1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;"><div style="position: absolute; max-width: 93px; top: 204px; left: 29px; text-align: center;" class="flot-tick-label tickLabel">0.0</div><div style="position: absolute; max-width: 93px; top: 204px; left: 142px; text-align: center;" class="flot-tick-label tickLabel">1.0</div><div style="position: absolute; max-width: 93px; top: 204px; left: 255px; text-align: center;" class="flot-tick-label tickLabel">2.0</div><div style="position: absolute; max-width: 93px; top: 204px; left: 368px; text-align: center;" class="flot-tick-label tickLabel">3.0</div><div style="position: absolute; max-width: 93px; top: 204px; left: 481px; text-align: center;" class="flot-tick-label tickLabel">4.0</div><div style="position: absolute; max-width: 93px; top: 204px; left: 594px; text-align: center;" class="flot-tick-label tickLabel">5.0</div><div style="position: absolute; max-width: 93px; top: 204px; left: 707px; text-align: center;" class="flot-tick-label tickLabel">6.0</div></div><div class="flot-y-axis flot-y1-axis yAxis y1Axis" style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;"><div style="position: absolute; top: 192px; left: 1px; text-align: right;" class="flot-tick-label tickLabel">-2.000</div><div style="position: absolute; top: 168px; left: 1px; text-align: right;" class="flot-tick-label tickLabel">-1.500</div><div style="position: absolute; top: 144px; left: 1px; text-align: right;" class="flot-tick-label tickLabel">-1.000</div><div style="position: absolute; top: 120px; left: 1px; text-align: right;" class="flot-tick-label tickLabel">-0.500</div><div style="position: absolute; top: 96px; left: 4px; text-align: right;" class="flot-tick-label tickLabel">0.000</div><div style="position: absolute; top: 72px; left: 4px; text-align: right;" class="flot-tick-label tickLabel">0.500</div><div style="position: absolute; top: 48px; left: 4px; text-align: right;" class="flot-tick-label tickLabel">1.000</div><div style="position: absolute; top: 24px; left: 4px; text-align: right;" class="flot-tick-label tickLabel">1.500</div><div style="position: absolute; top: 1px; left: 4px; text-align: right;" class="flot-tick-label tickLabel">2.000</div></div></div><canvas class="flot-overlay" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 745px; height: 220px;" width="745" height="220"></canvas><div class="legend"><div style="position: absolute; width: 62px; height: 66px; top: 13px; right: 13px; background-color: rgb(255, 255, 255); opacity: 0.85;"> </div><table style="position:absolute;top:13px;right:13px;;font-size:smaller;color:#545454"><tbody><tr><td class="legendColorBox"><div style="border:1px solid #ccc;padding:1px"><div style="width:4px;height:0;border:5px solid rgb(237,194,64);overflow:hidden"></div></div></td><td class="legendLabel">Domains</td></tr><tr><td class="legendColorBox"><div style="border:1px solid #ccc;padding:1px"><div style="width:4px;height:0;border:5px solid rgb(175,216,248);overflow:hidden"></div></div></td><td class="legendLabel">Hosting</td></tr><tr><td class="legendColorBox"><div style="border:1px solid #ccc;padding:1px"><div style="width:4px;height:0;border:5px solid rgb(203,75,75);overflow:hidden"></div></div></td><td class="legendLabel">Services</td></tr></tbody></table></div></div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-                                    
-                                    
-                                                         
+                                            <div class="infobox infobox-blue">
+                                                <div class="infobox-icon">
+                                                    <i class="ace-icon fa fa-users"></i>
+                                                </div>
+                                                <div class="infobox-data">
+                                                    <span class="infobox-data-number"><?php echo $strTotalHostMeetingCount; ?></span>
+                                                    <div class="infobox-content small">Total Meeting Hosted</div>
+                                                </div>
+                                            </div>
 
+                                            <div class="infobox infobox-red">
+                                                <div class="infobox-icon">
+                                                    <i class="ace-icon fa fa-exchange"></i>
+                                                </div>
+                                                <div class="infobox-data">
+                                                    <span class="infobox-data-number"><?php echo $strTotalMeetingInviteCount; ?></span>
+                                                    <div class="infobox-content">Total Meeting Joined</div>
+                                                </div>
+                                            </div>
 
-                                                               <div class="row">
-                                                                    
-                                                                <div class="col-sm-6">
-                                                                        <div id="recent-box" class="widget-box transparent collapsed">
-                                                                            <div class="widget-header">
-                                                                                <h4 class="widget-title lighter smaller">
-                                                                                        <i class="ace-icon fa fa-rss orange"></i>FREQUENT CONTACTS
-                                                                                </h4>
-                                                                            </div>
-                                                                            <div class="widget-body">
-                                                                                <div class="widget-main padding-4">
-                                                                                    <div class="tab-content padding-8">
-                                                                                            <div class="tab-pane active" id="member-tab">
-                                                                                                    <div class="clearfix">
-                                                                                                        <?php
-                                                                                                        for ($intCntr = 0; $intCntr < sizeof($arrFrequentInvitees); $intCntr++)
-                                                                                                        {
-                                                                                                            $strContactNickName = $arrFrequentInvitees[$intCntr]["contact_nick_name"];
-                                                                                                            $strContactEmailID = $arrFrequentInvitees[$intCntr]["contact_email_address"];
-                                                                                                            ?>
-                                                                                                                    <div class="itemdiv memberdiv">
-                                                                                                                            <div class="user"><img src="<?php echo IMG_PATH; ?>avatar2.png" alt="<?php echo $strContactEmailID; ?>" title="<?php echo $strContactEmailID; ?>"></div>
-                                                                                                                            <div class="body">
-                                                                                                                                    <div class="name blue"><?php echo $strContactNickName; ?></div>
-                                                                                                                                    <div class="time"><i class="ace-icon fa fa-clock-o"></i> <span class="green">20 min</span></div>
-                                                                                                                            </div>
-                                                                                                                    </div>
+                                            <div class="infobox infobox-pink">
+                                                <div class="infobox-icon">
+                                                    <i class="ace-icon fa fa-comments-o"></i>
+                                                </div>
+                                                <div class="infobox-data">
+                                                    <span class="infobox-data-number"><?php echo $strTotalMeetingDuration; ?></span>
+                                                    <div class="infobox-content small">Total Meeting Minutes</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="infobox infobox-orange">
+                                                <div class="infobox-icon">
+                                                    <i class="ace-icon fa fa- fa-envelope-o"></i>
+                                                </div>
+                                                <div class="infobox-data">
+                                                    <span class="infobox-data-number"><?php echo $strTotalDistinctInviteeCount; ?></span>
+                                                    <div class="infobox-content small">Total Distinct Invitee</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="infobox infobox-blue3">
+                                                <div class="infobox-icon">
+                                                    <i class="ace-icon fa fa- fa-user"></i>
+                                                </div>
+                                                <div class="infobox-data">
+                                                    <span class="infobox-data-number"><?php echo $strTotalProfileCompletePercent; ?> &percnt;</span>
+                                                    <div class="infobox-content small">Profile  Complete</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="hr hr32 hr-dotted"></div>
+
+                                            <div class="widget-box">
+                                                <div class="widget-header widget-header-flat widget-header-small">
+                                                    <h5 class="widget-title">
+                                                        <i class="ace-icon fa  fa-bar-chart-o"></i>
+                                                        Meeting Statistics
+                                                    </h5>
+                                                </div>
+                                                <div class="widget-body">
+                                                    <div class="widget-main">      
+                                                        <div id="container" style="min-width: 310px; height: 310px; margin: 0 auto"></div>           
+                                                    </div>
+                                                </div>
+                                            </div>                                                                        
+                                            <!--                                                                    </div>-->
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="hr hr32 hr-dotted"></div>
 
 
-                                                                                                        <?php } ?>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="widget-box transparent collapsed">
+                                            <div class="widget-header widget-header-flat">
+                                                <h4 class="widget-title lighter">
+                                                    <i class="ace-icon fa fa-users orange"></i>Frequent Contacts
+                                                </h4>
+                                                <div class="widget-toolbar">
+                                                    <a data-action="collapse" href="#"><i class="ace-icon fa fa-chevron-down"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="widget-body" style="display: none;">
+                                                <div class="widget-main no-padding">
+                                                    <div class="clearfix">
+                                                        <?php
+                                                        for ($intCntr = 0; $intCntr < sizeof($arrFrequentInvitees); $intCntr++)
+                                                        {
+                                                            $strContactNickName = $arrFrequentInvitees[$intCntr]["contact_nick_name"];
+                                                            $strContactEmailID = $arrFrequentInvitees[$intCntr]["contact_email_address"];
+                                                            ?>
+                                                            <div class="itemdiv memberdiv">
+                                                                <div class="user"><img src="<?php echo IMG_PATH; ?>avatar2.png" alt="<?php echo $strContactEmailID; ?>" title="<?php echo $strContactEmailID; ?>"></div>
+                                                                <div class="body">
+                                                                    <div class="name blue"><?php echo $strContactNickName; ?></div>
+                                                                </div>
+                                                            </div>
+                                                        <?php } ?>
+                                                    </div>
+                                                    <div class="space-4"></div>
+                                                    <div class="center">
+                                                        <i class="ace-icon fa fa-users fa-2x green middle"></i>&nbsp;<a class="btn btn-sm btn-white btn-info" href="<?php echo $SITE_ROOT . 'contacts/' ?>">See all contacts &nbsp;<i class="ace-icon fa fa-arrow-right"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="widget-box transparent">
+                                            <div class="widget-header widget-header-flat">
+                                                <h5 class="widget-title">
+                                                    <i class="ace-icon fa fa-bar-chart-o red"></i>
+                                                    Meeting Statistics
+                                                </h5>
+                                            </div>
+                                            <div class="widget-body">
+                                                <div class="widget-main">
+                                                    <div id="piechart-placeholder"></div>                                                
+                                                </div>
+                                            </div>
+                                        </div>
+<!--                                        <div class="widget-box transparent collapsed">
+                                            <div class="widget-header widget-header-flat">
+                                                <h4 class="widget-title lighter">
+                                                    <i class="ace-icon fa fa-bar-chart-o red"></i>Meeting Statistics 
+                                                </h4>
+                                                <div class="widget-toolbar">
+                                                    <a data-action="collapse" href="#"><i class="ace-icon fa fa-chevron-down"></i></a>
+                                                </div>
+                                            </div>
+
+                                            <div class="widget-body" style="display: none;">
+                                                <div class="widget-main padding-4">       
+                                                    <div id="piechart-placeholder"></div> 
+                                                </div>
+                                            </div>
+                                        </div>-->
+                                    </div>
+                                </div>
+
+
+
+
+
+<!--                                <div class="row">
+
+                                    <div class="col-sm-6">
+
+                                    </div>
+
+                                                                                                    <div class="col-sm-6">
+                                                                                                        <div class="widget-box">
+                                                                                                              <div class="widget-header widget-header-flat widget-header-small">
+                                                                                                                  <h5 class="widget-title">
+                                                                                                                      <i class="ace-icon fa fa-signal"></i>
+                                                                                                                      Meeting Statistics
+                                                                                                                  </h5>
+                                                                                                              </div>
+                                                                                                              <div class="widget-body">
+                                                                                                                  <div class="widget-main">
+                                                                                                                      <div id="piechart-placeholder"></div>                                                
+                                                                                                                  </div>
+                                                                                                              </div>
+                                                                                                          </div>
                                                                                                     </div>
 
-                                                                                                    <div class="space-4"></div>
-
-                                                                                                    <div class="center">
-                                                                                                            <i class="ace-icon fa fa-users fa-2x green middle"></i>&nbsp;<a class="btn btn-sm btn-white btn-info" href="<?php echo $SITE_ROOT . 'contacts/' ?>">See all contacts &nbsp;<i class="ace-icon fa fa-arrow-right"></i></a>
-                                                                                                    </div>
-                                                                                                    
-                                                                                            </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                </div>
-                                                                   
-                                                                <div class="col-sm-6">
-                                                                    <div class="widget-box">
-                                                                          <div class="widget-header widget-header-flat widget-header-small">
-                                                                              <h5 class="widget-title">
-                                                                                  <i class="ace-icon fa fa-signal"></i>
-                                                                                  Meeting Statistics
-                                                                              </h5>
-                                                                          </div>
-                                                                          <div class="widget-body">
-                                                                              <div class="widget-main">
-                                                                                  <div id="piechart-placeholder"></div>                                                
-                                                                              </div>
-                                                                          </div>
-                                                                      </div>
-                                                                </div>
-                                                                    
-                                                               </div>
+                                </div>-->
 
                                 <!-- PAGE CONTENT END -->
                             </div>
@@ -519,7 +490,7 @@ $eventsJson = str_replace('","className"', ',"className"', $eventsJson);
                         },
                         events: <?php echo $eventsJson; ?>,
                         editable: false,
-                        droppable: false, 
+                        droppable: false,
                         selectable: false,
                         selectHelper: false,
                         eventClick: function (calEvent, jsEvent, view) {
@@ -542,7 +513,6 @@ $eventsJson = str_replace('","className"', ',"className"', $eventsJson);
                     });
                 }
                 ;
-
         </script>
 
 
@@ -649,11 +619,7 @@ $eventsJson = str_replace('","className"', ',"className"', $eventsJson);
                     title: {
                         text: 'Monthly Average Meeting'
                     },
-//        subtitle: {
-//            text: 'Source: WorldClimate.com'
-//        },
                     xAxis: {
-                        //categories: ['2015-07-09','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov', 'Dec'],
                         categories: [<?php echo $arrDateArr; ?>],
                         crosshair: true
                     },
@@ -684,78 +650,8 @@ $eventsJson = str_replace('","className"', ',"className"', $eventsJson);
                             color: "#68BC31"
                         }]
                 });
-
-
-
             });
-
-
-
         </script>
 
     </body>
-    <script type="text/javascript">
-        function __createEle(tag, cls, id, name)
-        {
-            var ele;
-            ele = document.createElement(tag);
-            if (cls != "")
-                ele.className = cls;
-            if (id != "")
-                ele.id = id;
-            if (name != "")
-                ele.name = name;
-            return ele;
-        }
-        ;
-        function calenderEvent()
-        {
-
-            var eventData = <?php echo json_encode($arrMeetingCurrentMonth); ?>;
-            var eventData = [{"schedule_id": "563c6bc200f3d", "meeting_title": "demo", "schedule_status": "0", "meeting_date": "2015-11-09", "meeting_time": "07:11"}, {"schedule_id": "563c70f445146", "meeting_title": "calendar demo", "schedule_status": "0", "meeting_date": "2015-11-10", "meeting_time": "07:11"}, {"schedule_id": "561caf2b3225a", "meeting_title": "Chat history testing", "schedule_status": "0", "meeting_date": "2015-11-13", "meeting_time": "07:11"}];
-            for (var a = 0; a < eventData.length; a++)
-            {
-
-                var ele = document.getElementsByClassName("fc-bg");
-                for (var i = 0; i < ele.length; i++)
-                {
-                    var tdCnt = 0, trEle = ele[i].childNodes[1].tBodies[0].childNodes[1];
-
-                    for (var j = 0; j < trEle.childNodes.length; j++)
-                    {
-                        if (trEle.childNodes[j].tagName == "TD")
-                        {
-                            tdCnt = tdCnt + 1;
-                            if (trEle.childNodes[j].attributes["data-date"].value == eventData[a].meeting_date)
-                            {
-                                var tblTags = ele[i].parentNode.childNodes[3].childNodes[1];
-                                var t = createTag(tblTags.tBodies[0].rows[0].cells[tdCnt - 1], eventData[a]);
-
-
-                            }
-                        }
-                    }
-
-                }
-            }
-        }
-        function createTag(ele, obj)
-        {
-            ele.setAttribute("class", "fc-event-container");
-            var eleA = __createEle("a");
-            eleA.setAttribute("class", "fc-day-grid-event fc-event fc-start fc-end label-info");
-            eleA.innerHTML = "<div class='fc-content'><span class='fc-time'>" + obj.meeting_time + " </span><span class='fc-title'>" + obj.meeting_title + "</span></div>";
-            ele.appendChild(eleA);
-            return true;
-        }
-        window.onload = function ()
-        {
-            calenderEvent();
-        };
-
-
-    </script>
-
-
-
 </html>
