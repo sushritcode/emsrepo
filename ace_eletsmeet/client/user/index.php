@@ -33,7 +33,7 @@ try
     {
         throw new Exception("index.php : getPlanDetails : Error in populating Plan Details." . $a->getMessage(), 541);
     }
-    $strTotalLicense = $arrTotalLicense[0]['TotalLicense'];
+    $strTotalLicense = $arrTotalLicense[0]['LicenseSum'];
     
     //License Consumed
     try

@@ -319,7 +319,7 @@ function getLMInstanceByClientId($client_id, $dataHelper) {
 
     try
     {
-        $strSqlStatement = "SELECT client_id, partner_id, logout_url, rt_server_name, rt_server_salt, rt_server_api_url, status FROM client_details  WHERE status = '1' AND client_id = '" . trim($client_id) . "'";
+        $strSqlStatement = "SELECT cld.client_id, partner_id, logout_url, rt_server_name, rt_server_salt, rt_server_api_url, client_login_enabled FROM client_login_details AS cld, client_details AS cd WHERE cld.client_id = cd.client_id  AND cld.client_login_enabled ='1' AND cld.client_id = '" . trim($client_id) . "';";
         $arrInstanceList = $dataHelper->fetchRecords("QR", $strSqlStatement);
         return $arrInstanceList;
     }

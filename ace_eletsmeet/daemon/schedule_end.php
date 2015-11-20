@@ -52,7 +52,7 @@ try
             try
             {
                 $meetingInstanceDtls = getLMInstanceByClientId($Client_Id, $objDataHelper);
-                //print_r($meetingInstanceDtls);
+                print_r($meetingInstanceDtls);
             }
             catch (Exception $e)
             {

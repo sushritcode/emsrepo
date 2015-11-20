@@ -61,9 +61,10 @@ function getSumOfClientLicenseByType($client_id, $opt_type, $dataHelper) {
 
     try
     {
-        $strSqlQuery = "SELECT IFNULL(SUM(no_of_license),0) AS LicenseSum FROM client_license_details AS ld, client_login_details AS cld, client_details AS cd WHERE ld.client_id = cld.client_id AND cld.client_id = cd.client_id AND client_login_enabled = '1'  AND operation_type = '" . trim($opt_type) . "' AND ld.client_id ='" . trim($client_id) . "';";
+        $strSqlQuery = "SELECT IFNULL(SUM(no_of_license),0) AS 'LicenseSum' FROM client_license_details AS ld, client_login_details AS cld, client_details AS cd WHERE ld.client_id = cld.client_id AND cld.client_id = cd.client_id AND client_login_enabled = '1'  AND operation_type = '" . trim($opt_type) . "' AND ld.client_id ='" . trim($client_id) . "';";
         $arrResult = $dataHelper->fetchRecords("QR", $strSqlQuery);
-        return $arrResult[0]['LicenseSum'];
+        return $arrResult;
+        //return $arrResult[0]['LicenseSum'];
     }
     catch (Exception $e)
     {
