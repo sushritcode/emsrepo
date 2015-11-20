@@ -1,0 +1,8 @@
+2015-11-20 07:37:02 , meetingID=564ec0de4ba6c&password=mppwd 
+
+ 741a6409b9862099d3bf250b46c9faf2aeef4af6 
+
+ http://conference.eletsmeet.com/bigbluebutton/api/end?meetingID=564ec0de4ba6c&password=mppwd&checksum=741a6409b9862099d3bf250b46c9faf2aeef4af6 
+
+ SUCCESS|sentEndMeetingRequest|A request to end the meeting was sent.  Please wait a few seconds, and then use the getMeetingInfo or isMeetingRunning API calls to verify that it was ended.
+

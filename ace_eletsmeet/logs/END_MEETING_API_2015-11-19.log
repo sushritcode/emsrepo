@@ -1,0 +1,8 @@
+2015-11-19 12:01:02 , meetingID=564da04e682a8&password=mppwd 
+
+ e0276041c7909c8f2cafe2a83bd9a8235de46c46 
+
+ http://conference.eletsmeet.com/bigbluebutton/api/end?meetingID=564da04e682a8&password=mppwd&checksum=e0276041c7909c8f2cafe2a83bd9a8235de46c46 
+
+ FAILED|notFound|We could not find a meeting with that meeting ID - perhaps the meeting is not yet running?
+

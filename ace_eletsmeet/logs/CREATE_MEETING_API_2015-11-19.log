@@ -1,0 +1,24 @@
+2015-11-19 10:11:34 , name=The+First+Meeting&meetingID=564da04e682a8&attendeePW=appwd&moderatorPW=mppwd&voiceBridge=72813&webVoice=72813&maxParticipants=3&record=true&duration=0&meta=NULL&logoutURL=https://eletsmeet.com 
+
+ e3eb25e11904a228a3df29a2eeba8dc3c37005e5 
+
+ http://172.16.1.114/bigbluebutton/api/create?name=The+First+Meeting&meetingID=564da04e682a8&attendeePW=appwd&moderatorPW=mppwd&voiceBridge=72813&webVoice=72813&maxParticipants=3&record=true&duration=0&meta=NULL&logoutURL=https://eletsmeet.com&checksum=e3eb25e11904a228a3df29a2eeba8dc3c37005e5 
+
+ ||||
+
+2015-11-19 10:14:07 , name=The+First+Meeting&meetingID=564da04e682a8&attendeePW=appwd&moderatorPW=mppwd&voiceBridge=72813&webVoice=72813&maxParticipants=3&record=true&duration=0&meta=NULL&logoutURL=https://eletsmeet.com 
+
+ e3eb25e11904a228a3df29a2eeba8dc3c37005e5 
+
+ http://172.16.1.114/bigbluebutton/api/create?name=The+First+Meeting&meetingID=564da04e682a8&attendeePW=appwd&moderatorPW=mppwd&voiceBridge=72813&webVoice=72813&maxParticipants=3&record=true&duration=0&meta=NULL&logoutURL=https://eletsmeet.com&checksum=e3eb25e11904a228a3df29a2eeba8dc3c37005e5 
+
+ ||||
+
+2015-11-19 10:15:38 , name=The+First+Meeting&meetingID=564da04e682a8&attendeePW=appwd&moderatorPW=mppwd&voiceBridge=72813&webVoice=72813&maxParticipants=3&record=true&duration=0&meta=NULL&logoutURL=http://stage.eletsmeet.com 
+
+ 898f15b47f33512aa590c5e3e85c7dfe0f1c0999 
+
+ http://conference.eletsmeet.com/bigbluebutton/api/create?name=The+First+Meeting&meetingID=564da04e682a8&attendeePW=appwd&moderatorPW=mppwd&voiceBridge=72813&webVoice=72813&maxParticipants=3&record=true&duration=0&meta=NULL&logoutURL=http://stage.eletsmeet.com&checksum=898f15b47f33512aa590c5e3e85c7dfe0f1c0999 
+
+ SUCCESS|1447927971576||appwd|mppwd
+

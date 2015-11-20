@@ -1,0 +1,98 @@
+CREATE TABLE IF NOT EXISTS `user_login_details` (
+  `user_id` varchar(25) NOT NULL,
+  `user_name` varchar(100) NOT NULL,
+  `client_id` varchar(25) NOT NULL,
+  `partner_id` varchar(25) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `email_address` varchar(150) NOT NULL,
+  `role` enum('0','1') NOT NULL COMMENT '0-SuperAdmin,1-CompanyAdmin',
+  `login_enabled` tinyint(1) NOT NULL,
+  `createdOn` datetime NOT NULL,
+  `createdBy` varchar(100) DEFAULT NULL,
+  `user_lastlogin_dtm` datetime DEFAULT NULL,
+  `user_login_ip_address` varchar(25) DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `user_name` (`user_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+ALTER TABLE `user_details` DROP `client_id` ,
+DROP `partner_id` ,
+DROP `email_address` ,
+DROP `password` ,
+DROP `registration_dtm` ,
+DROP `user_lastlogin_dtm` ,
+DROP `user_login_ip_address` ,
+DROP `is_admin` ;
+
+
+ALTER TABLE `login_users` CHANGE `	user_login_ip_address` `user_login_ip_address` VARCHAR( 25 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ;
+
+
+ALTER TABLE `dev_db_eletesmeet_com`.`schedule_details`     CHANGE `meeting_agenda` `meeting_agenda` TEXT NULL  COMMENT 'Agenda of meeting';
+
+
+CREATE TABLE IF NOT EXISTS `user_login_details` (
+  `user_id` varchar(25) NOT NULL,
+  `user_name` varchar(100) NOT NULL,
+  `client_id` varchar(25) NOT NULL,
+  `partner_id` varchar(25) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `email_address` varchar(150) NOT NULL,
+  `role` enum('0','1') NOT NULL COMMENT '0-SuperAdmin,1-CompanyAdmin',
+  `login_enabled` tinyint(1) NOT NULL,
+  `createdOn` datetime NOT NULL,
+  `createdBy` varchar(100) DEFAULT NULL,
+  `user_lastlogin_dtm` datetime DEFAULT NULL,
+  `user_login_ip_address` varchar(25) DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `user_name` (`user_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+ALTER TABLE `user_details` DROP `client_id` ,
+DROP `partner_id` ,
+DROP `email_address` ,
+DROP `password` ,
+DROP `registration_dtm` ,
+DROP `user_lastlogin_dtm` ,
+DROP `user_login_ip_address` ,
+DROP `is_admin` ;
+
+
+ALTER TABLE `login_users` CHANGE `	user_login_ip_address` `user_login_ip_address` VARCHAR( 25 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL ;
+
+
+ALTER TABLE `dev_db_eletesmeet_com`.`schedule_details`     CHANGE `meeting_agenda` `meeting_agenda` TEXT NULL  COMMENT 'Agenda of meeting';
+
+ALTER TABLE `dev_db_eletesmeet_com`.`schedule_details` CHANGE `meeting_instance` `meeting_instance` VARCHAR(255) CHARSET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT 'Instance name where meeting will host', ADD COLUMN `cancel_reason` TEXT NULL COMMENT 'meeting cancel reason' AFTER `subscription_id`; 
+
+
+DELIMITER $$
+
+USE `dev_db_eletesmeet_com`$$
+
+DROP PROCEDURE IF EXISTS `CancelSchedule`$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CancelSchedule`(
+            p_schedule_id       VARCHAR(25),
+            p_schedule_status   VARCHAR(3),
+            p_update_datetime   DATETIME,
+            p_cancel_reason     TEXT,
+    OUT     p_status            INT(1)
+)
+BEGIN
+DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
+SELECT 0 INTO  p_status;
+    UPDATE schedule_details SET schedule_status = p_schedule_status, schedule_status_update_time = p_update_datetime, cancel_reason = p_cancel_reason WHERE schedule_id = p_schedule_id AND schedule_status = '0';
+    SET  @v_upd_row_count  := ROW_COUNT();
+    IF ( @v_upd_row_count  > 0) THEN
+        SET p_status = 1;
+    ELSEIF (@v_upd_row_count = 0) THEN
+        SET p_status = 2;
+    ELSE
+        SET p_status = 0;
+    END IF ;
+END$$
+
+DELIMITER ;

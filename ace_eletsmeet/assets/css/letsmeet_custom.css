@@ -1,0 +1,56 @@
+.cPointer {
+     cursor: pointer;
+}
+
+/*.timezone {
+    display: none;
+}*/
+
+.display-none{
+    display: none;
+}
+
+.form-group.required .control-label:after { 
+   content:"*";
+   color:red;
+}
+
+.errorDisplay {
+     display:none;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 10000;
+}
+
+/*.loading_modal{
+    border-radius: 5px;
+    left: 50%;
+    line-height: 200px;
+    margin-left: -150px;
+    position: fixed;
+    text-align: center;
+    top: 25%;
+    z-index: 10001;
+}*/
+
+.loading_modal{
+    position: fixed;
+    text-align: center;
+    top: 25%;
+    z-index: 10001;
+}
+
+.loading_modal_left_48{
+    left: 48%;
+}
+
+.loading_modal_left_30{
+    left: 30%;
+}
