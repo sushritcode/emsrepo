@@ -9,7 +9,7 @@ $ADM_CONST_MODULE = 'home';
 $ADM_CONST_PAGEID = 'Home';
 require_once(ADM_INCLUDES_PATH . 'adm_authorize.inc.php');
 require_once(ADM_INCLUDES_PATH . 'adm_db_common_function.inc.php');
-require_once(ADM_INCLUDES_PATH . 'mail_common_function.inc.php');
+//require_once(ADM_INCLUDES_PATH . 'mail_common_function.inc.php');
 
 try
 {

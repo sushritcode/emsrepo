@@ -179,6 +179,10 @@ $optionCountry ="";
                                                         {
                                                             echo $contacts[$i]['contact_mobile_number'] = "---";
                                                         }
+                                                        else
+                                                        {
+                                                            echo $contacts[$i]['contact_mobile_number'];
+                                                        }
                                                         ?>
                                            </td>
 		       <td class="hidden-480"><?php echo  $contacts[$i]['contact_group_name'];?></td>
